@@ -31,8 +31,7 @@
             <li>
               <NuxtLink
                   ref="link"
-                  :to="item.url"
-                  disabled
+                  :to="(!hasSubMenu(item)) ? item.url : false"
                   :target="item.target ? '_blank' : '_self'"
                   :class="(item.target ? 'nav-link hover target' : 'nav-link hover') + (hasSubMenu(item) ? ' dropdown' : '')"
               >
@@ -46,8 +45,7 @@
               </Transition>
               <div class="nav-dropdown-container" v-if="hasSubMenu(item)" ref="dropdown">
                 <Transition name="slide-fade" @enter="enterAnimation" @leave="leaveAnimation">
-<!--                  <HeaderDropdown v-if="true" :item="item" :lines="lines"/>-->
-                                    <HeaderDropdown v-show="item.show ?? false"  :item="item" :lines="lines"/>
+                  <HeaderDropdown v-show="item.show ?? false" :item="item" :lines="lines"/>
                 </Transition>
               </div>
             </li>
@@ -72,6 +70,7 @@ const isMobile = useIsMobile();
 function navClickHandler(url, isDropdown) {
   console.log(url, isDropdown);
 }
+
 function onClick(event) {
   console.log('click');
   event.preventDefault()
