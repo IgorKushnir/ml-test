@@ -1,0 +1,128 @@
+$font-family: 'Bague';
+
+%uppercase {
+  text-transform: uppercase;
+  font-weight: normal;
+}
+
+a {
+  color: $dark-blue;
+  text-decoration: none;
+}
+
+h1 {
+  @extend %uppercase;
+  font-size: 36px;
+  margin: 16px 0;
+}
+h2 {
+  @extend %uppercase;
+  font-size: 32px;
+  margin: 16px 0;
+}
+h3 {
+  @extend %uppercase;
+  font-size: 24px;
+  margin: 16px 0;
+}
+h4 {
+  @extend %uppercase;
+  font-size: 20px;
+  margin: 16px 0;
+}
+h5 {
+  @extend %uppercase;
+  font-size: 16px;
+  margin: 16px 0;
+}
+
+p {
+  line-height: 1.4em;
+  margin: 16px 0;
+  color: $gray;
+}
+
+.title {
+  font-size: 48px;
+}
+
+.subheader {
+  text-transform: uppercase;
+  line-height: 1em;
+  letter-spacing: .1em;
+  font-size: 16px;
+  margin-bottom: 16px;
+  &.medium {
+    font-size: 14px;
+  }
+  &.small {
+    font-size: 12px;
+  }
+}
+
+/* Target link */
+.target:after {
+  content: "\e911";
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  font-size: 1em;
+  margin-left: 0.4em;
+}
+
+//.uppercase {
+//  text-transform: uppercase;
+//}
+
+
+
+
+
+
+@media (max-width: $breakpoint-tablet) {
+  h1 {
+    font-size: 32px;
+    margin: 16px 0;
+  }
+  h2 {
+    font-size: 24px;
+  }
+  h3 {
+    font-size: 20px;
+  }
+  h4 {
+    font-size: 18px;
+  }
+  h5 {
+    font-size: 14px;
+  }
+  .title {
+    font-size: 32px;
+  }
+
+  p {
+    font-size: 16px;
+  }
+}
+
+@font-face {
+  font-family: $font-family;
+  src: url('~/assets/fonts/Regular.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: auto;
+}
+
+@font-face {
+  font-family: $font-family;
+  src: url('~/assets/fonts/Medium.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: auto;
+}
+
+
