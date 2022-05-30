@@ -27,13 +27,16 @@
 
       <div ref="menu_wrapper" class="menu_wrapper hide">
         <div class="nav">
-          <ul v-for="item in menu" class="nav-container">
+          <ul v-for="(item, index) in menu" class="nav-container">
             <li>
               <NuxtLink
                   ref="link"
                   :to="!(hasSubMenu(item) && isMobile) ? item.url : false"
                   :target="item.target ? '_blank' : '_self'"
                   :class="(item.target ? 'nav-link hover target' : 'nav-link hover') + (hasSubMenu(item) ? ' dropdown' : '')"
+                  v-on:click="navClickHandler(hasSubMenu(item), index)"
+                  @mouseenter="mouseEnterHandler(hasSubMenu(item), index)"
+                  @mouseleave="mouseLeaveHandler"
               >
                 {{ item.title }}
               </NuxtLink>
@@ -60,26 +63,55 @@
 </template>
 
 <script setup lang="ts">
-import {onBeforeRouteLeave} from "vue-router";
-
 const data = useMenuData();
 const {menu, lines} = {menu: data.value[0].primary, lines: data.value[1]};
 const isMobile = useIsMobile();
-
-// let preventClick = ref(true);
-
-function navClickHandler(url, isDropdown) {
-  console.log(url, isDropdown);
-}
-
-function onClick(event) {
-  console.log('click');
-  event.preventDefault()
-}
-
+let activeIndex = ref(0);
 const dropdown = ref();
 const link = ref();
 const menu_wrapper = ref();
+
+
+
+// On mobile click to submenu open
+function navClickHandler(isDropdown, index) {
+  if (isMobile.value && isDropdown) {
+    if (menu[index].show) {
+      hideSubMenu();
+    } else {
+      showSubMenu(index)
+    }
+  }
+}
+
+function mouseEnterHandler(isDropdown, index) {
+  if (!isMobile.value) {
+    showSubMenu(index);
+  }
+}
+function mouseLeaveHandler() {
+  if (!isMobile.value) {
+    hideSubMenu();
+  }
+}
+// Show submenu
+const showSubMenu = (index) => {
+  hideSubMenu();
+  menu[index].show = true;
+  activeIndex.value = index;
+
+  link.value[activeIndex.value].$el.parentElement.classList.add('active')
+}
+// Hide submenu
+const hideSubMenu = () => {
+  menu[activeIndex.value].show = false;
+
+  link.value[activeIndex.value].$el.parentElement.classList.remove('active')
+}
+
+
+
+
 
 function showHideMenu() {
   if (menu_wrapper.value.classList.contains('hide')) {
@@ -94,10 +126,8 @@ const hasSubMenu = (item) => {
   return item.collections || item.items.length > 0
 };
 
-// Prevent click
-// useRouter().beforeEach((to, from) => {
-//   return preventClick.value
-// })
+
+
 
 function enterAnimation(element) {
   if (!isMobile.value) return
@@ -110,9 +140,6 @@ function enterAnimation(element) {
 
 function leaveAnimation(element) {
   if (!isMobile.value) return
-  // const height = getComputedStyle(element).height;
-  // element.style.height = height;
-  // getComputedStyle(element).height;
 
   requestAnimationFrame(() => {
     element.style.height = 0;
@@ -121,37 +148,8 @@ function leaveAnimation(element) {
 
 
 onMounted(() => {
-  let activeIndex = 0;
-  const menuItems = window.document.getElementsByClassName('nav-container');
 
-  for (let i = 0; i < menuItems.length; i++) {
-    const dropdown = link.value[i].$el.classList.contains('dropdown');
-    // const link = menuItems[i].children[0].getElementsByTagName('a')[0];
-    if (dropdown) {
-      link.value[i].$el.addEventListener("mouseenter", function (e) {
-        if (!isMobile.value) {
-          showSubMenu(i);
-        }
-      });
-      link.value[i].$el.addEventListener("click", function () {
-        if (isMobile.value) {
-          if (!menu[i].show) {
-            showSubMenu(i);
-          } else {
-            hideSubMenu();
-          }
-        }
-      });
-    } else {
-      // Hide prev submenu on hovering on another item without dropdown
-      link.value[i].$el.addEventListener("mouseenter", function (e) {
-        if (!isMobile.value) {
-          console.log('here');
-          hideSubMenu();
-        }
-      });
-    }
-  }
+
 
   // Mouse leave
   const navigation = window.document.getElementsByClassName('nav')[0]
@@ -159,20 +157,6 @@ onMounted(() => {
     hideSubMenu();
   })
 
-  // Show submenu
-  const showSubMenu = (index) => {
-    hideSubMenu();
-    menu[index].show = true;
-    activeIndex = index;
-
-    menuItems[activeIndex].getElementsByTagName('a')[0].parentElement.classList.add('active')
-  }
-  // Hide submenu
-  const hideSubMenu = () => {
-    menu[activeIndex].show = false;
-
-    menuItems[activeIndex].getElementsByTagName('a')[0].parentElement.classList.remove('active')
-  }
 
 
   // Before mount each route Remove all active classes
