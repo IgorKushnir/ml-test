@@ -71,7 +71,6 @@ query Menu {
     }
 `);
 
-    // console.log(responce['data']);
     const menu = responce['data'].menu.data.attributes;
     const lines = responce['data'].lines.data;
 
