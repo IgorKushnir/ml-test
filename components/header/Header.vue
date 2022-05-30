@@ -36,7 +36,6 @@
                   :class="(item.target ? 'nav-link hover target' : 'nav-link hover') + (hasSubMenu(item) ? ' dropdown' : '')"
                   v-on:click="navClickHandler(hasSubMenu(item), index)"
                   @mouseenter="mouseEnterHandler(hasSubMenu(item), index)"
-                  @mouseleave="mouseLeaveHandler"
               >
                 {{ item.title }}
               </NuxtLink>
