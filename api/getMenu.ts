@@ -83,5 +83,5 @@ query Menu {
         }
     });
 
-    return [menu, []]
+    return [menu, linesWithCollections]
 }
