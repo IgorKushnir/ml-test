@@ -5,8 +5,7 @@
 
       <div class="top-nav">
         <div class="left-side">
-          <NuxtLink to="/1" class="nav-link__tertiary hover hide-md">Trunk shows</NuxtLink>
-          <NuxtLink to="/1" class="nav-link__tertiary target hover hide-md">White&Lace Store</NuxtLink>
+          <NuxtLink v-for="item in menu['primary_additional']" :to="item.url" :class="'nav-link__tertiary hover hide-md' + (item.target ? ' target' : '')" :target="item.target ? '_target' : '_self'">{{item.title}}</NuxtLink>
           <div v-on:click="showHideMenu" class="nav-icon hover mobile-menu">
             <div class="icon-menu-24"></div>
           </div>
@@ -27,7 +26,7 @@
 
       <div ref="menu_wrapper" class="menu_wrapper hide">
         <div class="nav">
-          <ul v-for="(item, index) in menu" class="nav-container">
+          <ul v-for="(item, index) in menu['primary']" class="nav-container">
             <li>
               <NuxtLink
                   ref="link"
@@ -63,7 +62,7 @@
 
 <script setup lang="ts">
 const data = useMenuData();
-const {menu, lines} = {menu: data.value[0].primary, lines: data.value[1]};
+const {menu, lines} = {menu: data.value[0], lines: data.value[1]};
 const isMobile = useIsMobile();
 let activeIndex = ref(0);
 const dropdown = ref();
@@ -75,7 +74,7 @@ const menu_wrapper = ref();
 // On mobile click to submenu open
 function navClickHandler(isDropdown, index) {
   if (isMobile.value && isDropdown) {
-    if (menu[index].show) {
+    if (menu.primary[index].show) {
       hideSubMenu();
     } else {
       showSubMenu(index)
@@ -96,14 +95,14 @@ function mouseLeaveHandler() {
 // Show submenu
 const showSubMenu = (index) => {
   hideSubMenu();
-  menu[index].show = true;
+  menu.primary[index].show = true;
   activeIndex.value = index;
 
   link.value[activeIndex.value].$el.parentElement.classList.add('active')
 }
 // Hide submenu
 const hideSubMenu = () => {
-  menu[activeIndex.value].show = false;
+  menu.primary[activeIndex.value].show = false;
 
   link.value[activeIndex.value].$el.parentElement.classList.remove('active')
 }

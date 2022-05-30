@@ -9,9 +9,7 @@
           <div class="ratio-4x3">
 
 
-            <Transition name="fade">
-              <img :src="$getImage(item.cover_4x3, 'medium')" v-if="currentCollection === -1" :alt="item.title" loading="lazy">
-            </Transition>
+              <img :src="$getImage(item.cover_4x3, 'medium')"  :alt="item.title" >
             <template v-for="(cover, index) in coversList">
               <Transition name="fade">
                 <img v-if="currentCollection === index" :data-test="currentCollection === index"

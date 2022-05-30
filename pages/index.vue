@@ -188,6 +188,10 @@
 
 <script setup lang="ts">
 
+useHead({
+  title: 'Main'
+
+})
 
 let counter = useFavCount();
 // Transition
