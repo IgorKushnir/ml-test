@@ -10,10 +10,12 @@
 
 
 <script setup lang="ts">
-// Load menu data
-import menuData from '~/api/getMenuData';
+import menuData from '~/api/getMenu';
 
-useMenuData().value = await menuData();
+useMenuData().value = await menuData('en')
+
+
+
 
 // // computed
 // const count = computed(()=> 3)
@@ -40,3 +42,4 @@ function reportWindowSize() {
   }
 }
 </style>
+

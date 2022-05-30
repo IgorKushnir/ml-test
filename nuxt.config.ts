@@ -1,14 +1,12 @@
 import { defineNuxtConfig } from 'nuxt'
 
-// https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
-
     css: [
         '@/assets/style/main.scss',
     ],
     buildModules: [
         'nuxt-vite',
-        "@nuxt3-graphql/urql",
+        '@nuxtjs/strapi'
     ],
     vite: {
         css: {
@@ -20,12 +18,12 @@ export default defineNuxtConfig({
         },
     },
 
-    urql: {
-        url: "http://localhost:1337/graphql/"
+    strapi: {
+        url: process.env.STRAPI_URL || 'http://localhost:1337',
     },
 
     publicRuntimeConfig: {
-        API_CDN_URL: process.env.API_CDN_URL
+        API_CDN_URL: process.env.API_CDN_URL,
     },
 })
 

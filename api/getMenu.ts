@@ -1,7 +1,13 @@
-import {gql} from "@apollo/client/core"
 
-export const getMenu = (lang) => gql`
-    query Menu {
+
+
+
+
+export default async function (lang) {
+    const graphql = useStrapiGraphQL()
+
+    const responce = await graphql(`
+query Menu {
         menu(locale:"${lang}") {
             data {
                 attributes {
@@ -63,4 +69,18 @@ export const getMenu = (lang) => gql`
             }
         }
     }
-`;
+`);
+
+    // console.log(responce['data']);
+    const menu = responce['data'].menu.data.attributes;
+    const lines = responce['data'].lines.data;
+
+    // Check if line is empty (collection inside)
+    lines.forEach((line, index) => {
+        if (line.attributes.collections.data.length <= 0) {
+            lines.splice(index, 1)
+        }
+    });
+
+    return [menu, lines]
+}
