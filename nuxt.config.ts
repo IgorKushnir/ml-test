@@ -23,7 +23,7 @@ export default defineNuxtConfig({
     },
 
     publicRuntimeConfig: {
-        API_CDN_URL: process.env.API_CDN_URL,
+        MODE: process.env.MODE,
     },
 })
 
