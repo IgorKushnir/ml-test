@@ -77,6 +77,11 @@
   line-height: 16px;
 }
 
+.router-link-active, .router-link-exact-active {
+  font-weight: bold;
+  color: $white;
+  opacity: 1!important;
+}
 
 
 @media (hover: hover) {

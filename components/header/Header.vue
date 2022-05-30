@@ -31,7 +31,7 @@
             <li>
               <NuxtLink
                   ref="link"
-                  :to="(!hasSubMenu(item)) ? item.url : false"
+                  :to="!(hasSubMenu(item) && isMobile) ? item.url : false"
                   :target="item.target ? '_blank' : '_self'"
                   :class="(item.target ? 'nav-link hover target' : 'nav-link hover') + (hasSubMenu(item) ? ' dropdown' : '')"
               >
@@ -45,6 +45,7 @@
               </Transition>
               <div class="nav-dropdown-container" v-if="hasSubMenu(item)" ref="dropdown">
                 <Transition name="slide-fade" @enter="enterAnimation" @leave="leaveAnimation">
+<!--                  <HeaderDropdown v-show="true" :item="item" :lines="lines"/>-->
                   <HeaderDropdown v-show="item.show ?? false" :item="item" :lines="lines"/>
                 </Transition>
               </div>
@@ -145,6 +146,7 @@ onMounted(() => {
       // Hide prev submenu on hovering on another item without dropdown
       link.value[i].$el.addEventListener("mouseenter", function (e) {
         if (!isMobile.value) {
+          console.log('here');
           hideSubMenu();
         }
       });

@@ -76,11 +76,12 @@ query Menu {
     const lines = responce['data'].lines.data;
 
     // Check if line is empty (collection inside)
+    let linesWithCollections = [];
     lines.forEach((line, index) => {
-        if (line.attributes.collections.data.length <= 0) {
-            lines.splice(index, 1)
+        if (line.attributes.collections.data.length > 0) {
+            linesWithCollections.push(line)
         }
     });
 
-    return [menu, lines]
+    return [menu, linesWithCollections]
 }

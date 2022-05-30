@@ -25,7 +25,7 @@
 
 
         <!--Collections-->
-        <ul class="collections  col-5  col-8-lg col-12-md" v-if="item.collections">
+        <ul class="collections  col-5  col-8-lg col-12-md" v-if="item.collections && lines.length > 0">
           <li v-for="line in lines" class="line">
             <span class="subheader small">{{ line.attributes.title }}</span>
             <ul>
@@ -33,6 +33,7 @@
                 <NuxtLink
                     :to=" '/collection/' + collection.attributes.slug"
                     @mouseover="collectionHoverHandler(collection.attributes.slug)"
+                    @mouseleave="collectionHoverOutHandler"
                     class="nav-link__tertiary hover"
                 >{{ collection.attributes.title }}
                 </NuxtLink>
@@ -138,6 +139,9 @@ function getIndexOfCollectionBySlug(slug) {
 function collectionHoverHandler(slug) {
   currentCollection.value = getIndexOfCollectionBySlug(slug);
 }
+function collectionHoverOutHandler() {
+  currentCollection.value = -1;
+}
 
 </script>
 
@@ -172,7 +176,7 @@ ul {
 }
 
 .nav-link__tertiary, .nav-link__secondary {
-  margin: 16px 0;
+  padding: 8px 0;
 }
 
 .subheader.small {
@@ -221,13 +225,14 @@ ul {
   }
 
   .nav-link__tertiary, .nav-link__secondary {
-    padding: 4px 0;
+    padding: 8px 0;
+    margin: 8px 0;
   }
 
 
   .collections {
     column-count: 1;
-    padding-right: unset;
+    padding-right: 20px;
   }
   .collections:after {
     all: unset;
