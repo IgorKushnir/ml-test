@@ -41,7 +41,8 @@
     </div>
 
 
-    <StickyBar>{{ counter }} <button v-on:click="count">click</button></StickyBar>
+    <StickyHeader/>
+<!--    <StickyBar>{{ counter }} <button v-on:click="count">click</button></StickyBar>-->
 
     <div class="container">
       <div class="row gap-40 justify-center">

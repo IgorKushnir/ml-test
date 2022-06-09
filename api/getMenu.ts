@@ -1,8 +1,3 @@
-
-
-
-
-
 export default async function (lang) {
     const graphql = useStrapiGraphQL()
 
@@ -21,6 +16,7 @@ query Menu {
                               attributes {
                                 url
                                 formats
+                                placeholder
                               }
                             }
                           }
@@ -59,6 +55,7 @@ query Menu {
                                       attributes {
                                         url
                                         formats
+                                        placeholder
                                       }
                                     }
                                   }

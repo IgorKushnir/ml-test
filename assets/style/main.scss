@@ -51,6 +51,13 @@ img {
   .hide-md {
     display: none!important;
   }
+  .no-mobile-scroll {
+    overflow: hidden;
+  }
+
+  body {
+    margin-top: 56px;
+  }
 }
 @include lg {
   .hide-lg {

@@ -26,6 +26,12 @@
 }
 
 
+.icon-tick-16:before {
+  content: "\e90d";
+}
+.icon-phone-16:before {
+  content: "\e912";
+}
 .icon-arrow-16:before {
   content: "\e906";
 }
@@ -46,9 +52,6 @@
 }
 .icon-location-16:before {
   content: "\e90c";
-}
-.icon-phone-16:before {
-  content: "\e90d";
 }
 .icon-plus-16:before {
   content: "\e90e";

@@ -1,19 +1,18 @@
 <template>
   <div class="nav-dropdown">
     <div class="container">
-      <div class="row gap-L gap-v-M">
-
+      <div class="row gap-L display-block-md p-v-40 p-t-32-md p-b-0-md">
 
         <!--Cover-->
         <div class="col-4 hide-lg">
           <div class="ratio-4x3">
 
 
-              <img :src="$getImage(item.cover_4x3, 'medium')"  :alt="item.title" >
+            <Image :path="item.cover_4x3" size="medium" :alt="item.title"/>
             <template v-for="(cover, index) in coversList">
               <Transition name="fade">
-                <img v-if="currentCollection === index" :data-test="currentCollection === index"
-                     :src="$getImage(cover.cover_4x3, 'medium')" :alt="index" loading="lazy">
+                <Image v-if="currentCollection === index" :path="cover.cover_4x3" size="medium" :alt="cover.title"/>
+
               </Transition>
             </template>
 
@@ -23,13 +22,13 @@
 
 
         <!--Collections-->
-        <ul class="collections  col-5  col-8-lg col-12-md" v-if="item.collections && lines.length > 0">
+        <ul class="collections  col-5  col-8-lg col-12-md p-b-0-md m-t-8-md" v-if="item.collections && lines.length > 0">
           <li v-for="line in lines" class="line">
             <span class="subheader small">{{ line.attributes.title }}</span>
             <ul>
               <li v-for="collection in line.attributes.collections.data">
                 <NuxtLink
-                    :to=" '/collection/' + collection.attributes.slug"
+                    :to=" '/collections/' + collection.attributes.slug"
                     @mouseover="collectionHoverHandler(collection.attributes.slug)"
                     @mouseleave="collectionHoverOutHandler"
                     class="nav-link__tertiary hover"
@@ -41,7 +40,7 @@
         </ul>
 
         <!--Submenu-->
-        <ul class="sub-menu col-3 col-4-lg col-12-md" v-if="item.items.length > 0">
+        <ul class="sub-menu col-3 col-4-lg col-12-md m-t-8-md" v-if="item.items.length > 0">
           <li v-if="item.items.length > 0" v-for="sub_menu in divideSubMenu(item.items)">
             <ul v-for="sub_item in sub_menu">
               <li>
@@ -63,10 +62,11 @@
 </template>
 
 <script setup lang="ts">
+import Image from "~/components/Image.vue";
+
 const {$getImage} = useNuxtApp()
 let currentCollection = ref(-1)
 let coversList = ref([]);
-
 
 const props = defineProps({
   item: {
@@ -77,7 +77,10 @@ const props = defineProps({
     type: Array,
     required: true
   },
-
+  show: {
+    type: Boolean,
+    required: true
+  }
 })
 
 
@@ -142,7 +145,6 @@ function collectionHoverOutHandler() {
 }
 
 </script>
-
 <style scoped lang="scss">
 a {
   color: $light-gray;
@@ -157,9 +159,11 @@ ul {
 
 .sub-menu > li:first-child > ul:first-child .nav-link__secondary {
   margin-top: unset;
+  padding-top: unset;
 }
 
 .sub-menu > *, .collections > * {
+  //display: block;
   margin-bottom: 32px;
 }
 
@@ -172,6 +176,17 @@ ul {
   margin-top: 8px;
   overflow: hidden;
 }
+//.nav-dropdown:after {
+//  content: '';
+//  position: absolute;
+//  width: 400vw;
+//  height: 100%;
+//  left: -200px;
+//  top: -1px;
+//  //background-color: $dark-blue;
+//  background-color: #eb5757;
+//  z-index: -1;
+//}
 
 .nav-link__tertiary, .nav-link__secondary {
   padding: 8px 0;
@@ -180,7 +195,7 @@ ul {
 .subheader.small {
   opacity: .4;
   display: block;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 
@@ -193,7 +208,7 @@ ul {
 .collections:after {
   content: '';
   position: absolute;
-  top: 56px;
+  top: 40px;
   right: 20px;
   width: 1px;
   height: calc(100% - 112px);
@@ -236,5 +251,8 @@ ul {
     all: unset;
   }
 
+  .display-block-md {
+    display: block;
+  }
 }
 </style>

@@ -1,13 +1,15 @@
 <template>
   <HeaderWishCounter v-if="isMobile"/>
   <header class="navigation">
-    <div class="container">
+
+    <div class="container" style="position: static;">
 
       <div class="top-nav">
         <div class="left-side">
           <NuxtLink v-for="item in menu['primary_additional']" :to="item.url" :class="'nav-link__tertiary hover hide-md' + (item.target ? ' target' : '')" :target="item.target ? '_target' : '_self'">{{item.title}}</NuxtLink>
           <div v-on:click="showHideMenu" class="nav-icon hover mobile-menu">
-            <div class="icon-menu-24"></div>
+            <div v-if="!mobileMenuOpened" class="icon-menu-24"/>
+            <div v-else class="icon-close-24"/>
           </div>
         </div>
 
@@ -39,19 +41,29 @@
                 {{ item.title }}
               </NuxtLink>
 
-              <!--                  @click="navClickHandler(item.url, hasSubMenu(item))"-->
 
               <Transition name="show-line">
                 <div class="active-line" v-if="(item.show ?? false) && (hasSubMenu(item))"></div>
               </Transition>
               <div class="nav-dropdown-container" v-if="hasSubMenu(item)" ref="dropdown">
                 <Transition name="slide-fade" @enter="enterAnimation" @leave="leaveAnimation">
-<!--                  <HeaderDropdown v-show="true" :item="item" :lines="lines"/>-->
-                  <HeaderDropdown v-show="item.show ?? false" :item="item" :lines="lines"/>
+                  <HeaderDropdown v-show="item.show ?? false" :item="item" :lines="lines" :show="item.show ?? false"/>
                 </Transition>
               </div>
+
             </li>
           </ul>
+
+          <div class="m-v-32">
+            <NuxtLink
+                v-if="isMobile"
+                v-for="item in menu['primary_additional']" :to="item.url"
+                style="display: block"
+                :class="'nav-link__tertiary hover p-v-8 m-v-4' + (item.target ? ' target' : '')"
+                :target="item.target ? '_target' : '_self'">{{item.title}}
+            </NuxtLink>
+          </div>
+
         </div>
       </div>
     </div>
@@ -68,6 +80,7 @@ let activeIndex = ref(0);
 const dropdown = ref();
 const link = ref();
 const menu_wrapper = ref();
+let mobileMenuOpened = ref(false)
 
 
 
@@ -99,12 +112,24 @@ const showSubMenu = (index) => {
   activeIndex.value = index;
 
   link.value[activeIndex.value].$el.parentElement.classList.add('active')
+
+  if (!isMobile.value) return
+  // scroll to active menu
+  setTimeout(function () {
+    link.value[activeIndex.value].$el.scrollIntoView({block: "start", behavior: "smooth"})
+  },400)
 }
 // Hide submenu
 const hideSubMenu = () => {
   menu.primary[activeIndex.value].show = false;
 
   link.value[activeIndex.value].$el.parentElement.classList.remove('active')
+
+  if (!isMobile.value) return
+  // scroll to active menu
+  setTimeout(function () {
+    menu_wrapper.value.scroll({top: 0, behavior: 'smooth'})
+  },10)
 }
 
 
@@ -113,9 +138,13 @@ const hideSubMenu = () => {
 
 function showHideMenu() {
   if (menu_wrapper.value.classList.contains('hide')) {
-    menu_wrapper.value.classList.remove('hide')
+    mobileMenuOpened.value = true;
+    menu_wrapper.value.classList.remove('hide');
+    document.body.classList.add('no-mobile-scroll')
   } else {
+    mobileMenuOpened.value = false;
     menu_wrapper.value.classList.add('hide')
+    document.body.classList.remove('no-mobile-scroll')
   }
 }
 
@@ -160,7 +189,9 @@ onMounted(() => {
   // Before mount each route Remove all active classes
   addRouteMiddleware(async (to) => {
     hideSubMenu();
+    mobileMenuOpened.value = false;
     menu_wrapper.value.classList.add('hide');
+    document.body.classList.remove('no-mobile-scroll')
   });
 
 });
@@ -239,6 +270,8 @@ onMounted(() => {
 }
 
 
+
+
 // Line showing
 .show-line-enter-active, .show-line-leave-active {
   transition: all .4s ease-out;
@@ -270,6 +303,11 @@ onMounted(() => {
     position: fixed;
     top: 0;
     left: 0;
+    transform: translateY(0);
+    transition: transform .3s ease;
+    &.shift {
+      transform: translateY(-56px);
+    }
   }
   .nav {
     margin: 0;

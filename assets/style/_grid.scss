@@ -14,6 +14,7 @@ $layout-values: flex-start, flex-end, center, space-between, space-around;
 //$xxl: $spacing-unit * 8;     // 64px
 
 .container {
+  position: relative;
   width: 100%;
   max-width: 1600px;
   margin: 0 auto;
@@ -22,6 +23,8 @@ $layout-values: flex-start, flex-end, center, space-between, space-around;
 }
 
 .row {
+  position: relative;
+  width: 100%;
   display: flex;
   flex-flow: row wrap;
 }
@@ -31,15 +34,15 @@ $layout-values: flex-start, flex-end, center, space-between, space-around;
   padding: 20px;
 }
 .gap-S {
-  margin-left: -20px;
-  margin-right: -20px;
+  margin: -20px;
+  width: calc(100% + 40px);
 }
 .gap-L > * {
   padding: 40px;
 }
 .gap-L {
-  margin-left: -40px;
-  margin-right: -40px;
+  margin: -40px;
+  width: calc(100% + 80px);
 }
 
 
@@ -92,8 +95,8 @@ $layout-values: flex-start, flex-end, center, space-between, space-around;
     padding: 20px;
   }
   .gap-L {
-    margin-left: -20px;
-    margin-right: -20px;
+    margin: -20px;
+    width: calc(100% + 40px);
   }
 
   .gap-v-M > * {
