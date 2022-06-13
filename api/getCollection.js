@@ -15,6 +15,23 @@ query Collection{
     data {
       attributes {
         title
+        show_promo
+        cover_4x3 {
+          data {
+            attributes {
+              url
+              formats
+              placeholder
+            }
+          }
+        }
+        video {
+          data {
+            attributes {
+              url
+            }
+          }
+        }
         line {
           data {
             attributes {
@@ -30,34 +47,7 @@ query Collection{
           }
         }
         description
-        
-        products(
-          pagination: {limit: -1}
-          sort: "title"
-          filters: {
-            type: {
-              slug: {
-                eq: "dress"
-              }
-            }
-          }
-        ) {
-          data {
-            attributes {
-              title
-              slug
-              cover_3x4 {
-                data {
-                  attributes {
-                    formats
-                    url
-                    placeholder
-                  }
-                }
-              }
-            }
-          }
-        }
+       
       }
     }
   }

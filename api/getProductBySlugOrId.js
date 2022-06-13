@@ -61,7 +61,7 @@ query Product{
     }
 
 
-    const {data, pending, refresh, error} = await useAsyncData('data_' + collection, () => response, {
+    const {data, pending, refresh, error} = await useAsyncData('p_data_' + collection, () => response, {
         transform: (d) => {
             if (isNaN(slugOrId)) {
                 if (d.data[collection].data[0]) {

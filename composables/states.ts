@@ -7,3 +7,7 @@ export const useIsMobile = () => useState<boolean>('isMobile', () => false);
 export const useGoogle = () => useState<any>('google');
 
 
+
+
+export const useFiltersData = () => useState<object>('filtersData', () => []);
+

@@ -49,7 +49,7 @@ $sides: (top, bottom, left, right, v, h); // Leave this variable alone
 
           .p-#{str-slice($side, 0, 1)}-#{$space}-xl {
             padding-top: #{$space}px !important;
-            margin-bottom: #{$space}px !important;
+            padding-bottom: #{$space}px !important;
           }
         } @else {
           .m-#{str-slice($side, 0, 1)}-#{$space}-xl {
@@ -58,8 +58,8 @@ $sides: (top, bottom, left, right, v, h); // Leave this variable alone
           }
 
           .p-#{str-slice($side, 0, 1)}-#{$space}-xl {
-            margin-left: #{$space}px !important;
-            margin-right: #{$space}px !important;
+            padding-left: #{$space}px !important;
+            padding-right: #{$space}px !important;
           }
         }
       } @else {
@@ -86,7 +86,7 @@ $sides: (top, bottom, left, right, v, h); // Leave this variable alone
 
           .p-#{str-slice($side, 0, 1)}-#{$space}-lg {
             padding-top: #{$space}px !important;
-            margin-bottom: #{$space}px !important;
+            padding-bottom: #{$space}px !important;
           }
         } @else {
           .m-#{str-slice($side, 0, 1)}-#{$space}-lg {
@@ -95,8 +95,8 @@ $sides: (top, bottom, left, right, v, h); // Leave this variable alone
           }
 
           .p-#{str-slice($side, 0, 1)}-#{$space}-lg {
-            margin-left: #{$space}px !important;
-            margin-right: #{$space}px !important;
+            padding-left: #{$space}px !important;
+            padding-right: #{$space}px !important;
           }
         }
       } @else {
@@ -123,7 +123,7 @@ $sides: (top, bottom, left, right, v, h); // Leave this variable alone
 
           .p-#{str-slice($side, 0, 1)}-#{$space}-md {
             padding-top: #{$space}px !important;
-            margin-bottom: #{$space}px !important;
+            padding-bottom: #{$space}px !important;
           }
         } @else {
           .m-#{str-slice($side, 0, 1)}-#{$space}-md {
@@ -132,8 +132,8 @@ $sides: (top, bottom, left, right, v, h); // Leave this variable alone
           }
 
           .p-#{str-slice($side, 0, 1)}-#{$space}-md {
-            margin-left: #{$space}px !important;
-            margin-right: #{$space}px !important;
+            padding-left: #{$space}px !important;
+            padding-right: #{$space}px !important;
           }
         }
       } @else {
@@ -160,7 +160,7 @@ $sides: (top, bottom, left, right, v, h); // Leave this variable alone
 
           .p-#{str-slice($side, 0, 1)}-#{$space}-sm {
             padding-top: #{$space}px !important;
-            margin-bottom: #{$space}px !important;
+            padding-bottom: #{$space}px !important;
           }
         } @else {
           .m-#{str-slice($side, 0, 1)}-#{$space}-sm {
@@ -169,8 +169,8 @@ $sides: (top, bottom, left, right, v, h); // Leave this variable alone
           }
 
           .p-#{str-slice($side, 0, 1)}-#{$space}-sm {
-            margin-left: #{$space}px !important;
-            margin-right: #{$space}px !important;
+            padding-left: #{$space}px !important;
+            padding-right: #{$space}px !important;
           }
         }
       } @else {

@@ -1,30 +1,57 @@
 <template>
-  <div :class="index !== -1 ? 'custom-select active' : 'custom-select'" @mouseenter="showDropdown = true" @mouseleave="showDropdown = false" @click="showDropdown = false">
-    <StoreFlag v-if="flag && index!== -1" class="flag big" :code="data[index].flag"/>
+  <div class="select">
+    <div
+        :class="index !== -1 ? 'custom-select active hide-md' : 'custom-select hide-md'"
+        @mouseenter="showDropdown = true"
+        @mouseleave="showDropdown = false"
+        @click="showDropdown = false"
+    >
+      <StoreFlag v-if="flag && index!== -1" class="flag big" :code="data[index].flag"/>
 
-    <div class="label p-small">
-
-      <strong>{{ index === -1 ? name : data[index].value }}</strong>
-    </div>
-    <div v-show="showDropdown" ref="dropDown" class="drop-down">
-      <div :class="index === -1 ? 'item active p-small' : 'item p-small'" v-on:click="$emit('index', -1)">{{name}}</div>
-      <div v-for="(item, i) in data" :class="index === i ? 'item active p-small' : 'item p-small'" v-on:click="$emit('index', i)">
-        <StoreFlag v-if="flag" class="flag" :code="data[i].flag"/>
-        <span>{{item.value}}</span>
+      <div class="label p-small">
+        <strong>{{ index === -1 ? name : data[index].value }}</strong>
+        <div class="icon-drop-down-16"></div>
       </div>
+
+      <transition name="dropdown">
+        <div v-show="showDropdown" ref="dropDown" :class="'drop-down ' + side">
+          <div :class="index === -1 ? 'item active p-small' : 'item p-small'" v-on:click="$emit('index', -1)">{{all}}</div>
+          <div v-for="(item, i) in data" :class="index === i ? 'item active p-small' : 'item p-small'" v-on:click="$emit('index', i)">
+            <StoreFlag v-if="flag" class="flag" :code="data[i].flag"/>
+            <span>{{item.value}}</span>
+          </div>
+        </div>
+      </transition>
+
+
     </div>
 
+    <div  class="select-container show-md">
+      <StoreFlag v-if="flag && index !== -1" class="flag-mobile" :code="data[index].flag"/>
 
-<!--    <select class="select" v-on:change="$emit('index', index)" v-model="index">-->
-<!--      <option :value="-1">{{name}}</option>-->
-<!--      <option  v-for="(item, i) in data" :value="i" :selected="index === i">{{item.value}}</option>-->
-<!--    </select>-->
+      <select :class="'select custom-select p-small hidden' + (flag && index !== -1 ? ' flag' : '')">
+        <option value="1">{{index === -1 ? all : data[index].value}}</option>
+      </select>
+
+      <div class="icon-drop-down-16"></div>
+
+      <select :class="(index === -1 ? 'select custom-select p-small absolute' : 'select custom-select p-small absolute active') + (flag && index !== -1 ? ' flag' : '')" v-on:change="$emit('index', index)" v-model="index">
+        <option :value="-1">{{all}}</option>
+        <option  v-for="(item, i) in data" :value="i" :selected="index === i">{{item.value}}</option>
+
+      </select>
+    </div>
   </div>
+
 </template>
 
 <script setup>
 const props = defineProps({
   name: {
+    type: String,
+    required: true
+  },
+  all: {
     type: String,
     required: true
   },
@@ -41,56 +68,38 @@ const props = defineProps({
     type: Boolean,
     return: false,
     default: false
+  },
+  side: {
+    type: String,
+    required: false,
+    default: 'left'
   }
 })
 let showDropdown = ref(false)
 
-// let index = ref(props.index)
-
-// defineEmits({
-//   index: {
-//
-//   }
-// })
-
-// function handleClick(i) {
-//   console.log(i);
-//   index.value = i.value;
-//
-//   // this.$emit('index', index)
-// }
-
-// onMounted(() => {
-//
-// })
 
 </script>
 
 
 
 <style scoped lang="scss">
+.select {
+  display: inline-block;
+}
 .custom-select {
   position: relative;
   height: 64px;
   margin: -1px -0.5px 0 -0.5px;
   display: inline-block;
   padding: 19px 32px;
-  border-left: 1px solid $border-dark;
-  border-right: 1px solid $border-dark;
-  font-size: 1.25rem;
+  border: 1px solid $border-dark;
   cursor: pointer;
-  line-height: 1.1;
-
-  &:hover {
-    padding-top: 18px;
-    background-color: $light-gray;
-    border-top: 1px solid $border-dark;
-    border-bottom: 2px solid $light-gray;
-  }
   &.active {
     border-bottom: 2px solid $dark-blue;
   }
 }
+
+
 
 .drop-down {
   position: absolute;
@@ -98,14 +107,21 @@ let showDropdown = ref(false)
   top: calc(100% + 1px);
   min-width: 300px;
   height: auto;
-  max-height: 300px;
+  max-height: 330px;
   overflow-y: auto;
   background-color: $white;
   border: 1px solid $border-dark;
 }
+.drop-down.right {
+  left: unset;
+  right: -1px;
+}
 .item {
+  position: relative;
   padding: 20px 24px;
   border-bottom: 1px solid $border-dark;
+  transition: .3s;
+  z-index: 0;
 }
 .item.active {
   font-weight: bold;
@@ -144,30 +160,124 @@ let showDropdown = ref(false)
   }
 }
 
-
-
-
-
-.select {
-  //display: none;
-
+.icon-drop-down-16 {
+  display: inline-block;
+  font-size: 16px;
+  height: 17px;
+  margin-left: 12px;
+  width: 16px;
+  vertical-align: text-bottom;
 }
+
+
+
+
 select {
-appearance: none;
-background-color: transparent;
+  appearance: none;
+  padding-right: 20px!important;
+  background-color: transparent;
+  font-size: 16px;
   border: none;
-  padding: 0 1em 0 0;
   margin: 0;
-  width: 100%;
   font-family: inherit;
-  font-size: inherit;
   cursor: inherit;
   line-height: inherit;
+
+  font-weight: bold;
+  color: $dark-blue;
+  //width: 140px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-select::-ms-expand {
-  display: none;
+.select-container {
+  margin: 0 -.5px;
+  position: relative;
+}
+.absolute {
+  position: absolute!important;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+.hidden {
+  visibility: hidden;
+  border-width: 2px!important;
+  //padding: 0 40px!important;
+}
+
+
+//select::-ms-expand {
+//  //display: none;
+//}
+.item:before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  width: calc(100% - 16px);
+  height: calc(100% - 16px);
+  background-color: rgba($light-gray, .5);
+  z-index: -1;
+  opacity: 0;
+}
+@media (hover: hover) {
+  .custom-select:hover {
+    padding-top: 19px;
+    background-color: $light-gray;
+    border-top: 1px solid $border-dark;
+    border-bottom: 2px solid $light-gray;
+  }
+  //.item:hover {
+  //  background-color: rgba($light-gray, .5);
+  //}
+  .item:hover:before {
+    opacity: 1;
+  }
+}
+
+@include md {
+  .custom-select {
+    position: relative;
+    height: 56px;
+    padding: 15px 24px;
+    &.flag {
+      padding: 15px 0px 15px 60px;
+      margin-right: -60px;
+    }
+  }
+  .icon-drop-down-16 {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+    margin-right: 24px;
+    margin-bottom: 1px;
+    margin-left: -14px;
+    vertical-align: middle;
+  }
+  .flag-mobile {
+    margin-left: 24px;
+  }
 }
 
 
 
+.dropdown-enter-active {
+  transition: all .3s ease-out;
+
+}
+.dropdown-leave-active {
+}
+
+.dropdown-enter-from {
+  opacity: 0;
+  transform: perspective(9cm) rotateX(-35deg);
+  transform-origin:center top;
+}
+.dropdown-leave-to {
+  opacity: 0;
+}
 </style>

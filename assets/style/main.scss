@@ -40,6 +40,10 @@ img {
   text-align: center;
 }
 
+.no-scroll {
+  overflow: hidden;
+}
+
 
 
 @include sm {
@@ -125,4 +129,21 @@ img {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+
+
+
+
+
+
+@media (min-width: map-get($breakpoints, "md-min")) {
+  .show-md {
+    display: none !important;
+  }
+}
+@media (min-width: map-get($breakpoints, "sm-min")) {
+  .show-sm {
+    display: none !important;
+  }
 }

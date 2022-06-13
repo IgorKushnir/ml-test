@@ -13,10 +13,17 @@
 import menuData from '~/api/getMenu';
 import fav32 from '~/assets/img/32.png';
 import fav256 from '~/assets/img/256.png';
-import {Loader, LoaderOptions} from "google-maps";
-// import {useGoogle} from "~/composables/states";
+import getAllFilters from '~/api/getAllFilters'
 
+// get menu data
 useMenuData().value = await menuData('en')
+
+// Get all filters
+let allFilters = useFiltersData();
+let {data, pending, refresh, error} = await getAllFilters('en');
+if (!error.value) allFilters.value = data.value;
+
+
 
 useHead({
   // titleTemplate: 'My App - %s',
@@ -50,13 +57,18 @@ useHead({
 // const count = computed(()=> 3)
 
 
+//// Have to be inside in routs
+// onBeforeRouteLeave((to, from) => {
+//   console.log('to');
+// })
+//
+// onBeforeRouteUpdate((to, from) => {
+//   console.log('to');
+// })
+
 onMounted(async () => {
   reportWindowSize()
   window.addEventListener('resize', reportWindowSize);
-
-
-
-
   // console.log(localStorage);
 });
 
@@ -67,6 +79,7 @@ function reportWindowSize() {
     useIsMobile().value = mobile;
   }
 }
+
 
 
 </script>

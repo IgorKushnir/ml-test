@@ -1,12 +1,37 @@
 <template>
-  <div ref="wrapper" class="sticky-header-wrapper">
-    <div :class="getClass()">
-      <slot/>
+  <div class="wrapper">
+    <div ref="wrapper" class="sticky-header-wrapper scroll-x">
+      <div :class="getClass()">
+        <div class="container">
+
+          <transition name="fade">
+            <div v-if="title && sticky" class="grid-column-start title-container">
+              <StickyBarBack reverse />
+              <h3 class="sticky-title">{{ title }}</h3>
+
+            </div>
+          </transition>
+
+<!--          <slot></slot>-->
+          <div class="grid-column-end"><slot name="end"/></div>
+          <div class="grid-column-center"><slot name="center"/></div>
+          <div class="grid-column-start"><slot name="start"/></div>
+
+
+        </div>
+      </div>
     </div>
   </div>
+
 </template>
 
 <script setup>
+const props = defineProps({
+  title: {
+    type: String,
+    required: false
+  }
+})
 let wrapper = ref();
 let sticky = ref(false);
 let shift = ref(false);
@@ -33,6 +58,7 @@ function getClass() {
 }
 
 function scroll() {
+  if (!wrapper.value) return
   const originOffsetY = wrapper.value.getBoundingClientRect().y;
   const topGap = inMobile.value ? 56 : 0;
 
@@ -50,7 +76,6 @@ function scroll() {
 }
 
 
-
 onMounted(() => {
   // navigation = wrapper;
   document.addEventListener('scroll', scroll);
@@ -64,12 +89,48 @@ addRouteMiddleware(async (to, from) => {
 </script>
 
 <style scoped lang="scss">
-.sticky-header-wrapper {
+.title-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  max-width: 100%;
+  min-width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  grid-column-start: 1;
+  margin-right: auto;
+
+  h3 {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 100%;
+  }
+
+}
+.sticky-title {
+  margin-left: 32px;
+}
+
+//& > * {
+//  display: inline-block;
+//}
+
+.wrapper {
   position: relative;
   height: 64px;
-  max-height: 64px;
-  width: 100%;
+
 }
+
+.sticky-header-wrapper {
+  position: absolute;
+  height: 400px;
+  width: 100%;
+  max-width: 100%;
+
+  overflow: hidden;
+}
+
 .sticky-header {
   position: relative;
   top: 0;
@@ -82,10 +143,24 @@ addRouteMiddleware(async (to, from) => {
   border-color: $border-dark;
   background-color: $white;
   z-index: 8;
+
+
 }
+
 .fixed {
   position: fixed;
 }
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  justify-items: center;
+  white-space: nowrap;
+
+}
+
+
+
 
 
 @include md {
@@ -93,18 +168,72 @@ addRouteMiddleware(async (to, from) => {
     height: 56px;
     max-height: 56px;
   }
+  .sticky-header-wrapper {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+  }
+
+
 
   .sticky-header {
     transform: translateY(0);
     transition: transform .3s ease;
+
     &.fixed {
       position: fixed;
       top: 56px;
+
+      overflow-x: scroll;
+      overflow-y: hidden;
+      scroll-behavior: smooth;
     }
+
     &.shift {
       transform: translateY(-56px);
     }
   }
+
+  .container {
+    grid-template-columns: auto 1fr;
+  }
+
+
+  .sticky-title {
+    margin-left: 24px;
+  }
+
+  .title-container {
+    margin-left: -33px;
+  }
 }
 
+</style>
+
+<style lang="scss">
+.grid-column-start {
+  white-space: nowrap;
+  grid-column-start: 1;
+  grid-row-start: 1;
+}
+.grid-column-center {
+  white-space: nowrap;
+  grid-column-start: 2;
+  grid-row-start: 1;
+}
+.grid-column-end {
+  white-space: nowrap;
+  grid-column-start: 3;
+  grid-row-start: 1;
+  margin-left: auto;
+}
+
+@include md {
+  .grid-column-center {
+    grid-column-start: 1;
+  }
+  .grid-column-end {
+    grid-column-start: 2;
+  }
+}
 </style>

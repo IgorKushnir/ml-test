@@ -1,9 +1,9 @@
 <template>
-  <div :class="classes" v-for="store in data.store">
+  <div>
     <div class="store-item p-v-40 p-h-40" >
       <div class="city-container">
-        <Flag :code="data.country_code"/>
-        <strong>{{data.name}}</strong>
+        <Flag :code="store.country_code"/>
+        <strong>{{store.city}}</strong>
       </div>
       <h3>{{store.title}}</h3>
       <p v-if="store.description" class="p-small">{{store.description}}</p>
@@ -17,7 +17,7 @@
         </ListIcon>
 
         <ListIcon v-if="store.website" :to="store.website" target="_blank" :text="store.website" icon="taget-16" class="m-v-16">
-          <div class="p-small website link">{{store.website}}</div>
+          <div class="p-small link">{{store.website}}</div>
 
         </ListIcon>
       </div>
@@ -31,18 +31,10 @@
 import Flag from "./Flag";
 
 defineProps({
-  data: {
+  store: {
     type: Object,
     required: true
-  },
-  classes: {
-    type: String,
-    required: true
-  },
-  // code: {
-  //   type: Object,
-  //   required: true
-  // }
+  }
 })
 
 
@@ -53,6 +45,7 @@ defineProps({
 </script>
 
 <style scoped lang="scss">
+
 .store-item {
   border: 1px solid $border-dark;
   height: 100%;
@@ -73,12 +66,7 @@ defineProps({
   }
 }
 
-.website {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 100%;
-}
+
 
 
 

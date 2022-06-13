@@ -1,12 +1,10 @@
 <template>
   <div>
-    <div v-if="!pendingCollection && dataCollection != null">
 
+    <div>
+      <InnerHeader :title="slug"/>
 
-      <InnerHeader :title="dataCollection.title" :sub_header="dataCollection.line.data.attributes.title"
-                   :sub_title="dataCollection.description"/>
-
-      <StickyHeader :title="dataCollection.title">
+      <StickyHeader>
         <template #end>
           <Filter
               :available-filters="dataAvailableFilters"
@@ -17,38 +15,14 @@
         </template>
       </StickyHeader>
 
-      {{ filterSelected }}
-      <Container>
-        <div class="col-8 col-12-md"
-             v-if="dataCollection.show_promo && dataCollection.cover_4x3.data != null && filterSelected.length === 0"
-        >
-          <div class="promo" v-if="dataCollection.video.data != null">
-            <Image :path="dataCollection.cover_4x3" :alt="dataCollection.title"/>
-
-            <video
-                playsinline=""
-                :src="$getAbsoluteUrl(dataCollection.video.data.attributes.url)"
-                loop="loop"
-                tabindex="-1"
-                muted autoplay aria-hidden="true"
-            >
-            </video>
-          </div>
-        </div>
-
-        <!--        {{dataProducts}}-->
-        <!--        {{pendingProducts}}-->
-        <ProductGrid :products-data="dataProducts.data" :pending-products="pendingProducts">
-          <div v-if="filterSelected.length === 0" class="col-8 col-6-lg col-12-md">
-            <Fact />
-          </div>
-        </ProductGrid>
+      <Container v-if="!pendingProducts && dataProducts != null">
+        <ProductGrid :products-data="dataProducts.data" :pending-products="pendingProducts" :grid="4" />
       </Container>
 
     </div>
 
-    <Loading v-if="pendingCollection"/>
-    <PageNotFound v-if="dataCollection === null"/>
+    <Loading v-if="pendingProducts"/>
+    <PageNotFound v-if="dataProducts === null"/>
 
   </div>
 </template>
@@ -64,32 +38,23 @@ const route = useRoute();
 let slug = route.params.slug;
 let filterSelected = ref([])
 
-let filters = ref([{
-  key: 'collection',
-  values: [slug]
-}])
-const {
-  data: dataCollection,
-  pending: pendingCollection,
-  refresh: refreshCollection,
-  error: errorCollection
-} = await getCollection(slug, 'en')
+let filters = ref([])
+
 let {
   data: dataProducts,
   pending: pendingProducts,
   refresh: refreshProducts,
   error: errorProducts
-} = await getProducts({filters: filters.value, lang: 'en', type: 'dress'});
+} = await getProducts({filters: filters.value, lang: 'en', type: slug});
 let {
   data: dataAvailableFilters,
   pending: pendingFilters,
   refresh: refreshAvailableFilters,
   error: errorAvailableFilters
-} = await getActiveFilters({filters: filters.value, lang: 'en', type: 'dress'});
+} = await getActiveFilters({filters: filters.value, lang: 'en', type: slug});
 
 
 onMounted(() => {
-  refreshCollection();
   refreshProducts();
   refreshAvailableFilters()
 })
@@ -114,7 +79,7 @@ async function filterData(e) {
 
 
   pendingProducts.value = true;
-  const {data, pending, refresh, error} = await getProducts({filters: f, lang: 'en', type: 'dress'});
+  const {data, pending, refresh, error} = await getProducts({filters: f, lang: 'en', type: slug});
 
   refresh()
 
@@ -132,7 +97,7 @@ async function checkFiltersHandler(e) {
   }
 
   pendingFilters.value = true;
-  const {data, pending, refresh, error} = await getActiveFilters({filters: f, lang: 'en', type: 'dress'});
+  const {data, pending, refresh, error} = await getActiveFilters({filters: f, lang: 'en', type: slug});
 
   refresh()
 

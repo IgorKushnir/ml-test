@@ -91,8 +91,7 @@ p {
 
 
 
-
-@media (max-width: $breakpoint-tablet) {
+@include md {
   h1 {
     font-size: 32px;
     margin: 16px 0;
@@ -136,6 +135,51 @@ p {
   height: 1px;
   background-color: rgba($dark-blue, .4);
 }
+
+
+
+
+// Button
+.button {
+  text-transform: uppercase;
+  line-height: 16px;
+  font-size: 16px;
+  letter-spacing: .1em;
+
+  display: inline-block;
+  padding: 15px 31px;
+
+  border: 1px solid $dark-blue;
+  color: $dark-blue;
+
+  cursor: pointer;
+  text-align: center;
+
+  &.primary {
+    background-color: $dark-blue;
+    color: $white;
+    &.white {
+      background-color: $white;
+      color: $dark-blue;
+    }
+  }
+
+  &.white {
+    border: 1px solid $white;
+    color: $white;
+
+  }
+
+}
+
+@include md {
+  .button {
+    font-size: 14px;
+  }
+}
+
+
+
 
 @media (hover: hover) {
   .link:hover {

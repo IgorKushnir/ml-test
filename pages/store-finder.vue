@@ -3,38 +3,54 @@
     <div v-if="!pending && data != null">
       <InnerHeader title="Store finder"/>
       <StickyHeader>
-        <div class="container">
-          <div class="row justify-center">
-            <Select :data="getCountries()" name="All countries" :index="dataIndex" :flag="true" @index="changeCountry"/>
-            <Select v-if="getCities().length > 1" :data="getCities()" name="All cities" :index="cityIndex" @index="changeCity"/>
-          </div>
+<!--        <Select v-if="getLines().length > 0" :data="getLines()" name="Lines" all="All lines" :index="lineIndex" @index="changeLine"/>-->
 
+        <template #center>
+          <Select :data="getCountries()" name="Country" all="All countries" :index="dataIndex" :flag="true" @index="changeCountry"/>
+          <Select v-if="getCities().length > 1" :data="getCities()" name="City" all="All cities" :index="cityIndex" @index="changeCity" />
+        </template>
+        <template #end>
+          <Select
+              class="grid-column-end"
+              v-if="lines.length > 1" :data="lines" name="Lines" all="All lines" side="right" :index="lineIndex" @index="changeLine"
+          />
+        </template>
+
+
+        <div></div>
+        <div class="grid-column-center">
+          <Select :data="getCountries()" name="Country" all="All countries" :index="dataIndex" :flag="true" @index="changeCountry"/>
+          <Select v-if="getCities().length > 1" :data="getCities()" name="City" all="All cities" :index="cityIndex" @index="changeCity" />
         </div>
+        <Select
+            class="grid-column-end"
+            v-if="lines.length > 1" :data="lines" name="Lines" all="All lines" side="right" :index="lineIndex" @index="changeLine"/>
+
+
       </StickyHeader>
 
       <!-- Toggle-->
-      <div v-if="!isMobile" class="container">
-        <div class="row">
-          <div class="toggle-container">
-            <span class="label">Show on map</span>
-            <Toggle @show="e => showMapHandler(e)"/>
-          </div>
+      <TagContainer class="hide-md">
+        <span class="label p-small"><strong>Show on map</strong></span>
+        <Toggle @show="e => showMapHandler(e)"/>
+      </TagContainer>
+
+
+
+      <Container v-if="!showMap" justify="justify-center">
+        <template v-for="store in stores">
+            <StoreItem :store="store"  :class="stores.length <= 2 ? 'col-6 col-8-lg col-12-md' : 'col-4 col-6-xl col-12-md'"/>
+        </template>
+      </Container>
+
+
+      <Container  v-if="showMap">
+        <div class="col-12">
+          <Map :data="stores" :show="showMap"/>
         </div>
 
-      </div>
+      </Container>
 
-      <div class="container">
-        <StoreMap v-if="!isMobile" ref="map" :data="getStoresByIndex(dataIndex)" :show="showMap"/>
-
-
-        <div class="m-v-80" v-if="!showMap">
-          <div class="row gap-S justify-center">
-            <template v-for="item in getStoresByIndex(dataIndex)">
-              <StoreItem :data="item" :classes="getStoresByIndex(dataIndex).length === 1 ? 'col-5 col-6-xl col-8-lg col-12-md' : 'col-4 col-6-xl col-12-md' "/>
-            </template>
-          </div>
-        </div>
-      </div>
 
     </div>
     <Loading v-if="pending"/>
@@ -46,17 +62,37 @@
 <script setup>
 import getCountryCode from '~/api/getCountryCode'
 import getStores from '~/api/getStores'
+import Map from "../components/store/Map";
+import TagContainer from "../components/TagContainer";
 
 const router = useRouter();
 const route = useRoute();
 let country = route.query.country;
 let dataIndex = ref(-1);
 let cityIndex = ref(-1);
+let lineIndex = ref(-1);
+
+let stores = ref([])
+let lines = ref([])
 
 let countryCode = ref(null);
 let showMap = ref(false)
 const map = ref()
-const isMobile = useIsMobile();
+
+
+watch(() => dataIndex.value, () => {
+  stores.value = getStoresByIndex(dataIndex.value)
+  getLines()
+})
+watch(() => cityIndex.value, () => {
+  stores.value = getStoresByIndex(dataIndex.value)
+  getLines()
+})
+watch(() => lineIndex.value, () => {
+  stores.value = getStoresByIndex(dataIndex.value)
+})
+
+
 
 
 function getIndexOfDataByCode(code) {
@@ -74,6 +110,7 @@ if (country == null) {
 
 const {data, pending, refresh, error} = await getStores('en')
 
+// Change routing query
 if (countryCode.value == null) {
   dataIndex.value = getIndexOfDataBySlug(country);
   router.replace({
@@ -86,43 +123,85 @@ if (countryCode.value == null) {
   })
 }
 
+stores.value = getStoresByIndex(dataIndex.value);
+
 function getStoresByIndex(index) {
+  let _stores = []
   if (index !== -1) {
     // Return stores in specific city
     if (cityIndex.value !== -1) {
-      let d = data.value[index].attributes.city[cityIndex.value];
-      d.country_code = data.value[index].attributes.country_code;
-      return [d];
+      let city = data.value[index].attributes.city[cityIndex.value];
+      city.store.forEach(store => {
+        _stores.push(store)
+      })
+    } else {
+      // Return stores by index
+      let d = data.value[index].attributes.city;
+
+      d.forEach(city => {
+        city.store.forEach(store => {
+          _stores.push(store)
+        })
+      })
     }
-    // Return stores by index
-    let d = data.value[index].attributes.city;
-    d.forEach(e => {
-      e.country_code = data.value[index].attributes.country_code;
-    })
-    return d
+
   } else {
     // Return all stores
-    let allStores = [];
     data.value.forEach(e => {
-      e.attributes.city.forEach(c => {
-        let d = c;
-        d.country_code = e.attributes.country_code
-        allStores.push(c)
+      e.attributes.city.forEach(city => {
+        city.store.forEach(store => {
+          _stores.push(store)
+        })
       })
-    })
-    return allStores;
+      })
   }
+  if (lineIndex.value !== -1) {
+    const lineSlug = lines.value[lineIndex.value].key
+    _stores = _stores.filter(store => {
+      if (store.lines.data.length > 0) {
+        const lineSlugs = store.lines.data.map(line => line.attributes.slug);
+        if (lineSlugs.includes(lineSlug)) {
+          return true
+        }
+      }
+
+    })
+  }
+  return _stores;
+
 }
 
 function getCountries() {
   return data.value.map(e => { return {value: e.attributes.country, flag: e.attributes.country_code} })
 }
-
 function getCities() {
   if (dataIndex.value !== -1) {
-    return data.value[dataIndex.value].attributes.city.map(c => {return { value: c.name }});
+    return data.value[dataIndex.value].attributes.city.map(c => {
+      return { value: c.name }
+    });
   }
   return [];
+}
+function getLines() {
+  let l = [];
+  let keys = [];
+  stores.value.forEach(store => {
+    if (store.lines.data.length > 0) {
+      store.lines.data.forEach(line => {
+        const slug = line.attributes.slug;
+        if (!keys.includes(slug)) {
+          l.push({
+            key: line.attributes.slug,
+            value: line.attributes.title,
+          })
+          keys.push(slug)
+        }
+      })
+    }
+  })
+
+  lines.value = l;
+
 }
 
 function showMapHandler(e) {
@@ -131,6 +210,7 @@ function showMapHandler(e) {
 
 function changeCountry(e) {
   cityIndex.value = -1;
+  lineIndex.value = -1;
   dataIndex.value = e;
   if (dataIndex.value !== -1) {
     router.replace({
@@ -144,23 +224,20 @@ function changeCountry(e) {
 }
 function changeCity(e) {
   cityIndex.value = e;
+  lineIndex.value = -1;
 }
+function changeLine(i) {
+  lineIndex.value = i;
+
+}
+
 
 
 </script>
 
 
 <style scoped lang="scss">
-.toggle-container {
-  position: absolute;
-  top: 23px;
-  right: 0;
-  display: flex;
-  .label {
-    margin-right: 16px;
-    margin-top: 3px;
-  }
-}
+
 
 
 </style>

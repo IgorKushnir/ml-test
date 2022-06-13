@@ -31,30 +31,7 @@ defineProps({
 
 <style scoped lang="scss">
 .button-container {
-  display: block;
   cursor: pointer;
-}
-.button {
-  text-transform: uppercase;
-  line-height: 16px;
-  font-size: 16px;
-  letter-spacing: .1em;
-
-  display: inline-block;
-  padding: 15px 31px;
-
-  border: 1px solid $dark-blue;
-
-  &.primary {
-    background-color: $dark-blue;
-    color: $white;
-  }
-}
-
-@include md {
-  .button {
-    font-size: 14px;
-  }
 }
 
 </style>

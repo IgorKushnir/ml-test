@@ -45,7 +45,9 @@ query Menu {
                     title
                     slug
                     order
-                    collections {
+                    collections (
+                      sort: "order"
+                    ){
                         data {
                             attributes {
                                 title

@@ -2,9 +2,9 @@
   <NuxtLink :to="to" class="product-item">
     <div class="product-item-head">
       <h3>{{title}}</h3>
-      <p>dsdsdsd dfd fd fdf dfd</p>
+<!--      <p>dsdsdsd dfd fd fdf dfd</p>-->
     </div>
-    <Image :path="image" :alt="title" :class="ratio"/>
+    <Image :path="image" :alt="title"  size="medium" :class="ratio"/>
   </NuxtLink>
 </template>
 

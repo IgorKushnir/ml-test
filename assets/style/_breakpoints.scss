@@ -2,6 +2,7 @@ $breakpoint-tablet: 768px;
 
 $breakpoints: (
         "sm" : 480px,
+        "sm-min" : 481px,
         "md": $breakpoint-tablet,
         "md-min": 769px,
         "lg" : 960px,

@@ -40,13 +40,17 @@ defineProps({
     margin-right: 16px;
   }
   .list-container {
-    max-width: calc(100% - 32px);
+    max-width: calc(100% );
     *:first-child {
       margin-top: -2px;
     }
   }
 }
+.link {
+  display: block;
+  overflow-wrap: anywhere;
 
+}
 
 
 </style>

@@ -20,12 +20,18 @@ export default async function (lang) {
           pagination: {
             limit: -1
           }
+          sort: "name"
         ) {
           name
           store (
-          pagination: {
-            limit: -1
-          }
+              pagination: {
+                limit: -1
+              }
+              filters: {
+                  publish: {
+                    eq: true
+                  }
+                }
         ){
             title
             description
@@ -35,6 +41,14 @@ export default async function (lang) {
             website
             lat
             lng
+            lines {
+            data {
+              attributes {
+                title
+                slug
+              }
+            }
+          }
           }
         }
       }
@@ -44,7 +58,30 @@ export default async function (lang) {
     `);
 
     const { data, pending, refresh, error } = await useAsyncData('data_'+collection, () => response, {
-        transform: (d) => d.data[collection].data,
+        transform: (d) => {
+            let countries = d.data[collection].data
+
+            // Remove cities with stores length 0
+            let c = countries.map(country => {
+                let cities = []
+                country.attributes.city.forEach(city => {
+                    if (city.store.length > 0) {
+                        city.store.forEach(c => {
+                            c.country_code = country.attributes.country_code
+                            c.city = city.name
+                        })
+                        cities.push(city)
+                    }
+                })
+                country.attributes.city = cities
+                return country
+            })
+            // countries.filter
+            const ukraineIndex = countries.findIndex(c => c.attributes.slug === 'ukraine')
+            const americaIndex = countries.findIndex(c => c.attributes.slug === 'united-states')
+            let sorted = countries.filter(c => c.attributes.slug !== 'united-states' && c.attributes.slug !== 'ukraine')
+            return [countries[ukraineIndex], countries[americaIndex], ...sorted]
+        },
     })
 
     return { data, pending, refresh, error };
