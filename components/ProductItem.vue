@@ -1,10 +1,14 @@
 <template>
-  <NuxtLink :to="to" class="product-item">
-    <div class="product-item-head">
-      <h3>{{title}}</h3>
-<!--      <p>dsdsdsd dfd fd fdf dfd</p>-->
-    </div>
-    <Image :path="image" :alt="title"  size="medium" :class="ratio"/>
+  <NuxtLink :to="to">
+  <div class="product-item">
+
+      <div class="product-item-head">
+        <h3>{{title}}</h3>
+        <!--      <p>dsdsdsd dfd fd fdf dfd</p>-->
+      </div>
+      <Image :path="image" :alt="title"  size="medium" :class="'image ' + ratio"/>
+
+  </div>
   </NuxtLink>
 </template>
 
@@ -35,6 +39,8 @@ defineProps({
 $transition: .5s ease-in-out;
 .product-item {
   position: relative;
+  width: 100%;
+  height: 100%;
 
   &:after {
     content: '';
@@ -42,7 +48,6 @@ $transition: .5s ease-in-out;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: white;
     z-index: 1;
     background: linear-gradient(180deg, rgba($white, 0) 75%, rgba($white, .8) 100%);
     opacity: 0;
@@ -56,7 +61,10 @@ $transition: .5s ease-in-out;
     opacity: 0;
     z-index: 2;
     transition: $transition;
-
+  }
+  .image {
+    //position: absolute;
+    //width: 100%;
   }
 
   .product-item-head > *:first-child{

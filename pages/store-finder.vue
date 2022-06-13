@@ -31,7 +31,7 @@
 
       <!-- Toggle-->
       <TagContainer class="hide-md">
-        <span class="label p-small"><strong>Show on map</strong></span>
+        <span class="p-small" style="margin: -3px 16px 0"><strong>Show on map</strong></span>
         <Toggle @show="e => showMapHandler(e)"/>
       </TagContainer>
 
