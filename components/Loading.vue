@@ -1,13 +1,18 @@
 <template>
   <div>
-    <State class="loading" />
+    <transition name="fade">
+      <State class="loading" />
+    </transition>
   </div>
 </template>
 
-<script>
-export default {
-  name: "Loading"
-}
+<script setup>
+defineProps({
+  pending: {
+    type: Boolean,
+    required: true
+  }
+})
 </script>
 
 <style scoped>

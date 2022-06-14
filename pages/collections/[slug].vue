@@ -49,7 +49,6 @@
 
     </div>
 
-<!--    <Loading v-if="pendingCollection"/>-->
     <PageNotFound v-if="dataCollection === null"/>
 
   </div>

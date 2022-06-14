@@ -1,19 +1,21 @@
 <template>
   <div>
-    <div class="content" v-if="!pending && data != null">
-      <InnerHeader :title="data.title" :sub_header="data.sub_header" :sub_title="data.sub_title"/>
+    <transition name="fade">
+      <div class="content" v-if="!pending && data != null">
+        <InnerHeader :title="data.title" :sub_header="data.sub_header" :sub_title="data.sub_title"/>
 
-      <div class="container">
-        <template v-for="content in data.content">
-          <div class="row gap-S justify-center">
-            <div class="component-text col-8" v-if="content['__typename'] === 'ComponentContentText'" v-html="content.text"/>
-          </div>
+        <div class="container">
+          <template v-for="content in data.content">
+            <div class="row gap-S justify-center">
+              <div class="component-text col-8" v-if="content['__typename'] === 'ComponentContentText'" v-html="content.text"/>
+            </div>
 
-        </template>
+          </template>
+        </div>
       </div>
-    </div>
+    </transition>
 
-    <Loading v-if="pending"/>
+    <Loading :pending="pending"/>
     <PageNotFound v-if="data === null" />
   </div>
 </template>

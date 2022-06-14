@@ -1,47 +1,54 @@
 <template>
   <div>
-    <div v-if="!pending && data != null">
-      <InnerHeader title="Store finder"/>
-      <StickyHeader>
+    <transition name="fade">
+      <div v-if="!pending && data != null">
+        <InnerHeader title="Store finder"/>
+        <StickyHeader>
 
-        <template #center>
-          <Select :data="getCountries()" name="Country" all="All countries" :index="dataIndex" :flag="true" @index="changeCountry"/>
-          <Select v-if="getCities().length > 1" :data="getCities()" name="City" all="All cities" :index="cityIndex" @index="changeCity" />
-        </template>
-        <template  #end>
-          <Select
-              v-if="lines.length > 1" :data="lines" name="Lines" all="All lines" side="right" :index="lineIndex" @index="changeLine"
-          />
-        </template>
-
-
-      </StickyHeader>
-
-      <!-- Toggle-->
-      <TagContainer class="hide-md">
-        <span class="p-small" style="margin: -3px 16px 0"><strong>Show on map</strong></span>
-        <Toggle @show="e => showMapHandler(e)"/>
-      </TagContainer>
+          <template #center>
+            <Select :data="getCountries()" name="Country" all="All countries" :index="dataIndex" :flag="true"
+                    @index="changeCountry"/>
+            <Select v-if="getCities().length > 1" :data="getCities()" name="City" all="All cities" :index="cityIndex"
+                    @index="changeCity"/>
+          </template>
+          <template #end>
+            <Select
+                v-if="lines.length > 1" :data="lines" name="Lines" all="All lines" side="right" :index="lineIndex"
+                @index="changeLine"
+            />
+          </template>
 
 
+        </StickyHeader>
 
-      <Container v-if="!showMap" justify="justify-center">
-        <template v-for="store in stores">
-            <StoreItem :store="store"  :class="stores.length <= 2 ? 'col-6 col-8-lg col-12-md' : 'col-4 col-6-xl col-12-md'"/>
-        </template>
-      </Container>
-
-
-      <Container  v-if="showMap">
-        <div class="col-12">
-          <Map :data="stores" :show="showMap"/>
-        </div>
-
-      </Container>
+        <!-- Toggle-->
+        <TagContainer class="hide-md">
+          <span class="p-small" style="margin: -3px 16px 0"><strong>Show on map</strong></span>
+          <Toggle @show="e => showMapHandler(e)"/>
+        </TagContainer>
 
 
-    </div>
-    <Loading v-else/>
+        <Container v-if="!showMap" justify="justify-center">
+          <template v-for="store in stores">
+            <StoreItem :store="store"
+                       :class="stores.length <= 2 ? 'col-6 col-8-lg col-12-md' : 'col-4 col-6-xl col-12-md'"/>
+          </template>
+        </Container>
+
+
+        <Container v-if="showMap">
+          <div class="col-12">
+            <Map :data="stores" :show="showMap"/>
+          </div>
+
+        </Container>
+
+
+      </div>
+    </transition>
+
+    <Loading :pending="pending"/>
+
   </div>
 </template>
 
@@ -81,7 +88,6 @@ if (data.value != null) {
 }
 
 
-
 watch(() => dataIndex.value, () => {
   stores.value = getStoresByIndex(dataIndex.value)
   getLines()
@@ -96,8 +102,6 @@ watch(() => lineIndex.value, () => {
 })
 
 
-
-
 function getIndexOfDataByCode(code) {
   return data.value.findIndex(d => d.attributes.country_code === code)
 }
@@ -105,9 +109,6 @@ function getIndexOfDataByCode(code) {
 function getIndexOfDataBySlug(code) {
   return data.value.findIndex(d => d.attributes.slug === code)
 }
-
-
-
 
 
 // Change routing query
@@ -155,7 +156,7 @@ function getStoresByIndex(index) {
           _stores.push(store)
         })
       })
-      })
+    })
   }
   if (lineIndex.value !== -1) {
     const lineSlug = lines.value[lineIndex.value].key
@@ -174,16 +175,20 @@ function getStoresByIndex(index) {
 }
 
 function getCountries() {
-  return data.value.map(e => { return {value: e.attributes.country, flag: e.attributes.country_code} })
+  return data.value.map(e => {
+    return {value: e.attributes.country, flag: e.attributes.country_code}
+  })
 }
+
 function getCities() {
   if (dataIndex.value !== -1) {
     return data.value[dataIndex.value].attributes.city.map(c => {
-      return { value: c.name }
+      return {value: c.name}
     });
   }
   return [];
 }
+
 function getLines() {
   let l = [];
   let keys = [];
@@ -224,22 +229,22 @@ function changeCountry(e) {
     })
   }
 }
+
 function changeCity(e) {
   cityIndex.value = e;
   lineIndex.value = -1;
 }
+
 function changeLine(i) {
   lineIndex.value = i;
 
 }
 
 
-
 </script>
 
 
 <style scoped lang="scss">
-
 
 
 </style>
