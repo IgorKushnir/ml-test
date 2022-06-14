@@ -17,37 +17,39 @@
         </template>
       </StickyHeader>
 
-      {{ filterSelected }}
-      <Container>
-        <div class="col-8 col-12-md"
-             v-if="dataCollection.show_promo && dataCollection.cover_4x3.data != null && filterSelected.length === 0"
-        >
-          <div class="promo" v-if="dataCollection.video.data != null">
-            <Image :path="dataCollection.cover_4x3" :alt="dataCollection.title"/>
+<!--      {{ filterSelected }}-->
 
-            <video
-                playsinline=""
-                :src="$getAbsoluteUrl(dataCollection.video.data.attributes.url)"
-                loop="loop"
-                tabindex="-1"
-                muted autoplay aria-hidden="true"
-            >
-            </video>
+
+      <ProductGrid :products-data="dataProducts.data" :pending-products="pendingProducts" :promo="dataCollection.show_promo">
+        <template #promo>
+          <div class="col-8 col-12-md"
+               v-if="dataCollection.show_promo && dataCollection.cover_4x3.data != null && filterSelected.length === 0"
+          >
+            <div class="promo" v-if="dataCollection.video.data != null">
+              <Image :path="dataCollection.cover_4x3" :alt="dataCollection.title"/>
+
+              <video
+                  playsinline=""
+                  :src="$getAbsoluteUrl(dataCollection.video.data.attributes.url)"
+                  loop="loop"
+                  tabindex="-1"
+                  muted autoplay aria-hidden="true"
+              >
+              </video>
+            </div>
           </div>
-        </div>
-
-        <!--        {{dataProducts}}-->
-        <!--        {{pendingProducts}}-->
-        <ProductGrid :products-data="dataProducts.data" :pending-products="pendingProducts">
+        </template>
+        <template #fact>
           <div v-if="filterSelected.length === 0" class="col-8 col-6-lg col-12-md">
             <Fact />
           </div>
-        </ProductGrid>
-      </Container>
+        </template>
+
+      </ProductGrid>
 
     </div>
 
-    <Loading v-if="pendingCollection"/>
+<!--    <Loading v-if="pendingCollection"/>-->
     <PageNotFound v-if="dataCollection === null"/>
 
   </div>

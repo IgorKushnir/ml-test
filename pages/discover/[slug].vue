@@ -1,32 +1,24 @@
 <template>
   <div>
+    <InnerHeader :title="slug"/>
 
-    <div>
-      <InnerHeader :title="slug"/>
+    <StickyHeader>
+      <template #center>
+        <StickyMenu :data="typeData" path="/discover/" class="grid-column-center"/>
+      </template>
 
-      <StickyHeader>
-        <template #center>
-          <StickyMenu :data="typeData" path="/discover/" class="grid-column-center"/>
-        </template>
+      <template #end>
+        <Filter
+            :available-filters="dataAvailableFilters"
+            @filters="e => filterData(e)"
+            @check-filters="e => checkFiltersHandler(e)"
+            :pending="pendingFilters"
+        />
+      </template>
+    </StickyHeader>
 
-        <template #end>
-          <Filter
-              :available-filters="dataAvailableFilters"
-              @filters="e => filterData(e)"
-              @check-filters="e => checkFiltersHandler(e)"
-              :pending="pendingFilters"
-          />
-        </template>
-      </StickyHeader>
+      <ProductGrid :products-data="dataProducts.data" :pending-products="pendingProducts" :grid="4"/>
 
-      <Container v-if="!pendingProducts && dataProducts != null">
-        <ProductGrid :products-data="dataProducts.data" :pending-products="pendingProducts" :grid="4" />
-      </Container>
-
-    </div>
-
-    <Loading v-if="pendingProducts"/>
-    <PageNotFound v-if="dataProducts === null"/>
 
   </div>
 </template>

@@ -9,6 +9,7 @@
       :products-count="availableFilters.pagination.total ?? 0"
       @check-filters="e => checkFiltersHandler(e)"
       :pending="pending"
+      :show-reset="count > 0"
   />
 </template>
 

@@ -1,17 +1,29 @@
 <template>
-  <div v-if="pendingProducts">pendingProducts</div>
 
-  <template v-if="!pendingProducts" v-for="(product, index) in productsData">
+  <transition name="fade">
+    <Container v-if="!pendingProducts && productsData.length > 0">
+      <template  v-for="(product, index) in productsData">
 
-      <slot v-if="index === 8" />
+        <slot name="promo" v-if="index === 0"/>
+        <slot name="fact" v-if="promo ? (index === 8) : (index === 7)"/>
 
-    <div :class="grid === 3 ? 'col-4 col-6-lg col-12-sm' : 'col-3 col-4-lg col-12-sm'">
-      <ProductItem :title="product.attributes.title" :to="'/product/' + product.attributes.slug"
-                   :image="product.attributes.cover_3x4"/>
-    </div>
-  </template>
+        <div :class="grid === 3 ? 'col-4 col-6-lg col-12-sm' : 'col-3 col-4-lg col-12-sm'">
+          <ProductItem :title="product.attributes.title" :to="'/product/' + product.attributes.slug"
+                       :image="product.attributes.cover_3x4"/>
+        </div>
+      </template>
+    </Container>
+  </transition>
 
-  <div v-if="productsData && productsData.length === 0">No products</div>
+
+
+  <transition name="fade">
+    <Loading v-if="pendingProducts"/>
+  </transition>
+
+  <transition name="fade">
+    <State v-if="productsData && productsData.length === 0" title="No products"></State>
+  </transition>
 
 </template>
 
@@ -29,6 +41,10 @@ const prop = defineProps({
     type: Number,
     required: false,
     default: 3
+  },
+  promo: {
+    type: Boolean,
+    required: true
   }
 })
 

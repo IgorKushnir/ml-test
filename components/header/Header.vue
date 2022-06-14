@@ -113,11 +113,11 @@ const showSubMenu = (index) => {
 
   link.value[activeIndex.value].$el.parentElement.classList.add('active')
 
-  if (!isMobile.value) return
-  // scroll to active menu
-  setTimeout(function () {
-    link.value[activeIndex.value].$el.scrollIntoView({block: "start", behavior: "smooth"})
-  },400)
+  // if (!isMobile.value) return
+  // // scroll to active menu
+  // setTimeout(function () {
+  //   link.value[activeIndex.value].$el.scrollIntoView({block: "start", behavior: "smooth"})
+  // },400)
 }
 // Hide submenu
 const hideSubMenu = () => {
@@ -125,11 +125,11 @@ const hideSubMenu = () => {
 
   link.value[activeIndex.value].$el.parentElement.classList.remove('active')
 
-  if (!isMobile.value) return
-  // scroll to active menu
-  setTimeout(function () {
-    menu_wrapper.value.scroll({top: 0, behavior: 'smooth'})
-  },10)
+  // if (!isMobile.value) return
+  // // scroll to active menu
+  // setTimeout(function () {
+  //   menu_wrapper.value.scroll({top: 0, behavior: 'smooth'})
+  // },10)
 }
 
 

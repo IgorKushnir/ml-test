@@ -4,7 +4,17 @@
 
       <transition name="slide">
         <div v-show="showFilters" class="wrapper">
-          <div class="filters-container p-h-80 p-t-80 p-b-120">
+          <div class="filters-container p-h-56 p-t-80 p-v-120    p-h-32-md">
+
+            <div class="header-container p-r-0">
+              <div class="btn close" v-on:click="closeFilter"><div class="icon-close-24"></div></div>
+              <h4 class="title"><strong>Filters</strong></h4>
+
+<!--              <transition name="fade">-->
+<!--                <div v-if="showReset" class="btn reset p-small"><strong>Reset all</strong></div>-->
+<!--              </transition>-->
+            </div>
+
             <template v-for="(filter, index) in allFilters">
 <!--              :default-open="index < 2"-->
 <!--              -->
@@ -18,7 +28,7 @@
                   :available-filter-items="availableFilters[filter.uid]"
               />
             </template>
-            <div class="button-container p-v-16 p-h-80">
+            <div class="button-container p-v-16 p-h-56  p-h-32-md">
               <div class="button primary" v-on:click="handleFilterButton">
                 <span v-if="!pending">Show {{ productsCount }}</span>
                 <span v-else>...</span>
@@ -61,6 +71,10 @@ const props = defineProps({
     required: true
   },
   pending: {
+    type: Boolean,
+    required: true
+  },
+  showReset: {
     type: Boolean,
     required: true
   }
@@ -151,12 +165,55 @@ $desktop_size: 500px;
 .button {
   display: block;
 }
+.header-container {
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  height: 56px;
+  width: $desktop_size;
+  top: 0;
+  right: 0;
+  background-color: $white;
+  border-bottom: 1px solid $border-dark;
+  z-index: 99;
+  .title {
+    font-size: inherit;
+    margin-left: 24px;
+    margin-right: auto;
+  }
+}
+.btn {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: .3s;
+
+  &:hover {
+    background-color: $light-gray;
+  }
+  &.close {
+    font-size: 24px;
+    width: 56px;
+    height: 100%;
+    border-right: 1px solid $border-dark;
+  }
+  &.reset {
+    padding: 0 32px;
+    height: 100%;
+    border-left: 1px solid $border-dark;
+  }
+}
 
 @include md {
-  .filters-container {
+
+  .filters-container, .header-container, .button-container {
     width: 100%;
   }
 }
+
+
+
 
 
 .slide-enter-active,
