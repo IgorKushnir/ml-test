@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div v-if="!pending && data != null">
+{{pending}}
+<!--    {{data}}-->
+    <div v-if=" data != null">
       <InnerHeader title="Store finder"/>
       <StickyHeader>
 
@@ -41,8 +43,7 @@
 
 
     </div>
-    <Loading v-if="pending"/>
-    <PageNotFound v-if="data === null"/>
+    <Loading v-else/>
   </div>
 </template>
 
@@ -67,12 +68,28 @@ let countryCode = ref(null);
 let showMap = ref(false)
 const map = ref()
 
+const {data, pending, refresh, error} = await getStores('en')
+if (country == null) {
+  countryCode.value = await getCountryCode();
+}
+if (data.value != null) {
+  changeRoute()
+  stores.value = getStoresByIndex(dataIndex.value);
+} else {
+  watch(() => data.value, () => {
+    changeRoute()
+    stores.value = getStoresByIndex(dataIndex.value);
+  })
+}
+
+
 
 watch(() => dataIndex.value, () => {
   stores.value = getStoresByIndex(dataIndex.value)
   getLines()
 })
 watch(() => cityIndex.value, () => {
+
   stores.value = getStoresByIndex(dataIndex.value)
   getLines()
 })
@@ -92,26 +109,25 @@ function getIndexOfDataBySlug(code) {
 }
 
 
-if (country == null) {
-  countryCode.value = await getCountryCode();
-}
 
-const {data, pending, refresh, error} = await getStores('en')
+
 
 // Change routing query
-if (countryCode.value == null) {
-  dataIndex.value = getIndexOfDataBySlug(country);
-  router.replace({
-    query: {country: country},
-  })
-} else {
-  dataIndex.value = getIndexOfDataByCode(countryCode.value);
-  router.replace({
-    query: {country: data.value[dataIndex.value].attributes.slug},
-  })
-}
+function changeRoute() {
+  if (countryCode.value == null) {
+    dataIndex.value = getIndexOfDataBySlug(country);
+    router.replace({
+      query: {country: country},
+    })
+  } else {
+    console.log(countryCode.value);
+    dataIndex.value = getIndexOfDataByCode(countryCode.value);
+    router.replace({
+      query: {country: data.value[dataIndex.value]?.attributes?.slug ?? 'all'},
+    })
+  }
 
-stores.value = getStoresByIndex(dataIndex.value);
+}
 
 function getStoresByIndex(index) {
   let _stores = []

@@ -49,6 +49,7 @@ defineProps({
 .link {
   display: block;
   overflow-wrap: anywhere;
+  word-break: break-word;
 
 }
 

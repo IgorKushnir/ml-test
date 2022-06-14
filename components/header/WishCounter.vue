@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink to="/" class="nav-icon wish-icon hover">
+  <NuxtLink v-if="false" to="/" class="nav-icon wish-icon hover">
     <div class="icon-heart-no-24">
       <div class="wish-counter">{{ counter }}</div>
     </div>

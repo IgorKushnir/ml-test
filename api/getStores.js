@@ -8,7 +8,7 @@ export default async function (lang) {
     locale: "${lang}"
     sort: "country"
     pagination: {
-      limit: -1
+      limit: 1
     }
   ) {
     data {
@@ -57,7 +57,7 @@ export default async function (lang) {
 }
     `);
 
-    const { data, pending, refresh, error } = await useAsyncData('data_'+collection, () => response, {
+    const { data, pending, refresh, error } = await useLazyAsyncData('data_'+collection, () => response, {
         transform: (d) => {
             let countries = d.data[collection].data
 
@@ -87,8 +87,10 @@ export default async function (lang) {
             if (americaIndex !== -1) final.push(countries[americaIndex]);
 
             return [...final, ...countries]
+
         },
     })
 
     return { data, pending, refresh, error };
+
 }
