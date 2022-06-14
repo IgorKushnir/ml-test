@@ -63,6 +63,7 @@ export default async function (lang) {
 
             // Remove cities with stores length 0
             let c = countries.map(country => {
+
                 let cities = []
                 country.attributes.city.forEach(city => {
                     if (city.store.length > 0) {
@@ -80,7 +81,12 @@ export default async function (lang) {
             const ukraineIndex = countries.findIndex(c => c.attributes.slug === 'ukraine')
             const americaIndex = countries.findIndex(c => c.attributes.slug === 'united-states')
             let sorted = countries.filter(c => c.attributes.slug !== 'united-states' && c.attributes.slug !== 'ukraine')
-            return [countries[ukraineIndex], countries[americaIndex], ...sorted]
+
+            let final = [];
+            if (ukraineIndex !== -1) final.push(countries[ukraineIndex]);
+            if (americaIndex !== -1) final.push(countries[americaIndex]);
+
+            return [...final, ...countries]
         },
     })
 

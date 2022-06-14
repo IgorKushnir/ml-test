@@ -5,6 +5,10 @@
       <InnerHeader :title="slug"/>
 
       <StickyHeader>
+        <template #center>
+          <StickyMenu :data="typeData" path="/discover/" class="grid-column-center"/>
+        </template>
+
         <template #end>
           <Filter
               :available-filters="dataAvailableFilters"
@@ -31,8 +35,11 @@
 import getCollection from '~/api/getCollection'
 import getProducts from '~/api/getProducts'
 import getActiveFilters from '~/api/getActiveFilters'
+import {useTypesData} from "~/composables/states";
 
 const {$getAbsoluteUrl} = useNuxtApp();
+
+const typeData = useTypesData()
 
 const route = useRoute();
 let slug = route.params.slug;

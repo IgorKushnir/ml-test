@@ -3,9 +3,7 @@
 
   <template v-if="!pendingProducts" v-for="(product, index) in productsData">
 
-<!--    <div >-->
       <slot v-if="index === 8" />
-<!--    </div>-->
 
     <div :class="grid === 3 ? 'col-4 col-6-lg col-12-sm' : 'col-3 col-4-lg col-12-sm'">
       <ProductItem :title="product.attributes.title" :to="'/product/' + product.attributes.slug"

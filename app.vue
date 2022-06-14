@@ -10,18 +10,27 @@
 
 
 <script setup lang="ts">
-import menuData from '~/api/getMenu';
+import getInitialData from '~/api/getInitialData';
 import fav32 from '~/assets/img/32.png';
 import fav256 from '~/assets/img/256.png';
 import getAllFilters from '~/api/getAllFilters'
 
-// get menu data
-useMenuData().value = await menuData('en')
+import {useFiltersData, useMenuData, useTypesData} from "~/composables/states";
+
+// get Initial data (Menu, Lines, Types)
+let {data: initialData, error: initialError} = await getInitialData('en');
+if (!initialError.value) {
+  useMenuData().value = [initialData.value[0], initialData.value[1]]
+  useTypesData().value = initialData.value[2];
+}
+
 
 // Get all filters
 let allFilters = useFiltersData();
 let {data, pending, refresh, error} = await getAllFilters('en');
 if (!error.value) allFilters.value = data.value;
+
+// Get types
 
 
 

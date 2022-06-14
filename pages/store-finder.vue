@@ -3,28 +3,16 @@
     <div v-if="!pending && data != null">
       <InnerHeader title="Store finder"/>
       <StickyHeader>
-<!--        <Select v-if="getLines().length > 0" :data="getLines()" name="Lines" all="All lines" :index="lineIndex" @index="changeLine"/>-->
 
         <template #center>
           <Select :data="getCountries()" name="Country" all="All countries" :index="dataIndex" :flag="true" @index="changeCountry"/>
           <Select v-if="getCities().length > 1" :data="getCities()" name="City" all="All cities" :index="cityIndex" @index="changeCity" />
         </template>
-        <template #end>
+        <template  #end>
           <Select
-              class="grid-column-end"
               v-if="lines.length > 1" :data="lines" name="Lines" all="All lines" side="right" :index="lineIndex" @index="changeLine"
           />
         </template>
-
-
-        <div></div>
-        <div class="grid-column-center">
-          <Select :data="getCountries()" name="Country" all="All countries" :index="dataIndex" :flag="true" @index="changeCountry"/>
-          <Select v-if="getCities().length > 1" :data="getCities()" name="City" all="All cities" :index="cityIndex" @index="changeCity" />
-        </div>
-        <Select
-            class="grid-column-end"
-            v-if="lines.length > 1" :data="lines" name="Lines" all="All lines" side="right" :index="lineIndex" @index="changeLine"/>
 
 
       </StickyHeader>

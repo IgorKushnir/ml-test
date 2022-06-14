@@ -1,6 +1,5 @@
 <template>
-<!--  <img :src="'.../assets/img/flags/ad.webp)'" class="flag"/>-->
-  <img :src="'../assets/img/flags/' + code.toLowerCase() + '.webp'" class="flag"/>
+  <img :src="'img/flags/'+ code.toLowerCase() +'.webp'" class="flag"/>
 
 </template>
 
@@ -11,6 +10,7 @@ defineProps({
     required: true
   }
 })
+
 
 
 </script>

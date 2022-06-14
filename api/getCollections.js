@@ -4,21 +4,6 @@ export default async function (lang) {
 
     const response = graphql(`
 query Collections{
-    types(
-        sort: "order"
-        locale: "${lang}"
-        pagination: {
-          limit: -1
-        }
-      ) {
-        data {
-          attributes {
-            title
-            slug
-          }
-        }
-  }
-  
  lines (
      sort: "order" 
      locale: "${lang}"
@@ -61,14 +46,7 @@ query Collections{
             const data = d.data[collection].data;
             let lines = data.map(line => line.attributes)
 
-            let types = d.data['types'].data;
-            if (types.length > 0) {
-                types = types.map(type => type.attributes)
-            }
-            return {
-                lines: lines,
-                types: types,
-            };
+            return lines;
         },
     })
 

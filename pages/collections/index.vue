@@ -5,12 +5,12 @@
       <StickyHeader>
 <!--        // Data types to global data-->
         <template #center>
-          <StickyMenu :data="data.types" path="/discover/" class="grid-column-center"/>
+          <StickyMenu :data="typeData" path="/discover/" class="grid-column-center"/>
         </template>
       </StickyHeader>
 
       <Container>
-        <template v-for="line in data.lines">
+        <template v-for="line in data">
           <div class="col-12 subheader small center m-b-0 m-t-16 show-sm">{{line.title}}</div>
 
           <div v-for="collection in line.collections.data" class="col-4 col-6-xl col-12-sm">
@@ -33,8 +33,11 @@
 <script setup>
 
 import getCollections from '~/api/getCollections'
+import {useTypesData} from "../../composables/states";
 
 let {data, pending, refresh, error} = await getCollections('en')
+
+const typeData = useTypesData()
 
 
 </script>

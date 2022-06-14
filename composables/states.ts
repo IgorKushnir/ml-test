@@ -10,4 +10,5 @@ export const useGoogle = () => useState<any>('google');
 
 
 export const useFiltersData = () => useState<object>('filtersData', () => []);
+export const useTypesData = () => useState<object>('typesData', () => []);
 

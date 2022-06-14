@@ -33,7 +33,7 @@ query ProductsWithFilters{
 
   }
     pagination: {
-      limit: 10
+      limit: 12
     }
     sort: "title"
     locale: "${lang}"

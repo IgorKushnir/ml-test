@@ -36,7 +36,7 @@ const props = defineProps({
   margin-right: 0;
 }
 
-.nav-link.active {
+.nav-link.router-link-active {
   font-weight: bold;
 }
 .nav-link:after {
@@ -50,7 +50,7 @@ const props = defineProps({
   transition: .3s;
 }
 
-.nav-link.active:after {
+.nav-link.router-link-active:after {
   height: 2px;
   width: 100%;
   left: 0;

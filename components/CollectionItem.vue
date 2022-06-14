@@ -1,6 +1,6 @@
 <template>
   <div class="ratio-3x4">
-    <NuxtLink :to="to" active-class="_" exact-active-class="_" class="collection-item">
+    <NuxtLink :to="to" class="collection-item">
       <Image :path="image" :alt="title"  size="medium" class="ratio-3x4"/>
 
       <div class="collection-item-head">

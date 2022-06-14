@@ -19,11 +19,13 @@ export default defineNuxtConfig({
     },
 
     strapi: {
-        url: process.env.STRAPI_URL || 'http://localhost:1337',
+        // url: process.env.STRAPI_URL || 'http://localhost:1337',
+        url:  'https://millanova-backend-iwjo4.ondigitalocean.app'
     },
 
     publicRuntimeConfig: {
         MODE: process.env.MODE,
+        STRAPI_URL: process.env.STRAPI_URL,
     },
 })
 
