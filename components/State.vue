@@ -5,7 +5,7 @@
         <div v-if="!hideIcon" class="icon">
           <img src="@/assets/img/small-logo-dark.svg" alt="">
         </div>
-        <h1>{{ title }}</h1>
+        <h1 v-if="title">{{ title }}</h1>
         <p v-if="text">{{text}}</p>
         <Button v-if="button" :path="button.path" class="m-b-40 m-b-24-md m-t-32">{{ button.text }}</Button>
       </div>
@@ -21,7 +21,7 @@ defineProps({
   },
   title: {
     type: String,
-    required: true,
+    required: false,
   },
   text: {
     type: String,

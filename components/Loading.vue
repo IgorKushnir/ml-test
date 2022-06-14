@@ -1,6 +1,6 @@
 <template>
   <div>
-    Loading...
+    <State class="loading" />
   </div>
 </template>
 
@@ -11,5 +11,17 @@ export default {
 </script>
 
 <style scoped>
+.loading {
+  opacity: .8;
+  animation: blinker 1s ease-in-out infinite;
+
+}
+
+
+@keyframes blinker {
+  50% {
+    opacity: .3;
+  }
+}
 
 </style>

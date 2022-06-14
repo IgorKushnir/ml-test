@@ -68,7 +68,7 @@ query ProductsWithFilters{
 
 
 
-    return await useAsyncData('data_'+collection, () => response, {
+    return await useLazyAsyncData('data_'+collection, () => response, {
         transform: (d) => {
             return d.data[collection]
         },

@@ -1,8 +1,6 @@
 <template>
   <div>
-{{pending}}
-<!--    {{data}}-->
-    <div v-if=" data != null">
+    <div v-if="!pending && data != null">
       <InnerHeader title="Store finder"/>
       <StickyHeader>
 

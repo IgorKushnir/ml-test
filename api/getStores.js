@@ -8,7 +8,7 @@ export default async function (lang) {
     locale: "${lang}"
     sort: "country"
     pagination: {
-      limit: 1
+      limit: -1
     }
   ) {
     data {
