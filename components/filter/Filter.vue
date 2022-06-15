@@ -32,12 +32,17 @@ let allFilters = useFiltersData();
 let showFilters = ref(false)
 let count = ref(0)
 
+const isMobile = useIsMobile()
 
 function toggleFilters(state) {
   showFilters.value = state;
 }
 
 function emitFilters(e) {
+  window.scrollTo({
+    top: isMobile.value ? 0 : 153,
+    behavior: 'smooth'
+  });
   emits('filters', e)
   count.value = e.map(d => d.values.length).reduce((partialSum, a) => partialSum + a, 0)
 }

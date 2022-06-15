@@ -10,7 +10,7 @@
         <template #end>
           <Filter
               :available-filters="dataAvailableFilters"
-              @filters="e => filterData(e)"
+              @filters="e => filterData(e, 1)"
               @check-filters="e => checkFiltersHandler(e)"
               :pending="pendingFilters"
           />
@@ -20,7 +20,13 @@
 <!--      {{ filterSelected }}-->
 
 
-      <ProductGrid :products-data="dataProducts.data" :pending-products="pendingProducts" :promo="dataCollection.show_promo">
+      <ProductGrid
+          :products-data="dataProducts"
+          :pending-products="pendingProducts"
+          :promo="dataCollection.show_promo"
+          @load="page => filterData(currentFilters, page)"
+          infinite
+      >
         <template #promo>
           <div class="col-8 col-12-md"
                v-if="dataCollection.show_promo && dataCollection.cover_4x3.data != null && filterSelected.length === 0"
@@ -49,7 +55,7 @@
 
     </div>
 
-    <PageNotFound v-if="dataCollection === null"/>
+    <PageNotFound  :show="dataCollection === null"/>
 
   </div>
 </template>
@@ -80,7 +86,7 @@ let {
   pending: pendingProducts,
   refresh: refreshProducts,
   error: errorProducts
-} = await getProducts({filters: filters.value, lang: 'en', type: 'dress'});
+} = await getProducts({filters: filters.value, lang: 'en', type: 'dress', page: 1});
 let {
   data: dataAvailableFilters,
   pending: pendingFilters,
@@ -95,8 +101,9 @@ onMounted(() => {
   refreshAvailableFilters()
 })
 
-
-async function filterData(e) {
+let currentFilters =  ref([])
+async function filterData(e, page) {
+  currentFilters.value = e;
   let f = [...filters.value];
   if (e !== null) {
     let newFilters = e.filter(d => d.values.length > 0)
@@ -115,13 +122,22 @@ async function filterData(e) {
 
 
   pendingProducts.value = true;
-  const {data, pending, refresh, error} = await getProducts({filters: f, lang: 'en', type: 'dress'});
+  const {data, pending, refresh, error} = await getProducts({filters: f, lang: 'en', type: 'dress', page: page});
 
   refresh()
 
   watch(() => pending.value, (p) => {
-    dataProducts.value = data.value;
-    pendingProducts.value = pending.value;
+    if (page === 1) {
+      dataProducts.value = data.value;
+      pendingProducts.value = pending.value;
+    } else  {
+      dataProducts.value.meta = data.value.meta;
+      dataProducts.value.data = [...dataProducts.value.data, ...data.value.data];
+
+      pendingProducts.value = pending.value;
+    }
+
+    console.log(dataProducts.value.meta.pagination);
   })
 }
 

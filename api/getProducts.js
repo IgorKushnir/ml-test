@@ -1,4 +1,5 @@
-export default async function ({filters, type, lang}) {
+export default async function ({filters, type, lang, page}) {
+    // console.log(page);
 
     const graphql = useStrapiGraphQL()
     const collection = 'products';
@@ -33,7 +34,8 @@ query ProductsWithFilters{
 
   }
     pagination: {
-      limit: 12
+      pageSize: 12
+      page: ${page}
     }
     sort: "title"
     locale: "${lang}"
@@ -70,6 +72,7 @@ query ProductsWithFilters{
 
     return await useLazyAsyncData('data_'+collection, () => response, {
         transform: (d) => {
+            // console.log(d.data[collection].meta);
             return d.data[collection]
         },
     })

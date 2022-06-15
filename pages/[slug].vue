@@ -14,9 +14,8 @@
         </div>
       </div>
     </transition>
-
+    <PageNotFound :show="!pending && data === null"/>
     <Loading :pending="pending"/>
-    <PageNotFound v-if="data === null" />
   </div>
 </template>
 

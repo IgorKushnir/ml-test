@@ -29,7 +29,7 @@
 
     <Loading :pending="pending"/>
 
-    <PageNotFound v-if="data === null"/>
+    <PageNotFound :show="data === null"/>
   </div>
 </template>
 

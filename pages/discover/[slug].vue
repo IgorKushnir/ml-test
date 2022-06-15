@@ -10,15 +10,21 @@
       <template #end>
         <Filter
             :available-filters="dataAvailableFilters"
-            @filters="e => filterData(e)"
+            @filters="e => filterData(e, 1)"
             @check-filters="e => checkFiltersHandler(e)"
             :pending="pendingFilters"
         />
       </template>
     </StickyHeader>
 
-      <ProductGrid :products-data="dataProducts.data" :pending-products="pendingProducts" :grid="4"/>
-
+      <ProductGrid
+          v-if="dataProducts!== null"
+          :products-data="dataProducts"
+          :pending-products="pendingProducts"
+          :grid="4"
+          infinite
+          @load="page => filterData(currentFilters, page)"
+      />
 
   </div>
 </template>
@@ -36,15 +42,15 @@ const typeData = useTypesData()
 const route = useRoute();
 let slug = route.params.slug;
 let filterSelected = ref([])
-
 let filters = ref([])
 
+// let dataProducts = {}
 let {
   data: dataProducts,
   pending: pendingProducts,
   refresh: refreshProducts,
   error: errorProducts
-} = await getProducts({filters: filters.value, lang: 'en', type: slug});
+} = await getProducts({filters: filters.value, lang: 'en', type: slug, page: 1});
 let {
   data: dataAvailableFilters,
   pending: pendingFilters,
@@ -59,7 +65,9 @@ onMounted(() => {
 })
 
 
-async function filterData(e) {
+let currentFilters =  ref([])
+async function filterData(e, page) {
+  currentFilters.value = e;
   let f = [...filters.value];
   if (e !== null) {
     let newFilters = e.filter(d => d.values.length > 0)
@@ -78,13 +86,22 @@ async function filterData(e) {
 
 
   pendingProducts.value = true;
-  const {data, pending, refresh, error} = await getProducts({filters: f, lang: 'en', type: slug});
+  const {data, pending, refresh, error} = await getProducts({filters: f, lang: 'en', type: slug, page: page});
 
   refresh()
 
   watch(() => pending.value, (p) => {
-    dataProducts.value = data.value;
-    pendingProducts.value = pending.value;
+    if (page === 1) {
+      dataProducts.value = data.value;
+      pendingProducts.value = pending.value;
+    } else  {
+      dataProducts.value.meta = data.value.meta;
+      dataProducts.value.data = [...dataProducts.value.data, ...data.value.data];
+
+      pendingProducts.value = pending.value;
+    }
+
+    console.log(dataProducts.value.meta.pagination);
   })
 }
 

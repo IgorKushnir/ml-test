@@ -1,7 +1,7 @@
 <template>
   <div>
     <transition name="fade">
-      <State class="loading" />
+      <State v-if="pending" :class="'loading ' + extendedClass" />
     </transition>
   </div>
 </template>
@@ -11,6 +11,11 @@ defineProps({
   pending: {
     type: Boolean,
     required: true
+  },
+  extendedClass: {
+    type: String,
+    required: false,
+    default: ''
   }
 })
 </script>

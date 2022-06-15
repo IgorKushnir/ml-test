@@ -1,5 +1,5 @@
 <template>
-  <div class="container stage p-v-80 p-v-40-md">
+  <div :class="'container stage p-v-80 p-v-40-md'">
     <div class="row gap-S justify-center">
       <div class="state-container col-6 col-12-md center">
         <div v-if="!hideIcon" class="icon">
@@ -41,6 +41,7 @@ defineProps({
   justify-content: center;
   align-items: center;
 }
+
 .state-container {
   //display: flex;
   //flex-direction: column;
@@ -51,5 +52,16 @@ defineProps({
   width: 100px;
   margin: 0 auto 32px;
 }
+
+
+.half {
+  min-height: calc(100vh - 370px);
+}
+@include md {
+  .half {
+    min-height: calc(100vh - 230px);
+  }
+}
+
 
 </style>

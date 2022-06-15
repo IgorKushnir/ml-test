@@ -19,7 +19,7 @@ defineProps({
 .flag {
   width: 24px;
   /*height: 16px;*/
-  background-color: #eb5757;
+  /*background-color: #eb5757;*/
 }
 
 </style>
