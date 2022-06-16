@@ -80,10 +80,13 @@ if (country == null) {
 if (data.value != null) {
   changeRoute()
   stores.value = getStoresByIndex(dataIndex.value);
+  getLines()
+
 } else {
   watch(() => data.value, () => {
     changeRoute()
     stores.value = getStoresByIndex(dataIndex.value);
+    getLines()
   })
 }
 

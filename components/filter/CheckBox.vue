@@ -1,7 +1,7 @@
 <template>
   <div :class="'check-box-container' + (value ? ' active' : '') + (!available ? ' not-available' : '')" v-on:click="available ? $emit('value', !value) : ''">
     <div class="check-box"/>
-    <p class="label">{{ label }}</p>
+    <div class="p label">{{ label }}</div>
   </div>
 </template>
 
@@ -53,7 +53,7 @@ const props = defineProps({
 .label {
   display: inline-block;
   vertical-align: super;
-  margin-left: 16px;
+  margin: 0 0 0 16px;
   color: $dark-blue;
 }
 .active {

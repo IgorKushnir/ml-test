@@ -95,7 +95,7 @@ let {
   pending: pendingFilters,
   refresh: refreshAvailableFilters,
   error: errorAvailableFilters
-} = await getActiveFilters({filters: filters.value, lang: 'en', type: 'dress'});
+} = await getActiveFilters({filters: filters.value, lang: 'en', type: 'dress', fetchFilters: true});
 
 
 onMounted(() => {
@@ -140,7 +140,7 @@ async function filterData(e, page) {
       pendingProducts.value = pending.value;
     }
 
-    console.log(dataProducts.value.meta.pagination);
+    // console.log(dataProducts.value.meta.pagination);
   })
 }
 
@@ -152,7 +152,7 @@ async function checkFiltersHandler(e) {
   }
 
   pendingFilters.value = true;
-  const {data, pending, refresh, error} = await getActiveFilters({filters: f, lang: 'en', type: 'dress'});
+  const {data, pending, refresh, error} = await getActiveFilters({filters: f, lang: 'en', type: 'dress', fetchFilters: false});
 
   refresh()
 

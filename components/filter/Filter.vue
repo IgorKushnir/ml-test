@@ -1,15 +1,15 @@
 <template>
   <FilterButton v-on:click="toggleFilters(true)" :count="count" />
   <FilterModal
+      v-if="availableFiltersFirstFetch.filters != null"
       :show-filters="showFilters"
       :all-filters="allFilters"
-      :available-filters="availableFilters.filters"
+      :available-filters="availableFiltersFirstFetch.filters"
       @close="toggleFilters(false)"
       @filters="e => emitFilters(e)"
       :products-count="availableFilters.pagination.total ?? 0"
       @check-filters="e => checkFiltersHandler(e)"
       :pending="pending"
-      :show-reset="count > 0"
   />
 </template>
 
@@ -25,6 +25,18 @@ const props = defineProps({
     required: true
   }
 })
+
+// Get Available Filters just Once
+const availableFiltersFirstFetch = ref(props.availableFilters)
+watch(() => props.availableFilters, (f)=> {
+  if (f.filters != null) {
+    availableFiltersFirstFetch.value = f
+  }
+})
+
+
+
+
 
 import {useFiltersData} from "~/composables/states";
 

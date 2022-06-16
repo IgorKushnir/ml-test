@@ -48,6 +48,7 @@
               <div class="nav-dropdown-container" v-if="hasSubMenu(item)" ref="dropdown">
                 <Transition name="slide-fade" @enter="enterAnimation" @leave="leaveAnimation">
                   <HeaderDropdown v-show="item.show ?? false" :item="item" :lines="lines" :show="item.show ?? false"/>
+
                 </Transition>
               </div>
 
@@ -73,6 +74,10 @@
 </template>
 
 <script setup lang="ts">
+import { enter, leave} from '~/api/misc/transitions';
+
+
+
 const data = useMenuData();
 const {menu, lines} = {menu: data.value[0], lines: data.value[1]};
 const isMobile = useIsMobile();
@@ -154,24 +159,8 @@ const hasSubMenu = (item) => {
 };
 
 
-
-
-function enterAnimation(element) {
-  if (!isMobile.value) return
-  element.style.height = 0;
-  const height = element.children[0].getBoundingClientRect().height;
-  requestAnimationFrame((e) => {
-    element.style.height = height + 'px';
-  });
-}
-
-function leaveAnimation(element) {
-  if (!isMobile.value) return
-
-  requestAnimationFrame(() => {
-    element.style.height = 0;
-  });
-}
+const enterAnimation = (e) => enter(e, isMobile)
+const leaveAnimation = (e) => leave(e, isMobile)
 
 
 onMounted(() => {
@@ -282,14 +271,6 @@ onMounted(() => {
   margin-left: 50%;
 }
 
-//Fade showing
-.slide-fade-enter-active, .slide-fade-leave-active {
-  transition: all .4s ease-out;
-}
-
-.slide-fade-enter-from, .slide-fade-leave-to {
-  opacity: 0;
-}
 
 
 .menu_wrapper {

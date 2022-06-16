@@ -1,9 +1,11 @@
 <template>
   <div class="list-icon">
-    <span :class="'icon-'+icon"/>
+    <span :class="'icon icon-'+icon"/>
     <div>
-      <NuxtLink :to="to" :target="target" class="list-container p-small link">
-        {{text}}
+      <NuxtLink :to="to" :target="target" class="list-container p-small">
+<!--        <span class="text" v-html="text"/>-->
+        <div class="text"><slot /></div>
+
       </NuxtLink>
     </div>
   </div>
@@ -36,21 +38,17 @@ defineProps({
 <style scoped lang="scss">
 .list-icon {
   display: flex;
-  *:first-child {
-    margin-right: 16px;
-  }
-  .list-container {
-    max-width: calc(100% );
-    *:first-child {
-      margin-top: -2px;
-    }
-  }
 }
-.link {
+.icon, text {
+  margin-left: 8px;
+}
+.text {
+  margin-left: 16px;
+
   display: block;
   overflow-wrap: anywhere;
   word-break: break-word;
-
+  font-weight: inherit;
 }
 
 

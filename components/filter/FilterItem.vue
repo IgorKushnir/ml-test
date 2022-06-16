@@ -5,19 +5,26 @@
       <div v-if="open" class="icon-drop-up-16"></div>
       <div v-else class="icon-drop-down-16"></div>
     </div>
-    <div v-if="open" class="list">
-      <FilterCheckBox
-          v-for="(filter, i) in filterItemData"
-          :label="filter.title"
-          :value="filter.value"
-          @value="e => setItemValue(i, e)"
-          :available="isFilterItemsAvailable(filter)"
-      />
-    </div>
+    <transition name="slide-fade" @enter="enterAnimation" @leave="leaveAnimation">
+      <div v-if="open">
+        <div class="p-v-8">
+          <FilterCheckBox
+              v-for="(filter, i) in filterItemData"
+              :label="filter.title"
+              :value="filter.value"
+              @value="e => setItemValue(i, e)"
+              :available="isFilterItemsAvailable(filter)"
+          />
+        </div>
+      </div>
+    </transition>
+
   </div>
 </template>
 
 <script setup>
+import {enter, leave} from "~/api/misc/transitions";
+
 const emits = defineEmits(["value"]);
 
 const props = defineProps({
@@ -75,6 +82,10 @@ function openHandler() {
 }
 
 
+const enterAnimation = (e) => enter(e)
+const leaveAnimation = (e) => leave(e)
+
+
 function isFilterItemsAvailable(filter) {
   const itemSlug = filter.slug;
   const availableSlugs = props.availableFilterItems.map(d => d.slug);
@@ -95,8 +106,9 @@ function isFilterItemsAvailable(filter) {
   margin-top: -1px;
   cursor: pointer;
 }
-.list {
-  padding: 8px 0;
-}
+
+
+
+
 
 </style>

@@ -9,17 +9,26 @@
       <p v-if="store.description" class="p-small">{{store.description}}</p>
 
       <div class="contacts m-t-32">
-        <ListIcon v-if="store.address" :to="'https://www.google.com/maps/place/'+store.address" :text="store.address" target="_blank" icon="location-16" class="m-v-16">
-          <div class="p-small link">{{store.address}}</div>
+        <ListIcon v-if="store.address" :to="'https://www.google.com/maps/place/'+store.address"  target="_blank" icon="location-16" class="m-v-16">
+          {{ store.address }}
+          <div class="display-block m-t-8">
+            <div class="p-small link" style="display: inline-block">Show on map <span class="icon-taget-16"/></div>
+          </div>
         </ListIcon>
 
-        <ListIcon v-if="store.phone" :to="'tel: '+store.phone" :text="store.phone" icon="phone-16" class="m-v-16">
+        <ListIcon v-if="store.phone" :to="'tel: '+store.phone" icon="phone-16" class="m-v-16">
+          <div class="p-small link">{{store.phone}}</div>
         </ListIcon>
 
         <ListIcon v-if="store.website" :to="store.website" target="_blank" :text="store.website" icon="taget-16" class="m-v-16">
           <div class="p-small link">{{store.website}}</div>
-
         </ListIcon>
+
+        <template v-if="store.lines.data.length > 0">
+          <div class="subheader small m-t-32">Lines</div>
+          <p  class="p-small" >{{store.lines.data.map(line => line.attributes.title).join(', ')   }}</p>
+        </template>
+
       </div>
 
     </div>

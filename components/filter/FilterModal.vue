@@ -10,30 +10,31 @@
               <div class="btn close" v-on:click="closeFilter"><div class="icon-close-24"></div></div>
               <h4 class="title"><strong>Filters</strong></h4>
 
-<!--              <transition name="fade">-->
-<!--                <div v-if="showReset" class="btn reset p-small"><strong>Reset all</strong></div>-->
-<!--              </transition>-->
+              <transition name="fade">
+                <div v-if="isSelectedFilters" v-on:click="resetHandler" class="btn reset p-small"><strong>Reset all</strong></div>
+              </transition>
             </div>
 
-            <template v-for="(filter, index) in allFilters">
-<!--              :default-open="index < 2"-->
-<!--              -->
+            <template v-for="(filter, index) in allFiltersFiltered">
 
               <FilterItem
-                  v-if="filter.data.length > 0"
                   :name="filter.uid"
                   :data="filter.data"
-                  :default-open="true"
+                  :default-open="index < 1"
                   @value="e => handleValue(e)"
                   :available-filter-items="availableFilters[filter.uid]"
               />
             </template>
-            <div class="button-container p-v-16 p-h-56  p-h-32-md">
+
+            <transition name="fade">
+            <div v-if="!showFilterButton" class="button-container p-v-16 p-h-56  p-h-32-md">
               <div class="button primary" v-on:click="handleFilterButton">
                 <span v-if="!pending">Show {{ productsCount }}</span>
                 <span v-else>...</span>
               </div>
             </div>
+            </transition>
+
             <div class="close-overlay" v-on:click="closeFilter"/>
 
           </div>
@@ -73,23 +74,45 @@ const props = defineProps({
   pending: {
     type: Boolean,
     required: true
-  },
-  showReset: {
-    type: Boolean,
-    required: true
   }
 })
+
+
 
 watch(() => props.showFilters, (e) => {
   e ? document.body.classList.add('no-scroll') : document.body.classList.remove('no-scroll')
 })
 
+const allFiltersFiltered = computed(()=> {
+  return props.allFilters.filter(d => d.data.length > 0)
+})
 
-let filters = ref([])
+const filters = ref([])
 
+const selectedItems = ref([])
+const filteredItems = ref([])
+const showFilterButton = ref(false);
 
+function checkIsFilterButtonShow() {
+  showFilterButton.value = JSON.stringify(selectedItems.value) === JSON.stringify(filteredItems.value);
+}
+checkIsFilterButtonShow()
 
 function handleValue(e) {
+  let currentSelected = []
+  props.allFilters.forEach(e => {
+    e.data.forEach(d => {
+      currentSelected.push(d.attributes.value);
+    })
+  })
+  if (filteredItems.value.length === 0) {
+    filteredItems.value = currentSelected.map(e => false);
+  }
+  selectedItems.value = currentSelected;
+
+  checkIsFilterButtonShow()
+
+
   const index = filters.value.findIndex(d => d.key === e.key)
   if (index === -1) {
     filters.value.push(e)
@@ -97,17 +120,52 @@ function handleValue(e) {
     filters.value[index] = e
   }
 
+
   emits('checkFilters', filters.value)
 }
 
 function handleFilterButton() {
+  filteredItems.value = selectedItems.value;
+  checkIsFilterButtonShow()
   closeFilter();
   emits('filters', filters.value);
 }
 
 function closeFilter() {
-  // document.body.classList.remove('no-scroll')
     emits("close");
+}
+const isSelectedFilters = computed(()=> {
+  let selected = []
+  props.allFilters.forEach(f => {
+    f.data.forEach(e => {
+      if (e.attributes.value) {
+        selected.push(true)
+      }
+    })
+  })
+  return selected.length > 0
+})
+
+
+
+function resetHandler() {
+  filters.value.forEach(v => {
+    v.values = []
+  })
+  emits('filters', filters.value);
+
+  props.allFilters.forEach(f => {
+    f.data.forEach(e => {
+      e.attributes.value = false
+    })
+  })
+
+  emits('checkFilters', filters.value)
+
+  selectedItems.value = []
+  filteredItems.value = []
+  checkIsFilterButtonShow()
+
 }
 
 
