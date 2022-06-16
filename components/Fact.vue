@@ -1,14 +1,26 @@
 <template>
   <div class="fact">
-    <h2>This collection is also about the love, work, and creativity</h2>
-    <p>This collection is also about the love, work, and creativity put into producing a wedding, which reflects the personal style of bride.</p>
+    <h2 v-if="title">{{title}}</h2>
+    <p v-if="text">{{text}}}</p>
   </div>
 </template>
 
-<script>
-export default {
-  name: "Fact"
-}
+<script setup>
+defineProps({
+  title: {
+    type: String,
+    required: false
+  },
+  text: {
+    type: String,
+    required: false
+  },
+  logo: {
+    type: Boolean,
+    required: false,
+    default: false
+  },
+})
 </script>
 
 <style scoped lang="scss">

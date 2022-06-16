@@ -32,6 +32,11 @@ query Collection{
             }
           }
         }
+        fact {
+          title
+          text
+          logo
+        }
         line {
           data {
             attributes {

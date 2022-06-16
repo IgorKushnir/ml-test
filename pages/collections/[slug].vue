@@ -31,10 +31,10 @@
           <div class="col-8 col-12-md"
                v-if="dataCollection.show_promo && dataCollection.cover_4x3.data != null && filterSelected.length === 0"
           >
-            <div class="promo" v-if="dataCollection.video.data != null">
+            <div class="promo" v-if="dataCollection.show_promo">
               <Image :path="dataCollection.cover_4x3" :alt="dataCollection.title"/>
-
               <video
+                  v-if="dataCollection.video.data != null"
                   playsinline=""
                   :src="$getAbsoluteUrl(dataCollection.video.data.attributes.url)"
                   loop="loop"
@@ -46,8 +46,10 @@
           </div>
         </template>
         <template #fact>
-          <div v-if="filterSelected.length === 0" class="col-8 col-6-lg col-12-md">
-            <Fact />
+
+          <div v-if="dataCollection.fact !== null && filterSelected.length === 0"
+               class="col-8 col-6-lg col-12-md">
+                        <Fact :title="dataCollection.fact.title" :text="dataCollection.fact.text" />
           </div>
         </template>
 
