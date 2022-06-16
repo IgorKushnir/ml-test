@@ -9,6 +9,7 @@
       <StickyHeader :title="dataCollection.title">
         <template #end>
           <Filter
+              v-if="dataAvailableFilters !== null"
               :available-filters="dataAvailableFilters"
               @filters="e => filterData(e, 1)"
               @check-filters="e => checkFiltersHandler(e)"
