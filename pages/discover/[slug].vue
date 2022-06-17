@@ -11,7 +11,7 @@
         <Filter
             v-if="dataAvailableFilters !== null"
             :available-filters="dataAvailableFilters"
-            @filters="e => filterData(e, 1)"
+            @filters="e => handleFilter(e)"
             @check-filters="e => checkFiltersHandler(e)"
             :pending="pendingFilters"
         />
@@ -122,6 +122,12 @@ async function checkFiltersHandler(e) {
     dataAvailableFilters.value = data.value;
     pendingFilters.value = pending.value;
   })
+}
+
+function handleFilter(e) {
+  pendingProducts.value = true
+  dataProducts.value.data = []
+  filterData(e, 1)
 }
 
 </script>

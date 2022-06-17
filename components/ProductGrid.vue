@@ -25,7 +25,7 @@
 <!--  <Loading :pending="true"  extended-class="half"/>-->
 
   <transition name="fade">
-    <State v-if="productsData && productsData.data.length === 0" title="No products"  class="half"></State>
+    <State v-if="productsData && !pendingProducts && productsData.data.length === 0" title="No products"  class="half"></State>
   </transition>
 
 
