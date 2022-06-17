@@ -18,22 +18,28 @@
             <template v-for="(filter, index) in allFiltersFiltered">
 
               <FilterItem
-                  :name="filter.uid"
-                  :data="filter.data"
+                  :name="getName(filter.uid)"
+                  :data="filter"
                   :default-open="index < 1"
                   @value="e => handleValue(e)"
                   :available-filter-items="availableFilters[filter.uid]"
               />
             </template>
 
-            <transition name="fade">
-            <div v-if="!showFilterButton" class="button-container p-v-16 p-h-56  p-h-32-md">
-              <div class="button primary" v-on:click="handleFilterButton">
-                <span v-if="!pending">Show {{ productsCount }}</span>
-                <span v-else>...</span>
+            <transition name="shift">
+              <div v-if="!showFilterButton" class="button-container p-v-16 p-h-56  p-h-32-md">
+                <div class="button primary" v-on:click="handleFilterButton">
+                  <span v-if="!pending">Show {{ productsCount }}</span>
+                  <span v-else>...</span>
+                </div>
               </div>
-            </div>
+              <div v-else class="button-container p-v-16 p-h-56  p-h-32-md">
+                <div class="button primary close" v-on:click="closeFilter">
+                  <span>Dismiss</span>
+                </div>
+              </div>
             </transition>
+
 
             <div class="close-overlay" v-on:click="closeFilter"/>
 
@@ -77,6 +83,21 @@ const props = defineProps({
   }
 })
 
+function getName(uid) {
+  const names = {
+    silhouettes: "Silhouette",
+    colors: "Color",
+    lines: "Line",
+    styles: "Style",
+    necklines: "Neckline",
+    decorations: "Decoration",
+    others: "Other",
+    budgets: "Budget"
+  }
+  return names[uid] ?? uid
+
+}
+
 
 
 watch(() => props.showFilters, (e) => {
@@ -84,7 +105,10 @@ watch(() => props.showFilters, (e) => {
 })
 
 const allFiltersFiltered = computed(()=> {
-  return props.allFilters.filter(d => d.data.length > 0)
+  return props.allFilters.filter((d, index) => {
+    const availableItem = props.availableFilters[d.uid].length > 0
+    return d.data.length > 0 && availableItem
+  })
 })
 
 const filters = ref([])
@@ -223,6 +247,11 @@ $desktop_size: 500px;
 .button {
   display: block;
 }
+.button.close {
+  background-color: $light-gray;
+  color: $dark-blue;
+  border-color: $light-gray;
+}
 .header-container {
   position: fixed;
   display: flex;
@@ -245,11 +274,9 @@ $desktop_size: 500px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: .3s;
+  //transition: .3s;
 
-  &:hover {
-    background-color: $light-gray;
-  }
+
   &.close {
     font-size: 24px;
     width: 56px;
@@ -260,6 +287,11 @@ $desktop_size: 500px;
     padding: 0 32px;
     height: 100%;
     border-left: 1px solid $border-dark;
+  }
+}
+@media (hover:hover) {
+  .btn:hover {
+    background-color: $light-gray;
   }
 }
 
@@ -285,6 +317,16 @@ $desktop_size: 500px;
 .slide-enter-from,
 .slide-leave-to {
   transform: translate(500px, 0);
+}
+
+.shift-enter-active,
+.shift-leave-active {
+  transition: transform 0.3s ease-out;
+}
+
+.shift-enter-from,
+.shift-leave-to {
+  transform: translate(0, 100px);
 }
 
 </style>

@@ -7,14 +7,22 @@
     </div>
     <transition name="slide-fade" @enter="enterAnimation" @leave="leaveAnimation">
       <div v-if="open">
-        <div class="p-v-8">
-          <FilterCheckBox
-              v-for="(filter, i) in filterItemData"
-              :label="filter.title"
-              :value="filter.value"
-              @value="e => setItemValue(i, e)"
-              :available="isFilterItemsAvailable(filter)"
-          />
+        <div :class="'p-v-8 ' + data.uid">
+          <template v-for="(filter, i) in filterItemData">
+            <FilterCheckBox
+                v-if="data.uid !== 'silhouettes'"
+                :label="filter.title"
+                :value="filter.value"
+                @value="e => setItemValue(i, e)"
+                :available="isFilterItemsAvailable(filter)"
+            />
+            <FilterCheckBoxDress
+                v-if="data.uid === 'silhouettes' && isFilterItemsAvailable(filter)"
+                :filter="filter"
+                @value="e => setItemValue(i, e)"
+            />
+          </template>
+
         </div>
       </div>
     </transition>
@@ -24,6 +32,7 @@
 
 <script setup>
 import {enter, leave} from "~/api/misc/transitions";
+import FilterCheckBoxDress from "./FilterCheckBoxDress";
 
 const emits = defineEmits(["value"]);
 
@@ -33,7 +42,7 @@ const props = defineProps({
     required:true
   },
   data: {
-    type: Array,
+    type: Object,
     required: true
   },
   defaultOpen: {
@@ -51,7 +60,8 @@ open.value = props.defaultOpen;
 
 let filterItemData = ref([])
 
-filterItemData.value = props.data.map(d => {
+
+filterItemData.value = props.data.data.map(d => {
   let m = d.attributes;
   m.value = false;
   return m;
@@ -65,7 +75,7 @@ function setItemValue(i, e) {
   let filters = filterItemData.value.filter(d => d.value)
 
   filters = {
-    key: props.name,
+    key: props.data.uid,
     values: filters.map(d => d.slug)
   }
 
@@ -105,8 +115,37 @@ function isFilterItemsAvailable(filter) {
   align-items: center;
   margin-top: -1px;
   cursor: pointer;
+
 }
 
+.silhouettes {
+  padding: 32px 0!important;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 16px;
+}
+@media (hover:hover) {
+  .head:hover {
+    background-color: rgb($light-gray, .5);
+  }
+}
+
+@include md {
+  .silhouettes {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@include sm {
+  .silhouettes {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 370px) {
+  .silhouettes {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 
 
 

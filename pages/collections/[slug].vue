@@ -50,7 +50,7 @@
 
           <div v-if="dataCollection.fact !== null && filterSelected.length === 0"
                class="col-8 col-6-lg col-12-md">
-                        <Fact :title="dataCollection.fact.title" :text="dataCollection.fact.text" />
+                        <Fact :title="dataCollection.fact.title" :text="dataCollection.fact.text" :logo="dataCollection.fact.logo"/>
           </div>
         </template>
 

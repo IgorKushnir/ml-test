@@ -1,9 +1,9 @@
 <template>
-  <div :class="'container stage p-v-80 p-v-40-md'">
+  <div class="container stage p-v-80 p-v-40-md">
     <div class="row gap-S justify-center">
       <div class="state-container col-6 col-12-md center">
         <div v-if="!hideIcon" class="icon">
-          <img src="@/assets/img/small-logo-dark.svg" alt="">
+          <img src="@/assets/img/small-logo-dark.svg" alt="Milla Nova">
         </div>
         <h1 v-if="title">{{ title }}</h1>
         <p v-if="text">{{text}}</p>
@@ -52,6 +52,7 @@ defineProps({
   width: 100px;
   margin: 0 auto 32px;
 }
+
 
 
 .half {
