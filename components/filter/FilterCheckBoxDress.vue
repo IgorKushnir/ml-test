@@ -1,7 +1,8 @@
 <template>
   <div v-on:click="$emit('value', !filter.value) " :class="'dress-container'  + (filter.value ? ' active' : '')">
     <div class="dress">
-      <img :src="'../img/silhouette/' + (filter.value ? filter.slug : filter.slug + '_s') + '.png'" width="100" height="100" :alt="filter.title">
+      <img v-show="filter.value" :src="'../img/silhouette/' + ( filter.slug ) + '.png'" width="100" height="100" :alt="filter.title">
+      <img v-show="!filter.value" :src="'../img/silhouette/' + (  filter.slug + '_s') + '.png'" width="100" height="100" :alt="filter.title">
     </div>
     <div class="p label">{{filter.title}}</div>
 

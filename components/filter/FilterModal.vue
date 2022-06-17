@@ -90,7 +90,7 @@ function getName(uid) {
     lines: "Line",
     styles: "Style",
     necklines: "Neckline",
-    decorations: "Decoration",
+    decorations: "Decor",
     others: "Other",
     budgets: "Budget"
   }
