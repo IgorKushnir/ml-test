@@ -130,6 +130,20 @@ query getAllFilters{
       }
     }
   }
+  
+  backnecklines (
+    locale: "en",
+    pagination: {
+      limit: -1
+    }
+  ){
+    data {
+      attributes {
+        title
+        slug
+      }
+    }
+  }
 }
 `);
 
