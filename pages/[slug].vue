@@ -33,12 +33,12 @@ onMounted(() => refresh())
 </script>
 
 <style scoped lang="scss">
-.component-text:deep(*) {
-  column-count: 1!important;
-}
-.content:deep(img) {
-  width: 100%;
-
-}
+//.component-text:deep(*) {
+//  column-count: 1!important;
+//}
+//.content:deep(img) {
+//  width: 100%;
+//
+//}
 
 </style>

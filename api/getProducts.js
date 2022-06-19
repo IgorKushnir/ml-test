@@ -6,19 +6,6 @@ export default async function ({filters, type, lang, page}) {
 
 
 
-    // function getFilter(key, values) {
-    //     const _values = values.map(v => {
-    //         return `{ slug: { eq: "${v}" } }`
-    //     })
-    //     return `{ ${key}: { or: [ ${_values.join(' ')} ] } }`
-    // };
-    // let _filters;
-    // if (filters.length > 0) {
-    //     _filters = filters.map(v => getFilter(v.key, v.values)).join(' ');
-    // } else {
-    //     _filters = '';
-    // }
-
     const _filters = filters.map(f => {
         const val = f.values.map(v => {
             return `{

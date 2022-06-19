@@ -1,5 +1,5 @@
 <template>
-<!--  <NuxtLink :to="to">-->
+  <NuxtLink :to="to">
   <div class="product-item">
 
       <div class="product-item-head">
@@ -9,7 +9,7 @@
       <Image :path="image" :alt="title"  size="medium" :class="'image ' + ratio"/>
 
   </div>
-<!--  </NuxtLink>-->
+  </NuxtLink>
 </template>
 
 <script setup>

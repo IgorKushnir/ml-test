@@ -1,28 +1,19 @@
 <template>
-  <div class="fact">
-    <div v-if="logo" class="logo">
+  <div v-if="data !== null" class="fact">
+    <div v-if="data.logo" class="logo">
       <img src="@/assets/img/small-logo-dark.svg" alt="Milla Nova">
     </div>
-    <h2 v-if="title">{{title}}</h2>
-    <p v-if="text">{{text}}</p>
+    <h2 v-if="data.title">{{data.title}}</h2>
+    <p v-if="data.text">{{data.text}}</p>
   </div>
 </template>
 
 <script setup>
 defineProps({
-  title: {
-    type: String,
+  data: {
+    type: Object,
     required: false
-  },
-  text: {
-    type: String,
-    required: false
-  },
-  logo: {
-    type: Boolean,
-    required: false,
-    default: false
-  },
+  }
 })
 </script>
 

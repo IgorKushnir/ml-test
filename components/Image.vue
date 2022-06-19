@@ -8,7 +8,7 @@
 <script setup>
 const {$getImage} = useNuxtApp()
 
-const props = defineProps({
+let props = defineProps({
   path: {
     type: Object,
     required: true
@@ -24,6 +24,8 @@ const props = defineProps({
   },
 
 })
+
+
 
 </script>
 

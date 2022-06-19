@@ -7,15 +7,6 @@ export default async function ({filters, type, lang, fetchFilters}) {
     // console.log(filters);
 
 
-    // function getFilter(key, values) {
-    //     const _values = values.map(v => {
-    //         return `{ slug: { eq: "${v}" } }`
-    //     })
-    //     return `{ ${key}: { or: [ ${_values.join(' ')} ] } }`
-    // };
-    // const _filters = filters.map(v => getFilter(v.key, v.values)).join(' ');
-
-
     const _filters = filters.map(f => {
         const val = f.values.map(v => {
             return `{

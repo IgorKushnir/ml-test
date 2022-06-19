@@ -24,7 +24,7 @@ const router = useRouter()
 
 function backHandler(e) {
   if (props.text != null) {
-    e('clicks', 'hello')
+    e('clicks')
   } else {
     router.back()
   }
