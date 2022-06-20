@@ -35,11 +35,12 @@
 
 
 <script setup>
-import Swiper, { Navigation, Scrollbar, FreeMode } from 'swiper'
+import  Swiper, { Navigation, Scrollbar, FreeMode } from 'swiper'
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/scrollbar';
+
 
 const props = defineProps({
   data: {
@@ -53,7 +54,6 @@ const props = defineProps({
 })
 
 const show = ref(false);
-let swiper = ref();
 const swiperEl = ref()
 const next = ref()
 const prev = ref()
@@ -63,7 +63,7 @@ const swiperScrollbar = ref()
 watch(() => props.data, (d) => {
   if (d === undefined) return
 
-  swiper = new Swiper(swiperEl.value, {
+  new Swiper(swiperEl.value, {
     modules: [Navigation, Scrollbar, FreeMode],
     slidesPerView: 2.5,
     spaceBetween: 20,

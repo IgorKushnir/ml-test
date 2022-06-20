@@ -34,11 +34,13 @@
 
 
 <script setup>
-import {Swiper, SwiperSlide, useSwiper} from 'swiper/vue';
+import {Swiper, SwiperSlide} from 'swiper/vue';
+
 import { Navigation, Scrollbar, FreeMode} from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/scrollbar';
+
 
 const props = defineProps({
   data: {

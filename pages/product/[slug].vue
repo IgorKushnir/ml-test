@@ -10,7 +10,7 @@
         </template>
       </StickyHeader>
 
-<!--      <Carusel :data="data.recommended?.products.data" title="Recommendation" class="m-v-80"/>-->
+      <Carusel2 v-if="data.recommended !== null" :data="data.recommended?.products.data" title="Recommendation" class="m-v-80"/>
 
 
 
@@ -69,7 +69,7 @@
 
       </Container>
 
-      <Carusel v-if="data.recommended !== null" :data="data.recommended.products.data" title="Recommendation" class="m-v-80"/>
+<!--      <Carusel v-if="data.recommended !== null" :data="data.recommended.products.data" title="Recommendation" class="m-v-80"/>-->
 
       <!--      <pre v-if="data.recommended !== null">{{ data.recommended.products.data.length }}</pre>-->
 
