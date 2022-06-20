@@ -1,43 +1,47 @@
 <template>
-<!--  <transition name="fade">-->
-<!--    <div v-show="show" class="overflow">-->
+  <transition name="fade">
+    <div v-show="show" class="overflow">
 
-<!--      <div ref="prev" class="prev">-->
-<!--        <StickyBarBack reverse text=""/>-->
-<!--      </div>-->
+      <div ref="prev" class="prev">
+        <StickyBarBack reverse text=""/>
+      </div>
 
-<!--      <div ref="next" class="next">-->
-<!--        <StickyBarBack text=""/>-->
-<!--      </div>-->
+      <div ref="next" class="next">
+        <StickyBarBack text=""/>
+      </div>
 
-<!--      <div class="container">-->
-<!--        <h2 v-if="title" class="m-t-0 m-b-40 m-b-24-md">{{ title }}</h2>-->
-<!--        <div ref="swiperEl" class="swiper">-->
-<!--          <div class="swiper-wrapper">-->
-<!--            <NuxtLink-->
-<!--                v-for="item in data"-->
-<!--                class="swiper-slide"-->
-<!--                :to="'/product/' + item.attributes.slug"-->
-<!--            >-->
-<!--              <div class="ratio-3x4">-->
-<!--                <Image :path="item.attributes.cover_3x4" :alt="item.attributes.title"/>-->
-<!--              </div>-->
-<!--              <p class="p-small dark-blue"><strong>{{ item.attributes.title }}</strong></p>-->
-<!--            </NuxtLink>-->
-<!--          </div>-->
-<!--          <div ref="swiperScrollbar" class="swiper-scrollbar m-t-40 m-t-24-md"></div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </transition>-->
+      <div class="container">
+        <h2 v-if="title" class="m-t-0 m-b-40 m-b-24-md">{{ title }}</h2>
+        <div ref="swiperEl" class="swiper">
+          <div class="swiper-wrapper">
+            <NuxtLink
+                v-for="item in data"
+                class="swiper-slide"
+                :to="'/product/' + item.attributes.slug"
+            >
+              <div class="ratio-3x4">
+                <Image :path="item.attributes.cover_3x4" :alt="item.attributes.title"/>
+              </div>
+              <p class="p-small dark-blue"><strong>{{ item.attributes.title }}</strong></p>
+            </NuxtLink>
+          </div>
+          <div ref="swiperScrollbar" class="swiper-scrollbar m-t-40 m-t-24-md"></div>
+        </div>
+      </div>
+    </div>
+  </transition>
 
 </template>
 
-<script setup >
+<script>
 import Swiper, { Navigation, Scrollbar, FreeMode} from 'swiper';
+
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/scrollbar';
+</script>
+<script setup>
+
 
 const props = defineProps({
   data: {
