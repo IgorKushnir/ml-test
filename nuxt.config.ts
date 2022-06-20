@@ -10,6 +10,13 @@ export default defineNuxtConfig({
     ],
 
     vite: {
+        build: {
+            rollupOptions: {
+                external: [
+                    'swiper/vue'
+                ]
+            }
+        },
         css: {
             preprocessorOptions: {
                 scss: {
