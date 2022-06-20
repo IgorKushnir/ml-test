@@ -6,17 +6,10 @@ export default defineNuxtConfig({
     ],
     buildModules: [
         'nuxt-vite',
-        '@nuxtjs/strapi'
+        '@nuxtjs/strapi',
     ],
+
     vite: {
-        build: {
-            ssr: false,
-            rollupOptions: {
-                external: [
-                    'swiper'
-                ]
-            }
-        },
         css: {
             preprocessorOptions: {
                 scss: {

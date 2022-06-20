@@ -35,7 +35,7 @@
 
 
 <script setup>
-import Swiper, { Navigation, Scrollbar, FreeMode} from 'swiper';
+import Swiper, { Navigation, Scrollbar, FreeMode} from '~/assets/js/swiper';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
