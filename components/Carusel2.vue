@@ -36,16 +36,14 @@
 
 <script setup>
 // import  Swiper, { Navigation, Scrollbar, FreeMode } from 'swiper'
-//
-// import 'swiper/css';
-// import 'swiper/css/navigation';
-// import 'swiper/css/scrollbar';
 
-// import Swiper bundle with all modules installed
-import Swiper from 'swiper/bundle';
+import Swiper from 'https://unpkg.com/swiper@8/swiper-bundle.esm.browser.min.js'
 
-// import styles bundle
-import 'swiper/css/bundle';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/scrollbar';
+
+
 
 const props = defineProps({
   data: {
