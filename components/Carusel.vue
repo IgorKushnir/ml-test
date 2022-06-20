@@ -9,7 +9,7 @@
       <h2 v-if="title" class="m-t-0 m-b-40 m-b-24-md">{{ title }}</h2>
 
       <swiper
-          :modules="[Navigation, Scrollbar, FreeMode]"
+          :modules="[Navigation, Scrollbar]"
           :slides-per-view="6"
           :space-between="40"
           :scrollbar="{ draggable: true }"
@@ -36,11 +36,13 @@
 <script setup>
 import {Swiper, SwiperSlide} from 'swiper/vue';
 
-import { Navigation, Scrollbar, FreeMode} from 'swiper';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/scrollbar';
+import { Navigation, Scrollbar} from 'swiper';
+// import 'swiper/css';
+// import 'swiper/css/navigation';
+// import 'swiper/css/scrollbar';
 
+import 'swiper/swiper-bundle.min.css'
+import 'swiper/swiper.min.css'
 
 const props = defineProps({
   data: {

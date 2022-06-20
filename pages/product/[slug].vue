@@ -10,7 +10,7 @@
         </template>
       </StickyHeader>
 
-      <Carusel2 v-if="data.recommended !== null" :data="data.recommended?.products.data" title="Recommendation" class="m-v-80"/>
+      <Carusel v-if="data.recommended !== null" :data="data.recommended?.products.data" title="Recommendation" class="m-v-80"/>
 
 
 
