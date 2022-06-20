@@ -96,7 +96,7 @@ const nuxtApp = useNuxtApp()
 
 nuxtApp.hook("page:finish", () => {
   // Is next and prev route Product page
-  if ((useRoute().name === usePreviousRoute().value.name) && (usePreviousRoute().value.name === 'product-slug') && !useIsMobile().value) {
+  if ((useRoute().name === usePreviousRoute().value) && (usePreviousRoute().value === 'product-slug') && !useIsMobile().value) {
     window.scrollTo({
       top: 153,
       behavior: "smooth"

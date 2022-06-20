@@ -1,4 +1,4 @@
-import { defineNuxtConfig } from 'nuxt'
+import {defineNuxtConfig} from 'nuxt'
 
 export default defineNuxtConfig({
     css: [
@@ -9,6 +9,14 @@ export default defineNuxtConfig({
         '@nuxtjs/strapi'
     ],
     vite: {
+        build: {
+            ssr: false,
+            rollupOptions: {
+                external: [
+                    'swiper'
+                ]
+            }
+        },
         css: {
             preprocessorOptions: {
                 scss: {
