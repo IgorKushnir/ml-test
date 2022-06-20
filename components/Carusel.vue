@@ -1,42 +1,41 @@
 <template>
-  <transition name="fade">
-    <div v-show="show" class="overflow">
 
-      <div ref="prev" class="prev">
-        <StickyBarBack reverse text=""/>
-      </div>
+  <div class="overflow">
+    <StickyBarBack reverse v-on:click="prev" class="prev" text=""/>
 
-      <div ref="next" class="next">
-        <StickyBarBack text=""/>
-      </div>
+    <StickyBarBack v-on:click="next"  class="next" text=""/>
 
-      <div class="container">
-        <h2 v-if="title" class="m-t-0 m-b-40 m-b-24-md">{{ title }}</h2>
-        <div ref="swiperEl" class="swiper">
-          <div class="swiper-wrapper">
-            <NuxtLink
-                v-for="item in data"
-                class="swiper-slide"
-                :to="'/product/' + item.attributes.slug"
-            >
-              <div class="ratio-3x4">
-                <Image :path="item.attributes.cover_3x4" :alt="item.attributes.title"/>
-              </div>
-              <p class="p-small dark-blue"><strong>{{ item.attributes.title }}</strong></p>
-            </NuxtLink>
-          </div>
-          <div ref="swiperScrollbar" class="swiper-scrollbar m-t-40 m-t-24-md"></div>
-        </div>
-      </div>
+    <div class="container">
+      <h2 v-if="title" class="m-t-0 m-b-40 m-b-24-md">{{ title }}</h2>
+
+      <swiper
+          :modules="[Navigation, Scrollbar, FreeMode]"
+          :slides-per-view="6"
+          :space-between="40"
+          :scrollbar="{ draggable: true }"
+          @swiper="onSwiper"
+      >
+        <swiper-slide  v-for="item in data">
+          <NuxtLink
+              class="swiper-slide"
+              :to="'/product/' + item.attributes.slug"
+          >
+            <div class="ratio-3x4">
+              <Image :path="item.attributes.cover_3x4" :alt="item.attributes.title"/>
+            </div>
+            <p class="p-small dark-blue"><strong>{{ item.attributes.title }}</strong></p>
+          </NuxtLink>
+        </swiper-slide>
+      </swiper>
     </div>
-  </transition>
+  </div>
 
 </template>
 
 
 <script setup>
-import Swiper, { Navigation, Scrollbar, FreeMode} from '~/assets/js/swiper';
-
+import {Swiper, SwiperSlide, useSwiper} from 'swiper/vue';
+import { Navigation, Scrollbar, FreeMode} from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/scrollbar';
@@ -52,73 +51,17 @@ const props = defineProps({
   }
 })
 
-const show = ref(false);
-let swiper = ref();
-const swiperEl = ref()
-const next = ref()
-const prev = ref()
-const swiperScrollbar = ref()
+const carusel = ref();
 
-
-watch(() => props.data, (d) => {
-  if (d === undefined) return
-
-  swiper = new Swiper(swiperEl.value, {
-    modules: [Navigation, Scrollbar, FreeMode],
-    slidesPerView: 2.5,
-    spaceBetween: 20,
-    freeMode: true,
-
-    breakpoints: {
-      480: {
-        slidesPerView: 3.5,
-        spaceBetween: 20,
-        freeMode: true,
-      },
-      768: {
-        slidesPerView: 4.5,
-        spaceBetween: 20,
-        freeMode: true,
-      },
-      960: {
-        slidesPerView: 5.5,
-        spaceBetween: 20,
-        freeMode: true,
-      },
-      1200: {
-        slidesPerView: 6,
-        spaceBetween: 40,
-        freeMode: false,
-      }
-    },
-
-    navigation: {
-      nextEl: next.value,
-      prevEl: prev.value,
-    },
-
-    scrollbar: {
-      el: swiperScrollbar.value,
-      hide: false,
-      draggable: true
-    },
-
-
-
-    on: {
-      init: function () {
-        show.value = true;
-      },
-    },
-  });
-
-})
-
-
-
-
-
-
+function onSwiper(s) {
+  carusel.value = s;
+}
+function prev() {
+  carusel.value.slidePrev()
+}
+function next() {
+  carusel.value.slideNext()
+}
 
 </script>
 
@@ -127,16 +70,8 @@ watch(() => props.data, (d) => {
   overflow: hidden;
   position: relative;
 }
-.swiper-scrollbar {
-  position: relative;
-  width: 100%;
-  left: 0;
-  height: 2px;
-}
-.swiper-scrollbar, .swiper-scrollbar > .swiper-scrollbar-drag {
-  border-radius: 0;
-  background-color: $border-dark;
-}
+
+
 
 
 .next, .prev {
@@ -144,10 +79,12 @@ watch(() => props.data, (d) => {
   z-index: 8;
   top: calc(50% - 32px)
 }
+
 .next {
   left: auto;
   right: calc((((100% - $grid-max-width) / 2) + 40px) / 2 - 32px);
 }
+
 .prev {
   left: calc((((100% - $grid-max-width) / 2) + 40px) / 2 - 32px);
   right: auto;
@@ -158,6 +95,7 @@ watch(() => props.data, (d) => {
     display: none;
   }
 }
+
 @include xl {
   .swiper {
     overflow: visible;
@@ -175,6 +113,18 @@ watch(() => props.data, (d) => {
 </style>
 
 <style lang="scss">
+.swiper-scrollbar {
+  position: relative;
+  width: 100%;
+  left: 0;
+  height: 2px;
+}
+
+.swiper-scrollbar{
+  border-radius: 0;
+  background-color: $border-dark;
+}
+
 .swiper-scrollbar-drag {
   border-radius: 0;
   height: 20px;

@@ -9,7 +9,7 @@
 
 
 
-<script setup lang="ts">
+<script setup>
 import getInitialData from '~/api/getInitialData';
 import fav32 from '~/assets/img/32.png';
 import fav256 from '~/assets/img/256.png';
