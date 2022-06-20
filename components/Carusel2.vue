@@ -35,12 +35,17 @@
 
 
 <script setup>
-import  Swiper, { Navigation, Scrollbar, FreeMode } from 'swiper'
+// import  Swiper, { Navigation, Scrollbar, FreeMode } from 'swiper'
+//
+// import 'swiper/css';
+// import 'swiper/css/navigation';
+// import 'swiper/css/scrollbar';
 
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/scrollbar';
+// import Swiper bundle with all modules installed
+import Swiper from 'swiper/bundle';
 
+// import styles bundle
+import 'swiper/css/bundle';
 
 const props = defineProps({
   data: {
@@ -64,7 +69,7 @@ watch(() => props.data, (d) => {
   if (d === undefined) return
 
   new Swiper(swiperEl.value, {
-    modules: [Navigation, Scrollbar, FreeMode],
+    // modules: [Navigation, Scrollbar, FreeMode],
     slidesPerView: 2.5,
     spaceBetween: 20,
     freeMode: true,

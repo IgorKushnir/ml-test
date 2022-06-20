@@ -36,13 +36,10 @@
 <script setup>
 import {Swiper, SwiperSlide} from 'swiper/vue';
 
-import { Navigation, Scrollbar} from 'swiper';
-// import 'swiper/css';
-// import 'swiper/css/navigation';
-// import 'swiper/css/scrollbar';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/scrollbar';
 
-import 'swiper/swiper-bundle.min.css'
-import 'swiper/swiper.min.css'
 
 const props = defineProps({
   data: {
