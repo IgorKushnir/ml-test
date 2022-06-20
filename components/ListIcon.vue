@@ -3,7 +3,6 @@
     <span :class="'icon icon-'+icon"/>
     <div>
       <NuxtLink :to="to" :target="target" class="list-container p-small">
-<!--        <span class="text" v-html="text"/>-->
         <div class="text"><slot /></div>
 
       </NuxtLink>
@@ -17,10 +16,6 @@ defineProps({
     type: String,
     required: false,
     default: 'bullet-16'
-  },
-  text: {
-    type: String,
-    required: true,
   },
   to: {
     type: String,

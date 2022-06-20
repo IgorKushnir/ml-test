@@ -94,14 +94,20 @@ function reportWindowSize() {
 
 const nuxtApp = useNuxtApp()
 
-// nuxtApp.hook("page:finish", () => {
-//   // Is next and prev route Product page
-//   if ((useRoute().name === usePreviousRoute().value.name) && (usePreviousRoute().value.name === 'product-slug') && !useIsMobile().value) {
-//     window.scrollTo(0, 153)
-//   } else {
-//     window.scrollTo(0, 0)
-//   }
-// })
+nuxtApp.hook("page:finish", () => {
+  // Is next and prev route Product page
+  if ((useRoute().name === usePreviousRoute().value.name) && (usePreviousRoute().value.name === 'product-slug') && !useIsMobile().value) {
+    window.scrollTo({
+      top: 153,
+      behavior: "smooth"
+    })
+  } else {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    })
+  }
+})
 </script>
 
 
