@@ -86,6 +86,8 @@ addRouteMiddleware(async (to, from) => {
     document.removeEventListener("scroll", scroll);
   }
 });
+
+
 </script>
 
 <style scoped lang="scss">

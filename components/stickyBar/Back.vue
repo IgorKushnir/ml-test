@@ -29,6 +29,9 @@ function backHandler(e) {
     router.back()
   }
 }
+
+
+
 </script>
 
 <style scoped lang="scss">
@@ -38,14 +41,17 @@ function backHandler(e) {
   align-items: center;
   cursor: pointer;
   /*height: 56px;*/
-  border-width: 0 1px;
+  border-width: 1px;
   border-style: solid;
   border-color: $border-dark;
-  height: 63px;
+  height: 64px;
   min-width: 64px;
-  margin: -.5px;
+  margin: -1px -.5px;
+  background-color: $white;
 }
 .back-btn.reverse {
+  margin-left: 0;
+  margin-top: -1px;
   .back-btn-container {
     flex-direction: row-reverse;
     .icon-arrow-16 {
@@ -82,8 +88,13 @@ function backHandler(e) {
 }
 
 @include md {
+  .back-btn-container.reverse {
+    margin-left: -1px;
+    margin-top: -2px;
+  }
   .back-btn {
-    height: 55px;
+    height: 56px;
+    min-width: 56px;
   }
   .back-btn.text  .back-btn-container {
     margin: 0 14px;

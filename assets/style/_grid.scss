@@ -1,5 +1,6 @@
 @use 'sass:math';
 $grid-columns: 12;
+$grid-max-width: 1600px;
 
 $layout-values: flex-start, flex-end, center, space-between, space-around;
 
@@ -16,7 +17,7 @@ $layout-values: flex-start, flex-end, center, space-between, space-around;
 .container {
   position: relative;
   width: 100%;
-  max-width: 1600px;
+  max-width: $grid-max-width;
   margin: 0 auto;
   padding: 0 40px;
   box-sizing: border-box;

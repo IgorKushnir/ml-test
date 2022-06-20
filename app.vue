@@ -15,7 +15,7 @@ import fav32 from '~/assets/img/32.png';
 import fav256 from '~/assets/img/256.png';
 import getAllFilters from '~/api/getAllFilters'
 
-import {useFiltersData, useMenuData, useTypesData} from "~/composables/states";
+import {useFiltersData, useMenuData, useTypesData, usePreviousRoute, useIsMobile} from "~/composables/states";
 
 // get Initial data (Menu, Lines, Types)
 let {data: initialData, error: initialError} = await getInitialData('en');
@@ -90,11 +90,18 @@ function reportWindowSize() {
 }
 
 
+
+
 const nuxtApp = useNuxtApp()
 
-nuxtApp.hook("page:finish", () => {
-  window.scrollTo(0, 0)
-})
+// nuxtApp.hook("page:finish", () => {
+//   // Is next and prev route Product page
+//   if ((useRoute().name === usePreviousRoute().value.name) && (usePreviousRoute().value.name === 'product-slug') && !useIsMobile().value) {
+//     window.scrollTo(0, 153)
+//   } else {
+//     window.scrollTo(0, 0)
+//   }
+// })
 </script>
 
 

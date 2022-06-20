@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!pending && data != null">
+    <div v-if="data != null">
       <!--      <InnerHeader :title="data.title" :sub_title="data.description"/>-->
 
       <StickyHeader :title="data.title">
@@ -9,6 +9,8 @@
           <StickyBarBack v-if="data.extra.next" text="Next" @click="nextHandler"/>
         </template>
       </StickyHeader>
+
+
 
 
       <Container>
@@ -35,7 +37,7 @@
             <div>
               <div class="subheader small">Color</div>
               <div class="p-small"><strong>
-                {{ data.colors.data.map(color => color.attributes.title).join(', ')  }}
+                {{ data.colors.data.map(color => color.attributes.title).join(', ') }}
               </strong></div>
             </div>
           </div>
@@ -45,7 +47,7 @@
         <Container class="gallery col-8 col-7-lg col-12-md m-t-0">
           <div v-if="data.fact !== null" class="col-6 ">
             <div class="ratio-3x4">
-              <Fact :data="data.fact" />
+              <Fact :data="data.fact"/>
             </div>
           </div>
           <template v-for="(img, index) in data.gallery.data">
@@ -61,23 +63,23 @@
               </div>
             </div>
           </template>
-
-
         </Container>
+
 
       </Container>
 
-<!--      <pre v-if="data.recommended !== null">{{ data.recommended.products.data.length }}</pre>-->
+      <Carusel :data="data.recommended?.products.data" title="Recommendation" class="m-v-80"/>
+
+      <!--      <pre v-if="data.recommended !== null">{{ data.recommended.products.data.length }}</pre>-->
 
 
     </div>
-    <Loading v-if="pending"/>
-    <PageNotFound v-if="data === null"/>
+    <Loading :pending="pending"/>
+    <PageNotFound :show="data == null"/>
   </div>
 </template>
 
-<script setup>
-scrollToTop: true
+<script setup lang="ts">
 import getProduct from '~/api/getProduct'
 
 const route = useRoute();
@@ -86,13 +88,17 @@ let slug = route.params.slug;
 
 
 let {data, pending, refresh, error} = await getProduct(slug)
-onMounted(() => refresh())
+onMounted(() => {
+  refresh()
+})
+
 
 function prevHandler() {
-  router.push('/product/'+data.value.extra.previous.slug)
+  router.replace('/product/' + data.value.extra.previous.slug)
 }
+
 function nextHandler() {
-  router.push('/product/'+data.value.extra.next.slug)
+  router.replace('/product/' + data.value.extra.next.slug)
 }
 
 function isLandscape(width, height) {
@@ -117,7 +123,7 @@ function isLandscape(width, height) {
 
 
 .gallery {
-  margin-top: 0!important;
+  margin-top: 0 !important;
 }
 
 </style>

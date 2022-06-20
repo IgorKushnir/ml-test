@@ -15,6 +15,7 @@ query Product{
     data {
       id
       attributes {
+      slug
       extra
       
         title
@@ -85,7 +86,7 @@ query Product{
 `);
 
 
-    const {data, pending, refresh, error} = await useAsyncData('p_data_' + collection, () => response, {
+    const {data, pending, refresh, error} = await useLazyAsyncData('p_data_' + collection, () => response, {
         transform: (d) => {
             if (isNaN(slugOrId)) {
                 if (d.data[collection].data[0]) {

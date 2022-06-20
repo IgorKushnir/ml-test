@@ -20,7 +20,7 @@ export default async function ({filters, type, lang, fetchFilters}) {
     // console.log(_filters);
 
 
-    console.log(_filters);
+    // console.log(_filters);
 
     const response = graphql(`
 query ProductsWithFilters{
