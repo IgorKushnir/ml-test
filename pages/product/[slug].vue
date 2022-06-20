@@ -10,53 +10,51 @@
         </template>
       </StickyHeader>
 
-      <Carusel2 v-if="data.recommended !== null" :data="data.recommended?.products.data" title="Recommendation" class="m-v-80"/>
 
 
 
       <Container>
         <div class="col-4 col-5-lg col-12-md">
-
-          <div class="m-b-32">
+          <div class="">
             <h1 class="title m-t-0">{{ data.title }}</h1>
-            <p>{{ data.description }}</p>
           </div>
+          <div class="sticky-content">
+            <p class="m-b-32">{{ data.description }}</p>
 
-          <div class="info m-b-32">
-            <div>
-              <div class="subheader small">Collection</div>
-              <div class="p-small"><strong>{{ data.collection.data.attributes.title }}</strong></div>
-            </div>
-            <div>
-              <div class="subheader small">Line</div>
-              <div class="p-small"><strong>{{ data.collection.data.attributes.line.data.attributes.title }}</strong>
+
+            <div class="info m-b-32">
+              <div>
+                <div class="subheader small">Collection</div>
+                <div class="p-small"><strong>{{ data.collection.data.attributes.title }}</strong></div>
+              </div>
+              <div>
+                <div class="subheader small">Line</div>
+                <div class="p-small"><strong>{{ data.collection.data.attributes.line.data.attributes.title }}</strong>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div v-if="data.colors.data.length > 0" class="info m-b-32">
-            <div>
-              <div class="subheader small">Color</div>
-              <div class="p-small"><strong>
-                {{ data.colors.data.map(color => color.attributes.title).join(', ') }}
-              </strong></div>
+            <div v-if="data.colors.data.length > 0" class="info m-b-32">
+              <div>
+                <div class="subheader small">Color</div>
+                <div class="p-small"><strong>
+                  {{ data.colors.data.map(color => color.attributes.title).join(', ') }}
+                </strong></div>
+              </div>
             </div>
           </div>
         </div>
 
 
-        <Container class="gallery col-8 col-7-lg col-12-md m-t-0">
-          <div v-if="data.fact !== null" class="col-6 ">
-            <div class="ratio-3x4">
-              <Fact :data="data.fact"/>
-            </div>
-          </div>
+        <div class="gallery col-8 col-7-lg col-12-md m-t-0">
+
+
+
           <template v-for="(img, index) in data.gallery.data">
             <div
-                :class="isLandscape(img.attributes.width, img.attributes.height) ? 'col-6 col-12-lg col-6-md col-12-sm' : 'col-12'"
-                :style="'order: '+index"
+                :class="isLandscape(img.attributes.width, img.attributes.height) ? 'vertical' : 'horizontal'"
             >
-              <div :class="isLandscape(img.attributes.width, img.attributes.height) ? 'ratio-3x4' : 'ratio-4x3'">
+              <div :class="isLandscape(img.attributes.width, img.attributes.height) ? 'ratio-3x4' : 'ratio-3x2'">
                 <Image
                     :path="{data: img}"
                     :alt="data.title"
@@ -64,14 +62,19 @@
               </div>
             </div>
           </template>
-        </Container>
+
+          <div v-if="data.fact !== null" class="vertical">
+            <div class="ratio-3x4">
+              <Fact :data="data.fact"/>
+            </div>
+          </div>
+        </div>
 
 
       </Container>
 
-<!--      <Carusel v-if="data.recommended !== null" :data="data.recommended.products.data" title="Recommendation" class="m-v-80"/>-->
-
-      <!--      <pre v-if="data.recommended !== null">{{ data.recommended.products.data.length }}</pre>-->
+      <Carusel v-if="data.recommended !== null" :data="data.recommended?.products.data" title="Recommendation" class="m-v-80"/>
+      <Carusel v-if="data.extra !== null" :data="data.extra?.also" title="You may also like" :column="4" class="m-v-80"/>
 
 
     </div>
@@ -122,9 +125,46 @@ function isLandscape(width, height) {
   margin-bottom: 8px;
 }
 
+.sticky-content {
+  position: sticky;
+  top: 104px;
+}
+
 
 .gallery {
-  margin-top: 0 !important;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 40px;
+  grid-auto-flow: dense;
+}
+.horizontal {
+  grid-column: auto/span 2;
+}
+.vertical {
+  grid-column: auto/span 1;
+}
+
+@include md {
+  .sticky-content {
+    position: relative;
+    top:0
+  }
+}
+@include xl {
+  .gallery {
+    grid-gap: 16px;
+  }
+}
+@include sm {
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+  .horizontal {
+    grid-column: auto/span 1;
+  }
+  .vertical {
+    grid-column: auto/span 1;
+  }
 }
 
 </style>
