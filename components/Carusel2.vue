@@ -36,12 +36,20 @@
 
 <script setup>
 // import  Swiper, { Navigation, Scrollbar, FreeMode } from 'swiper'
+useHead({
+  link: [
+    {
+      rel:"stylesheet",
+      href: "https://unpkg.com/swiper@8/swiper-bundle.min.css"
+    }
+  ]
+})
 
 import Swiper from 'https://unpkg.com/swiper@8/swiper-bundle.esm.browser.min.js'
 
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/scrollbar';
+// import 'swiper/css';
+// import 'swiper/css/navigation';
+// import 'swiper/css/scrollbar';
 
 
 
