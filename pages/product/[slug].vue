@@ -22,14 +22,15 @@
             <p class="m-b-32">{{ data.description }}</p>
 
 
-            <div class="info m-b-32">
+            <div class="info m-b-32" v-if="data.collection.data">
               <div>
                 <div class="subheader small">Collection</div>
                 <div class="p-small"><strong>{{ data.collection.data.attributes.title }}</strong></div>
               </div>
               <div>
                 <div class="subheader small">Line</div>
-                <div class="p-small"><strong>{{ data.collection.data.attributes.line.data.attributes.title }}</strong>
+                <div class="p-small">
+                  <strong>{{ data.collection.data.attributes.line.data.attributes.title }}</strong>
                 </div>
               </div>
             </div>
