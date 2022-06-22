@@ -52,10 +52,17 @@ img {
   .hide-sm {
     display: none!important;
   }
+  .display-block-sm {
+    display: block!important;
+  }
+
 }
 @include md {
   .hide-md {
     display: none!important;
+  }
+  .display-block-md {
+    display: block!important;
   }
   .no-mobile-scroll {
     overflow: hidden;
@@ -69,10 +76,16 @@ img {
   .hide-lg {
     display: none!important;
   }
+  .display-block-lg {
+    display: block!important;
+  }
 }
 @include xl {
   .hide-xl {
     display: none!important;
+  }
+  .display-block-lg {
+    display: block!important;
   }
 }
 

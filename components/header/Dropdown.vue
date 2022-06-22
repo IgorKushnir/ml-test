@@ -250,9 +250,5 @@ ul {
   .collections:after {
     all: unset;
   }
-
-  .display-block-md {
-    display: block;
-  }
 }
 </style>

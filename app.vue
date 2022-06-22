@@ -78,7 +78,6 @@ useHead({
 onMounted(async () => {
   reportWindowSize()
   window.addEventListener('resize', reportWindowSize);
-  // console.log(localStorage);
 });
 
 // Check size

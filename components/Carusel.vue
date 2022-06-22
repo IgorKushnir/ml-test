@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div v-show="show" class="overflow">
+    <div v-show="show" class="overflow m-v-80 m-v-40-xl m-v-32-md">
 
       <div ref="prev" class="prev">
         <StickyBarBack reverse text=""/>
@@ -10,24 +10,31 @@
         <StickyBarBack text=""/>
       </div>
 
-      <div class="container">
-        <h2 v-if="title" class="m-t-0 m-b-40 m-b-24-md">{{ title }}</h2>
-        <div ref="swiperEl" class="swiper">
-          <div class="swiper-wrapper">
-            <NuxtLink
-                v-for="item in data"
-                class="swiper-slide"
-                :to="'/product/' + item.attributes.slug"
-            >
-              <div class="ratio-3x4">
-                <Image :path="item.attributes.cover_3x4" :alt="item.attributes.title"/>
+            <div class="container">
+<!--      <Container justify="justify-center">-->
+              <div class="row gap-S justify-center">
+                <div :class="colClass">
+                  <h2 v-if="title" class="m-t-0 m-b-40 m-b-24-md">{{ title }}</h2>
+                  <div ref="swiperEl" class="swiper">
+                    <div class="swiper-wrapper">
+                      <NuxtLink
+                          v-for="item in data"
+                          class="swiper-slide"
+                          :to="'/product/' + item.attributes.slug"
+                      >
+                        <div class="ratio-3x4">
+                          <Image :path="item.attributes.cover_3x4" :alt="item.attributes.title"/>
+                        </div>
+                        <p class="p-small dark-blue"><strong>{{ item.attributes.title }}</strong></p>
+                      </NuxtLink>
+                    </div>
+                    <div ref="swiperScrollbar" class="swiper-scrollbar m-t-40 m-t-24-md"></div>
+                  </div>
+                </div>
               </div>
-              <p class="p-small dark-blue"><strong>{{ item.attributes.title }}</strong></p>
-            </NuxtLink>
-          </div>
-          <div ref="swiperScrollbar" class="swiper-scrollbar m-t-40 m-t-24-md"></div>
-        </div>
-      </div>
+
+<!--      </Container>-->
+            </div>
     </div>
   </transition>
 
@@ -38,7 +45,6 @@
 import '~/assets/js/swiper/swiper-bundle.min.css';
 
 import Swiper from '~/assets/js/swiper/swiper-bundle.esm.browser.min.js'
-
 
 
 const props = defineProps({
@@ -54,7 +60,12 @@ const props = defineProps({
     type: Number,
     required: false,
     default: 6
-  }
+  },
+  colClass: {
+    type: String,
+    required: false,
+    default: 'col-12'
+  },
 })
 
 const show = ref(false);
@@ -69,10 +80,7 @@ const brakePoints = {
 }
 
 
-
-watch(() => props.data, (d) => {
-  if (d === undefined) return
-
+onMounted(() => {
   new Swiper(swiperEl.value, {
     slidesPerView: brakePoints[props.column][4],
     spaceBetween: 20,
@@ -113,20 +121,13 @@ watch(() => props.data, (d) => {
     },
 
 
-
     on: {
       init: function () {
         show.value = true;
       },
     },
   });
-
 })
-
-
-
-
-
 
 
 </script>
@@ -136,12 +137,14 @@ watch(() => props.data, (d) => {
   overflow: hidden;
   position: relative;
 }
+
 .swiper-scrollbar {
   position: relative;
   width: 100%;
   left: 0;
   height: 2px;
 }
+
 .swiper-scrollbar, .swiper-scrollbar > .swiper-scrollbar-drag {
   border-radius: 0;
   background-color: $border-dark;
@@ -153,10 +156,12 @@ watch(() => props.data, (d) => {
   z-index: 8;
   top: calc(50% - 32px)
 }
+
 .next {
   left: auto;
   right: calc((((100% - $grid-max-width) / 2) + 40px) / 2 - 32px);
 }
+
 .prev {
   left: calc((((100% - $grid-max-width) / 2) + 40px) / 2 - 32px);
   right: auto;
@@ -167,6 +172,7 @@ watch(() => props.data, (d) => {
     display: none;
   }
 }
+
 @include xl {
   .swiper {
     overflow: visible;

@@ -86,6 +86,7 @@
 
 <script setup lang="ts">
 import getProduct from '~/api/getProduct'
+const { $setViewedProduct } = useNuxtApp()
 
 const route = useRoute();
 const router = useRouter();
@@ -94,8 +95,11 @@ let slug = route.params.slug;
 
 let {data, pending, refresh, error} = await getProduct(slug)
 onMounted(() => {
-  refresh()
+  refresh().then(_ => {
+    $setViewedProduct(data.value.id, data.value.slug)
+  });
 })
+
 
 
 function prevHandler() {
@@ -109,6 +113,7 @@ function nextHandler() {
 function isLandscape(width, height) {
   return (width / height) < 1
 }
+
 
 
 </script>
