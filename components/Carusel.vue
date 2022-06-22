@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div v-show="show" class="overflow m-v-80 m-v-40-xl m-v-32-md">
+    <div v-show="show" class="overflow m-v-80 m-v-40-xl m-v-32-md" :class="navCompact ? 'full' : 'compact'">
 
       <div ref="prev" class="prev">
         <StickyBarBack reverse text=""/>
@@ -66,6 +66,11 @@ const props = defineProps({
     required: false,
     default: 'col-12'
   },
+  navCompact: {
+    type: Boolean,
+    required: false,
+    default: true
+  }
 })
 
 const show = ref(false);
@@ -153,19 +158,35 @@ onMounted(() => {
 
 .next, .prev {
   position: absolute;
-  z-index: 8;
+  z-index: 2;
   top: calc(50% - 32px)
 }
 
-.next {
-  left: auto;
-  right: calc((((100% - $grid-max-width) / 2) + 40px) / 2 - 32px);
+.full {
+  .next {
+    left: auto;
+    right: calc((((100% - $grid-max-width) / 2) + 40px) / 2 - 32px);
+  }
+
+  .prev {
+    left: calc((((100% - $grid-max-width) / 2) + 40px) / 2 - 32px);
+    right: auto;
+  }
 }
 
-.prev {
-  left: calc((((100% - $grid-max-width) / 2) + 40px) / 2 - 32px);
-  right: auto;
+.compact {
+  .next {
+    left: auto;
+    right: calc(100% / 8);
+  }
+
+  .prev {
+    left: calc(100% / 8);
+    right: auto;
+  }
 }
+
+
 
 @include md {
   .next, .prev {
@@ -177,15 +198,26 @@ onMounted(() => {
   .swiper {
     overflow: visible;
   }
+  .compact {
+    .next {
+      right: -1px;
+    }
+    .prev {
+      left: -1px;
+    }
+  }
 }
 
 @media (max-width: $grid-max-width) {
-  .next {
-    right: -1px;
+  .full {
+    .next {
+      right: -1px;
+    }
+    .prev {
+      left: -1px;
+    }
   }
-  .prev {
-    left: -1px;
-  }
+
 }
 </style>
 

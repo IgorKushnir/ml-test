@@ -24,7 +24,7 @@
                   <NuxtLink :to="'/trunk-shows/'+item.attributes.slug">
                     <h2 class="m-t-0">{{item.attributes.title}}</h2>
                   </NuxtLink>
-                  <span><strong>{{getDatesInRange(item.attributes.from, item.attributes.to)}}</strong></span>
+                  <span><strong>{{$getDatesInRange(item.attributes.from, item.attributes.to, $getMonths)}}</strong></span>
                   <span class="m-l-16">
                   <span class="icon-location-16 p-small m-r-8"/>
                   <span>{{ [item.attributes.city, item.attributes.country].join(', ') }}</span>
@@ -54,32 +54,9 @@
 import {getTrunkShows} from '~/api/trunkShows'
 let {data, pending, refresh, error} = await getTrunkShows('en')
 
-const months = [
-  ['February', 'Feb.'],
-  ['March', 'Mar.'],
-  ['April', 'Apr.'],
-  ['May', 'May'],
-  ['June', 'Jun.'],
-  ['July', 'Jul.'],
-  ['August', 'Aug.'],
-  ['September', 'Sep..'],
-  ['October', 'Oct.'],
-  ['November', 'Nov.'],
-  ['December ', 'Dec.'],
-]
-function getDatesInRange(from, to) {
-  const _from = new Date(from);
-  const _to = new Date(to);
-  const compareDate = (_from.getMonth() + _from.getFullYear()) === (_to.getMonth() + _to.getFullYear())
+const { $getMonths, $getDatesInRange } = useNuxtApp()
 
 
-  const mFrom = months[_from.getMonth() - 1][1]
-  const mTo = months[_to.getMonth() - 1][1]
-  if (compareDate) {
-    return mFrom + ' ' + _from.getDate() + '-' + _to.getDate()  ;
-  }
-  return mFrom + ' ' + _from.getDate() + ' - ' + mTo + ' ' +  _to.getDate();
-}
 
 const getMonthSection = computed(()=> {
   let d = data.value.map(e => {
@@ -90,7 +67,7 @@ const getMonthSection = computed(()=> {
   d.forEach((e, i) => {
     if (e[0] !== prev) {
       prev = e[0];
-      d[i] = months[e[0] - 1][0] + ' ' + e[1]
+      d[i] = $getMonths[e[0] - 1][0] + ' ' + e[1]
     } else {
       d[i] = null;
     }

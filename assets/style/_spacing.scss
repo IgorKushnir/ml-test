@@ -1,4 +1,4 @@
-$spaceamounts: (0, 4, 8, 16, 24, 32, 40, 48, 56, 64, 80, 120, 160); // Adjust this to include the pixel amounts you need.
+$spaceamounts: (0, 4, 8, 12, 16, 24, 32, 40, 48, 56, 64, 80, 120, 160); // Adjust this to include the pixel amounts you need.
 $sides: (top, bottom, left, right, v, h); // Leave this variable alone
 
 @each $space in $spaceamounts {
