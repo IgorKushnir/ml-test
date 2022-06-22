@@ -51,15 +51,30 @@
 
 
 
-          <template v-for="(img, index) in data.gallery.data">
+          <template v-for="(item, index) in data.gallery.data">
             <div
-                :class="isLandscape(img.attributes.width, img.attributes.height) ? 'vertical' : 'horizontal'"
+                v-if="mime(item.attributes.mime) === 'image'"
+                :class="isLandscape(item.attributes.width, item.attributes.height) ? 'vertical' : 'horizontal'"
             >
-              <div :class="isLandscape(img.attributes.width, img.attributes.height) ? 'ratio-3x4' : 'ratio-3x2'">
+              <div :class="isLandscape(item.attributes.width, item.attributes.height) ? 'ratio-3x4' : 'ratio-3x2'">
                 <Image
-                    :path="{data: img}"
+                    :path="{data: item}"
                     :alt="data.title"
                 />
+              </div>
+            </div>
+
+            <div  v-if="mime(item.attributes.mime) === 'video'" class="vertical">
+              <div class="ratio-3x4">
+                <Image :path="data.cover_3x4" :alt="data.title" only-placeholder/>
+                <video
+                    playsinline=""
+                    :src="$getAbsoluteUrl(item.attributes.url)"
+                    loop="loop"
+                    tabindex="-1"
+                    muted autoplay aria-hidden="true"
+                >
+                </video>
               </div>
             </div>
           </template>
@@ -115,6 +130,10 @@ function isLandscape(width, height) {
 }
 
 
+function mime(mime) {
+  return mime.split("/")[0]
+}
+
 
 </script>
 
@@ -148,6 +167,15 @@ function isLandscape(width, height) {
 }
 .vertical {
   grid-column: auto/span 1;
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 @include md {

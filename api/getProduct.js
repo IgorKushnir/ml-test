@@ -20,9 +20,21 @@ query Product{
       
         title
         description
+        cover_3x4 {
+          data {
+            attributes {
+              width
+              height
+              url
+              formats
+              placeholder
+            }
+          }
+        }
         gallery {
           data {
             attributes {
+              mime
               width
               height
               url

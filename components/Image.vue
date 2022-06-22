@@ -1,7 +1,7 @@
 <template>
   <div class="img-component-container">
     <img v-if="path.data?.attributes?.placeholder != null" :src="path.data.attributes.placeholder" :alt="alt" class="img-component placeholder">
-    <img :src="$getImage(path, size)"  :alt="alt" class="img-component"  loading="lazy">
+    <img v-if="!onlyPlaceholder" :src="$getImage(path, size)"  :alt="alt" class="img-component"  loading="lazy">
   </div>
 </template>
 
@@ -22,6 +22,11 @@ let props = defineProps({
     required: false,
     default: 'medium'
   },
+  onlyPlaceholder: {
+    type: Boolean,
+    required: false,
+    default: false
+  }
 
 })
 
