@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div v-show="show" class="overflow m-v-80 m-v-40-xl m-v-32-md" :class="navCompact ? 'full' : 'compact'">
+    <div v-show="show" class="overflow m-v-80 m-v-40-xl m-v-32-md" :class="navCompact ? 'compact' : 'full'">
 
       <div ref="prev" class="prev">
         <StickyBarBack reverse text=""/>
@@ -69,7 +69,7 @@ const props = defineProps({
   navCompact: {
     type: Boolean,
     required: false,
-    default: true
+    default: false
   }
 })
 

@@ -48,6 +48,7 @@
             :data="data.attributes.offered.products.data"
             :column="4"
             col-class="col-8 col-10-xl col-12-lg"
+            nav-compact
         />
 
       </div>
