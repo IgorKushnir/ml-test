@@ -51,6 +51,13 @@ query ProductsWithFilters{
       attributes {
         title
         slug
+        type {
+          data {
+            attributes {
+              slug
+            }
+          }
+        }
         cover_3x4 {
           data {
             attributes {

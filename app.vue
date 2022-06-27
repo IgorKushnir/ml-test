@@ -4,6 +4,7 @@
 
     <NuxtPage/>
 
+    <Footer/>
   </div>
 </template>
 
@@ -11,11 +12,14 @@
 
 <script setup>
 import getInitialData from '~/api/getInitialData';
-import fav32 from '~/assets/img/32.png';
-import fav256 from '~/assets/img/256.png';
+// import fav32 from '/public/img/32.png';
+// import fav256 from '/public/img/256.png';
 import getAllFilters from '~/api/getAllFilters'
 
 import {useFiltersData, useMenuData, useTypesData, usePreviousRoute, useIsMobile} from "~/composables/states";
+
+const nuxtApp = useNuxtApp()
+
 
 // get Initial data (Menu, Lines, Types)
 let {data: initialData, error: initialError} = await getInitialData('en');
@@ -44,10 +48,10 @@ useHead({
   charset: 'utf-8',
   link: [
     {
-      href: fav32, rel: "shortcut icon", type:"image/x-icon",
+      href: '/img/32.png', rel: "shortcut icon", type:"image/x-icon",
     },
     {
-      href: fav256, rel: "apple-touch-icon",
+      href: '/img/256.png', rel: "apple-touch-icon",
     }
   ],
 
@@ -78,6 +82,8 @@ useHead({
 onMounted(async () => {
   reportWindowSize()
   window.addEventListener('resize', reportWindowSize);
+
+  loadNextHook()
 });
 
 // Check size
@@ -91,22 +97,51 @@ function reportWindowSize() {
 
 
 
-const nuxtApp = useNuxtApp()
 
 nuxtApp.hook("page:finish", () => {
-  // Is next and prev route Product page
-  if ((useRoute().name === usePreviousRoute().value) && (usePreviousRoute().value === 'product-slug') && !useIsMobile().value) {
-    window.scrollTo({
-      top: 153,
-      behavior: "smooth"
-    })
-  } else {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    })
+  setTimeout(go, 500)
+
+  function go() {
+    // Is next and prev route Product page
+    if ((useRoute().name === usePreviousRoute().value) && (usePreviousRoute().value === 'product-slug') && !useIsMobile().value) {
+      window.scrollTo({
+        top: 153,
+        // behavior: "smooth"
+      })
+    } else {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      })
+    }
   }
+
 })
+
+
+
+
+
+function loadNextHook() {
+  let currentPageHeight = ref(0);
+  let allowLoadNext = true;
+  watch(currentPageHeight, () => {
+    allowLoadNext = true;
+  })
+
+  document.addEventListener('scroll', function(e) {
+    currentPageHeight.value = document.body.scrollHeight;
+    const Y = window.scrollY - (document.body.scrollHeight - window.innerHeight);
+    if (-Y < window.innerHeight) {
+      if (allowLoadNext) {
+        nuxtApp.callHook('page:loadNext')
+        allowLoadNext = false;
+      }
+    }
+
+  });
+}
+
 </script>
 
 

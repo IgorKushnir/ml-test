@@ -10,31 +10,31 @@ a {
   text-decoration: none;
 }
 
-h1 {
+h1, .h1 {
   @extend %uppercase;
   font-size: 36px;
   margin: 16px 0;
   line-height: 1.2em;
 }
-h2 {
+h2, .h2 {
   @extend %uppercase;
   font-size: 32px;
   margin: 16px 0;
   line-height: 1.2em;
 }
-h3 {
+h3, .h3 {
   @extend %uppercase;
   font-size: 24px;
   margin: 16px 0;
   line-height: 1.2em;
 }
-h4 {
+h4, .h4 {
   @extend %uppercase;
   font-size: 20px;
   margin: 16px 0;
   line-height: 1.2em;
 }
-h5 {
+h5, .h5 {
   @extend %uppercase;
   font-size: 16px;
   margin: 16px 0;
@@ -89,24 +89,28 @@ p, .p {
 //}
 
 
-
+@include lg {
+  .title {
+    font-size: 40px;
+  }
+}
 
 
 @include md {
-  h1 {
+  h1, .h1 {
     font-size: 32px;
     margin: 16px 0;
   }
-  h2 {
+  h2, .h2 {
     font-size: 24px;
   }
-  h3 {
+  h3, .h3 {
     font-size: 20px;
   }
-  h4 {
+  h4, .h4 {
     font-size: 18px;
   }
-  h5 {
+  h5, .h5 {
     font-size: 14px;
   }
   .title {

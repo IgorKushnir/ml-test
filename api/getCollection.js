@@ -29,6 +29,9 @@ query Collection{
           data {
             attributes {
               url
+              formats
+              placeholder
+              mime
             }
           }
         }
@@ -36,6 +39,10 @@ query Collection{
           title
           text
           logo
+          ratio
+          layout
+          background_color
+          text_color
         }
         line {
           data {

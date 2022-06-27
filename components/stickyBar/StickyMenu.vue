@@ -1,9 +1,11 @@
 <template>
   <div>
     <NuxtLink
-        v-for="item in data"
+        v-for="(item, index) in data"
         :to="path + item.slug"
         class="nav-link hover"
+        :active-class="((activeItem === index) || (activeItem === null)) ? 'router-link-active' : '_'"
+        :exact-active-class="((activeItem === index) || (activeItem === null)) ? 'router-link-exact-active' : '_'"
     >{{ item.title }}</NuxtLink>
   </div>
 </template>
@@ -18,6 +20,11 @@ const props = defineProps({
     type: String,
     required: false,
     default: ''
+  },
+  activeItem: {
+    type: Number,
+    required: false,
+    default: null
   }
 })
 

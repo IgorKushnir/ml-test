@@ -33,6 +33,16 @@ export default defineNuxtPlugin(() => {
                     return mFrom + ' ' + _from.getDate() + '-' + _to.getDate() + _fromYear;
                 }
                 return mFrom + ' ' + _from.getDate() + _fromYear + ' - ' + mTo + ' ' +  _to.getDate() + _toYear;
+            },
+            getDate: (date, months) => {
+                const _date = new Date(date);
+                const m = months[_date.getMonth() - 1][0]
+
+                return m + ' ' +  _date.getDate() + ', ' + _date.getFullYear()
+            },
+
+            handleNewLine: (string) => {
+                return string.replace(/(?:\r\n|\r|\n)/g, '<br />');
             }
         }
     }

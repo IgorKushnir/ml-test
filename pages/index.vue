@@ -1,27 +1,25 @@
 <template>
   <div>
-    <State title="Home page"></State>
+    <transition name="fade">
+      <div class="content" v-if="!pending && data != null">
+        <ContentBanner :data="data.attributes.banner" type="main" />
+
+        <Content :data="data.attributes.content"/>
+
+      </div>
+    </transition>
+    <PageNotFound :show="!pending && data === null"/>
+    <Loading :pending="pending"/>
   </div>
 </template>
 
 <script setup lang="ts">
+import getMain from '~/api/getMain'
 
-useHead({
-  title: 'Main'
+let { data, pending, refresh, error } = await getMain('en')
 
-})
 
-// let counter = useFavCount();
-// // Transition
-// // https://stackblitz.com/edit/nuxt-starter-veals5?file=components%2FMountain.vue
-//
-// onMounted(() => {
-//   counter.value++;
-// })
-//
-// function count() {
-//   counter.value++;
-// }
+
 
 </script>
 

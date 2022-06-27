@@ -20,17 +20,6 @@ query Product{
       
         title
         description
-        cover_3x4 {
-          data {
-            attributes {
-              width
-              height
-              url
-              formats
-              placeholder
-            }
-          }
-        }
         gallery {
           data {
             attributes {
@@ -71,6 +60,10 @@ query Product{
           title
           text
           logo
+          ratio
+          layout
+          background_color
+          text_color
         }
         recommended {
           products {

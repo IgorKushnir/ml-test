@@ -1,20 +1,37 @@
 <template>
-  <div v-if="data !== null" class="fact">
-    <div v-if="data.logo" class="logo">
-      <img src="@/assets/img/small-logo-dark.svg" alt="Milla Nova">
+  <div v-if="data !== null" class="fact p-v-80" :class="data.background_color + '_bg'">
+
+    <div class="row justify-center">
+      <div :class="['col-6', 'col-8', 'col-8'][layoutIndex]">
+        <div v-if="data.logo"  :class="['logo lg', 'logo', 'logo sm'][layoutIndex]">
+
+          <Logo :color="data.text_color"/>
+
+        </div>
+        <div :class="['h1', 'h2', 'h3'][layoutIndex] + ' ' + data.text_color" v-if="data.title" v-html="$handleNewLine(data.title)"/>
+        <div :class="['p', 'p', 'p-small'][layoutIndex] + ' ' + data.text_color" v-if="data.text" v-html="$handleNewLine(data.text)"/>
+      </div>
+
     </div>
-    <h2 v-if="data.title">{{data.title}}</h2>
-    <p v-if="data.text">{{data.text}}</p>
+
   </div>
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   data: {
     type: Object,
     required: false
   }
 })
+
+const layoutIndex = computed(() => {
+  const keys = Object.keys(props.data);
+  const index = keys.findIndex(d => d.endsWith('layout'))
+  return ['wide', 'normal', 'tight'].findIndex(el => el === props.data[keys[index]])
+})
+
+
 </script>
 
 <style scoped lang="scss">
@@ -24,25 +41,102 @@ defineProps({
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
-  background-color: $pink;
+  height: auto;
+  min-height: 100%;
+  //background-color: $pink;
   text-align: center;
-  padding: 40px;
+  //padding: 40px;
   * {
-    max-width: 400px;
     margin-top: unset;
   }
 }
 
-.logo img {
+.logo {
   background-image: none;
-  width: 100px;
+  height: 88px;
   margin: 0 auto 32px;
 }
 
+.logo.lg {
+  height: 100px;
+}
+.logo.sm {
+  height: 64px;
+}
+
+
 @include md {
   .logo img {
-    width: 56px;
+    height: 56px;
   }
+}
+
+.light {
+  color: #F1F2F3;
+}
+.dark_blue {
+  color: #051C2C;
+}
+.dark_cerulean {
+  color: #004876;
+}
+.glacier {
+  color: #7AA5BA;
+}
+.vanilla_ice {
+  color: #E5D4D3;
+}
+.gold {
+  color: #F6DFA4;
+}
+.gun_powder {
+  color: #4D4E56;
+}
+.empress {
+  color: #726869;
+}
+.regent_grey {
+  color: #7B8687;
+}
+.alto {
+  color: #D2C6C3;
+}
+.sand {
+  color: #D0CAC2;
+}
+
+
+.light_bg {
+  background-color: #F1F2F3;
+}
+.dark_blue_bg {
+  background-color: #051C2C;
+}
+.dark_cerulean_bg {
+  background-color: #004876;
+}
+.glacier_bg {
+  background-color: #7AA5BA;
+}
+.vanilla_ice_bg {
+  background-color: #E5D4D3;
+}
+.gold_bg {
+  background-color: #F6DFA4;
+}
+.gun_powder_bg {
+  background-color: #4D4E56;
+}
+.empress_bg {
+  background-color: #726869;
+}
+.regent_grey_bg {
+  background-color: #7B8687;
+}
+.alto_bg {
+  background-color: #D2C6C3;
+}
+.sand_bg {
+  background-color: #D0CAC2;
 }
 </style>

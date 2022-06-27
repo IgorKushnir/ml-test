@@ -4,7 +4,7 @@
 
     <StickyHeader>
       <template #center>
-        <StickyMenu :data="typeData" path="/discover/" class="grid-column-center"/>
+        <StickyMenu :data="typeData" path="/" class="grid-column-center"/>
       </template>
 
       <template #end>
@@ -18,14 +18,14 @@
       </template>
     </StickyHeader>
 
-      <ProductGrid
-          v-if="dataProducts!== null"
-          :products-data="dataProducts"
-          :pending-products="pendingProducts"
-          :grid="4"
-          infinite
-          @load="page => filterData(currentFilters, page)"
-      />
+    <ProductGrid
+        v-if="dataProducts!== null"
+        :products-data="dataProducts"
+        :pending-products="pendingProducts"
+        :grid="4"
+        infinite
+        @load="page => filterData(currentFilters, page)"
+    />
 
   </div>
 </template>

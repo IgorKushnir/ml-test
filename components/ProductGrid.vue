@@ -8,22 +8,16 @@
         <slot name="fact" v-if="promo ? (index === 8) : (index === 7)"/>
 
         <div :class="grid === 3 ? 'col-4 col-6-lg col-12-sm' : 'col-3 col-4-lg col-12-sm'">
-          <ProductItem :title="product.attributes.title" :to="'/product/' + product.attributes.slug"
+          <ProductItem :title="product.attributes.title" :to="'/' + product.attributes.type.data.attributes.slug + '/' + product.attributes.slug"
                        :image="product.attributes.cover_3x4"/>
         </div>
       </template>
     </Container>
   </transition>
 
-<!--  {{productsData.meta}}-->
-
-
-
 
 
   <Loading :pending="pendingProducts"  extended-class="half"/>
-<!--  <Loading :pending="true"  extended-class="half"/>-->
-
   <transition name="fade">
     <State v-if="productsData && !pendingProducts && productsData.data.length === 0" title="No products"  class="half"></State>
   </transition>

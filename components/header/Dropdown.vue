@@ -28,7 +28,7 @@
             <ul>
               <li v-for="collection in line.attributes.collections.data">
                 <NuxtLink
-                    :to=" '/collections/' + collection.attributes.slug"
+                    :to=" '/collection/' + collection.attributes.slug"
                     @mouseover="collectionHoverHandler(collection.attributes.slug)"
                     @mouseleave="collectionHoverOutHandler"
                     class="nav-link__tertiary hover"

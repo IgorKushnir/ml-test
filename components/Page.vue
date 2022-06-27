@@ -1,0 +1,40 @@
+<template>
+  <div>
+    <transition name="fade">
+      <div class="content" v-if="!pending && data != null">
+        <InnerHeader v-if="!data.banner" :title="data.title" :sub_header="data.sub_header" :sub_title="data.text"/>
+
+        <ContentBanner :data="data.banner" :title="data.title" :text="data.text" />
+
+        <Content :data="data.content"/>
+
+      </div>
+    </transition>
+    <PageNotFound :show="!pending && data === null"/>
+    <Loading :pending="pending"/>
+  </div>
+</template>
+
+<script setup lang="ts">
+import getMenu from '~/api/getPage'
+
+
+const route = useRoute();
+let slug = route.params.slug;
+
+
+let { data, pending, refresh, error } = await getMenu(slug, 'en')
+onMounted(() => refresh())
+
+</script>
+
+<style scoped lang="scss">
+//.component-text:deep(*) {
+//  column-count: 1!important;
+//}
+//.content:deep(img) {
+//  width: 100%;
+//
+//}
+
+</style>

@@ -20,7 +20,7 @@
                       <NuxtLink
                           v-for="item in data"
                           class="swiper-slide"
-                          :to="'/product/' + item.attributes.slug"
+                          :to="path +'/' + item.attributes.slug"
                       >
                         <div class="ratio-3x4">
                           <Image :path="item.attributes.cover_3x4" :alt="item.attributes.title"/>
@@ -70,6 +70,11 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: false
+  },
+  path: {
+    type: String,
+    required: false,
+    default: '/product'
   }
 })
 

@@ -120,7 +120,7 @@ addRouteMiddleware(async (to, from) => {
 
 .wrapper {
   position: relative;
-  height: 64px;
+  height: 63px;
 
 }
 
@@ -166,6 +166,9 @@ addRouteMiddleware(async (to, from) => {
 
 
 @include md {
+  .wrapper {
+    height: 55px;
+  }
   .sticky-header-wrapper, .sticky-header {
     height: 56px;
     max-height: 56px;

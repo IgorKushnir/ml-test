@@ -1,24 +1,16 @@
 import content from './misc/content'
 
-export default async function (slug, lang) {
+export default async function (lang) {
     const graphql = useStrapiGraphQL()
-    const collection = 'pages';
+    const collection = 'main';
 
     const response = graphql(`
-query Page{
-  pages (
+query Main{
+  main (
   locale: "${lang}"
-    filters: {
-      slug: {
-        eq: "${slug}"
-      }
-    }
   ) {
     data {
       attributes {
-        title
-        text
-        sub_header
         banner {
           title
           text
@@ -46,7 +38,7 @@ query Page{
 
 
     const { data, pending, refresh, error } = await useLazyAsyncData('data_'+collection, () => response, {
-        transform: (d) => d.data[collection].data[0] ? d.data[collection].data[0].attributes : null,
+        transform: (d) => d.data[collection].data,
     })
     return { data, pending, refresh, error };
 }

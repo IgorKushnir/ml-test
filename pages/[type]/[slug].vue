@@ -1,7 +1,6 @@
 <template>
   <div>
     <div v-if="data != null">
-      <!--      <InnerHeader :title="data.title" :sub_title="data.description"/>-->
 
       <StickyHeader :title="data.title">
         <template #end>
@@ -12,8 +11,12 @@
 
 
 
-
+      <div class="promo ratio-3x4 show-md">
+        <Image :path="{data: data.gallery.data[0]}" :alt="data.title"/>
+        <div class="white-overlay"></div>
+      </div>
       <Container>
+
         <div class="col-4 col-5-lg col-12-md">
           <div class="">
             <h1 class="title m-t-0">{{ data.title }}</h1>
@@ -22,12 +25,12 @@
             <p class="m-b-32">{{ data.description }}</p>
 
 
-            <div class="info m-b-32" v-if="data.collection.data">
-              <div>
+            <div class="info m-t-40" v-if="data.collection.data">
+              <div class="m-b-32 m-r-40">
                 <div class="subheader small">Collection</div>
                 <div class="p-small"><strong>{{ data.collection.data.attributes.title }}</strong></div>
               </div>
-              <div>
+              <div class="m-b-32">
                 <div class="subheader small">Line</div>
                 <div class="p-small">
                   <strong>{{ data.collection.data.attributes.line.data.attributes.title }}</strong>
@@ -47,50 +50,21 @@
         </div>
 
 
-        <div class="gallery col-8 col-7-lg col-12-md m-t-0">
-
-
-
-          <template v-for="(item, index) in data.gallery.data">
-            <div
-                v-if="mime(item.attributes.mime) === 'image'"
-                :class="isLandscape(item.attributes.width, item.attributes.height) ? 'vertical' : 'horizontal'"
-            >
-              <div :class="isLandscape(item.attributes.width, item.attributes.height) ? 'ratio-3x4' : 'ratio-3x2'">
-                <Image
-                    :path="{data: item}"
-                    :alt="data.title"
-                />
-              </div>
-            </div>
-
-            <div  v-if="mime(item.attributes.mime) === 'video'" class="vertical">
-              <div class="ratio-3x4">
-                <Image :path="data.cover_3x4" :alt="data.title" only-placeholder/>
-                <video
-                    playsinline=""
-                    :src="$getAbsoluteUrl(item.attributes.url)"
-                    loop="loop"
-                    tabindex="-1"
-                    muted autoplay aria-hidden="true"
-                >
-                </video>
+        <ContentMediaGrid :data="isMobile ? data.gallery.data.slice(1) : data.gallery.data" classes="col-8 col-7-lg col-12-md m-t-0" columns="product">
+          <template #end >
+            <div v-if="data.fact !== null" :class="data.fact.ratio">
+              <div :class="data.fact.ratio === 'horizontal' ? 'ratio-3x2' : 'ratio-3x4'">
+                <Fact :data="data.fact"/>
               </div>
             </div>
           </template>
-
-          <div v-if="data.fact !== null" class="vertical">
-            <div class="ratio-3x4">
-              <Fact :data="data.fact"/>
-            </div>
-          </div>
-        </div>
+        </ContentMediaGrid>
 
 
       </Container>
 
       <Carusel v-if="data.recommended !== null" :data="data.recommended?.products.data" title="Recommendation" class="m-v-80"/>
-      <Carusel v-if="data.extra !== null" :data="data.extra?.also" title="You may also like" :column="4" class="m-v-80"/>
+      <Carusel v-if="data.extra !== null" :data="data.extra?.also"  title="You may also like" :column="4" class="m-v-80"/>
 
 
     </div>
@@ -102,6 +76,7 @@
 <script setup lang="ts">
 import getProduct from '~/api/getProduct'
 const { $setViewedProduct } = useNuxtApp()
+const isMobile = useIsMobile();
 
 const route = useRoute();
 const router = useRouter();
@@ -125,14 +100,10 @@ function nextHandler() {
   router.replace('/product/' + data.value.extra.next.slug)
 }
 
-function isLandscape(width, height) {
-  return (width / height) < 1
-}
 
 
-function mime(mime) {
-  return mime.split("/")[0]
-}
+
+
 
 
 </script>
@@ -142,9 +113,7 @@ function mime(mime) {
   display: inline-block;
 }
 
-.info > *:nth-child(2) {
-  margin-left: 40px;
-}
+
 
 .info .subheader.small {
   margin-bottom: 8px;
@@ -156,12 +125,6 @@ function mime(mime) {
 }
 
 
-.gallery {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 40px;
-  grid-auto-flow: dense;
-}
 .horizontal {
   grid-column: auto/span 2;
 }
@@ -169,36 +132,29 @@ function mime(mime) {
   grid-column: auto/span 1;
 }
 
-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
 
+
+@include lg {
+  .horizontal {
+    grid-column: auto/span 1;
+  }
+}
 @include md {
   .sticky-content {
     position: relative;
     top:0
   }
+
+  .promo {
+    margin-bottom: -80px;
+  }
+
+  .white-overlay {
+    height: calc(100% + 1px);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 80%, #FFFFFF 100%);
+  }
+
 }
-@include xl {
-  .gallery {
-    grid-gap: 16px;
-  }
-}
-@include sm {
-  .gallery {
-    grid-template-columns: 1fr;
-  }
-  .horizontal {
-    grid-column: auto/span 1;
-  }
-  .vertical {
-    grid-column: auto/span 1;
-  }
-}
+
 
 </style>
