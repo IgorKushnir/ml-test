@@ -1,6 +1,53 @@
 function content() {
     return `
     content {
+    ...on ComponentContentCarusel {
+            __typename
+            carusel_layout: layout
+            text
+            column
+            carusel {
+              title
+              text
+              media {
+                data {
+                   attributes {
+                    mime
+                    formats
+                    url
+                    placeholder
+                    width
+                    height
+                  }
+                }
+              }
+            }
+          }
+    
+    ...on ComponentContentMediaBanner {
+            __typename
+            media_banner_layout: layout
+            banner {
+              title
+              text
+              button_text
+              button_link
+              button
+              media {
+                data {
+                  attributes {
+                    mime
+                    formats
+                    url
+                    placeholder
+                    width
+                    height
+                  }
+                }
+              }
+            }
+          }
+          
             ...on ComponentContentBlocks {
             __typename
             blocks {

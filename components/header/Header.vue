@@ -1,4 +1,6 @@
 <template>
+  <HeaderSearchModal :show="showSearch" @close="showSearch = false"/>
+
   <HeaderWishCounter v-if="isMobile"/>
   <header class="navigation">
 
@@ -20,9 +22,9 @@
 
         <div class="right-side">
           <HeaderWishCounter v-if="!isMobile"/>
-          <NuxtLink to="/" class="nav-icon hover">
+          <div class="nav-icon hover" v-on:click="showSearch = true">
             <div class="icon-search-24"></div>
-          </NuxtLink>
+          </div>
         </div>
       </div>
 
@@ -87,6 +89,7 @@ const link = ref();
 const menu_wrapper = ref();
 let mobileMenuOpened = ref(false)
 
+const showSearch = ref(false)
 
 
 // On mobile click to submenu open
@@ -217,7 +220,7 @@ onMounted(() => {
   margin: 0 8px;
   z-index: 10;
   color: rgb($light-gray, .8);
-
+  cursor: pointer;
   &:hover {
     color: $light-gray;
   }

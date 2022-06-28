@@ -25,6 +25,7 @@ const colors = {
   alto: "#D2C6C3",
   sand: "#D0CAC2",
   light: "#F1F2F3",
+  dark_gray: "#DBDEE0",
 
 }
 const hexColor = computed(() => colors[props.color])

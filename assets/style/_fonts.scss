@@ -41,10 +41,13 @@ h5, .h5 {
   line-height: 1.2em;
 }
 
-p, .p {
+p {
   line-height: 1.4em;
   margin: 16px 0;
   color: $gray;
+  font-size: 18px;
+}
+.p {
   font-size: 18px;
 }
 .p-small {

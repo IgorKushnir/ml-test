@@ -23,6 +23,11 @@ $layout-values: flex-start, flex-end, center, space-between, space-around;
   box-sizing: border-box;
 }
 
+.anti-container {
+  width: 100vw;
+  padding: 0;
+  margin: 0 -50vw;
+}
 .row {
   position: relative;
   width: 100%;

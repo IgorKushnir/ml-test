@@ -1,23 +1,41 @@
 <template>
   <Container v-for="content in data" justify="content justify-center">
-    <div v-if="content['__typename'] === 'ComponentContentText'" class="text-block p-t-0 p-b-0" :class="layout(content['text_layout'])">
-      <div v-html="content.text" />
+    <div v-if="content['__typename'] === 'ComponentContentText'" class="text-block p-t-0 p-b-0"
+         :class="layout(content['text_layout'])">
+      <div v-html="content.text"/>
     </div>
 
     <template v-if="content['__typename'] === 'ComponentContentImageVideoGrig'">
-      <ContentMediaGrid :data="content.media.data" :classes="layout(content['grid_layout'])" :columns="content.columns"/>
+      <ContentMediaGrid :data="content.media.data" :classes="layout(content['grid_layout'])"
+                        :columns="content.columns"/>
     </template>
 
 
-    <div v-if="content['__typename'] === 'ComponentContentFact'" :class="layout(content['fact_layout'])" >
-      <div :class="content.ratio === 'vertical' ? 'ratio-3x4' : 'ratio-3x2'">
+    <div v-if="content['__typename'] === 'ComponentContentFact'" :class="layout(content['fact_layout'])">
+      <div :class="content.ratio === 'vertical' ? 'ratio-3x4' : 'ratio-16x9 ratio-3x4-md'">
         <Fact :data="content"/>
       </div>
     </div>
 
+    <div v-if="content['__typename'] === 'ComponentContentMediaBanner'" :class="layout(content.media_banner_layout)">
+      <ContentBanner :data="content.banner" type="content"/>
 
-    <div v-if="content['__typename'] === 'ComponentContentBlocks'" :class="layout('normal')" >
-      <ContentBlocks :data="content.blocks" />
+    </div>
+
+
+    <div v-if="content['__typename'] === 'ComponentContentBlocks'" :class="layout('normal')">
+      <ContentBlocks :data="content.blocks"/>
+    </div>
+
+    <div v-if="content['__typename'] === 'ComponentContentCarusel'" class="anti-container">
+      <Carusel
+          :data="caruselData(content.carusel)"
+          :column="content.column === 'six' ? 6 : 4"
+          :col-class="layout(content['carusel_layout'])"
+          :layout="content['carusel_layout']"
+      >
+        <div v-if="content.text" v-html="content.text" class="m-b-40 m-b-24-md"/>
+      </Carusel>
     </div>
   </Container>
 </template>
@@ -36,12 +54,24 @@ const layout = ((layout) => {
   return 'col-8 col-10-xl col-12-lg'; //  === normal
 })
 
+function caruselData(data) {
+  let _data = data.map(d => {
+    return {
+      attributes: {
+        title: d.title,
+        text: d.text,
+        cover_3x4: d.media
+      }
+    };
+  })
+  return _data
+}
+
 </script>
 
 <style scoped>
 
 </style>
-
 
 
 <style lang="scss">
@@ -50,11 +80,13 @@ const layout = ((layout) => {
   * {
     column-gap: 40px;
   }
+
   a {
     font-weight: bold;
     position: relative;
     transition: .3s;
   }
+
   a:after {
     transition: .3s;
     content: '';
@@ -66,13 +98,15 @@ const layout = ((layout) => {
     background-color: rgba($dark-blue, .4);
   }
 }
+
 @include md {
   .text-block {
     * {
-      column-count: 1!important;
+      column-count: 1 !important;
     }
   }
 }
+
 @media (hover: hover) {
   a:hover {
     color: $dark-blue;
@@ -83,16 +117,20 @@ const layout = ((layout) => {
 
   }
 }
+
 blockquote {
   margin-left: 0;
   margin-right: 0;
-  padding: 40px 80px ;
+  padding: 40px 80px;
   position: relative;
+
   * {
     color: $dark-blue;
   }
+
   background-color: $light-gray;
 }
+
 blockquote *:before {
   content: '〝';
   font-size: 2em;

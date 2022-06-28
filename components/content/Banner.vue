@@ -1,15 +1,15 @@
 <template>
-  <div v-if="data" class="banner ratio-main-screen">
-    <Image :path="data.media" :alt="data.title ?? data.title !== '' ? data.title : title"/>
+  <div v-if="data" class="banner" :class=" type === 'content' ? 'ratio-16x9  ratio-3x4-md' : 'ratio-main-screen'">
+    <Image :path="_media" :alt="data.title ?? data.title !== '' ? data.title : title"/>
     <div class="overlay"/>
-    <div class="wrapper">
+    <div class="wrapper" :class="type">
       <Container :justify="type === 'main' ? '' : 'justify-center'">
         <div  :class="type === 'main' ? 'col-4 col-6-lg col-12-md p-v-0' : 'col-6 col-10-lg col-12-md p-v-0 center'">
-          <h1 class="white" :class="type === 'main' ? '' : 'title'">{{data.title ?? data.title !== '' ? data.title : title}}</h1>
+          <h1 class="white" :class="type === 'main' ? '' : type === 'content' ? 'h2' : 'title'">{{data.title ?? data.title !== '' ? data.title : title}}</h1>
           <p class="white">{{data.text ?? data.text !== "" ? data.text : text}}</p>
 
           <NuxtLink v-if="data.button" :to="data.button_link" class="button white m-v-32">{{ data.button_text }}</NuxtLink>
-          <div v-if="!data.button" class="arrow-down icon-arrow-16 white m-t-56 m-t-32-md m-b-32"/>
+          <div v-if="!data.button && type === 'inner'" class="arrow-down icon-arrow-16 white m-t-56 m-t-32-md m-b-32"/>
         </div>
       </Container>
     </div>
@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   data: {
     type: Object,
     required: false
@@ -37,6 +37,14 @@ defineProps({
     default: "inner"
   }
 })
+const _media = computed(() => {
+  const keys = Object.keys(props.data);
+  const index = keys.findIndex(d => d.endsWith('media'))
+  console.log(keys[index]);
+  return props.data[keys[index]]
+})
+
+
 
 </script>
 
@@ -47,6 +55,12 @@ defineProps({
   height: 100%;
   display: flex;
   align-items: flex-end;
+}
+.wrapper.content {
+  align-items: center;
+//  &:last-child {
+//  margin-bottom: 0;
+//}
 }
 
 
