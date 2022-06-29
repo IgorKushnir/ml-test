@@ -4,7 +4,7 @@
       <img v-show="filter.value" :src="'../img/silhouette/' + ( filter.slug ) + '.png'" width="100" height="100" :alt="filter.title">
       <img v-show="!filter.value" :src="'../img/silhouette/' + (  filter.slug + '_s') + '.png'" width="100" height="100" :alt="filter.title">
     </div>
-    <div class="p label">{{filter.title}}</div>
+    <div class="p label m-v-16">{{filter.title}}</div>
 
   </div>
 </template>

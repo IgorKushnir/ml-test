@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div v-show="show" class="overflow m-v-80 m-v-40-xl m-v-32-md" :class="navCompact ? 'compact' : 'full'">
+    <div v-show="show" class="overflow" :class="navCompact ? 'compact' : 'full'">
 
       <div ref="prev" class="prev">
         <StickyBarBack reverse text=""/>
@@ -11,7 +11,6 @@
       </div>
 
       <div class="container">
-        <!--      <Container justify="justify-center">-->
         <div class="row gap-S justify-center">
           <div :class="colClass">
             <slot/>
@@ -20,20 +19,23 @@
                 <NuxtLink
                     v-for="item in data"
                     class="swiper-slide"
-                    :to="path +'/' + item.attributes.slug"
+                    :to="item.attributes.slug ? (path +'/' + item.attributes.slug) : null"
                 >
                   <div class="ratio-3x4">
                     <Image :path="item.attributes.cover_3x4" :alt="item.attributes.title"/>
                   </div>
-                  <p class="p-small dark-blue"><strong>{{ item.attributes.title }}</strong></p>
+                  <div v-if="item.attributes.title || item.attributes.text" class="m-t-16">
+                    <div v-if="item.attributes.title" class="p dark-blue m-v-8"><strong>{{
+                        item.attributes.title
+                      }}</strong></div>
+                    <div v-if="item.attributes.text" class="p m-v-8 gray">{{ item.attributes.text }}</div>
+                  </div>
                 </NuxtLink>
               </div>
               <div ref="swiperScrollbar" class="swiper-scrollbar m-t-40 m-t-24-md"></div>
             </div>
           </div>
         </div>
-
-        <!--      </Container>-->
       </div>
     </div>
   </transition>

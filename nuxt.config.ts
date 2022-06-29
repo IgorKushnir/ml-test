@@ -34,7 +34,8 @@ export default defineNuxtConfig({
     publicRuntimeConfig: {
         MODE: process.env.MODE,
         STRAPI_URL: process.env.STRAPI_URL,
-        SEARCH_URL: process.env.SEARCH_URL || 'http://localhost:7700',
+        // SEARCH_URL: process.env.SEARCH_URL || 'http://localhost:7700',
+        SEARCH_URL: process.env.SEARCH_URL || 'http://167.172.227.234',
     },
 })
 

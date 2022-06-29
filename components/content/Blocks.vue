@@ -1,13 +1,13 @@
 <template>
   <div v-for="item in data" class="blocks">
-    <div class="row gap-S m-v-40 m-v-0-md">
-      <div class="col-6 col-12-sm">
+    <div class="row gap-S m-v-64 m-v-32-md">
+      <div class="col-6 col-12-sm p-v-0">
         <div :class="item.ratio === 'square' ? 'ratio-1x1' : ratio(item) < 1 ? 'ratio-4x3' : 'ratio-3x4'"
              :style="item.ratio === 'original' ? 'padding-bottom:' + ratio(item) * 100 + '%' : '' ">
           <Image :path="item.media"/>
         </div>
       </div>
-      <div class="text-block col-6 col-12-sm" v-html="item.text"/>
+      <div class="text-block col-6 col-12-sm  p-v-0 p-t-16-md" v-html="item.text"/>
     </div>
   </div>
 </template>
