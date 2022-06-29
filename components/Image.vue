@@ -22,7 +22,7 @@ let props = defineProps({
   },
   alt: {
     type: String,
-    required: true,
+    required: false,
     default: "Milla Nova"
   },
   size: {

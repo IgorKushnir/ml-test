@@ -1,6 +1,35 @@
 function content() {
     return `
     content {
+    ...on ComponentContentDivider {
+            __typename
+            size
+            line
+          }
+          
+    ...on ComponentContentPoster {
+            __typename
+            poster {
+              title
+              text
+              button_text
+              button_link
+              button
+              media {
+                data {
+                   attributes {
+                    mime
+                    formats
+                    url
+                    placeholder
+                    width
+                    height
+                  }
+                }
+              }
+            }
+          }
+          
     ...on ComponentContentCarusel {
             __typename
             carusel_layout: layout

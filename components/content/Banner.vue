@@ -40,7 +40,6 @@ const props = defineProps({
 const _media = computed(() => {
   const keys = Object.keys(props.data);
   const index = keys.findIndex(d => d.endsWith('media'))
-  console.log(keys[index]);
   return props.data[keys[index]]
 })
 

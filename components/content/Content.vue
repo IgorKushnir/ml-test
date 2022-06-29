@@ -1,29 +1,33 @@
 <template>
-  <Container v-for="content in data" justify="content justify-center">
+  <Container v-for="content in data" justify="content justify-center" class="m-v-120 m-v-72-xl m-v-56-md">
     <div v-if="content['__typename'] === 'ComponentContentText'" class="text-block p-t-0 p-b-0"
          :class="layout(content['text_layout'])">
       <div v-html="content.text"/>
     </div>
 
     <template v-if="content['__typename'] === 'ComponentContentImageVideoGrig'">
-      <ContentMediaGrid :data="content.media.data" :classes="layout(content['grid_layout'])"
-                        :columns="content.columns"/>
+      <ContentMediaGrid :data="content.media.data" :classes="layout(content['grid_layout'])  + ' p-v-0'"
+                        :columns="content.columns"
+      />
     </template>
 
 
-    <div v-if="content['__typename'] === 'ComponentContentFact'" :class="layout(content['fact_layout'])">
+    <div v-if="content['__typename'] === 'ComponentContentFact'" :class="layout(content['fact_layout'])" class="p-v-0">
       <div :class="content.ratio === 'vertical' ? 'ratio-3x4' : 'ratio-16x9 ratio-3x4-md'">
         <Fact :data="content"/>
       </div>
     </div>
 
-    <div v-if="content['__typename'] === 'ComponentContentMediaBanner'" :class="layout(content.media_banner_layout)">
-      <ContentBanner :data="content.banner" type="content"/>
 
+    <div v-if="content['__typename'] === 'ComponentContentMediaBanner'"
+         :class="content.media_banner_layout === 'full' ? 'anti-container p-h-0' : layout(content.media_banner_layout)"
+         class="p-v-0">
+      <ContentBanner :data="content.banner" type="content"/>
     </div>
 
 
-    <div v-if="content['__typename'] === 'ComponentContentBlocks'" :class="layout('normal')">
+
+    <div v-if="content['__typename'] === 'ComponentContentBlocks'" :class="layout('normal')" class="p-v-0">
       <ContentBlocks :data="content.blocks"/>
     </div>
 
@@ -37,10 +41,23 @@
         <div v-if="content.text" v-html="content.text" class="m-b-40 m-b-24-md"/>
       </Carusel>
     </div>
+
+    <template v-if="content['__typename'] === 'ComponentContentPoster'">
+      <ContentPosters :data="content.poster"/>
+    </template>
+
+
+    <template v-if="content['__typename'] === 'ComponentContentDivider'" >
+      <div v-if="content.line" class="brake-line p-v-0"></div>
+    </template>
+
+
   </Container>
 </template>
 
 <script setup>
+import Posters from "./Posters";
+
 const props = defineProps({
   data: {
     type: Array,
