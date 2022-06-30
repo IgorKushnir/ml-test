@@ -7,11 +7,11 @@
           <div v-if="show" class="search">
             <div class="container">
               <div class="head row gap-S m-v-0">
-                <div class="col-2 p-v-0">
+                <div class="col-2 p-v-0 hide-lg">
                   <Logo class="logo" color="dark_gray"/>
                 </div>
-                <div class="col-8 p-v-0 input-container">
-                  <input ref="input" v-model="search" autocomplete="off" autofocus class="input">
+                <div class="col-8 col-10-lg col-12-md p-v-0 input-container">
+                  <input ref="input" v-model="search" alt="Search" placeholder="Product name" autocomplete="off" autofocus class="input">
                   <div class="icon-search-24"/>
                   <div class="actions p-r-24">
                     <transition name="fade">
@@ -23,7 +23,7 @@
                     </transition>
                   </div>
                 </div>
-                <div class="col-2 p-v-0">
+                <div class="col-2 p-v-0 hide-md">
                   <div class="icon-close-24" v-on:click="close"/>
                 </div>
               </div>
@@ -42,9 +42,9 @@
                     v-for="item in result.hits" :to="'/' + (item?.type.slug ?? 'product') + '/' + item.slug"
                     v-on:click="close" class="col-2">
                   <div class="ratio-3x4">
-                    <Image :path="{data: {attributes: item.cover_3x4}}" :alt="item.title"/>
+                    <Image :path="{data: {attributes: item.cover_3x4}}" size="small" :alt="item.title"/>
                   </div>
-                  <div class="m-t-8" v-html="highlight(item.title, search)"/>
+                  <div class="m-t-8 product-name" v-html="highlight(item.title, search)"/>
                   <div class="collection-label gray m-t-4">{{ item.collection?.title }}</div>
                   <!--              <pre>{{item}}</pre>-->
                 </NuxtLink>
@@ -157,7 +157,6 @@ function highlight(text, search) {
   top: 0;
   left: 0;
   width: 100vw;
-  min-height: 152px;
   z-index: 99;
   background-color: $white;
 }
@@ -221,7 +220,10 @@ function highlight(text, search) {
 .input:focus {
   outline: none;
 }
-
+::placeholder {
+  color: $dark-blue;
+  opacity: .3;
+}
 .collection-label {
   font-size: 12px;
 }
@@ -246,6 +248,59 @@ function highlight(text, search) {
   z-index: 99;
   overflow-y: auto;
 }
+.product-name {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  //white-space: nowrap;
+  //overflow: hidden;
+  //text-overflow: ellipsis;
+  //height: 1em;
+}
+
+@include lg {
+  .search-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@include md {
+  .search {
+    background-color: $dark-blue;
+    top: 56px;
+    .container {
+      padding: 0 16px;
+    }
+  }
+  .head {
+    height: 56px;
+  }
+  .overlay {
+    top: 56px
+  }
+  .input {
+    height: 40px;
+    font-size: 16px;
+    padding-left: 56px;
+  }
+
+  .icon-search-24 {
+    top: 8px;
+    left: 32px;
+  }
+  .actions {
+    right: 8px;
+  }
+  .result {
+    top: 112px;
+    border-top: none;
+    height: calc(100vh - 112px);
+  }
+  .search-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+  }
+}
+
 
 
 .slide-enter-active,

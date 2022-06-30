@@ -22,8 +22,8 @@
 
         <div class="right-side">
           <HeaderWishCounter v-if="!isMobile"/>
-          <div class="nav-icon hover" v-on:click="showSearch = true">
-            <div class="icon-search-24"></div>
+          <div class="nav-icon hover" v-on:click="showHideSearch">
+            <div :class="showSearch ? 'icon-close-24' : 'icon-search-24'"/>
           </div>
         </div>
       </div>
@@ -141,11 +141,19 @@ const hideSubMenu = () => {
 }
 
 
-
+function showHideSearch() {
+  showSearch.value = !showSearch.value;
+  if (mobileMenuOpened.value) {
+    showHideMenu()
+  }
+}
 
 
 function showHideMenu() {
+
   if (menu_wrapper.value.classList.contains('hide')) {
+    showSearch.value = false;
+
     mobileMenuOpened.value = true;
     menu_wrapper.value.classList.remove('hide');
     document.body.classList.add('no-mobile-scroll')
