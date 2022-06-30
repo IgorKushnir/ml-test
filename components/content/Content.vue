@@ -13,7 +13,7 @@
 
 
     <div v-if="content['__typename'] === 'ComponentContentFact'" :class="layout(content['fact_layout'])" class="p-v-0">
-      <div :class="content.ratio === 'vertical' ? 'ratio-3x4' : 'ratio-16x9 ratio-3x4-md'">
+      <div :class="content.ratio === 'vertical' ? 'new-ratio-3x4' : 'new-ratio-16x9'">
         <Fact :data="content"/>
       </div>
     </div>

@@ -44,7 +44,7 @@
                   <div class="ratio-3x4">
                     <Image :path="{data: {attributes: item.cover_3x4}}" size="small" :alt="item.title"/>
                   </div>
-                  <div class="m-t-8 product-name" v-html="highlight(item.title, search)"/>
+                  <div class="m-t-8 brake-word" v-html="highlight(item.title, search)"/>
                   <div class="collection-label gray m-t-4">{{ item.collection?.title }}</div>
                   <!--              <pre>{{item}}</pre>-->
                 </NuxtLink>
@@ -248,14 +248,7 @@ function highlight(text, search) {
   z-index: 99;
   overflow-y: auto;
 }
-.product-name {
-  overflow-wrap: anywhere;
-  word-break: break-word;
-  //white-space: nowrap;
-  //overflow: hidden;
-  //text-overflow: ellipsis;
-  //height: 1em;
-}
+
 
 @include lg {
   .search-grid {

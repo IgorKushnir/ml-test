@@ -53,7 +53,7 @@
         <ContentMediaGrid :data="isMobile ? data.gallery.data.slice(1) : data.gallery.data" classes="col-8 col-7-lg col-12-md m-t-0" columns="product">
           <template #end >
             <div v-if="data.fact !== null" :class="data.fact.ratio">
-              <div :class="data.fact.ratio === 'horizontal' ? 'ratio-3x2' : 'ratio-3x4'">
+              <div :class="data.fact.ratio === 'horizontal' ? 'new-ratio-3x2' : 'new-ratio-3x4'">
                 <Fact :data="data.fact"/>
               </div>
             </div>

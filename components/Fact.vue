@@ -1,15 +1,15 @@
 <template>
-  <div v-if="data !== null" class="fact p-v-80" :class="data.background_color + '_bg'">
+  <div v-if="data !== null" class="fact p-v-80 p-v-40-md" :class="data.background_color + '_bg'">
 
     <div class="row justify-center">
-      <div :class="['col-6', 'col-8', 'col-8'][layoutIndex]">
+      <div :class="['col-6 col-10-md', 'col-8 col-10-md', 'col-8 col-10-md'][layoutIndex]">
         <div v-if="data.logo"  :class="['logo lg', 'logo', 'logo sm'][layoutIndex]">
 
           <Logo :color="data.text_color"/>
 
         </div>
-        <div :class="['h1', 'h2', 'h3'][layoutIndex] + ' ' + data.text_color" v-if="data.title" v-html="$handleNewLine(data.title)"/>
-        <div :class="['p', 'p', 'p-small'][layoutIndex] + ' ' + data.text_color" v-if="data.text" v-html="$handleNewLine(data.text)"/>
+        <div class="brake-word" :class="['h1 h3-md', 'h2 h3-md', 'h3'][layoutIndex] + ' ' + data.text_color" v-if="data.title" v-html="$handleNewLine(data.title)"/>
+        <div :class="['p p-small-md', 'p p-small-md', 'p-small'][layoutIndex] + ' ' + data.text_color" v-if="data.text" v-html="$handleNewLine(data.text)"/>
       </div>
 
     </div>
@@ -66,8 +66,9 @@ const layoutIndex = computed(() => {
 
 
 @include md {
-  .logo img {
-    height: 56px;
+  .logo {
+    height: 64px!important;
+    margin-bottom: 16px;
   }
 }
 

@@ -1,14 +1,23 @@
 <template>
   <div>
+<!--    <div class="col-10">-->
+<!--      <div class="new-ratio-16x9">-->
+<!--        <Fact :data="{-->
+<!--          title: 'Meet Bella Belle x Milla Nova charity collaboration',-->
+<!--          text: 'A-line ivory gown on straps with sequin embroidery and open back. The gown has a sheer cape made of tulle also embroidered with sequins.',-->
+<!--          background_color: 'dark_blue',-->
+<!--          text_color: 'light',-->
+<!--          layout: 'tight',-->
+<!--          logo: true-->
+<!--        }"/>-->
+<!--      </div>-->
+<!--    </div>-->
+
     <Header/>
-
     <NuxtPage/>
-
     <Footer/>
   </div>
 </template>
-
-
 
 <script setup>
 import getInitialData from '~/api/getInitialData';
@@ -144,8 +153,9 @@ function loadNextHook() {
 
 </script>
 
-
 <style lang="scss">
+
+
 .page-enter-active,
 .page-leave-active {
   //transform-origin: top;

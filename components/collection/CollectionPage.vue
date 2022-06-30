@@ -39,7 +39,7 @@
           </div>
         </template>
         <template #fact>
-          <div v-if="dataCollection.fact !== null && filterSelected.length === 0" :class="(dataCollection.fact.ratio === 'vertical' ?  'col-4'  : 'col-8') + ' col-6-lg col-12-md'">
+          <div v-if="dataCollection.fact !== null && filterSelected.length === 0" :class="(dataCollection.fact.ratio === 'vertical' ?  'col-4'  : 'col-8') + ' col-6-lg col-12-lg new-ratio-16x9-md'">
             <Fact :data="dataCollection.fact"/>
           </div>
         </template>

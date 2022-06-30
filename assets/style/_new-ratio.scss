@@ -1,0 +1,53 @@
+%ratio {
+  position: relative;
+  &.overflow-hidden {
+    overflow: hidden;
+  }
+}
+
+.new-ratio-16x9 {
+  aspect-ratio: 16 / 9;
+  @extend %ratio;
+}
+.new-ratio-3x1 {
+  aspect-ratio: 3 / 1;
+  @extend %ratio;
+}
+.new-ratio-3x4 {
+  aspect-ratio: 3 / 4;
+  @extend %ratio;
+}
+.new-ratio-4x3 {
+  aspect-ratio: 4 / 3;
+  @extend %ratio;
+}
+.new-ratio-3x2 {
+  aspect-ratio: 3 / 2;
+  @extend %ratio;
+}
+.new-ratio-1x1 {
+  aspect-ratio: 1 / 1;
+  @extend %ratio;
+}
+
+
+@include md {
+  .new-ratio-16x9-md {
+    aspect-ratio: 16 / 9;
+  }
+  .new-ratio-3x1-md {
+    aspect-ratio: 3 / 1;
+  }
+  .new-ratio-3x4-md {
+    aspect-ratio: 3 / 4;
+  }
+  .new-ratio-4x3-md {
+    aspect-ratio: 4 / 3;
+  }
+  .new-ratio-3x2-md {
+    aspect-ratio: 3 / 2;
+  }
+  .new-ratio-1x1-md {
+    aspect-ratio: 1 / 1;
+  }
+}

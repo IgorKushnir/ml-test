@@ -89,6 +89,10 @@ p {
   margin-left: 0.4em;
 }
 
+.brake-word {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
 //.uppercase {
 //  text-transform: uppercase;
 //}
@@ -128,6 +132,16 @@ p {
   .p-small {
     font-size: 14px;
   }
+
+
+
+  .h3-md {
+    font-size: 20px;
+  }
+  .p-small-md {
+    font-size: 12px;
+  }
+
 }
 
 .link {
