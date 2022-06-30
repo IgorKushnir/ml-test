@@ -2,7 +2,7 @@
   <Container v-for="content in data" justify="content justify-center" class="m-v-120 m-v-72-xl m-v-56-md">
     <div v-if="content['__typename'] === 'ComponentContentText'" class="text-block p-t-0 p-b-0"
          :class="layout(content['text_layout'])">
-      <div v-html="content.text"/>
+      <ContentText :data="content.text"/>
     </div>
 
     <template v-if="content['__typename'] === 'ComponentContentImageVideoGrig'">

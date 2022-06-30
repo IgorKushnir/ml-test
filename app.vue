@@ -63,6 +63,13 @@ useHead({
       href: '/img/256.png', rel: "apple-touch-icon",
     }
   ],
+  // script: [
+  //   {
+  //     src: '/js/shortcode/shortcode.js'
+  //   }
+  // ]
+  // import Shortcode from '~/assets/js/shortcode/shortcode'
+
 
   // meta: [
   //   {  name: 'description', content: 'My amazing site.' }
