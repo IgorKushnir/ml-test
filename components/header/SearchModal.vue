@@ -1,8 +1,6 @@
 <template>
   <ClientOnly>
     <teleport to="body">
-      {{ show }}
-
       <div class="wrapper">
 
         <transition name="slide">
@@ -36,22 +34,20 @@
         </transition>
 
         <transition name="fade">
-          <div v-if="result !== null && show" class="result">
+          <div v-if="result !== null && show && result.nbHits > 0" class="result">
             <div class="container">
-              <div v-if="result.nbHits === 0">No results</div>
-              <div class="row justify-center">
-                <div v-if="result.nbHits > 0" class="col-8 row gap-S p-v-48">
-                  <NuxtLink
-                      v-for="item in result.hits" :to="'/' + (item?.type.slug ?? 'product') + '/' + item.slug"
-                      v-on:click="close" class="col-2">
-                    <div class="ratio-3x4">
-                      <Image :path="{data: {attributes: item.cover_3x4}}" :alt="item.title"/>
-                    </div>
-                    <div class="m-t-8" v-html="highlight(item.title, search)"/>
-                    <div class="collection-label gray m-t-4">{{ item.collection?.title }}</div>
-                    <!--              <pre>{{item}}</pre>-->
-                  </NuxtLink>
-                </div>
+<!--              <div v-if="result.nbHits === 0">No results</div>-->
+              <div class="search-grid m-v-40">
+                <NuxtLink
+                    v-for="item in result.hits" :to="'/' + (item?.type.slug ?? 'product') + '/' + item.slug"
+                    v-on:click="close" class="col-2">
+                  <div class="ratio-3x4">
+                    <Image :path="{data: {attributes: item.cover_3x4}}" :alt="item.title"/>
+                  </div>
+                  <div class="m-t-8" v-html="highlight(item.title, search)"/>
+                  <div class="collection-label gray m-t-4">{{ item.collection?.title }}</div>
+                  <!--              <pre>{{item}}</pre>-->
+                </NuxtLink>
               </div>
             </div>
           </div>
@@ -111,6 +107,10 @@ async function getResult() {
     const data = await $fetch(`indexes/product/search`, {
       baseURL: config.SEARCH_URL,
       method: 'POST',
+      headers: {
+        Authorization:
+            'Bearer ' + config.MEILISEARCH_API_KEY,
+      },
       body: {
         "q": search.value,
       }
@@ -126,7 +126,10 @@ watch(search, () => {
 })
 watch(() => input.value, () => {
   if (input.value) {
-    input.value.focus()
+    input.value.focus();
+    document.body.classList.add('no-scroll');
+  } else {
+    document.body.classList.remove('no-scroll');
   }
 })
 
@@ -173,6 +176,14 @@ function highlight(text, search) {
   left: 0;
   background-color: $overlay;
   z-index: 98;
+}
+.search-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 40px;
+  * {
+    width: 100%;
+  }
 }
 
 .logo {
