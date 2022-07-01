@@ -1,9 +1,8 @@
 <template>
-  <div v-html="parsedData"/>
+  <div v-html="data"/>
 </template>
 
 <script setup>
-import shortcode from 'shortcode-parser';
 
 const props = defineProps({
   data: {
@@ -13,40 +12,7 @@ const props = defineProps({
 })
 
 
-shortcode.add('ul', function(buf, opt) {
-  let classes = '';
-  if (opt.class) classes = opt.class
-  return '<div class="'+classes+'">' + buf + '</div>';
-});
-shortcode.add('li', function(buf, opt) {
-  let title = '';
-  if (opt.title) title = '<div class="li-title">'+opt.title+'</div>';
-  return `<div> ${title} <p class="m-t-0"> ${buf} </p></div>`;
-});
-shortcode.add('button', function(buf, opt) {
-  let classes = '';
-  if (opt.primary) classes = 'primary'
-  return '<div class="m-v-32"><a href="'+opt.link+'" class="button '+classes+'">' + buf + '</a></div>';
-});
 
-let parsedData = shortcode.parse(props.data, {
-  charcodes: function(buf, opts) {
-    return marked(buf, opts);
-  }
-});
-
-parsedData = allReplace(parsedData, ['<pre>', '<code>', '</pre>', '</code>'])
-
-
-
-
-function allReplace(string, array) {
-  var retStr = string;
-  for (var x in array) {
-    retStr = retStr.replace(new RegExp(array[x], 'g'), '');
-  }
-  return retStr;
-}
 
 
 </script>
