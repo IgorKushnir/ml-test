@@ -17,8 +17,8 @@ const props = defineProps({
 
 </script>
 
-<style lang="scss" scoped>
-.text-content >>> .history {
+<style lang="scss">
+.text-content > .history {
   column-count: 2;
   color: $gray;
 
@@ -37,7 +37,7 @@ const props = defineProps({
     color: $dark-blue;
   }
 }
-.text-content >>>  .key {
+.text-content >  .key {
   display: grid;
   grid-gap: 40px;
   grid-template-columns: repeat(3, 1fr);
@@ -56,7 +56,7 @@ const props = defineProps({
   }
 }
 @include md {
-  .text-content >>> .history {
+  .text-content > .history {
     column-count: 1;
     &  > div {
       padding-top: 16px;
@@ -68,7 +68,7 @@ const props = defineProps({
     }
   }
 
-  .text-content >>>  .key {
+  .text-content >  .key {
     grid-gap: 20px;
     p {
       line-height: 1.2em;
