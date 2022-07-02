@@ -1,6 +1,6 @@
 <template>
   <div v-on:click="backHandler($emit)"
-      :class="'back-btn' + (text ? ' text' : '') + (reverse ? ' reverse' : '') ">
+      :class="'back-btn' + (text ? ' text' : '') + (reverse ? ' reverse' : '') + (light ? ' light' : '')">
     <div class="back-btn-container">
       <div class="p-small"><strong>{{ text }}</strong></div>
       <div class="icon-arrow-16"></div>
@@ -18,7 +18,12 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: false,
-  }
+  },
+  light: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
 })
 const router = useRouter()
 
@@ -48,6 +53,10 @@ function backHandler(e) {
   min-width: 64px;
   margin: -1px -.5px;
   background-color: $white;
+}
+.back-btn.light {
+  background-color: unset;
+  border-color: rgb($border-dark, 0);
 }
 .back-btn.reverse {
   margin-left: 0;
@@ -79,6 +88,9 @@ function backHandler(e) {
     .back-btn-container {
       transform: translate(4px , 0);
     }
+  }
+  .back-btn.light:hover {
+    background-color: rgb($light-gray, .1);
   }
   .back-btn.reverse:hover {
     .back-btn-container {

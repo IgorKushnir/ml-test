@@ -1,5 +1,5 @@
 <template>
-  <Container v-for="content in data" justify="content justify-center" class="m-v-120 m-v-72-xl m-v-56-md">
+  <Container v-for="(content, index) in data" justify="content justify-center" :class="index === 0 ? 'm-b-120 m-b-72-xl m-b-56-md' : 'm-v-120 m-v-72-xl m-v-56-md'">
     <div v-if="content['__typename'] === 'ComponentContentText'" class="text-block p-t-0 p-b-0"
          :class="layout(content['text_layout'])">
       <ContentText :data="content.text"/>
@@ -51,6 +51,9 @@
       <div v-if="content.line" class="brake-line p-v-0"></div>
     </template>
 
+    <div v-if="content['__typename'] === 'ComponentContentSilhouettes'" class="anti-container p-h-0 p-v-0">
+      <ContentSilhouettes :data="content"/>
+    </div>
 
   </Container>
 </template>
@@ -77,7 +80,8 @@ function caruselData(data) {
       attributes: {
         title: d.title,
         text: d.text,
-        cover_3x4: d.media
+        cover_3x4: d.media,
+        slug: d.link
       }
     };
   })
@@ -92,6 +96,14 @@ function caruselData(data) {
 
 
 <style lang="scss">
+.content {
+  //margin-top: 0!important;
+  //margin-bottom: 0!important;
+
+}
+.content:first-child {
+  margin-top: unset;
+}
 
 .text-block {
   * {
@@ -104,7 +116,7 @@ function caruselData(data) {
     transition: .3s;
   }
 
-  a:after {
+  a:before {
     transition: .3s;
     content: '';
     position: absolute;

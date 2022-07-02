@@ -18,6 +18,11 @@ const props = defineProps({
 </script>
 
 <style lang="scss">
+.text-content img {
+  max-width: 100%;
+}
+
+
 .text-content > .history {
   column-count: 2;
   color: $gray;
@@ -81,6 +86,32 @@ const props = defineProps({
       font-size: 24px;
       margin-bottom: 8px;
     }
+  }
+}
+
+
+// Table
+.text-content table {
+  width: 100%;
+  border-spacing: 0;
+  p {
+    font-size: 16px;
+  }
+  th {
+    background-color: $gray;
+    p {
+      color: $white;
+      text-align: left;
+    }
+  }
+  tr:nth-child(2n) {
+    background-color: rgb($light-gray, 0.5);
+  }
+  tr:nth-child(2n -1) {
+    background-color: $light-gray;
+  }
+  td, th {
+    padding: 0 16px;
   }
 }
 

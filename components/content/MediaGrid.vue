@@ -2,6 +2,7 @@
   <div class="gallery" :class="[classes, columns].join(' ')">
     <template v-for="(item, index) in data">
       <div
+          v-if="!(hideFirst && index === 0)"
           :class="isLandscape(item.attributes.width, item.attributes.height) ? 'vertical' : 'horizontal'"
       >
         <div class="gallery-item" :class="isLandscape(item.attributes.width, item.attributes.height) ? 'ratio-3x4' : 'ratio-3x2'">
@@ -33,6 +34,11 @@ const props = defineProps({
     type: String,
     required: false,
     default: 'two'
+  },
+  hideFirst: {
+    type: Boolean,
+    required: false,
+    default: false
   }
 })
 

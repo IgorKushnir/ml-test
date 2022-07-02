@@ -3,7 +3,7 @@
     <CollectionItem
         :title="poster.title"
         :text="poster.text"
-        :image="poster.media"
+        :image="poster.cover_3x4"
         :button_text="poster.button_text"
         :to="poster.button_link"
         gradient

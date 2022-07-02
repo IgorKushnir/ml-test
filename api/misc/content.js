@@ -1,6 +1,10 @@
-function content() {
+function content(extra) {
+    if (!extra) extra = '';
+
     return `
     content {
+    ${extra}
+    
     ...on ComponentContentDivider {
             __typename
             size
@@ -15,9 +19,10 @@ function content() {
               button_text
               button_link
               button
-              media {
+            
+              cover_3x4 {
                 data {
-                   attributes {
+                  attributes {
                     mime
                     formats
                     url
@@ -38,6 +43,7 @@ function content() {
             carusel {
               title
               text
+              link
               media {
                 data {
                    attributes {
@@ -62,7 +68,7 @@ function content() {
               button_text
               button_link
               button
-              media {
+              cover_4x3 {
                 data {
                   attributes {
                     mime
@@ -74,6 +80,19 @@ function content() {
                   }
                 }
               }
+              cover_3x4 {
+                data {
+                  attributes {
+                    mime
+                    formats
+                    url
+                    placeholder
+                    width
+                    height
+                  }
+                }
+              }
+              
             }
           }
           

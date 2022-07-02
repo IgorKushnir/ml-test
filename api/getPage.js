@@ -25,16 +25,31 @@ query Page{
           button_text
           button_link
           button
-          media {
+          cover_4x3 {
+                data {
+                  attributes {
+                    mime
+                    formats
+                    url
+                    placeholder
+                    width
+                    height
+                  }
+                }
+              }
+          cover_3x4 {
             data {
               attributes {
+                mime
                 formats
                 url
                 placeholder
-                mime 
+                width
+                height
               }
             }
           }
+          
         }
                 ${content()}
 
