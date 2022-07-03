@@ -142,7 +142,7 @@ function getLink(slug) {
   if ($isAbsoluteUrl(slug)) {
     return slug
   }
-  if (slug.startsWith('/')) {
+  if (slug && slug.startsWith('/')) {
     return slug;
   }
   return slug ? (props.path +'/' + slug) : null
