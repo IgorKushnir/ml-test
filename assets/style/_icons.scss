@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('~/assets/fonts/icons/icomoon.eot?m50ls3');
-  src:  url('~/assets/fonts/icons/icomoon.eot?m50ls3#iefix') format('embedded-opentype'),
-  url('~/assets/fonts/icons/icomoon.ttf?m50ls3') format('truetype'),
-  url('~/assets/fonts/icons/icomoon.woff?m50ls3') format('woff'),
-  url('~/assets/fonts/icons/icomoon.svg?m50ls3#icomoon') format('svg');
+  src:  url('~/assets/fonts/icons/icomoon.eot?fdfdf33');
+  src:  url('~/assets/fonts/icons/icomoon.eot?fdfdf33#iefix') format('embedded-opentype'),
+  url('~/assets/fonts/icons/icomoon.ttf?fdfdf33') format('truetype'),
+  url('~/assets/fonts/icons/icomoon.woff?fdfdf33') format('woff'),
+  url('~/assets/fonts/icons/icomoon.svg?fdfdf33#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,7 +25,30 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-
+.icon-behance:before {
+  content: "\e913";
+}
+.icon-facebook:before {
+  content: "\e91a";
+}
+.icon-instagram:before {
+  content: "\e914";
+}
+.icon-linkedin:before {
+  content: "\e915";
+}
+.icon-pinterest:before {
+  content: "\e916";
+}
+.icon-telegram:before {
+  content: "\e917";
+}
+.icon-twitter:before {
+  content: "\e918";
+}
+.icon-youtube:before {
+  content: "\e919";
+}
 .icon-tick-16:before {
   content: "\e90d";
 }

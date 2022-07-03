@@ -43,6 +43,36 @@ export default defineNuxtPlugin(() => {
 
             handleNewLine: (string) => {
                 return string.replace(/(?:\r\n|\r|\n)/g, '<br />');
+            },
+
+            divideSubMenu: (subMenu) => {
+                let splitIndexes = [];
+                subMenu.forEach((e, index) => {
+                    if (e.url === '#') {
+                        splitIndexes.push(index - 1)
+                    }
+                })
+
+
+                subMenu = subMenu.reduceRight((result, value, index) => {
+                    result[0] = result[0] || [];
+
+                    if (splitIndexes.includes(index)) {
+                        result.unshift([value]);
+                    } else {
+                        result[0].unshift(value);
+                    }
+
+                    return result;
+                }, []);
+
+                subMenu.map(e => {
+                    if (e[0].url === '#') {
+                        return e.shift()
+                    }
+                    return e;
+                })
+                return subMenu;
             }
         }
     }

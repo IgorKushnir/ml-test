@@ -32,10 +32,26 @@ export default async function (lang) {
                       url
                       target
                     }
-                    footer {
-                        title
-                        url
-                        target
+                    footer_additional {
+                      title
+                      url
+                      target
+                      logo {
+                        data {
+                          attributes {
+                            url
+                            formats
+                            mime
+                            placeholder
+                          }
+                        }
+                      }
+                      description
+                    }
+                    social {
+                      title
+                      url
+                      icon
                     }
                 }
             }
@@ -85,7 +101,17 @@ export default async function (lang) {
             }
       }
     `;
-    const response = graphql(`query Initial{ ${ [ menuAndLines, types  ].join('') } }`);
+
+    const translations = `
+        transtation {
+            data {
+              attributes {
+                primary
+              }
+            }
+          }
+    `
+    const response = graphql(`query Initial{ ${ [ menuAndLines, types, translations  ].join('') } }`);
 
 
     return await useAsyncData('data_initial', () => response, {
@@ -101,7 +127,9 @@ export default async function (lang) {
                 types = types.map(type => type.attributes)
             }
 
-            return [menu, lines, types]
+            let translations = d.data.transtation.data.attributes
+
+            return [menu, lines, types, translations]
         },
     })
 }

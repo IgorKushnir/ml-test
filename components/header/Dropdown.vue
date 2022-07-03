@@ -41,7 +41,7 @@
 
         <!--Submenu-->
         <ul class="sub-menu col-3 col-4-lg col-12-md m-t-8-md" v-if="item.items.length > 0">
-          <li v-if="item.items.length > 0" v-for="sub_menu in divideSubMenu(item.items)">
+          <li v-if="item.items.length > 0" v-for="sub_menu in $divideSubMenu(item.items)">
             <ul v-for="sub_item in sub_menu">
               <li>
                 <NuxtLink
@@ -84,36 +84,6 @@ const props = defineProps({
 })
 
 
-// Divide Submenu by #
-function divideSubMenu(subMenu) {
-  let splitIndexes = [];
-  subMenu.forEach((e, index) => {
-    if (e.url == '#') {
-      splitIndexes.push(index - 1)
-    }
-  })
-
-
-  subMenu = subMenu.reduceRight((result, value, index) => {
-    result[0] = result[0] || [];
-
-    if (splitIndexes.includes(index)) {
-      result.unshift([value]);
-    } else {
-      result[0].unshift(value);
-    }
-
-    return result;
-  }, []);
-
-  subMenu.map(e => {
-    if (e[0].url == '#') {
-      return e.shift()
-    }
-    return e;
-  })
-  return subMenu;
-}
 
 
 // Generate list of collections on row

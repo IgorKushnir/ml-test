@@ -7,9 +7,13 @@ export default defineNuxtPlugin(() => {
             getImage: (data, format = null) => {
                 // const placeholder = '@/assets/img/logo.svg';
                 const placeholder = img;
-
-                if (data == null || data.data == null || data.data.attributes == null || data.data.attributes.formats == null) {
-                    return placeholder;
+                // data == null || data.data == null || data.data.attributes == null ||
+                if ( data?.data?.attributes?.formats == null) {
+                    if (data?.data?.attributes?.url === null) {
+                        return placeholder;
+                    } else {
+                        return $getAbsoluteUrl(data?.data?.attributes.url)
+                    }
                 }
                 if (format === null || data.data.attributes.formats[format] === undefined) {
                     return $getAbsoluteUrl(data.data.attributes.url);

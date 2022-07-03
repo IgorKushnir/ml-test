@@ -25,7 +25,7 @@ import getInitialData from '~/api/getInitialData';
 // import fav256 from '/public/img/256.png';
 import getAllFilters from '~/api/getAllFilters'
 
-import {useFiltersData, useMenuData, useTypesData, usePreviousRoute, useIsMobile} from "~/composables/states";
+import {useFiltersData, useMenuData, useTypesData, usePreviousRoute, useIsMobile, useTranslationsData} from "~/composables/states";
 
 const nuxtApp = useNuxtApp()
 
@@ -35,6 +35,8 @@ let {data: initialData, error: initialError} = await getInitialData('en');
 if (!initialError.value) {
   useMenuData().value = [initialData.value[0], initialData.value[1]]
   useTypesData().value = initialData.value[2];
+  useTranslationsData().value = initialData.value[3];
+
 }
 
 
