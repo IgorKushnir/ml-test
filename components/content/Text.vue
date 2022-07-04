@@ -17,9 +17,17 @@ const props = defineProps({
 
 </script>
 
+
+
+
+
 <style lang="scss">
+.text-content {
+  height: 100%;
+}
 .text-content img {
   max-width: 100%;
+  background-image: unset;
 }
 
 
@@ -42,51 +50,114 @@ const props = defineProps({
     color: $dark-blue;
   }
 }
-.text-content >  .key {
-  display: grid;
-  grid-gap: 40px;
-  grid-template-columns: repeat(3, 1fr);
-  color: $gray;
-  text-align: center;
-
-  &  > div {
-    padding: 0 40px;
+.text-content > .timeline-list {
+  & ul {
+    list-style: none !important;
+    padding-inline-start: 0;
   }
 
-  .li-title {
-    font-size: 32px;
-    margin-bottom: 16px;
-    font-weight: bold;
-    color: $dark-blue;
+  & > ul {
+    column-count: 2;
+    color: $gray;
+
+    & > li {
+      display: inline-flex;
+      column-gap: 16px;
+      align-items: baseline;
+      border-top: 1px solid $border-dark;
+      padding-top: 24px;
+      margin-top: 40px;
+
+      & > p {
+        font-size: 24px;
+        font-weight: bold;
+        color: $dark-blue;
+      }
+    }
   }
 }
-@include md {
-  .text-content > .history {
-    column-count: 1;
-    &  > div {
-      padding-top: 16px;
-      margin-top: 16px;
-    }
 
-    .li-title {
-      font-size: 20px;
-    }
+
+
+.text-content > .key-list {
+  & ul {
+    list-style: none!important;
+    padding-inline-start: 0;
+    text-align: center;
   }
 
-  .text-content >  .key {
-    grid-gap: 20px;
+  & > ul {
+    display: grid;
+    grid-gap: 40px;
+    grid-template-columns: repeat(3, 1fr);
+    color: $gray;
+    li {
+      max-width: 180px;
+      margin: 0 auto;
+    }
     p {
-      line-height: 1.2em;
+      margin-top: unset;
     }
-    &  > div {
-      padding: 0 0px;
-    }
-
-    .li-title {
-      font-size: 24px;
-      margin-bottom: 8px;
+    & > li > p {
+      font-size: 32px;
+      margin-bottom: 16px;
+      font-weight: bold;
+      color: $dark-blue;
     }
   }
+}
+
+
+
+
+
+
+.block-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  p {
+    max-width: 340px;
+  }
+}
+
+
+
+
+@include md {
+  .text-content > .timeline-list {
+    & > ul {
+      column-count: 1;
+      & > li {
+        padding-top: 16px;
+        margin-top: 16px;
+        & > p {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  .text-content >  .key-list {
+    & > ul {
+      grid-gap: 20px;
+      color: $gray;
+      line-height: 1.2em;
+      & > li > p {
+        font-size: 24px;
+        margin-bottom: 8px;
+      }
+    }
+
+  }
+
+
+
+
+
 }
 
 

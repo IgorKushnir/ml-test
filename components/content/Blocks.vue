@@ -7,7 +7,9 @@
           <Image :path="item.media"/>
         </div>
       </div>
-      <div class="text-block col-6 col-12-sm  p-v-0 p-t-16-md" v-html="item.text"/>
+      <div class="text-block col-6 col-12-sm  p-v-0 p-t-16-md">
+        <ContentText :data="item.text"/>
+      </div>
     </div>
   </div>
 </template>

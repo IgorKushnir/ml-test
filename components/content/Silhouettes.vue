@@ -28,7 +28,7 @@
               <div class="nav-link m-v-16">{{ dress.attributes.title }}</div>
             </NuxtLink>
           </div>
-          <div ref="swiperScrollbar" class="swiper-scrollbar m-t-40 m-t-56-md show-md"></div>
+          <div ref="swiperScrollbar" class="swiper-scrollbar white m-t-40 m-t-56-md show-md"></div>
         </div>
       </div>
       <NuxtLink to="/dress" class="button white m-t-40 show-md">All dresses</NuxtLink>
@@ -156,30 +156,33 @@ onMounted(() => {
 </style>
 
 <style lang="scss">
-.swiper-scrollbar-drag {
-  border-radius: 0;
-  height: 20px;
-  top: -10px;
-  cursor: move;
-  background-color: unset;
-}
+.swiper-scrollbar.white {
+  .swiper-scrollbar-drag {
+    border-radius: 0;
+    height: 20px;
+    top: -10px;
+    cursor: move;
+    background-color: unset;
+  }
 
-.swiper-scrollbar-drag:after {
-  transition: .15s ease-in-out;
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  top: 10px;
-  background-color: $border-dark;
-  z-index: 151;
+  .swiper-scrollbar-drag:after {
+    transition: .15s ease-in-out;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    top: 10px;
+    background-color: $border-dark;
+    z-index: 151;
 
-}
+  }
 
-.swiper-scrollbar-drag:hover {
-  &:after {
-    height: 6px;
-    top: 6px;
+  .swiper-scrollbar-drag:hover {
+    &:after {
+      height: 6px;
+      top: 6px;
+    }
   }
 }
+
 </style>
