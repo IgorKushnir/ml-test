@@ -75,12 +75,3 @@ const props = defineProps({
 
 
 </style>
-
-<style lang="scss">
-.ratio-main-screen {
-  img {
-    object-position: top center;
-  }
-}
-
-</style>

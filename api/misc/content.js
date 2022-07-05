@@ -5,6 +5,12 @@ function content(extra) {
     content {
     ${extra}
     
+    ...on ComponentContentEmbedVideo {
+            __typename
+            layout
+            embed
+          }
+    
     ...on ComponentContentDivider {
             __typename
             size

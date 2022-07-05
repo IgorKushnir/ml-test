@@ -55,6 +55,11 @@
       <ContentSilhouettes :data="content"/>
     </div>
 
+
+    <div v-if="content['__typename'] === 'ComponentContentEmbedVideo'" :class="layout(content.layout ?? 'normal')" class="p-v-0">
+      <ContentEmbed :data="content.embed"/>
+    </div>
+
   </Container>
 </template>
 

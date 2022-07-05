@@ -94,27 +94,30 @@ onMounted(() => {
     slidesPerView: brakePoints[props.column][4],
     spaceBetween: 20,
     freeMode: true,
+    mousewheel: {
+      forceToAxis: true,
+    },
 
     breakpoints: {
       480: {
         slidesPerView: brakePoints[props.column][3],
         spaceBetween: 20,
-        freeMode: true,
+        // freeMode: true,
       },
       768: {
         slidesPerView: brakePoints[props.column][2],
         spaceBetween: 20,
-        freeMode: true,
+        // freeMode: true,
       },
       960: {
         slidesPerView: brakePoints[props.column][1],
         spaceBetween: 20,
-        freeMode: true,
+        // freeMode: true,
       },
       1200: {
         slidesPerView: brakePoints[props.column][0],
         spaceBetween: 40,
-        freeMode: false,
+        // freeMode: false,
       }
     },
 

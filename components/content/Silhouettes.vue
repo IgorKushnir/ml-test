@@ -67,19 +67,23 @@ onMounted(() => {
       draggable: true
     },
 
+    mousewheel: {
+      forceToAxis: true,
+    },
+
     breakpoints: {
 
       768: {
         slidesPerView: 4,
         spaceBetween: 20,
-        freeMode: false,
+        // freeMode: false,
         loop: true,
       },
 
       1200: {
         slidesPerView: 4,
         spaceBetween: 40,
-        freeMode: false,
+        // freeMode: false,
         loop: true,
       }
     },
