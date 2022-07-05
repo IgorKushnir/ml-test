@@ -1,6 +1,6 @@
 <template>
   <div v-if="data" class="banner" :class=" type === 'content' ? 'ratio-16x9  ratio-3x4-md' : 'ratio-main-screen'">
-    <Image class="hide-md" :path="data.cover_4x3" :alt="(!data.title || data.title === '') ? title : data.title"/>
+    <Image class="hide-md" size="large" :path="data.cover_4x3" :alt="(!data.title || data.title === '') ? title : data.title"/>
     <Image class="show-md" :path="data.cover_3x4.data ? data.cover_3x4 : data.cover_4x3" :alt="(!data.title || data.title === '') ? title : data.title"/>
     <div class="overlay"/>
     <div class="wrapper" :class="type">
@@ -73,10 +73,14 @@ const props = defineProps({
   transform: rotate(90deg);
 }
 
-.ratio-main-screen >>> img {
-  object-position: top center;
+
+</style>
+
+<style lang="scss">
+.ratio-main-screen {
+  img {
+    object-position: top center;
+  }
 }
-
-
 
 </style>
