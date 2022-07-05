@@ -73,6 +73,9 @@ const props = defineProps({
   transform: rotate(90deg);
 }
 
+.ratio-main-screen >>> img {
+  object-position: top center;
+}
 
 
 

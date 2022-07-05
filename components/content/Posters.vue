@@ -6,7 +6,8 @@
         :image="poster.cover_3x4"
         :button_text="poster.button_text"
         :to="poster.button_link"
-        gradient
+        poster
+        :image_4x3="poster.cover_4x3"
     />
   </div>
 </template>

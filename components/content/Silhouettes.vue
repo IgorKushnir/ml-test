@@ -1,5 +1,5 @@
 <template>
-  <div class="silhouette-container p-v-40 p-v-0-xl">
+  <div class="silhouette-container">
     <Container v-if="data.title && data.title !== ''" justify="justify-center  m-v-80 m-v-56-md">
       <div class="col-4 col-8-xl col-12-lg center p-v-0">
         <h2 class="m-v-0">{{ data.title }}</h2>
@@ -21,7 +21,7 @@
 
         <div ref="swiperEl" class="swiper">
           <div class="swiper-wrapper">
-            <NuxtLink v-for="dress in [...data.silhouettes.data]" :to="dress.attributes.slug" class="swiper-slide">
+            <NuxtLink v-for="dress in [...data.silhouettes.data]" :to="'/dress?silhouettes=' + dress.attributes.slug" class="swiper-slide">
               <div class="new-ratio-1x1">
                 <img class="silhouette" :src="`../img/silhouette/${dress.attributes.slug}.png`" width="200" height="200" :alt="dress.attributes.title">
               </div>

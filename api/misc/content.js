@@ -32,6 +32,19 @@ function content(extra) {
                   }
                 }
               }
+              cover_4x3 {
+                data {
+                  attributes {
+                    mime
+                    formats
+                    url
+                    placeholder
+                    width
+                    height
+                  }
+                }
+              }
+              
             }
           }
           

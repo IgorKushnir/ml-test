@@ -1,9 +1,18 @@
 <template>
-  <div class="ratio-3x4">
+  <div class="ratio-3x4" :class="poster ? 'ratio-4x3 ratio-3x4-md' : ''">
     <NuxtLink :to="to" class="collection-item">
-      <Image :path="image" :alt="title"  size="medium" class="ratio-3x4"/>
+      <template v-if="!(poster && image_4x3)">
+        <Image :path="image" :alt="title"  size="medium"/>
+      </template>
 
-      <div class="collection-item-head" :class="gradient ? 'gradient' : ''">
+      <template v-else>
+        <Image class="hide-md" :path="image_4x3" :alt="title"  size="medium"/>
+        <Image class="show-md" :path="image" :alt="title"  size="medium"/>
+      </template>
+
+
+
+      <div class="collection-item-head" :class="poster ? 'gradient' : ''">
         <div class="collection-content p-v-56 p-h-56 p-v-32-md p-h-16-md">
           <p class="subheader">{{subHeader}}</p>
           <h2>{{title}}</h2>
@@ -49,11 +58,15 @@ const props = defineProps({
     required: false,
     default: 'Explore'
   },
-  gradient: {
+  poster: {
     type: Boolean,
     required: false,
     default: false
-  }
+  },
+  image_4x3: {
+    type: Object,
+    required: false
+  },
 })
 
 
@@ -83,6 +96,10 @@ const props = defineProps({
   position: absolute;
   bottom: 0;
   width: 100%;
+}
+
+.poster {
+  //max-height: 500px;
 }
 
 
