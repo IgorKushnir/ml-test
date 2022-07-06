@@ -5,7 +5,7 @@
         <Container justify="justify-center">
           <div class="col-12">
             <div class="ratio-3x1 ratio-16x9-md">
-              <Image :path="data.attributes.cover_3x1" :alt="data.attributes.title"/>
+              <Image :path="data.attributes.cover_3x1" :alt="data.attributes.title" size="large"/>
             </div>
           </div>
         </Container>
