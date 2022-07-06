@@ -57,7 +57,6 @@ function content(extra) {
     ...on ComponentContentCarusel {
             __typename
             carusel_layout: layout
-            text
             column
             carusel {
               title

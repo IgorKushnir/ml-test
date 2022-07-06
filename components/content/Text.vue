@@ -22,8 +22,15 @@ const props = defineProps({
 
 
 <style lang="scss">
+
 .text-content {
   height: 100%;
+  *:first-child {
+    margin-top: 0;
+  }
+  *:last-child {
+    margin-bottom: 0;
+  }
 }
 .text-content img {
   max-width: 100%;

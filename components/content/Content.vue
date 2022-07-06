@@ -1,9 +1,10 @@
 <template>
+
   <div v-for="(content, index) in data"
        class="container"
-             :class="(content.size === 'decrease') ? 'decrease' :  index === 0 ? 'm-b-120 m-b-72-xl m-b-56-md m-b-40-sm' : 'm-v-120 m-v-72-xl m-v-56-md m-v-40-sm'"
+             :class="content.size ??  'm-v-80 m-v-40-xl m-v-32-md'"
   >
-    <div class="row justify-center">
+    <div class="row justify-center" >
       <div v-if="content['__typename'] === 'ComponentContentText'" class="text-block p-t-0 p-b-0"
            :class="layout(content['text_layout'])">
         <ContentText :data="content.text"/>
@@ -41,9 +42,7 @@
             :column="content.column === 'six' ? 6 : 4"
             :col-class="layout(content['carusel_layout'])"
             :layout="content['carusel_layout']"
-        >
-          <div v-if="content.text" v-html="content.text" class="m-b-40 m-b-24-md"/>
-        </Carusel>
+        />
       </div>
 
       <template v-if="content['__typename'] === 'ComponentContentPoster'">
@@ -109,31 +108,45 @@ function caruselData(data) {
 <style lang="scss">
 .decrease {
   .row {
-    margin: -80px 0;
+    margin: -60px 0;
+    .brake-line {
+      position: absolute;
+    }
   }
 }
-//m-b-120 m-b-72-xl m-b-56-md
+.none {
+  .row {
+    margin: -40px 0;
+    .brake-line {
+      position: absolute;
+    }
+  }
+}
 @include xl {
   .decrease {
     .row {
-      margin: -80px 0;
+      margin: -28px 0;
+    }
+  }
+  .none {
+    .row {
+      margin: -20px 0;
     }
   }
 }
 @include md {
   .decrease {
     .row {
-      margin: -40px 0;
+      margin: -24px 0;
     }
   }
-}
-@include md {
-  .decrease {
+  .none {
     .row {
-      margin: -30px 0;
+      margin: -16px 0;
     }
   }
 }
+
 
 .content:first-child {
   margin-top: unset;
