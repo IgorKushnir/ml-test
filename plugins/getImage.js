@@ -6,10 +6,11 @@ export default defineNuxtPlugin(() => {
         provide: {
             getImage: (data, format = null) => {
                 // const placeholder = '@/assets/img/logo.svg';
+
                 const placeholder = img;
                 // data == null || data.data == null || data.data.attributes == null ||
                 if ( data?.data?.attributes?.formats == null) {
-                    if (data?.data?.attributes?.url === null) {
+                    if (data?.data?.attributes?.url == null) {
                         return placeholder;
                     } else {
                         return $getAbsoluteUrl(data?.data?.attributes.url)

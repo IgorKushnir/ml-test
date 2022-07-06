@@ -8,7 +8,9 @@
         :src="$getAbsoluteUrl(path.data.attributes.url)"
         loop="loop"
         tabindex="-1"
-        muted autoplay aria-hidden="true"
+        muted autoplay
+        aria-hidden="true"
+        :type="path.data.attributes.mime"
     />
   </div>
 </template>

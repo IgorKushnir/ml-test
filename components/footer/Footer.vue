@@ -162,7 +162,7 @@ const additional = useMenuData().value[0].footer_additional
     padding: 8px;
     border: 1px solid $border-light;
   }
-  .row-reverse-md > > > .row {
+  .row-reverse-md  .row {
     flex-direction: column-reverse;
   }
 

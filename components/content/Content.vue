@@ -1,5 +1,8 @@
 <template>
-  <Container v-for="(content, index) in data" justify="content justify-center" :class="index === 0 ? 'm-b-120 m-b-72-xl m-b-56-md' : 'm-v-120 m-v-72-xl m-v-56-md'">
+  <Container v-for="(content, index) in data"
+             justify="content justify-center"
+             :class="(content.size === 'decrease') ? 'decrease' :  index === 0 ? 'm-b-120 m-b-72-xl m-b-56-md' : 'm-v-120 m-v-72-xl m-v-56-md'"
+  >
     <div v-if="content['__typename'] === 'ComponentContentText'" class="text-block p-t-0 p-b-0"
          :class="layout(content['text_layout'])">
       <ContentText :data="content.text"/>
@@ -101,10 +104,18 @@ function caruselData(data) {
 
 
 <style lang="scss">
-.content {
-  //margin-top: 0!important;
-  //margin-bottom: 0!important;
-
+.decrease {
+  //display: unset;
+  .row {
+    margin: -160px 0;
+    .brake-line {
+      position: absolute;
+      top: -70px;
+    }
+  }
+}
+div:has(p) {
+  background: red;
 }
 .content:first-child {
   margin-top: unset;
