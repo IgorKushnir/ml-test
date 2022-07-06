@@ -1,69 +1,72 @@
 <template>
-  <Container v-for="(content, index) in data"
-             justify="content justify-center"
-             :class="(content.size === 'decrease') ? 'decrease' :  index === 0 ? 'm-b-120 m-b-72-xl m-b-56-md' : 'm-v-120 m-v-72-xl m-v-56-md'"
+  <div v-for="(content, index) in data"
+       class="container"
+             :class="(content.size === 'decrease') ? 'decrease' :  index === 0 ? 'm-b-120 m-b-72-xl m-b-56-md m-b-40-sm' : 'm-v-120 m-v-72-xl m-v-56-md m-v-40-sm'"
   >
-    <div v-if="content['__typename'] === 'ComponentContentText'" class="text-block p-t-0 p-b-0"
-         :class="layout(content['text_layout'])">
-      <ContentText :data="content.text"/>
-    </div>
+    <div class="row justify-center">
+      <div v-if="content['__typename'] === 'ComponentContentText'" class="text-block p-t-0 p-b-0"
+           :class="layout(content['text_layout'])">
+        <ContentText :data="content.text"/>
+      </div>
 
-    <template v-if="content['__typename'] === 'ComponentContentImageVideoGrig'">
-      <ContentMediaGrid :data="content.media.data" :classes="layout(content['grid_layout'])  + ' p-v-0'"
-                        :columns="content.columns"
-      />
-    </template>
+      <template v-if="content['__typename'] === 'ComponentContentImageVideoGrig'">
+        <ContentMediaGrid :data="content.media.data" :classes="layout(content['grid_layout'])  + ' p-v-0'"
+                          :columns="content.columns"
+        />
+      </template>
 
 
-    <div v-if="content['__typename'] === 'ComponentContentFact'" :class="layout(content['fact_layout'])" class="p-v-0">
-      <div :class="content.ratio === 'vertical' ? 'new-ratio-3x4' : 'new-ratio-16x9'">
-        <Fact :data="content"/>
+      <div v-if="content['__typename'] === 'ComponentContentFact'" :class="layout(content['fact_layout'])" class="p-v-0">
+        <div :class="content.ratio === 'vertical' ? 'new-ratio-3x4' : 'new-ratio-16x9'">
+          <Fact :data="content"/>
+        </div>
+      </div>
+
+
+      <div v-if="content['__typename'] === 'ComponentContentMediaBanner'"
+           :class="content.media_banner_layout === 'full' ? 'anti-container p-h-0' : layout(content.media_banner_layout)"
+           class="p-v-0">
+        <ContentBanner :data="content.banner" type="content"/>
+      </div>
+
+
+
+      <div v-if="content['__typename'] === 'ComponentContentBlocks'" :class="layout('normal')" class="p-v-0">
+        <ContentBlocks :data="content.blocks"/>
+      </div>
+
+      <div v-if="content['__typename'] === 'ComponentContentCarusel'" class="anti-container">
+        <Carusel
+            :data="caruselData(content.carusel)"
+            :column="content.column === 'six' ? 6 : 4"
+            :col-class="layout(content['carusel_layout'])"
+            :layout="content['carusel_layout']"
+        >
+          <div v-if="content.text" v-html="content.text" class="m-b-40 m-b-24-md"/>
+        </Carusel>
+      </div>
+
+      <template v-if="content['__typename'] === 'ComponentContentPoster'">
+        <ContentPosters :data="content.poster"/>
+      </template>
+
+
+      <template v-if="content['__typename'] === 'ComponentContentDivider'" >
+        <div v-if="content.line" class="brake-line p-v-0"></div>
+      </template>
+
+      <div v-if="content['__typename'] === 'ComponentContentSilhouettes'" class="anti-container p-h-0 p-v-0">
+        <ContentSilhouettes :data="content"/>
+      </div>
+
+
+      <div v-if="content['__typename'] === 'ComponentContentEmbedVideo'" :class="layout(content.layout ?? 'normal')" class="p-v-0">
+        <ContentEmbed :data="content.embed"/>
       </div>
     </div>
 
 
-    <div v-if="content['__typename'] === 'ComponentContentMediaBanner'"
-         :class="content.media_banner_layout === 'full' ? 'anti-container p-h-0' : layout(content.media_banner_layout)"
-         class="p-v-0">
-      <ContentBanner :data="content.banner" type="content"/>
-    </div>
-
-
-
-    <div v-if="content['__typename'] === 'ComponentContentBlocks'" :class="layout('normal')" class="p-v-0">
-      <ContentBlocks :data="content.blocks"/>
-    </div>
-
-    <div v-if="content['__typename'] === 'ComponentContentCarusel'" class="anti-container">
-      <Carusel
-          :data="caruselData(content.carusel)"
-          :column="content.column === 'six' ? 6 : 4"
-          :col-class="layout(content['carusel_layout'])"
-          :layout="content['carusel_layout']"
-      >
-        <div v-if="content.text" v-html="content.text" class="m-b-40 m-b-24-md"/>
-      </Carusel>
-    </div>
-
-    <template v-if="content['__typename'] === 'ComponentContentPoster'">
-      <ContentPosters :data="content.poster"/>
-    </template>
-
-
-    <template v-if="content['__typename'] === 'ComponentContentDivider'" >
-      <div v-if="content.line" class="brake-line p-v-0"></div>
-    </template>
-
-    <div v-if="content['__typename'] === 'ComponentContentSilhouettes'" class="anti-container p-h-0 p-v-0">
-      <ContentSilhouettes :data="content"/>
-    </div>
-
-
-    <div v-if="content['__typename'] === 'ComponentContentEmbedVideo'" :class="layout(content.layout ?? 'normal')" class="p-v-0">
-      <ContentEmbed :data="content.embed"/>
-    </div>
-
-  </Container>
+  </div>
 </template>
 
 <script setup>
@@ -105,18 +108,33 @@ function caruselData(data) {
 
 <style lang="scss">
 .decrease {
-  //display: unset;
   .row {
-    margin: -160px 0;
-    .brake-line {
-      position: absolute;
-      top: -70px;
+    margin: -80px 0;
+  }
+}
+//m-b-120 m-b-72-xl m-b-56-md
+@include xl {
+  .decrease {
+    .row {
+      margin: -80px 0;
     }
   }
 }
-div:has(p) {
-  background: red;
+@include md {
+  .decrease {
+    .row {
+      margin: -40px 0;
+    }
+  }
 }
+@include md {
+  .decrease {
+    .row {
+      margin: -30px 0;
+    }
+  }
+}
+
 .content:first-child {
   margin-top: unset;
 }
