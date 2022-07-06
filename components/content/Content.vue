@@ -46,7 +46,9 @@
       </div>
 
       <template v-if="content['__typename'] === 'ComponentContentPoster'">
-        <ContentPosters :data="content.poster"/>
+        <div class="row gap-S">
+          <ContentPosters :data="content.poster"/>
+        </div>
       </template>
 
 

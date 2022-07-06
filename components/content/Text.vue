@@ -188,6 +188,12 @@ const props = defineProps({
   tr:nth-child(2n -1) {
     background-color: $light-gray;
   }
+  tr {
+    height: 48px;
+  }
+  th {
+    height: 64px;
+  }
   td, th {
     padding: 0 16px;
   }
