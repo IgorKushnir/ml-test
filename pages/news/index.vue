@@ -25,7 +25,7 @@
 <script setup>
 import {getNews} from '~/api/news'
 const page = ref(1);
-const {data: newsData, pending, refresh, error} = await useLazyAsyncData('news', () => getNews('en',  page.value), {
+const {data: newsData, pending, refresh, error} = await useLazyAsyncData('news', () => getNews('en'), {
   transform: (d) => {
     return d.data['news']
   }

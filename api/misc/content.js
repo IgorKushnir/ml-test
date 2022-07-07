@@ -5,6 +5,12 @@ function content(extra) {
     content {
     ${extra}
     
+    ...on ComponentContentLatestContent {
+            __typename
+            amount
+            instance
+          }
+    
     ...on ComponentContentEmbedVideo {
             __typename
             layout

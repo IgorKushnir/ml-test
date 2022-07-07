@@ -31,7 +31,7 @@ async function getCategories(lang) {
     return {data, pending, refresh, error};
 }
 
-function getInspirations(lang, category, page) {
+function getInspirations(lang, category, page = 1, pageSize = 8) {
     const graphql = useStrapiGraphQL()
     const collection = 'inspirations';
 
@@ -54,7 +54,7 @@ function getInspirations(lang, category, page) {
     ${filters}
         pagination: {
         page: ${page}
-        pageSize: 8
+        pageSize: ${pageSize}
       }
       sort: "created:desc"
   ){

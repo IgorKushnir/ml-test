@@ -64,14 +64,19 @@
       <div v-if="content['__typename'] === 'ComponentContentEmbedVideo'" :class="layout(content.layout ?? 'normal')" class="p-v-0">
         <ContentEmbed :data="content.embed"/>
       </div>
+
+      <div v-if="content['__typename'] === 'ComponentContentLatestContent'"  class="col-12 p-v-0">
+        <div class="row gap-S justify-center">
+          <ContentLatestContent :data="content"/>
+        </div>
+      </div>
+
+
     </div>
-
-
   </div>
 </template>
 
 <script setup>
-import Posters from "./Posters";
 
 const props = defineProps({
   data: {

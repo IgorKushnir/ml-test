@@ -39,7 +39,7 @@ const props = defineProps({
   },
   to: {
     type: String,
-    required: true
+    required: false
   },
   subHeader: {
     type: String,

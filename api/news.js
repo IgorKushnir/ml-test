@@ -1,18 +1,18 @@
 import content from './misc/content'
 
 
-function getNews(lang, page) {
+function getNews(lang, page = 1, pageSize = 100) {
     const graphql = useStrapiGraphQL()
 
-    // page: ${page}
-    // pageSize: 8
+
 
     const response = graphql(`
     query News{
   news (
     locale: "${lang}"
         pagination: {
-        limit: -1
+        page: ${page}
+        pageSize: ${pageSize}
       }
       sort: "created:desc"
   ){
