@@ -1,7 +1,7 @@
 <template>
   <div class="img-component-container">
     <img :src="placeholder" :alt="alt" class="img-component placeholder">
-    <img :src="$getImage(path, size)" :alt="alt" class="img-component" loading="lazy">
+    <img v-if="!path.data?.attributes?.mime?.startsWith('video/')" :src="$getImage(path, size)" :alt="alt" class="img-component" loading="lazy">
     <video
         v-if="path.data?.attributes?.mime?.startsWith('video/')"
         playsinline=""
