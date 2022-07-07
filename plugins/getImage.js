@@ -7,21 +7,25 @@ export default defineNuxtPlugin(() => {
             getImage: (data, format = null) => {
                 // const placeholder = '@/assets/img/logo.svg';
 
+                function replaceToCDN(url) {
+                    url = url.replace('nyc3.digitaloceanspaces.com', 'nyc3.cdn.digitaloceanspaces.com')
+
+                    return url
+                }
                 const placeholder = img;
-                // data == null || data.data == null || data.data.attributes == null ||
                 if ( data?.data?.attributes?.formats == null) {
                     if (data?.data?.attributes?.url == null) {
                         return placeholder;
                     } else {
-                        return $getAbsoluteUrl(data?.data?.attributes.url)
+                        return replaceToCDN($getAbsoluteUrl(data?.data?.attributes.url))
                     }
                 }
                 if (format === null || data.data.attributes.formats[format] === undefined) {
-                    return $getAbsoluteUrl(data.data.attributes.url);
+                    return replaceToCDN($getAbsoluteUrl(data.data.attributes.url));
                 }
                 if (format) {
                     if (data.data.attributes.formats[format] !== null) {
-                        return $getAbsoluteUrl(data.data.attributes.formats[format].url)
+                        return replaceToCDN($getAbsoluteUrl(data.data.attributes.formats[format].url));
                     } else {
                         return placeholder
                     }
