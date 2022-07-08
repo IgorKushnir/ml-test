@@ -78,15 +78,20 @@ export default async function (lang) {
                 return country
             })
             // countries.filter
-            const ukraineIndex = countries.findIndex(c => c.attributes.slug === 'ukraine')
-            const americaIndex = countries.findIndex(c => c.attributes.slug === 'united-states')
-            let sorted = countries.filter(c => c.attributes.slug !== 'united-states' && c.attributes.slug !== 'ukraine')
+            let priority = ['ukraine', 'australia', 'italy', 'united-states', 'united-kingdom', 'turkey']
+            function getCountryIndex(slug) {
+                return countries.findIndex(c => c.attributes.slug === slug)
+            }
 
-            let final = [];
-            if (ukraineIndex !== -1) final.push(countries[ukraineIndex]);
-            if (americaIndex !== -1) final.push(countries[americaIndex]);
+            let excluded = countries.filter(c => !priority.includes(c.attributes.slug))
 
-            return [...final, ...countries]
+
+            priority = priority.map(e => getCountryIndex(e) !== -1 ? countries[getCountryIndex(e)] : null)
+            priority = priority.filter(c => c !== null)
+
+
+
+            return [...priority, ...excluded]
 
         },
     })

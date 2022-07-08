@@ -72,7 +72,7 @@ const props = defineProps({
   }
 })
 const emits = defineEmits(["close"])
-const search = ref('')
+let search = ref('')
 const input = ref()
 const config = useRuntimeConfig();
 const result = ref([]);

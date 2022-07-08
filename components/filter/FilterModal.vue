@@ -4,6 +4,7 @@
 
       <transition name="slide">
         <div v-show="showFilters" class="wrapper">
+
           <div class="filters-container p-h-56 p-t-80 p-v-120    p-h-32-md">
 
             <div class="header-container p-r-0">
@@ -16,7 +17,6 @@
             </div>
 
             <template v-for="(filter, index) in allFiltersFiltered">
-
               <FilterItem
                   :name="getName(filter.uid)"
                   :data="filter"
@@ -94,6 +94,8 @@ function getName(uid) {
     others: "Other",
     budgets: "Budget",
     backnecklines: "Back Necklines",
+    accessoires: "Accessoires",
+    shoes: "Shoes",
   }
   return names[uid] ?? uid
 

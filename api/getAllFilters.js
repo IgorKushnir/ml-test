@@ -131,6 +131,34 @@ query getAllFilters{
     }
   }
   
+  accessoires (
+    locale: "${lang}",
+    pagination: {
+      limit: -1
+    }
+  ){
+    data {
+      attributes {
+        title
+        slug
+      }
+    }
+  }
+  
+  shoes (
+    locale: "${lang}",
+    pagination: {
+      limit: -1
+    }
+  ){
+    data {
+      attributes {
+        title
+        slug
+      }
+    }
+  }
+  
   backnecklines (
     locale: "en",
     pagination: {
