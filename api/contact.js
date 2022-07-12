@@ -30,6 +30,9 @@ export default async function (lang) {
                     required
                     size
                   }
+                  emails {
+                    email
+                  }
                 }
               }
             }

@@ -1,9 +1,18 @@
 <template>
-  <div class="spinner-container">
+  <div class="spinner-container" :class="white ? 'white' : ''">
     <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
   </div>
 </template>
 
+<script setup>
+defineProps({
+  white: {
+    type: Boolean,
+    required: false,
+    default: false,
+  }
+})
+</script>
 
 
 <style scoped lang="scss">
@@ -37,6 +46,12 @@
   border-radius: 20%;
   background: $gray;
 }
+.spinner-container.white {
+  .lds-spinner div:after {
+    background: $white;
+  }
+}
+
 .lds-spinner div:nth-child(1) {
   transform: rotate(0deg);
   animation-delay: -1.1s;
