@@ -15,9 +15,10 @@
           <form class="col-6 form" @submit.prevent="send">
             <template v-for="(formItem, index) in item.form">
               <div class="input-block" :class="'c-'+formItem.size + (sendData[formItem.title].error ? ' error' : '')">
-                <label class="p-small" :for="index" :class="formItem.required ? 'required' : ''">{{ formItem.title }}</label>
+                <label v-if="formItem.type !== 'divider'" class="p-small" :for="index" :class="formItem.required ? 'required' : ''">{{ formItem.title }}</label>
+                <div v-if="formItem.type === 'divider'" class="subheader small m-b-8 m-t-32">{{ formItem.title }}</div>
                 <input
-                    v-if="formItem.type !== 'textarea'"
+                    v-if="formItem.type !== 'textarea' && formItem.type !== 'divider'"
                     :autofocus="index === 0"
                     class="input m-t-8"
                     :type="formItem.type"
@@ -53,7 +54,7 @@
         </Container>
 
 
-        <State v-else title="Your message has been sent" text="We will contact you soon as possible" :button="{text: 'To home page', path: '/'}" />
+        <State v-else :title="item.successful_message_sent_title" :text="item.successful_message_sent_text" :button="{text: 'Home page', path: '/'}" />
       </transition>
 
     </div>
@@ -97,6 +98,8 @@ function generateData() {
 }
 generateData();
 watch(index, () => {
+  sent.value = false;
+  loading.value = false;
   generateData()
 })
 
@@ -175,6 +178,9 @@ textarea {
   column-gap: 40px;
   row-gap: 24px;
   grid-template-columns: repeat(4, 1fr);
+}
+.form *:first-child .subheader{
+  margin-top: 0!important;
 }
 
 .c-1 {

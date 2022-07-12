@@ -23,6 +23,12 @@ const query = ref(route.query)
 watch(route, (r) => query.value = r.query)
 const type = computed(() => Object.keys(query.value)[0])
 
+useHead({
+  title: data.value.seo?.metaTitle ?? data.value.title,
+})
+
+
+
 </script>
 
 <style scoped>

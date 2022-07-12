@@ -37,7 +37,7 @@ export default defineNuxtConfig({
         SEARCH_URL: process.env.SEARCH_URL || 'http://localhost:7700',
         MEILISEARCH_API_KEY: process.env.MEILISEARCH_API_KEY,
         // SEARCH_URL: process.env.SEARCH_URL || 'http://167.172.227.234',
-    },
+    }
 })
 
 

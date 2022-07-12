@@ -3,7 +3,7 @@
     <div class="container row-reverse-md m-t-80 m-t-40-md">
       <div class="row gap-S">
         <div class="col-6 col-4-xl col-12-lg p-v-0">
-          <div class="h2 white m-t-0 hide-md">{{ translations.primary?.footer_title?.value }}</div>
+          <div class="h2 white m-t-0 hide-md">{{ translations.footer_title}}</div>
           <div class="m-v-40">
             <NuxtLink v-for="item in social" :class="'icon-'+item.icon" :to="item.url" target="_blank"
                       class="social white hover m-r-16 m-h-8-md"/>

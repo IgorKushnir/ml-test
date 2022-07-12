@@ -106,7 +106,10 @@ export default async function (lang) {
         transtation {
             data {
               attributes {
-                primary
+                site_title
+                site_description
+                footer_title
+                footer_copyright
               }
             }
           }

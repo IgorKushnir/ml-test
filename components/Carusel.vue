@@ -10,12 +10,19 @@
         <StickyBarBack light text=""/>
       </div>
 
+<!--      <div v-for="item in data">-->
+<!--                  <pre>-->
+<!--                    {{ item.attributes.slug }}-->
+<!--                  </pre>-->
+<!--      </div>-->
+
       <div class="container">
         <div class="row gap-S justify-center">
           <div :class="colClass">
             <slot/>
             <div ref="swiperEl" class="swiper">
               <div class="swiper-wrapper">
+
                 <NuxtLink
                     v-for="item in data"
                     class="swiper-slide"
@@ -32,6 +39,7 @@
                     <div v-if="item.attributes.text" class="p m-v-8 gray">{{ item.attributes.text }}</div>
                   </div>
                 </NuxtLink>
+
               </div>
               <div ref="swiperScrollbar" class="swiper-scrollbar m-t-40 m-t-24-md"></div>
             </div>

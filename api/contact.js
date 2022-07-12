@@ -1,3 +1,5 @@
+import seo from './misc/seo'
+
 export default async function (lang) {
 
     const graphql = useStrapiGraphQL()
@@ -7,6 +9,7 @@ export default async function (lang) {
     contactUs(locale:"${lang}") {
          data {
               attributes {
+               ${seo()}
                 title
                 text
                 cover_1x1 {
@@ -21,18 +24,22 @@ export default async function (lang) {
                     }
                   }
                 }
-                entry {
+                entry (pagination: {limit: -1}) {
                   title
                   slug
-                  form {
+                  form (pagination: {limit: -1}) {
                     title
                     type
                     required
                     size
                   }
-                  emails {
+                  emails (pagination: {limit: -1}) {
                     email
                   }
+                  successful_message_sent_title
+                  successful_message_sent_text
+                  error_message_sent_title
+                  error_message_sent_text
                 }
               }
             }

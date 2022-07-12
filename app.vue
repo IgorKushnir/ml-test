@@ -50,35 +50,26 @@ if (!error.value) allFilters.value = data.value;
 
 
 useHead({
-  // titleTemplate: 'My App - %s',
-  // or, instead:
-  title: 'Some Page',
+  // title: 'Some Page',
 
   titleTemplate: (title) => `${title} - Milla Nova | Wedding dresses | Collection Olives, Greece, Love`,
   viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
   charset: 'utf-8',
-  link: [
+
+  meta: [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     {
-      href: '/img/32.png', rel: "shortcut icon", type:"image/x-icon",
-    },
-    {
-      href: '/img/256.png', rel: "apple-touch-icon",
+      hid: 'description',
+      name: 'description',
+      content: 'my website description'
     }
   ],
-  // script: [
-  //   {
-  //     src: '/js/shortcode/shortcode.js'
-  //   }
-  // ]
-  // import Shortcode from '~/assets/js/shortcode/shortcode'
-
-
-  // meta: [
-  //   {  name: 'description', content: 'My amazing site.' }
-  // ],
-  // bodyAttrs: {
-  //   class: 'test'
-  // }
+  link: [
+    { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+    { rel: "shortcut icon",  type:"image/x-icon", href: '/img/32.png'},
+    { rel: "apple-touch-icon",  type:"image/x-icon", href: '/img/256.png'},
+  ]
 })
 
 
