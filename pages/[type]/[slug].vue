@@ -22,7 +22,7 @@
             <h1 class="title m-t-0">{{ data.title }}</h1>
           </div>
           <div class="sticky-content">
-            <p class="m-b-32">{{ data.description }}</p>
+            <p class="m-b-32" v-if="data.description" v-html="$handleNewLine(data.description)" />
 
 
             <div class="info m-t-40" v-if="data.collection.data">
@@ -65,12 +65,12 @@
       </Container>
 
 
-      <Carusel v-if="data.recommended !== null" :data="data.recommended?.products.data" class="m-v-80">
-        <h2 class="m-t-0 m-b-40 m-b-24-md">Recommendation</h2>
-      </Carusel>
-      <Carusel v-if="data.extra !== null" :data="data.extra?.also"  :column="4" class="m-v-80">
-        <h2 class="m-t-0 m-b-40 m-b-24-md">You may also like</h2>
-      </Carusel>
+<!--      <Carusel v-if="data.recommended !== null" :data="data.recommended?.products.data" class="m-v-80">-->
+<!--        <h2 class="m-t-0 m-b-40 m-b-24-md">Recommendation</h2>-->
+<!--      </Carusel>-->
+<!--      <Carusel v-if="data.extra !== null" :data="data.extra?.also"  :column="4" class="m-v-80">-->
+<!--        <h2 class="m-t-0 m-b-40 m-b-24-md">You may also like</h2>-->
+<!--      </Carusel>-->
 
 
 

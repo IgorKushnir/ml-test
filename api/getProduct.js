@@ -107,6 +107,7 @@ query Product{
             return null
         },
     })
+    // console.log(data, error);
 
     return {data, pending, refresh, error};
 }

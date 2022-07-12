@@ -42,7 +42,7 @@ export default defineNuxtPlugin(() => {
             },
 
             handleNewLine: (string) => {
-                return string.replace(/(?:\r\n|\r|\n)/g, '<br />');
+                return string?.replace(/(?:\r\n|\r|\n)/g, '<br />');
             },
 
             divideSubMenu: (subMenu) => {
