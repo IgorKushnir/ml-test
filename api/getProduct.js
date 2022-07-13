@@ -1,3 +1,5 @@
+import seo from './misc/seo'
+
 export default async function (slugOrId) {
     const graphql = useStrapiGraphQL()
     let collection = 'product';
@@ -15,6 +17,7 @@ query Product{
     data {
       id
       attributes {
+      ${seo()}
       slug
       extra
       

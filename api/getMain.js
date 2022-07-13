@@ -1,4 +1,5 @@
 import content from './misc/content'
+import seo from './misc/seo'
 
 export default async function (lang) {
     const graphql = useStrapiGraphQL()
@@ -26,6 +27,7 @@ query Main{
   ) {
     data {
       attributes {
+      ${seo()}
         banner {
           title
           text

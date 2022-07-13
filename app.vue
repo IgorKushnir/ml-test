@@ -50,7 +50,7 @@ if (!error.value) allFilters.value = data.value;
 
 
 useHead({
-  // title: 'Some Page',
+  title: 'Milla Nova',
 
   titleTemplate: (title) => `${title} - Milla Nova | Wedding dresses | Collection Olives, Greece, Love`,
   viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
@@ -66,7 +66,7 @@ useHead({
     }
   ],
   link: [
-    { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+    { rel: 'icon', type: 'image/x-icon', href: '/img/favicon.ico' },
     { rel: "shortcut icon",  type:"image/x-icon", href: '/img/32.png'},
     { rel: "apple-touch-icon",  type:"image/x-icon", href: '/img/256.png'},
   ]

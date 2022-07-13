@@ -1,4 +1,5 @@
 <template>
+
   <transition v-if="show" name="fade">
     <State
         title="Page not found"

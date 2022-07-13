@@ -1,5 +1,7 @@
 <template>
   <div>
+    <Seo title="Trunk shows"/>
+
     <transition name="fade">
       <div v-if="!pending && data != null">
         <InnerHeader title="Trunk shows"/>

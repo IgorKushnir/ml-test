@@ -1,3 +1,5 @@
+import seo from './misc/seo'
+
 export default async function (lang) {
 
     const graphql = useStrapiGraphQL()
@@ -95,6 +97,7 @@ export default async function (lang) {
           ) {
             data {
               attributes {
+              ${seo()}
                 title
                 slug
               }

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Seo :data="data"/>
     <transition name="fade">
       <div v-if="data != null">
         <transition name="fade">
@@ -25,15 +26,7 @@ const type = computed(() => Object.keys(query.value)[0])
 
 
 
-function setSeo() {
-  useHead({
-    title: data.value?.seo?.metaTitle ?? data.value?.title ?? '--',
-  })
-}
-watch(data, () => {
-  setSeo()
-})
-setSeo()
+
 
 
 

@@ -14,10 +14,12 @@ export default defineNuxtPlugin(() => {
         provide: {
             getAbsoluteUrl: (path) => {
                 function replaceToCDN(url) {
-                    url = url.replace('nyc3.digitaloceanspaces.com', 'nyc3.cdn.digitaloceanspaces.com')
+                    if (url) {
+                        url = url.replace('nyc3.digitaloceanspaces.com', 'nyc3.cdn.digitaloceanspaces.com')
 
-                    url = url.replace('https://nyc3.digitaloceanspaces.com/millanova', 'https://millanova.nyc3.cdn.digitaloceanspaces.com')
-                    url = url.replace('https://nyc3.cdn.digitaloceanspaces.com/millanova', 'https://millanova.nyc3.cdn.digitaloceanspaces.com')
+                        url = url.replace('https://nyc3.digitaloceanspaces.com/millanova', 'https://millanova.nyc3.cdn.digitaloceanspaces.com')
+                        url = url.replace('https://nyc3.cdn.digitaloceanspaces.com/millanova', 'https://millanova.nyc3.cdn.digitaloceanspaces.com')
+                    }
 
                     return url
 

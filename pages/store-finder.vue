@@ -1,5 +1,7 @@
 <template>
   <div>
+    <Seo title="Store finder"/>
+
     <transition name="fade">
       <div v-if="!pending && data != null">
         <InnerHeader title="Store finder"/>

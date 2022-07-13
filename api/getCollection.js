@@ -1,3 +1,5 @@
+import seo from './misc/seo'
+
 export default async function (slug, lang) {
     const graphql = useStrapiGraphQL()
     const collection = 'collections';
@@ -14,6 +16,7 @@ query Collection{
   ) {
     data {
       attributes {
+      ${seo()}
         title
         show_promo
         cover_4x3 {

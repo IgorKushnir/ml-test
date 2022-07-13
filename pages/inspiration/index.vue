@@ -1,5 +1,7 @@
 <template>
   <div>
+    <Seo title="Inspiration"/>
+
     <transition name="fade">
       <div v-if="data != null">
         <InnerHeader title="Inspiration"/>

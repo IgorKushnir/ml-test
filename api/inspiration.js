@@ -1,4 +1,5 @@
 import content from './misc/content'
+import seo from './misc/seo'
 
 async function getCategories(lang) {
     const graphql = useStrapiGraphQL()
@@ -117,6 +118,7 @@ async function getInspiration(slug, lang) {
   ){
     data {
       attributes {
+      ${seo()}
         title
         slug
         created

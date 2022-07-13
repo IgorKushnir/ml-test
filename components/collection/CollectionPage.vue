@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Seo :data="dataCollection"/>
     <div v-if="!pendingCollection && dataCollection != null">
 
 

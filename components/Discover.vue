@@ -1,31 +1,38 @@
 <template>
   <div>
-    <InnerHeader :title="slug"/>
+    <Seo :data="type"/>
 
-    <StickyHeader>
-      <template #center>
-        <StickyMenu :data="typeData" path="/" class="grid-column-center"/>
-      </template>
+    <div v-if="dataProducts!== null">
+      <InnerHeader :title="type.title"/>
 
-      <template #end>
-        <Filter
-            v-if="dataAvailableFilters !== null"
-            :available-filters="dataAvailableFilters"
-            @filters="e => handleFilter(e)"
-            @check-filters="e => checkFiltersHandler(e)"
-            :pending="pendingFilters"
-        />
-      </template>
-    </StickyHeader>
+      <StickyHeader>
+        <template #center>
+          <StickyMenu :data="typeData" path="/" class="grid-column-center"/>
+        </template>
 
-    <ProductGrid
-        v-if="dataProducts!== null"
-        :products-data="dataProducts"
-        :pending-products="pendingProducts"
-        :grid="4"
-        infinite
-        @load="page => filterData(currentFilters, page)"
-    />
+        <template #end>
+          <Filter
+              v-if="dataAvailableFilters !== null"
+              :available-filters="dataAvailableFilters"
+              @filters="e => handleFilter(e)"
+              @check-filters="e => checkFiltersHandler(e)"
+              :pending="pendingFilters"
+          />
+        </template>
+      </StickyHeader>
+
+      <ProductGrid
+          :products-data="dataProducts"
+          :pending-products="pendingProducts"
+          :grid="4"
+          infinite
+          @load="page => filterData(currentFilters, page)"
+      />
+    </div>
+
+    <Loading :pending="pendingProducts"/>
+    <PageNotFound :show="dataProducts == null && !pendingProducts"/>
+
 
   </div>
 </template>
@@ -44,6 +51,8 @@ const route = useRoute();
 let slug = route.params.slug;
 let filterSelected = ref([])
 let filters = ref([])
+
+const type = computed(() => typeData.value.find(e => e.slug === slug))
 
 // let dataProducts = {}
 let {

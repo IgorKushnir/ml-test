@@ -1,5 +1,7 @@
 <template>
   <div>
+    <Seo :data="data?.attributes"/>
+
     <transition name="fade">
       <div v-if="!pending && data != null">
         <Container justify="justify-center">

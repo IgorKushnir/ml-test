@@ -1,4 +1,6 @@
 <template>
+  <Seo title="Page not found"/>
+
   <PageNotFound/>
 </template>
 

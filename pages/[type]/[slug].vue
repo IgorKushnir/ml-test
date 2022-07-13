@@ -1,5 +1,7 @@
 <template>
   <div>
+    <Seo :data="data"/>
+
     <div v-if="data != null">
 
       <StickyHeader :title="data.title">
@@ -77,7 +79,7 @@
 
     </div>
     <Loading :pending="pending"/>
-    <PageNotFound :show="data == null"/>
+    <PageNotFound :show="data == null && !pending"/>
   </div>
 </template>
 

@@ -1,4 +1,5 @@
 import content from './misc/content'
+import seo from './misc/seo'
 
 
 function getNews(lang, page = 1, pageSize = 100) {
@@ -60,6 +61,7 @@ async function getNewsPost(slug, lang) {
   ){
     data {
       attributes {
+      ${seo()}
         title
         slug
         created

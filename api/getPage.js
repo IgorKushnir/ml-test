@@ -1,4 +1,5 @@
 import content from './misc/content'
+import seo from './misc/seo'
 
 export default async function (slug, lang) {
     const graphql = useStrapiGraphQL()
@@ -16,6 +17,7 @@ query Page{
   ) {
     data {
       attributes {
+      ${seo()}
         title
         text
         sub_header

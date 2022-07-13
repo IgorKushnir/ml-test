@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Seo :data="data" title="Collections"/>
     <transition name="fade">
       <div v-if="!pending && data != null">
         <InnerHeader title="Collections"/>
