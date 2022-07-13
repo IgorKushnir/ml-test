@@ -105,10 +105,17 @@ function reportWindowSize() {
 
 
 
-
+useRouter().options.scrollBehavior = (to, from, savedPosition) => {
+  console.log(savedPosition);
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve({ left: 0, top: savedPosition?.top ?? 0, behaviour: "smooth" });
+    }, 500);
+  });
+};
 
 nuxtApp.hook("page:finish", () => {
-  setTimeout(go, 500)
+  // setTimeout(go, 500)
 
   function go() {
     // Is next and prev route Product page
@@ -126,6 +133,9 @@ nuxtApp.hook("page:finish", () => {
   }
 
 })
+
+
+
 
 
 
