@@ -10,7 +10,7 @@
     </transition>
 
     <Loading :pending="pending"/>
-    <PageNotFound :show="data === null"/>
+    <PageNotFound :show="data === null && !pending"/>
   </div>
 </template>
 
@@ -23,9 +23,17 @@ const query = ref(route.query)
 watch(route, (r) => query.value = r.query)
 const type = computed(() => Object.keys(query.value)[0])
 
-useHead({
-  title: data.value.seo?.metaTitle ?? data.value.title,
+
+
+function setSeo() {
+  useHead({
+    title: data.value?.seo?.metaTitle ?? data.value?.title ?? '--',
+  })
+}
+watch(data, () => {
+  setSeo()
 })
+setSeo()
 
 
 
