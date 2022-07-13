@@ -20,6 +20,8 @@
         <div class="row gap-S justify-center">
           <div :class="colClass">
             <slot/>
+
+
             <div ref="swiperEl" class="swiper">
               <div class="swiper-wrapper">
 

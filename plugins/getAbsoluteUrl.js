@@ -1,4 +1,4 @@
-// import _path from 'path'
+import _path from 'path'
 
 export default defineNuxtPlugin(() => {
     const config = useRuntimeConfig();
@@ -33,13 +33,15 @@ export default defineNuxtPlugin(() => {
 
             },
             isAbsoluteUrl: (url) => {
-                let pattern = new RegExp('^(https?:\\/\\/)?'+
-                    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+
-                    '((\\d{1,3}\\.){3}\\d{1,3}))'+
-                    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+
-                    '(\\?[;&a-z\\d%_.~+=-]*)?'+
-                    '(\\#[-a-z\\d_]*)?$','i')
+                const pattern = /^[a-z][a-z0-9+.-]*:/;
+                // let pattern = new RegExp('^(https?:\\/\\/)?'+
+                //     '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+
+                //     '((\\d{1,3}\\.){3}\\d{1,3}))'+
+                //     '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+
+                //     '(\\?[;&a-z\\d%_.~+=-]*)?'+
+                //     '(\\#[-a-z\\d_]*)?$','i')
                 return pattern.test(url);
+                // return url.startsWith('http://') || url.startsWith('https://') || url.startsWith('www')
             }
         }
     }
