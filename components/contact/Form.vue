@@ -12,7 +12,7 @@
       <transition name="fade">
 
         <Container justify="justify-center" v-if="!sent">
-          <form class="col-6 form" @submit.prevent="send">
+          <form class="col-6 col-8-xl col-10-lg col-12-mg form" @submit.prevent="send">
             <template v-for="(formItem, index) in item.form">
               <div class="input-block" :class="'c-'+formItem.size + (sendData[formItem.title].error ? ' error' : '')">
                 <label v-if="formItem.type !== 'divider'" class="p-small" :for="index" :class="formItem.required ? 'required' : ''">{{ formItem.title }}</label>
@@ -194,6 +194,11 @@ textarea {
 }
 .c-4 {
   grid-column: auto/span 4;
+}
+@include md {
+  .c-1, .c-2, .c-3, .c-4 {
+    grid-column: auto/span 4;
+  }
 }
 
 .error-message {
