@@ -5,7 +5,7 @@
       <transition name="slide">
         <div v-show="showFilters" class="wrapper">
 
-          <div class="filters-container p-h-56 p-t-80 p-v-120    p-h-32-md">
+          <div class="filters-container p-h-56 p-t-112 p-b-120    p-h-32-md">
 
             <div class="header-container p-r-0">
               <div class="btn close" v-on:click="closeFilter"><div class="icon-close-24"></div></div>
@@ -23,6 +23,7 @@
                   :default-open="index < 1"
                   @value="e => handleValue(e)"
                   :available-filter-items="availableFilters[filter.uid]"
+                  :initialItemSelected="getInitialItemSelected(filter.uid)"
               />
             </template>
 
@@ -80,7 +81,11 @@ const props = defineProps({
   pending: {
     type: Boolean,
     required: true
-  }
+  },
+  initialFilterSelected: {
+    type: Array,
+    required: true
+  },
 })
 
 function getName(uid) {
@@ -139,7 +144,6 @@ function handleValue(e) {
 
   checkIsFilterButtonShow()
 
-
   const index = filters.value.findIndex(d => d.key === e.key)
   if (index === -1) {
     filters.value.push(e)
@@ -147,9 +151,23 @@ function handleValue(e) {
     filters.value[index] = e
   }
 
-
   emits('checkFilters', filters.value)
 }
+
+// Handle initial filters
+props.initialFilterSelected.forEach(e => {
+  handleValue(e)
+})
+showFilterButton.value = true;
+// watch(() => props.initialFilterSelected, () => {
+//   console.log(props.initialFilterSelected);
+//   // props.initialFilterSelected.forEach(e => {
+//   //   // console.log('dfdf');
+//   //   handleValue(e)
+//   // })
+//   // showFilterButton.value = true;
+// })
+
 
 function handleFilterButton() {
   filteredItems.value = selectedItems.value;
@@ -193,6 +211,11 @@ function resetHandler() {
   filteredItems.value = []
   checkIsFilterButtonShow()
 
+}
+
+
+function getInitialItemSelected(uid) {
+  return props.initialFilterSelected?.find(e => e.key === uid)?.values
 }
 
 

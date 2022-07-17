@@ -75,13 +75,23 @@ $transition: .5s ease-in-out;
 }
 
 
+
 @media (hover: hover) {
+  >>> .img-component.base {
+    transition: 2.5s ease-in-out;
+  }
   .product-item:hover {
     &:after {
       opacity: 1;
     }
     .product-item-head{
       opacity: 1;
+    }
+
+
+    >>> .img-component.base {
+      transform: scale(1.1);
+
     }
   }
 }

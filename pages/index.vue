@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Seo :data="data.attributes"/>
+    <Seo :data="data?.attributes"/>
 
     <transition name="fade">
       <div class="content" v-if="!pending && data != null">

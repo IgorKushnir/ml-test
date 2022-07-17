@@ -13,12 +13,28 @@
 </script>
 
 <style scoped lang="scss">
+.tag-container {
+  height: auto;
+  min-height: 32px;
+  margin-bottom: -76px!important;
+  margin-top: 24px!important;
+  z-index: 10;
+  .row {
+    justify-content: flex-end;
+  }
+}
+@include xl {
+  .tag-container {
+    margin-top: 16px!important;
+    margin-bottom: -44px!important;
+  }
+}
 
 .toggle-container {
-  position: absolute;
-  top: 23px;
-  right: 0;
+  gap: 8px;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   align-items: center;
   .label {
     margin-right: 16px;
@@ -26,9 +42,10 @@
   }
 }
 
-@include xl {
-  .tag-container {
-    height: 32px;
-  }
-}
+
+//@include xl {
+//  .tag-container {
+//    height: 32px;
+//  }
+//}
 </style>

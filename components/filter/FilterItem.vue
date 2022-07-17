@@ -53,20 +53,42 @@ const props = defineProps({
   availableFilterItems: {
     type: Object,
     required: true
-  }
+  },
+  initialItemSelected: {
+    type: Array,
+    required: false
+  },
 })
+
 let open = ref(false)
 open.value = props.defaultOpen;
 
 let filterItemData = ref([])
-
-
-filterItemData.value = props.data.data.map(d => {
-  let m = d.attributes;
-  m.value = false;
-  return m;
+const amount = computed(()=> {
+  const am = filterItemData.value.filter(d => d.value).length
+  if (am > 0) open.value = true;
+  return am
 })
 
+
+
+
+
+function checkSelected() {
+  filterItemData.value = props.data.data.map(d => {
+    let m = d.attributes;
+    if (props.initialItemSelected) {
+      m.value = props.initialItemSelected.includes(m.slug);
+    } else {
+      m.value = false;
+    }
+    return m;
+  })
+}
+checkSelected()
+watch(() => props.initialItemSelected, () => {
+  checkSelected()
+})
 
 
 function setItemValue(i, e) {
@@ -82,8 +104,6 @@ function setItemValue(i, e) {
   emits("value", filters);
 }
 
-// const amount = 0
-const amount = computed(()=> filterItemData.value.filter(d => d.value).length)
 
 
 

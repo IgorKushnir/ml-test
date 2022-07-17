@@ -10,6 +10,7 @@
       :products-count="availableFilters.pagination.total ?? 0"
       @check-filters="e => checkFiltersHandler(e)"
       :pending="pending"
+      :initialFilterSelected="initialFilterSelected"
   />
 </template>
 
@@ -20,6 +21,10 @@ const props = defineProps({
     type: Object,
     required: true
   },
+  initialFilterSelected: {
+    type: Array,
+    required: true
+  },
   pending: {
     type: Boolean,
     required: true
@@ -28,6 +33,7 @@ const props = defineProps({
 
 // Get Available Filters just Once
 const availableFiltersFirstFetch = ref(props.availableFilters)
+
 watch(() => props.availableFilters, (f)=> {
   if (f.filters != null) {
     availableFiltersFirstFetch.value = f
@@ -44,6 +50,11 @@ let allFilters = useFiltersData();
 let showFilters = ref(false)
 let count = ref(0)
 
+calculateFiltersAmount(props.initialFilterSelected);
+watch(() => props.initialFilterSelected, () => {
+  calculateFiltersAmount(props.initialFilterSelected);
+})
+
 const isMobile = useIsMobile()
 
 function toggleFilters(state) {
@@ -51,15 +62,18 @@ function toggleFilters(state) {
 }
 
 function emitFilters(e) {
-  window.scrollTo({
-    top: isMobile.value ? 0 : 153,
-    behavior: 'smooth'
-  });
+  // window.scrollTo({
+  //   top: isMobile.value ? 0 : 153,
+  //   behavior: 'smooth'
+  // });
   emits('filters', e)
   count.value = e.map(d => d.values.length).reduce((partialSum, a) => partialSum + a, 0)
 }
 function checkFiltersHandler(f) {
   emits('checkFilters', f)
+}
+function calculateFiltersAmount(filters) {
+  count.value = filters.map(d => d.values.length).reduce((partialSum, a) => partialSum + a, 0)
 }
 </script>
 

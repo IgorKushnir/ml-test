@@ -67,10 +67,10 @@
       </Container>
 
 
-      <Carusel v-if="data.recommended !== null" :data="data.recommended?.products.data" class="m-v-80">
-        <h2 class="m-t-0 m-b-40 m-b-24-md">Recommendation</h2>
+      <Carusel v-if="data.recommended !== null" :data="data.recommended?.products.data" :column="4" class="m-v-80">
+        <h2 class="m-t-0 m-b-40 m-b-24-md">Complete your look</h2>
       </Carusel>
-      <Carusel v-if="data.extra !== null" :data="data.extra?.also"  :column="4" class="m-v-80">
+      <Carusel v-if="data.extra !== null" :data="data.extra?.also"  class="m-v-80">
         <h2 class="m-t-0 m-b-40 m-b-24-md">You may also like</h2>
       </Carusel>
 

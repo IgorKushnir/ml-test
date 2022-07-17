@@ -104,35 +104,37 @@ function reportWindowSize() {
 }
 
 
+// let _savedPosition = null;
+// useRouter().options.scrollBehavior = (to, from, savedPosition) => {
+//   console.log(savedPosition);
+//   _savedPosition = savedPosition;
+//   // return new Promise((resolve, reject) => {
+//   //   setTimeout(() => {
+//   //     resolve({ left: 0, top: savedPosition?.top ?? 0, behaviour: "smooth" });
+//   //   }, 500);
+//   // });
+// };
 
-useRouter().options.scrollBehavior = (to, from, savedPosition) => {
-  console.log(savedPosition);
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve({ left: 0, top: savedPosition?.top ?? 0, behaviour: "smooth" });
-    }, 500);
-  });
-};
-
-nuxtApp.hook("page:finish", () => {
-  // setTimeout(go, 500)
-
-  function go() {
-    // Is next and prev route Product page
-    if ((useRoute().name === usePreviousRoute().value) && (usePreviousRoute().value === 'product-slug') && !useIsMobile().value) {
-      window.scrollTo({
-        top: 153,
-        // behavior: "smooth"
-      })
-    } else {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      })
-    }
-  }
-
-})
+// nuxtApp.hook("page:finish", () => {
+//   setTimeout(go, 1000)
+//
+//
+//   function go() {
+//     // Is next and prev route Product page
+//     if ((useRoute().name === usePreviousRoute().value) && (usePreviousRoute().value === 'product-slug') && !useIsMobile().value) {
+//       window.scrollTo({
+//         top: 153,
+//         // behavior: "smooth"
+//       })
+//     } else {
+//       window.scrollTo({
+//         top:  0,
+//         // behavior: "smooth"
+//       })
+//     }
+//   }
+//
+// })
 
 
 

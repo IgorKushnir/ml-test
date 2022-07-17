@@ -1,5 +1,6 @@
 export default async function ({filters, type, lang, page}) {
     // console.log(page);
+    // console.log(filters);
 
     const graphql = useStrapiGraphQL()
     const collection = 'products';
