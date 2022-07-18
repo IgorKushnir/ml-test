@@ -8,6 +8,7 @@
     <transition name="slide-fade" @enter="enterAnimation" @leave="leaveAnimation">
       <div v-if="open">
         <div :class="'p-v-8 ' + data.uid">
+
           <template v-for="(filter, i) in filterItemData">
             <FilterCheckBox
                 v-if="data.uid !== 'silhouettes'"
@@ -75,6 +76,7 @@ const amount = computed(()=> {
 
 
 function checkSelected() {
+  // console.log(props.data.data);
   filterItemData.value = props.data.data.map(d => {
     let m = d.attributes;
     if (props.initialItemSelected) {
@@ -82,6 +84,7 @@ function checkSelected() {
     } else {
       m.value = false;
     }
+    // console.log(m.slug, m.value);
     return m;
   })
 }

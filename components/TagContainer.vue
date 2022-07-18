@@ -18,7 +18,7 @@
   min-height: 32px;
   margin-bottom: -76px!important;
   margin-top: 24px!important;
-  z-index: 10;
+  z-index: 1;
   .row {
     justify-content: flex-end;
   }

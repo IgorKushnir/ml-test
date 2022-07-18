@@ -16,7 +16,7 @@
               </transition>
             </div>
 
-            <template v-for="(filter, index) in allFiltersFiltered">
+            <template v-for="(filter, index) in allFiltersFiltered" :key="filter.uid">
               <FilterItem
                   :name="getName(filter.uid)"
                   :data="filter"
@@ -126,11 +126,15 @@ const filteredItems = ref([])
 const showFilterButton = ref(false);
 
 function checkIsFilterButtonShow() {
+  // console.log(selectedItems.value);
   showFilterButton.value = JSON.stringify(selectedItems.value) === JSON.stringify(filteredItems.value);
 }
 checkIsFilterButtonShow()
 
+
+
 function handleValue(e) {
+  // console.log(e);
   let currentSelected = []
   props.allFilters.forEach(e => {
     e.data.forEach(d => {
@@ -151,22 +155,25 @@ function handleValue(e) {
     filters.value[index] = e
   }
 
+  // console.log('filters: ', filters.value);
+
   emits('checkFilters', filters.value)
 }
 
-// Handle initial filters
+// // Handle initial filters
 props.initialFilterSelected.forEach(e => {
   handleValue(e)
 })
 showFilterButton.value = true;
-// watch(() => props.initialFilterSelected, () => {
-//   console.log(props.initialFilterSelected);
-//   // props.initialFilterSelected.forEach(e => {
-//   //   // console.log('dfdf');
-//   //   handleValue(e)
-//   // })
-//   // showFilterButton.value = true;
-// })
+watch(() => props.initialFilterSelected, () => {
+  filters.value = props.initialFilterSelected
+  // console.log('- ',props.initialFilterSelected);
+  // props.initialFilterSelected.forEach(e => {
+  //   // console.log('dfdf');
+  //   handleValue(e)
+  // })
+  // showFilterButton.value = true;
+})
 
 
 function handleFilterButton() {
