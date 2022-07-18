@@ -77,6 +77,7 @@ $transition: .5s ease-in-out;
 
 
 @media (hover: hover) {
+  //:deep(<inner-selector>)
   >>> .img-component.base {
     transition: 2.5s ease-in-out;
   }

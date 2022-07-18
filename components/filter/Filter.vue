@@ -11,6 +11,7 @@
       @check-filters="e => checkFiltersHandler(e)"
       :pending="pending"
       :initialFilterSelected="initialFilterSelected"
+      :pendingInitial="pendingInitial"
   />
 </template>
 
@@ -28,7 +29,11 @@ const props = defineProps({
   pending: {
     type: Boolean,
     required: true
-  }
+  },
+  pendingInitial: {
+    type: Boolean,
+    required: true
+  },
 })
 
 // Get Available Filters just Once

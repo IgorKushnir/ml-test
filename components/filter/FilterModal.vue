@@ -16,19 +16,25 @@
               </transition>
             </div>
 
-            <template v-for="(filter, index) in allFiltersFiltered" :key="filter.uid">
-              <FilterItem
-                  :name="getName(filter.uid)"
-                  :data="filter"
-                  :default-open="index < 1"
-                  @value="e => handleValue(e)"
-                  :available-filter-items="availableFilters[filter.uid]"
-                  :initialItemSelected="getInitialItemSelected(filter.uid)"
-              />
-            </template>
+            <transition name="fade">
+              <div v-if="!pendingInitial">
+                <template v-for="(filter, index) in allFiltersFiltered" :key="filter.uid">
+                  <FilterItem
+                      :name="getName(filter.uid)"
+                      :data="filter"
+                      :default-open="index < 1"
+                      @value="e => handleValue(e)"
+                      :available-filter-items="availableFilters[filter.uid]"
+                      :initialItemSelected="getInitialItemSelected(filter.uid)"
+                  />
+                </template>
+              </div>
+              <Loading v-else pending />
+
+            </transition>
 
             <transition name="shift">
-              <div v-if="!showFilterButton" class="button-container p-v-16 p-h-56  p-h-32-md">
+              <div v-if="!showFilterButton && !pendingInitial" class="button-container p-v-16 p-h-56  p-h-32-md">
                 <div class="button primary" v-on:click="handleFilterButton">
                   <span v-if="!pending">Show {{ productsCount }}</span>
                   <span v-else>...</span>
@@ -84,6 +90,10 @@ const props = defineProps({
   },
   initialFilterSelected: {
     type: Array,
+    required: true
+  },
+  pendingInitial: {
+    type: Boolean,
     required: true
   },
 })

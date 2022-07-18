@@ -1,7 +1,6 @@
 <template>
   <div>
     <Seo :data="type"/>
-
     <div v-if="dataProducts!== null">
       <InnerHeader :title="type.title"/>
 
@@ -18,6 +17,7 @@
               @check-filters="e => checkFiltersHandler(e)"
               :pending="pendingFilters"
               :initialFilterSelected="initialFilters"
+              :pendingInitial="pendingFilters"
           />
         </template>
       </StickyHeader>
@@ -94,7 +94,6 @@ let {
   refresh: refreshAvailableFilters,
   error: errorAvailableFilters
 } = await getActiveFilters({filters: [], lang: 'en', type: slug, fetchFilters: true});
-
 
 onMounted(() => {
   refreshProducts();
