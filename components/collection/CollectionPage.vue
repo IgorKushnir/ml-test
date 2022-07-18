@@ -19,6 +19,7 @@
               @check-filters="e => checkFiltersHandler(e)"
               :pending="pendingFilters"
               :initialFilterSelected="initialFilters"
+              :pendingInitial="pendingFilters && dataAvailableFilters === null"
           />
         </template>
       </StickyHeader>
@@ -116,6 +117,7 @@ let {
 
 
 onMounted(() => {
+  dataAvailableFilters.value = null;
   refreshCollection();
   refreshProducts();
   refreshAvailableFilters()

@@ -77,8 +77,7 @@ $transition: .5s ease-in-out;
 
 
 @media (hover: hover) {
-  //:deep(<inner-selector>)
-  >>> .img-component.base {
+  :deep(.img-component.base) {
     transition: 2.5s ease-in-out;
   }
   .product-item:hover {
@@ -90,7 +89,7 @@ $transition: .5s ease-in-out;
     }
 
 
-    >>> .img-component.base {
+    :deep(.img-component.base) {
       transform: scale(1.1);
 
     }
