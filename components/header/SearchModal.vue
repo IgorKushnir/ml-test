@@ -39,7 +39,7 @@
 <!--              <div v-if="result.nbHits === 0">No results</div>-->
               <div class="search-grid m-v-40">
                 <NuxtLink
-                    v-for="item in result.hits" :to="'/' + (item?.type.slug ?? 'product') + '/' + item.slug"
+                    v-for="item in result.hits" :to="'/' + (item?.type?.slug ?? 'product') + '/' + item.slug"
                     v-on:click="close" class="col-2">
                   <div class="ratio-3x4">
                     <Image :path="{data: {attributes: item.cover_3x4}}" size="small" :alt="item.title"/>
@@ -79,24 +79,35 @@ const result = ref([]);
 const pending = ref(false);
 
 async function settings() {
-  const data = await $fetch(`indexes/product/settings`, {
-    baseURL: config.SEARCH_URL,
-    method: 'POST',
-    body: {
-      "displayedAttributes": [
-        "title",
-        "id",
-        "slug",
-        "cover_3x4",
-        "type",
-        "collection",
-      ],
-      "searchableAttributes": [
-        "title",
-      ]
-    }
-  });
-  console.log(data);
+  // const data = await $fetch(`indexes/product/settings`, {
+  //   baseURL: config.SEARCH_URL,
+  //   method: 'POST',
+  //   body: {
+  //     "displayedAttributes": [
+  //       "title",
+  //       "id",
+  //       "slug",
+  //       "cover_3x4",
+  //       "type",
+  //       "collection",
+  //     ],
+  //     "searchableAttributes": [
+  //       "title",
+  //     ]
+  //   }
+  // });
+  // console.log(data);
+
+
+  // const data = await $fetch(`keys`, {
+  //   baseURL: config.SEARCH_URL,
+  //   method: 'GET',
+  //   headers: {
+  //     Authorization:
+  //         'Bearer ' + config.MEILISEARCH_API_KEY,
+  //   }
+  // });
+  // console.log(data);
 }
 
 async function getResult() {
@@ -121,7 +132,7 @@ async function getResult() {
 }
 
 watch(search, () => {
-  // settings();
+  settings();
   getResult()
 })
 watch(() => input.value, () => {
