@@ -70,7 +70,7 @@
       <Carusel v-if="data.recommended !== null" :data="data.recommended?.products.data" :column="4" class="m-v-80">
         <h2 class="m-t-0 m-b-40 m-b-24-md">Complete your look</h2>
       </Carusel>
-      <Carusel v-if="data.extra !== null" :data="data.extra?.also"  class="m-v-80">
+      <Carusel v-if="data.extra !== null && data.extra.also.length > 0" :data="data.extra?.also"  class="m-v-80">
         <h2 class="m-t-0 m-b-40 m-b-24-md">You may also like</h2>
       </Carusel>
 
@@ -85,20 +85,35 @@
 
 <script setup lang="ts">
 import getProduct from '~/api/getProduct'
-const { $setViewedProduct } = useNuxtApp()
+const { $setViewedProduct, $getViewedProduct } = useNuxtApp()
 const isMobile = useIsMobile();
 
 const route = useRoute();
 const router = useRouter();
 let slug = route.params.slug;
 
+const extrudedIds = useViewedProductIds().value;
 
-let {data, pending, refresh, error} = await getProduct(slug)
+let {data, pending, refresh, error} = await getProduct(slug, JSON.stringify(extrudedIds))
+
+
+
 onMounted(() => {
   refresh().then(_ => {
     $setViewedProduct(data.value.id, data.value.slug)
+
+    const viewedIds = $getViewedProduct().map(p => p.id ?? 0)
+    useViewedProductIds().value = viewedIds;
+
+    data.value.extra.also = data.value.extra.also.filter(item => {
+      return !viewedIds.includes(item.attributes.id.toString())
+    });
+    // const dataFiltered = computed(() => )
+
   });
 })
+
+
 
 
 

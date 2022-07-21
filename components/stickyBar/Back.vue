@@ -1,14 +1,16 @@
 <template>
-  <div v-on:click="backHandler($emit)"
+  <div v-if="isBackAndNoHistory"
+      v-on:click="backHandler($emit)"
       :class="'back-btn' + (text ? ' text' : '') + (reverse ? ' reverse' : '') + (light ? ' light' : '')">
     <div class="back-btn-container">
-      <div class="p-small"><strong>{{ text }}</strong></div>
+      <div class="p-small hide-md"><strong>{{ text }}</strong></div>
       <div class="icon-arrow-16"></div>
     </div>
   </div>
 </template>
 
 <script setup>
+const isMobile = useIsMobile()
 const props = defineProps({
   text: {
     type: String,
@@ -31,9 +33,18 @@ function backHandler(e) {
   if (props.text != null) {
     e('clicks')
   } else {
+    console.log(router.options?.history?.state?.back);
     router.back()
   }
 }
+
+const isBackAndNoHistory = computed(() => {
+  if (props.text != null) {
+    return true;
+  } else {
+    return router.options?.history?.state?.back && !isMobile.value
+  }
+})
 
 
 

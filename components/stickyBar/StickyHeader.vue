@@ -6,7 +6,7 @@
 
           <transition name="fade">
             <div v-if="title && sticky" class="grid-column-start title-container">
-              <StickyBarBack reverse />
+              <StickyBarBack v-if="back" reverse />
               <h3 class="sticky-title">{{ title }}</h3>
 
             </div>
@@ -30,6 +30,11 @@ const props = defineProps({
   title: {
     type: String,
     required: false
+  },
+  back: {
+    type: Boolean,
+    required: false,
+    default: true
   }
 })
 let wrapper = ref();
@@ -110,8 +115,10 @@ addRouteMiddleware(async (to, from) => {
   }
 
 }
-.sticky-title {
-  margin-left: 32px;
+
+
+.back-btn {
+  margin-right: 32px;
 }
 
 //& > * {
@@ -204,13 +211,14 @@ addRouteMiddleware(async (to, from) => {
   }
 
 
-  .sticky-title {
-    margin-left: 24px;
+
+  .back-btn {
+    margin-right: 24px;
   }
 
-  .title-container {
-    margin-left: -33px;
-  }
+  //.title-container {
+  //  margin-left: -33px;
+  //}
 }
 
 </style>

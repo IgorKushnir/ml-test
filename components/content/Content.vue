@@ -42,6 +42,7 @@
             :column="content.column === 'six' ? 6 : 4"
             :col-class="layout(content['carusel_layout'])"
             :layout="content['carusel_layout']"
+            :nav-compact="!(content['carusel_layout'] === 'wide')"
         />
       </div>
 

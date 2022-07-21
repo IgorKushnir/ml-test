@@ -42,7 +42,7 @@
       />
     </div>
 
-    <Loading :pending="pendingProducts"/>
+<!--    <Loading :pending="pendingProducts"/>-->
     <PageNotFound :show="dataProducts == null && !pendingProducts"/>
 
 
@@ -208,6 +208,9 @@ function cutOneFilter(index) {
   })
   initialFilters.value = filters;
   setQuery(filters)
+
+  pendingProducts.value = true
+  dataProducts.value.data = []
   filterData(filters, 1)
 }
 

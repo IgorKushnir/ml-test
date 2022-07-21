@@ -50,6 +50,7 @@
             :column="4"
             col-class="col-8 col-10-xl col-12-lg"
             layout="normal"
+            nav-compact
         >
           <h2 class="m-t-0 m-b-40 m-b-24-md">Product offered</h2>
         </Carusel>

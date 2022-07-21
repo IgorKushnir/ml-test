@@ -1,69 +1,73 @@
 <template>
   <div>
-<!--    <div>-->
-<!--      <h1 style="position: fixed; top: 400px; z-index: 100; background-color: white">{{dataProducts.meta.pagination}}</h1>-->
-<!--    </div>-->
+
     <Seo :data="dataCollection"/>
-    <div v-if="!pendingCollection && dataCollection != null">
+    <transition name="fade">
+      <div v-if="!pendingCollection && dataCollection != null">
 
 
-      <InnerHeader :title="dataCollection.title" :sub_header="dataCollection.line.data.attributes.title"
-                   :sub_title="dataCollection.description"/>
+        <InnerHeader :title="dataCollection.title" :sub_header="dataCollection.line.data.attributes.title"
+                     :sub_title="dataCollection.description"/>
 
-      <StickyHeader :title="dataCollection.title">
-        <template #end>
-          <Filter
-              v-if="dataAvailableFilters !== null"
-              :available-filters="dataAvailableFilters"
-              @filters="e => handleFilter(e)"
-              @check-filters="e => checkFiltersHandler(e)"
-              :pending="pendingFilters"
-              :initialFilterSelected="initialFilters"
-              :pendingInitial="pendingFilters && dataAvailableFilters === null"
-          />
-        </template>
-      </StickyHeader>
-
-      <!--      {{ filterSelected }}-->
-      <TagContainer class="hide-md">
-        <div
-            v-for="(item, index) in filterSelected"
-            class="selected-item"
-            v-on:click="cutOneFilter(index)"
+        <StickyHeader
+            :back="router.options?.history?.state?.back === '/collections'"
+            :title="dataCollection.title"
         >
-          {{item.value}} <span class="icon-close-16"/>
-        </div>
+          <template #end>
+            <Filter
+                v-if="dataAvailableFilters !== null"
+                :available-filters="dataAvailableFilters"
+                @filters="e => handleFilter(e)"
+                @check-filters="e => checkFiltersHandler(e)"
+                :pending="pendingFilters"
+                :initialFilterSelected="initialFilters"
+                :pendingInitial="pendingFilters && dataAvailableFilters === null"
+            />
+          </template>
+        </StickyHeader>
 
-      </TagContainer>
-
-
-      <ProductGrid
-          :products-data="dataProducts"
-          :pending-products="pendingProducts"
-          :promo="dataCollection.show_promo"
-          @load="page => filterData(currentFilters, page)"
-          infinite
-      >
-        <template #promo>
-          <div class="col-8 col-12-lg"
-               v-if="dataCollection.show_promo && dataCollection.cover_4x3.data != null && filterSelected.length === 0"
+        <!--      {{ filterSelected }}-->
+        <TagContainer class="hide-md">
+          <div
+              v-for="(item, index) in filterSelected"
+              class="selected-item"
+              v-on:click="cutOneFilter(index)"
           >
-            <div class="promo" v-if="dataCollection.show_promo">
-              <Image :path="dataCollection.cover_4x3" :alt="dataCollection.title"/>
-              <Image v-if="dataCollection.video.data != null" class="video" :path="dataCollection.video" :alt="dataCollection.title"/>
+            {{item.value}} <span class="icon-close-16"/>
+          </div>
+
+        </TagContainer>
+
+
+        <ProductGrid
+            :products-data="dataProducts"
+            :pending-products="pendingProducts"
+            :promo="dataCollection.show_promo"
+            @load="page => filterData(currentFilters, page)"
+            infinite
+        >
+          <template #promo>
+            <div class="col-8 col-12-lg"
+                 v-if="dataCollection.show_promo && dataCollection.cover_4x3.data != null && filterSelected.length === 0"
+            >
+              <div class="promo" v-if="dataCollection.show_promo">
+                <Image :path="dataCollection.cover_4x3" :alt="dataCollection.title"/>
+                <Image v-if="dataCollection.video.data != null" class="video" :path="dataCollection.video" :alt="dataCollection.title"/>
+              </div>
             </div>
-          </div>
-        </template>
-        <template #fact>
-          <div v-if="dataCollection.fact !== null && filterSelected.length === 0" :class="(dataCollection.fact.ratio === 'vertical' ?  'col-4'  : 'col-8') + ' col-6-lg col-12-lg new-ratio-16x9-md'">
-            <Fact :data="dataCollection.fact"/>
-          </div>
-        </template>
+          </template>
+          <template #fact>
+            <div v-if="dataCollection.fact !== null && filterSelected.length === 0" :class="(dataCollection.fact.ratio === 'vertical' ?  'col-4'  : 'col-8') + ' col-6-lg col-12-lg new-ratio-16x9-md'">
+              <Fact :data="dataCollection.fact"/>
+            </div>
+          </template>
 
-      </ProductGrid>
+        </ProductGrid>
 
-    </div>
+      </div>
+    </transition>
 
+    <Loading :pending="pendingProducts"/>
     <PageNotFound  :show="dataCollection === null"/>
 
   </div>
@@ -228,6 +232,9 @@ function cutOneFilter(index) {
   })
   initialFilters.value = filters;
   setQuery(filters)
+
+  pendingProducts.value = true
+  dataProducts.value.data = []
   filterData(filters, 1)
 }
 

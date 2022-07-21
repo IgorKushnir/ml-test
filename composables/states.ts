@@ -14,3 +14,6 @@ export const useTranslationsData = () => useState<object>('translationsData', ()
 
 export const usePreviousRoute = () => useState<object>('previousRoute', () => []);
 
+
+export const useViewedProductIds = () => useState<object>('viewedProductIds', () => []);
+

@@ -1,6 +1,9 @@
 import seo from './misc/seo'
 
-export default async function (slugOrId) {
+export default async function (slugOrId, extrudeIds = '') {
+    if (extrudeIds) {
+        extrudeIds = '(extrudeIds: ' + extrudeIds + ')'
+    }
     const graphql = useStrapiGraphQL()
     let collection = 'product';
 
@@ -19,7 +22,7 @@ query Product{
       attributes {
       ${seo()}
       slug
-      extra
+      extra${extrudeIds}
       
         title
         description

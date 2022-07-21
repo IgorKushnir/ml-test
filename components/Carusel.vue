@@ -3,18 +3,18 @@
     <div v-show="show" class="overflow" :class="navCompact ? 'compact' : 'full'">
 
       <div ref="prev" class="prev hide-md">
-        <StickyBarBack light reverse text=""/>
+        <StickyBarBack reverse text=""/>
       </div>
 
       <div ref="next" class="next hide-md">
-        <StickyBarBack light text=""/>
+        <StickyBarBack text=""/>
       </div>
 
-<!--      <div v-for="item in data">-->
-<!--                  <pre>-->
-<!--                    {{ item.attributes.slug }}-->
-<!--                  </pre>-->
-<!--      </div>-->
+      <!--      <div v-for="item in data">-->
+      <!--                  <pre>-->
+      <!--                    {{ item.attributes.slug }}-->
+      <!--                  </pre>-->
+      <!--      </div>-->
 
       <div class="container">
         <div class="row gap-S justify-center">
@@ -158,9 +158,8 @@ function getLink(slug) {
   if (slug && slug.startsWith('/')) {
     return slug;
   }
-  return slug ? (props.path +'/' + slug) : null
+  return slug ? (props.path + '/' + slug) : null
 }
-
 
 
 </script>
@@ -214,8 +213,28 @@ function getLink(slug) {
   }
 }
 
+.swiper-slide:hover {
 
+}
 
+@media (hover: hover) {
+  :deep(.img-component.base) {
+    transition: 2.5s ease-in-out;
+  }
+  :deep(.m-t-16) {
+    transition: 0.2s ease-in-out;
+  }
+  .swiper-slide:hover {
+
+    :deep(.img-component.base) {
+      transform: scale(1.1);
+    }
+
+    :deep(.m-t-16) {
+      transform: translateY(-4px);
+    }
+  }
+}
 
 
 @include xl {
@@ -229,6 +248,7 @@ function getLink(slug) {
     .next {
       right: -1px;
     }
+
     .prev {
       left: -1px;
     }
@@ -240,6 +260,7 @@ function getLink(slug) {
     .next {
       right: -1px;
     }
+
     .prev {
       left: -1px;
     }
