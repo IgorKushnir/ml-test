@@ -23,7 +23,6 @@ query Product{
       ${seo()}
       slug
       extra${extrudeIds}
-      
         title
         description
         gallery {
@@ -70,6 +69,10 @@ query Product{
           layout
           background_color
           text_color
+        }
+        properties {
+          title
+          description
         }
         recommended {
           products {
