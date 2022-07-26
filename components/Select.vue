@@ -85,6 +85,7 @@ let showDropdown = ref(false)
 <style scoped lang="scss">
 .select {
   display: inline-block;
+  vertical-align: middle;
 }
 .custom-select {
   position: relative;

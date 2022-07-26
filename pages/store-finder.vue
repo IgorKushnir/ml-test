@@ -2,202 +2,176 @@
   <div>
     <Seo title="Store finder"/>
 
-    <transition name="fade">
-      <div v-if="!pending && data != null">
-        <InnerHeader title="Store finder"/>
-        <StickyHeader>
+    <div v-if="countries">
+      <InnerHeader title="Store finder"/>
+      <StickyHeader>
 
-          <template #center>
-            <Select :data="getCountries()" name="Country" all="All countries" :index="dataIndex" :flag="true"
-                    @index="changeCountry"/>
-            <Select v-if="getCities().length > 1" :data="getCities()" name="City" all="All cities" :index="cityIndex"
-                    @index="changeCity"/>
-          </template>
-          <template #end>
-            <Select
-                v-if="lines.length > 1" :data="lines" name="Lines" all="All lines" side="right" :index="lineIndex"
-                @index="changeLine"
-            />
-          </template>
+        <template #center>
+          <Select :data="countries" name="Country" all="All countries" :index="countryIndex" :flag="true"
+                  @index="changeCountry"/>
+          <Select v-if="cities && cities.length > 1" :data="cities" name="City" all="All cities" :index="cityIndex"
+                  @index="changeCity"/>
+        </template>
+        <template #end>
+          <Select
+              v-if="lines && lines.length > 1" :data="lines" name="Lines" all="All lines" side="right" :index="lineIndex"
+              @index="changeLine"
+          />
+        </template>
 
 
-        </StickyHeader>
+      </StickyHeader>
 
-        <!-- Toggle-->
-        <TagContainer class="hide-md">
+      <!-- Toggle-->
+      <transition name="fade">
+        <TagContainer v-if="countryIndex !== -1" class="hide-md">
           <span class="p-small" style="margin: -3px 16px 0"><strong>Show on map</strong></span>
-          <Toggle @show="e => showMapHandler(e)"/>
+          <Toggle @show="e => showMap = e"/>
         </TagContainer>
+      </transition>
+
+      <Container v-if="showMap">
+        <div class="col-12">
+          <StoreMap :data="stores" :show="showMap"/>
+        </div>
+      </Container>
 
 
-        <Container v-if="!showMap" justify="justify-center">
-          <template v-for="store in stores">
-            <StoreItem :store="store"
-                       :class="stores.length <= 2 ? 'col-6 col-8-lg col-12-md' : 'col-4 col-6-xl col-12-md'"/>
+      <transition name="fade">
+        <Container v-if="!showMap && !pending" >
+          <template v-if="countryIndex !== -1" v-for="store in stores">
+            <StoreItem :store="store" :class="stores.length <= 2 ? 'col-6 col-8-lg col-12-md' : 'col-4 col-6-xl col-12-md'"/>
           </template>
-        </Container>
-
-
-        <Container v-if="showMap">
-          <div class="col-12">
-            <Map :data="stores" :show="showMap"/>
-          </div>
+          <template v-if="countryIndex === -1" v-for="(country, index) in countries">
+            <NuxtLink :to="'?country='+country.slug" v-on:click="changeCountry(index)" :class="'col-4 col-6-xl col-12-md'">
+              <StoreItem :store="{country_code: country.flag, city: country.value}" country />
+            </NuxtLink>
+          </template>
 
         </Container>
+      </transition>
+      <Loading v-if="countryIndex !== -1 && pending" :pending="pending"/>
 
 
-      </div>
-    </transition>
+    </div>
 
-    <Loading :pending="pending"/>
 
+
+    <Loading v-if="!countries" :pending="!countries"/>
+
+    <PageNotFound :show="!data?.data && !pending && countryIndex !== -1"/>
   </div>
 </template>
 
-
 <script setup>
+import {getListOfCountries} from '~/api/stores'
 import getCountryCode from '~/api/getCountryCode'
-import getStores from '~/api/getStores'
-import Map from "../components/store/Map";
-import TagContainer from "../components/TagContainer";
+import {getCountry} from "../api/stores";
 
 const router = useRouter();
 const route = useRoute();
-let country = route.query.country;
-let dataIndex = ref(-1);
-let cityIndex = ref(-1);
-let lineIndex = ref(-1);
 
-let stores = ref([])
-let lines = ref([])
+const countrySlug = ref(route.query.country);
+const countryCode = ref(null);
+const countryIndex = ref(-1);
 
-let countryCode = ref(null);
+const cityIndex = ref(-1)
+const lineIndex = ref(-1)
+
 let showMap = ref(false)
-const map = ref()
 
-const {data, pending, refresh, error} = await getStores('en')
-if (country == null) {
-  countryCode.value = await getCountryCode();
-}
-if (data.value != null) {
-  changeRoute()
-  stores.value = getStoresByIndex(dataIndex.value);
-  getLines()
+const countries = ref(await getListOfCountries('en'))
 
-} else {
-  watch(() => data.value, () => {
-    changeRoute()
-    stores.value = getStoresByIndex(dataIndex.value);
-    getLines()
-  })
-}
+// console.log('b - ', countrySlug.value);
 
-
-watch(() => dataIndex.value, () => {
-  stores.value = getStoresByIndex(dataIndex.value)
-  getLines()
-})
-watch(() => cityIndex.value, () => {
-
-  stores.value = getStoresByIndex(dataIndex.value)
-  getLines()
-})
-watch(() => lineIndex.value, () => {
-  stores.value = getStoresByIndex(dataIndex.value)
-})
-
-
-function getIndexOfDataByCode(code) {
-  return data.value.findIndex(d => d.attributes.country_code === code)
-}
-
-function getIndexOfDataBySlug(code) {
-  return data.value.findIndex(d => d.attributes.slug === code)
-}
-
-
-// Change routing query
-function changeRoute() {
-  if (countryCode.value == null) {
-    dataIndex.value = getIndexOfDataBySlug(country);
-    router.replace({
-      query: {country: country},
-    })
-  } else {
-    console.log(countryCode.value);
-    dataIndex.value = getIndexOfDataByCode(countryCode.value);
-    router.replace({
-      query: {country: data.value[dataIndex.value]?.attributes?.slug ?? 'all'},
-    })
+const {data, pending, refresh, error} = await useLazyAsyncData('country', () => getCountry(countrySlug.value,'en'), {
+  transform: (d) => {
+    return d.data['storeFinder']
   }
+})
 
-}
 
-function getStoresByIndex(index) {
-  let _stores = []
-  if (index !== -1) {
-    // Return stores in specific city
-    if (cityIndex.value !== -1) {
-      let city = data.value[index].attributes.city[cityIndex.value];
-      city.store.forEach(store => {
-        _stores.push(store)
-      })
+
+
+if (countrySlug.value == null) {
+  countryCode.value = await getCountryCode();
+  // countryCode.value = "null";
+  if (countryCode.value) {
+    if (countries.value) {
+      countrySlug.value = getSlugByCode(countryCode.value);
+      countryIndex.value = getIndexBySlug(countrySlug.value)
+
+      changeRoute()
     } else {
-      // Return stores by index
-      let d = data.value[index].attributes.city;
+      watch(countries, () => {
+        countrySlug.value = getSlugByCode(countryCode.value);
+        countryIndex.value = getIndexBySlug(countrySlug.value)
 
-      d.forEach(city => {
-        city.store.forEach(store => {
-          _stores.push(store)
+        let inited = false;
+        watch(pending, () => {
+          if (!inited) {
+            refresh()
+            inited = true;
+          }
         })
+        changeRoute()
       })
     }
+  }
+} else {
+  countryIndex.value = getIndexBySlug(countrySlug.value)
+}
 
-  } else {
-    // Return all stores
-    data.value.forEach(e => {
-      e.attributes.city.forEach(city => {
-        city.store.forEach(store => {
-          _stores.push(store)
-        })
-      })
+function getStores() {
+  let stores = []
+  data.value?.data?.attributes.city.forEach(city => {
+    city.store.forEach(store => {
+      store.country_code = data.value.data.attributes.country_code
+      store.city = city.name
+      stores.push(store)
     })
+  })
+  return stores
+}
+const stores = computed(() => {
+  // return []
+  let sores = getStores();
+  if (cityIndex.value !== -1) {
+    sores = sores.filter(store => store.city === cities.value[cityIndex.value]?.value)
   }
   if (lineIndex.value !== -1) {
-    const lineSlug = lines.value[lineIndex.value].key
-    _stores = _stores.filter(store => {
-      if (store.lines.data.length > 0) {
-        const lineSlugs = store.lines.data.map(line => line.attributes.slug);
-        if (lineSlugs.includes(lineSlug)) {
-          return true
-        }
-      }
-
-    })
+    sores = sores.filter(store => {
+      // console.log('lines: ', lineIndex.value,  lines.value[lineIndex.value]?.value);
+      return lines.value[lineIndex.value]?.value ? store.lines.data.map(line => line.attributes.title).includes(lines.value[lineIndex.value]?.value) : true
+    } )
   }
-  return _stores;
+  return sores;
+})
 
-}
 
-function getCountries() {
-  return data.value.map(e => {
-    return {value: e.attributes.country, flag: e.attributes.country_code}
-  })
-}
+const cities = computed(() => {
+  // return []
+  if (countryIndex.value === -1) return [];
 
-function getCities() {
-  if (dataIndex.value !== -1) {
-    return data.value[dataIndex.value].attributes.city.map(c => {
-      return {value: c.name}
-    });
-  }
-  return [];
-}
+  return data.value?.data?.attributes?.city
+      .filter(city => {
+        return city.store.length > 0
+      })
+      .map(c => {
+        return {value: c.name}
+      });
+})
 
-function getLines() {
+
+const lines = computed(() => {
+  // return []
+  if (countryIndex.value === -1) return [];
+
   let l = [];
   let keys = [];
-  stores.value.forEach(store => {
+  getStores().forEach(store => {
+    if (cityIndex.value !== -1 && store.city !== cities.value[cityIndex.value]?.value) return
+
     if (store.lines.data.length > 0) {
       store.lines.data.forEach(line => {
         const slug = line.attributes.slug;
@@ -212,44 +186,66 @@ function getLines() {
     }
   })
 
-  lines.value = l;
+  return  l;
+})
 
+watch(() => countrySlug.value, (s) => {
+  // console.log('---', countrySlug.value);
+  refresh()
+})
+
+onMounted(() => {
+  if (countrySlug.value !== data?.value?.data?.attributes?.slug) {
+    // console.log('here', countrySlug.value);
+    refresh()
+  }
+})
+
+
+function getSlugByCode(code) {
+  const index = countries.value.findIndex(c => c.flag === code)
+  return countries.value[index]?.slug
 }
 
-function showMapHandler(e) {
-  showMap.value = e
+function getIndexBySlug(slug) {
+  const index = countries.value.findIndex(c => c.slug === slug)
+  return index
 }
 
-function changeCountry(e) {
+
+
+
+
+
+function changeCountry(index) {
+  countryIndex.value = index
+  countrySlug.value = countries.value[index]?.slug
+  changeRoute()
   cityIndex.value = -1;
   lineIndex.value = -1;
-  dataIndex.value = e;
-  if (dataIndex.value !== -1) {
-    router.replace({
-      query: {country: data.value[dataIndex.value].attributes.slug},
-    })
-  } else {
-    router.replace({
-      query: {country: 'all'},
-    })
+  if (index === -1) {
+    showMap.value = false
   }
 }
 
-function changeCity(e) {
-  cityIndex.value = e;
+function changeCity(index) {
+  cityIndex.value = index;
   lineIndex.value = -1;
 }
 
-function changeLine(i) {
-  lineIndex.value = i;
+function changeLine(index) {
+  lineIndex.value = index;
+}
 
+function changeRoute() {
+  router.replace({
+    query: {country: countrySlug.value},
+  })
 }
 
 
 </script>
 
-
-<style scoped lang="scss">
-
+<style scoped>
 
 </style>

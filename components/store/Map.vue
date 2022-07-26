@@ -1,4 +1,9 @@
 <template>
+  <div style="display: none">
+    <div ref="info" class="info">
+      <StoreItem  :store="data[storeIndex]" />
+    </div>
+  </div>
   <div v-show="show" class="map" ref="map"/>
 </template>
 
@@ -12,6 +17,9 @@ import items from "ajv/lib/vocabularies/applicator/items";
 const map = ref();
 let myMap;
 let markers = [];
+let infowindows = [];
+const info = ref()
+const storeIndex = ref(0)
 
 const props = defineProps({
   data: {
@@ -214,24 +222,37 @@ function setMarkers() {
 
 
 
-  const svgMarker = {
-    path: "M9 4.5C9 6.98528 6.98528 9 4.5 9C2.01472 9 0 6.98528 0 4.5C0 2.01472 2.01472 0 4.5 0C6.98528 0 9 2.01472 9 4.5Z",
-    fillColor: "#F6DFA4",
-    fillOpacity: 1,
-    strokeWeight: 0,
-    rotation: 0,
-    scale: 1,
-    anchor: new google.maps.Point(15, 30),
-  };
-  props.data.forEach(d => {
+
+  props.data.forEach((d, index) => {
     const location = new google.maps.LatLng(d.lat, d.lng);
     locations.push(location)
     const marker = new google.maps.Marker({
       position: location,
       map: myMap,
       title: 'Milla Nova',
-      icon: svgMarker,
+      // icon: svgMarker,
+      icon: 'http://localhost:3000/img/point.svg',
+      animation: google.maps.Animation.DROP,
     })
+    const infowindow = new google.maps.InfoWindow({
+      content: info.value,
+    });
+    infowindows.push(infowindow)
+
+    marker.addListener("click", () => {
+      infowindows.forEach(infoW => {
+        infoW.close()
+      })
+      storeIndex.value = index;
+      myMap.setZoom(15)
+      myMap.setCenter(location)
+      infowindow.open({
+        anchor: marker,
+        myMap,
+        shouldFocus: false,
+      });
+    });
+
     markers.push(marker)
   })
 
@@ -268,6 +289,9 @@ onMounted(async () => {
 
   }
   myMap = new google.maps.Map(map.value, {
+    mapTypeControl: false,
+    streetViewControl: false,
+    minZoom: 3,
     styles: [
       {
         "featureType": "all",
@@ -440,16 +464,35 @@ onMounted(async () => {
     ],
   });
 
+  google.maps.event.addListener(myMap, 'zoom_changed', function() {
+    infowindows.forEach(infoW => {
+      infoW.close()
+    })
+  })
+
   setMarkers();
 })
 </script>
 
 <style scoped lang="scss">
 .map {
+
   width: 100%;
   height: calc(100vh - 152px);
 }
 .map:deep img {
   background-image: unset;
+}
+.info {
+  font-family: 'Bague';
+  min-width: 500px;
+  :deep(.store-item) {
+    border: unset;
+    padding: 20px!important;
+  }
+}
+
+:deep(.gm-style-iw){
+  border-radius: 0!important;
 }
 </style>

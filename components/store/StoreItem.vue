@@ -3,12 +3,13 @@
     <div class="store-item p-v-40 p-h-40" >
       <div class="city-container">
         <Flag :code="store.country_code"/>
-        <strong>{{store.city}}</strong>
+        <strong v-if="!country">{{store.city}}</strong>
+        <h3 v-if="country" style="text-transform: unset">{{store.city}}</h3>
       </div>
-      <h3>{{store.title}}</h3>
+      <h3 v-if="store.title">{{store.title}}</h3>
       <p v-if="store.description" class="p-small">{{store.description}}</p>
 
-      <div class="contacts m-t-32">
+      <div v-if="store.address || store.phone || store.website || store?.lines?.data.length > 0" class="contacts m-t-32">
         <ListIcon v-if="store.address" :to="'https://www.google.com/maps/place/'+store.address"  target="_blank" icon="location-16" class="m-v-16">
           {{ store.address }}
           <div class="display-block m-t-8">
@@ -24,7 +25,7 @@
           <div class="p-small link">{{store.website}}</div>
         </ListIcon>
 
-        <template v-if="store.lines.data.length > 0">
+        <template v-if="store?.lines?.data.length > 0">
           <div class="subheader small m-t-32">Lines</div>
           <p  class="p-small" >{{store.lines.data.map(line => line.attributes.title).join(', ')   }}</p>
         </template>
@@ -43,6 +44,11 @@ defineProps({
   store: {
     type: Object,
     required: true
+  },
+  country: {
+    type: Boolean,
+    required: false,
+    default: false
   }
 })
 
