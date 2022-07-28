@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "google-maps": "^4.3.3",
+    "vue": "^3.2.37",
     "vue-gtag-next": "^1.14.0"
   },
   "engines": {
