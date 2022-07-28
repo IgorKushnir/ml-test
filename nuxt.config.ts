@@ -14,7 +14,8 @@ export default defineNuxtConfig({
         build: {
             rollupOptions: {
                 external: [
-                    'swiper/vue'
+                    'swiper/vue',
+                    'vue-gtag-next',
                 ]
             }
         },
