@@ -3,7 +3,6 @@ import {defineNuxtConfig} from 'nuxt'
 export default defineNuxtConfig({
     css: [
         '@/assets/style/main.scss',
-        // '@/assets/style/global.scss',
     ],
     buildModules: [
         // 'nuxt-vite',
@@ -15,6 +14,7 @@ export default defineNuxtConfig({
 
 
     },
+    // package.json - "nuxt-vite": "^0.3.5"
     // vite: {
     //     build: {
     //         rollupOptions: {
@@ -44,6 +44,7 @@ export default defineNuxtConfig({
         STRAPI_URL: process.env.STRAPI_URL,
         SEARCH_URL: process.env.SEARCH_URL || 'http://localhost:7700',
         MEILISEARCH_API_KEY: process.env.MEILISEARCH_API_KEY,
+        GOOGLE_ANALYTICS: process.env.GOOGLE_ANALYTICS,
         // SEARCH_URL: process.env.SEARCH_URL || 'http://167.172.227.234',
     }
 })

@@ -6,6 +6,7 @@
   </div>
 </template>
 
+
 <script setup>
 import getInitialData from '~/api/getInitialData';
 // import fav32 from '/public/img/32.png';
@@ -178,4 +179,4 @@ function loadNextHook() {
 }
 </style>
 
-<!--"nuxt-vite": "^0.3.5",-->
+
