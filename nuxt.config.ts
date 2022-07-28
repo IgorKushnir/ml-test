@@ -9,6 +9,7 @@ export default defineNuxtConfig({
         '@nuxtjs/strapi',
     ],
 
+
     vite: {
         build: {
             rollupOptions: {
