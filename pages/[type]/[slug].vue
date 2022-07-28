@@ -143,6 +143,8 @@ function nextHandler() {
 </script>
 
 <style scoped lang="scss">
+@import  "/assets/style/global.scss";
+
 .info > * {
   display: inline-block;
 }

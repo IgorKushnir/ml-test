@@ -35,6 +35,8 @@ defineProps({
 </script>
 
 <style scoped lang="scss">
+@import  "/assets/style/global.scss";
+
 $transition: .5s ease-in-out;
 .product-item {
   position: relative;

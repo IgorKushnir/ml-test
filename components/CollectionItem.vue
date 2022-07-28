@@ -73,6 +73,8 @@ const props = defineProps({
 </script>
 
 <style scoped lang="scss">
+@import  "/assets/style/global.scss";
+
 .collection-item > * {
   position: absolute;
   width: 100%;

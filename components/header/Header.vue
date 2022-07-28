@@ -198,6 +198,8 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+@import  "/assets/style/global.scss";
+
 .navigation {
   //height: 152px;
   width: 100%;

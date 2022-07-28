@@ -22,6 +22,7 @@ const props = defineProps({
 
 
 <style lang="scss">
+@import  "/assets/style/global.scss";
 
 .text-content {
   height: 100%;

@@ -475,6 +475,8 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
+@import  "/assets/style/global.scss";
+
 .map {
 
   width: 100%;

@@ -12,6 +12,8 @@ const counter = useFavCount()
 </script>
 
 <style scoped lang="scss">
+@import  "/assets/style/global.scss";
+
 .nav-icon .wish-counter {
   position: absolute;
   top: 2px;

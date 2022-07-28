@@ -7,8 +7,8 @@ export default defineNuxtPlugin(() => {
             getImage: (data, format = null) => {
                 // const placeholder = '@/assets/img/logo.svg';
 
-                const q = '?format=webp&width=2'
-                // const q = ''
+                // const q = '?format=webp&width=2'
+                const q = ''
 
                 const placeholder = img;
                 if ( data?.data?.attributes?.formats == null) {

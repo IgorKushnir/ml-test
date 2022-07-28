@@ -45,6 +45,8 @@ const placeholder = computed(() => {
 </script>
 
 <style lang="scss">
+@import  "/assets/style/global.scss";
+
 .img-component-container {
   overflow: hidden;
 }

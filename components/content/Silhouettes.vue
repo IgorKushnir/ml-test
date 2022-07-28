@@ -105,6 +105,8 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+@import  "/assets/style/global.scss";
+
 .silhouette-container {
   background-color: $gray;
   width: 100%;
@@ -160,6 +162,8 @@ onMounted(() => {
 </style>
 
 <style lang="scss">
+@import  "/assets/style/global.scss";
+
 .swiper-scrollbar.white {
   .swiper-scrollbar-drag {
     border-radius: 0;

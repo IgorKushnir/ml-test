@@ -241,6 +241,8 @@ function getInitialItemSelected(uid) {
 </script>
 
 <style scoped lang="scss">
+@import  "/assets/style/global.scss";
+
 $desktop_size: 500px;
 .wrapper {
   position: fixed;

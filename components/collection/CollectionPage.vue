@@ -241,6 +241,8 @@ function cutOneFilter(index) {
 </script>
 
 <style scoped lang="scss">
+@import  "/assets/style/global.scss";
+
 .selected-item {
   padding: 8px 10px 8px 12px;
   background-color: $gray;

@@ -83,6 +83,8 @@ let showDropdown = ref(false)
 
 
 <style scoped lang="scss">
+@import  "/assets/style/global.scss";
+
 .select {
   display: inline-block;
   vertical-align: middle;

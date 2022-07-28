@@ -21,6 +21,8 @@ defineProps({
 </script>
 
 <style scoped>
+@import  "/assets/style/global.scss";
+
 .loading {
   opacity: .8;
   animation: blinker 1s ease-in-out infinite;

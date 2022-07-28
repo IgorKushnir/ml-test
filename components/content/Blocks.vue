@@ -28,6 +28,7 @@ function ratio(item) {
 </script>
 
 <style scoped lang="scss">
+@import  "/assets/style/global.scss";
 
 .blocks:first-child .row {
   margin-top: 0!important;

@@ -35,6 +35,8 @@ defineProps({
 </script>
 
 <style scoped lang="scss">
+@import  "/assets/style/global.scss";
+
 .stage {
   min-height: calc(100vh - 152px);
   display: flex;

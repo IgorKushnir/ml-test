@@ -16,6 +16,8 @@ defineProps({
 
 
 <style scoped lang="scss">
+@import  "/assets/style/global.scss";
+
 .spinner-container {
   width: 24px;
   height: 24px;

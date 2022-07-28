@@ -3,30 +3,32 @@ import {defineNuxtConfig} from 'nuxt'
 export default defineNuxtConfig({
     css: [
         '@/assets/style/main.scss',
+        // '@/assets/style/global.scss',
     ],
     buildModules: [
-        'nuxt-vite',
+        // 'nuxt-vite',
         '@nuxtjs/strapi',
     ],
 
 
-    vite: {
-        build: {
-            rollupOptions: {
-                external: [
-                    'swiper/vue',
-                    'vue-gtag-next/vue',
-                ]
-            }
-        },
-        css: {
-            preprocessorOptions: {
-                scss: {
-                    additionalData: '@import "@/assets/style/global.scss";',
-                },
-            },
-        },
-    },
+    // vite: {
+    //     build: {
+    //         rollupOptions: {
+    //             external: [
+    //                 'swiper/vue',
+    //                 'vue-gtag-next',
+    //                 'vue',
+    //             ]
+    //         }
+    //     },
+    //     css: {
+    //         preprocessorOptions: {
+    //             scss: {
+    //                 additionalData: '@import "@/assets/style/global.scss";',
+    //             },
+    //         },
+    //     },
+    // },
 
     strapi: {
         url: process.env.STRAPI_URL || 'http://localhost:1337',

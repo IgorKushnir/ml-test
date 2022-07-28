@@ -114,6 +114,8 @@ function caruselData(data) {
 
 
 <style lang="scss">
+@import  "/assets/style/global.scss";
+
 .decrease {
   .row {
     margin: -60px 0;

@@ -11,6 +11,8 @@ let value = ref(false)
 </script>
 
 <style scoped lang="scss">
+@import  "/assets/style/global.scss";
+
 /* The switch - the box around the slider */
 .switch {
   position: relative;

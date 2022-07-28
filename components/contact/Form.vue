@@ -149,6 +149,8 @@ function send() {
 </script>
 
 <style scoped lang="scss">
+@import  "/assets/style/global.scss";
+
 label.required:after {
   content: " *";
   color: $red;

@@ -116,6 +116,8 @@ function collectionHoverOutHandler() {
 
 </script>
 <style scoped lang="scss">
+@import  "/assets/style/global.scss";
+
 a {
   color: $light-gray;
 }

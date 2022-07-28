@@ -1,18 +1,5 @@
 <template>
   <div>
-<!--    <div class="col-10">-->
-<!--      <div class="new-ratio-16x9">-->
-<!--        <Fact :data="{-->
-<!--          title: 'Meet Bella Belle x Milla Nova charity collaboration',-->
-<!--          text: 'A-line ivory gown on straps with sequin embroidery and open back. The gown has a sheer cape made of tulle also embroidered with sequins.',-->
-<!--          background_color: 'dark_blue',-->
-<!--          text_color: 'light',-->
-<!--          layout: 'tight',-->
-<!--          logo: true-->
-<!--        }"/>-->
-<!--      </div>-->
-<!--    </div>-->
-
     <Header/>
     <NuxtPage/>
     <Footer/>
@@ -166,6 +153,7 @@ function loadNextHook() {
 </script>
 
 <style lang="scss">
+@import  "/assets/style/global.scss";
 
 
 .page-enter-active,
@@ -190,3 +178,4 @@ function loadNextHook() {
 }
 </style>
 
+<!--"nuxt-vite": "^0.3.5",-->

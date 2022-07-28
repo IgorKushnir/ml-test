@@ -163,6 +163,8 @@ function highlight(text, search) {
 </script>
 
 <style scoped lang="scss">
+@import  "/assets/style/global.scss";
+
 .search {
   position: fixed;
   top: 0;

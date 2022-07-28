@@ -96,6 +96,8 @@ addRouteMiddleware(async (to, from) => {
 </script>
 
 <style scoped lang="scss">
+@import  "/assets/style/global.scss";
+
 .title-container {
   display: flex;
   align-items: center;
@@ -224,6 +226,8 @@ addRouteMiddleware(async (to, from) => {
 </style>
 
 <style lang="scss">
+@import  "/assets/style/global.scss";
+
 .grid-column-start {
   white-space: nowrap;
   grid-column-start: 1;
