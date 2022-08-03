@@ -1,5 +1,5 @@
 import renderSocialImage from "puppeteer-social-image";
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
 // import chromium  from 'chrome-aws-lambda';
 
 export default defineEventHandler(async (event) => {
@@ -43,7 +43,8 @@ export default defineEventHandler(async (event) => {
         browser: await puppeteer.launch({
             args: ["--no-sandbox", "--disabled-setupid-sandbox"],
             executablePath: puppeteer.executablePath(),
-            headless: true
+            headless: true,
+            ignoreHTTPSErrors: true,
             // executablePath: '/Users/rodney/Documents/Dev/projects/millanova-frontend/node_modules/puppeteer/.local-chromium/mac-1022525/chrome-mac/Chromium.app/Contents/MacOS/Chromium',
             // executablePath: __dirname + '/../../puppeteer/.local-chromium/mac-1022525/chrome-mac/Chromium.app/Contents/MacOS/Chromium',
             // executablePath: __dirname + '/../../puppeteer/.local-chromium/linux-1022525/chrome-linux/chrome',
