@@ -1,4 +1,5 @@
 import renderSocialImage from "puppeteer-social-image";
+import puppeteer from "puppeteer";
 
 export default  defineEventHandler(async (event) => {
 
@@ -37,6 +38,7 @@ export default  defineEventHandler(async (event) => {
         },
         output: "image.png",
         size: "facebook",
+        browser: await puppeteer.launch({})
         // preview: true
     })
     return img
