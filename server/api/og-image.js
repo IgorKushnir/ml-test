@@ -41,6 +41,7 @@ export default defineEventHandler(async (event) => {
         output: "image.png",
         size: "facebook",
         browser: await puppeteer.launch({
+            args: ["--no-sandbox", "--disabled-setupid-sandbox"],
             executablePath: puppeteer.executablePath(),
             headless: true
             // executablePath: '/Users/rodney/Documents/Dev/projects/millanova-frontend/node_modules/puppeteer/.local-chromium/mac-1022525/chrome-mac/Chromium.app/Contents/MacOS/Chromium',
