@@ -1,8 +1,8 @@
 import renderSocialImage from "puppeteer-social-image";
 import puppeteer from "puppeteer";
-import chromium  from 'chrome-aws-lambda';
+// import chromium  from 'chrome-aws-lambda';
 
-export default  defineEventHandler(async (event) => {
+export default defineEventHandler(async (event) => {
 
     const url = new URL('http://test.test' + event.req.url).search;
     const urlParams = new URLSearchParams(url)
