@@ -12,9 +12,11 @@
     "sass": "^1.54.0"
   },
   "dependencies": {
+    "chrome-aws-lambda": "^10.1.0",
     "google-maps": "^4.3.3",
     "nuxt": "^3.0.0-rc.6",
     "puppeteer": "^15.5.0",
+    "puppeteer-core": "^16.0.0",
     "puppeteer-social-image": "^0.8.1",
     "vue-gtag-next": "^1.14.0"
   },
