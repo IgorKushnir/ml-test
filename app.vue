@@ -24,8 +24,8 @@ if (!initialError.value) {
   useMenuData().value = [initialData.value[0], initialData.value[1]]
   useTypesData().value = initialData.value[2];
   useTranslationsData().value = initialData.value[3];
-
 }
+const translations = useTranslationsData();
 
 
 // Get all filters
@@ -36,11 +36,10 @@ if (!error.value) allFilters.value = data.value;
 // Get types
 
 
-
 useHead({
   title: 'Milla Nova',
 
-  titleTemplate: (title) => `${title} - Milla Nova | Wedding dresses | Collection Olives, Greece, Love`,
+  titleTemplate: (title) => `${title} - ${translations.value.site_title}`,
   viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
   charset: 'utf-8',
 

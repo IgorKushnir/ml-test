@@ -1,5 +1,6 @@
 <template>
   <div>
+<!--    Create route store-->
     <Seo title="Store finder"/>
 
     <div v-if="countries">
@@ -68,6 +69,7 @@ import {getListOfCountries} from '~/api/stores'
 import getCountryCode from '~/api/getCountryCode'
 import {getCountry} from "../api/stores";
 
+
 const router = useRouter();
 const route = useRoute();
 
@@ -81,7 +83,6 @@ const lineIndex = ref(-1)
 let showMap = ref(false)
 
 const countries = ref(await getListOfCountries('en'))
-
 // console.log('b - ', countrySlug.value);
 
 const {data, pending, refresh, error} = await useLazyAsyncData('country', () => getCountry(countrySlug.value,'en'), {
@@ -92,10 +93,12 @@ const {data, pending, refresh, error} = await useLazyAsyncData('country', () => 
 
 
 
-
 if (countrySlug.value == null) {
-  countryCode.value = await getCountryCode();
-  // countryCode.value = "null";
+  if (process.client) {
+    console.log('here');
+    countryCode.value = await getCountryCode();
+  }
+  // console.log(countryCode.value);
   if (countryCode.value) {
     if (countries.value) {
       countrySlug.value = getSlugByCode(countryCode.value);
@@ -194,7 +197,7 @@ watch(() => countrySlug.value, (s) => {
   refresh()
 })
 
-onMounted(() => {
+onMounted(async () => {
   if (countrySlug.value !== data?.value?.data?.attributes?.slug) {
     // console.log('here', countrySlug.value);
     refresh()

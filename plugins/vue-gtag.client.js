@@ -16,7 +16,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     const id = config.GOOGLE_ANALYTICS;
     if (!id) return
 
-    console.log('Google analytics: ' + id);
+    // console.log('Google analytics: ' + id);
     nuxtApp.vueApp.use(VueGtag, {
         property: {
             id: id

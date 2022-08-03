@@ -5,6 +5,7 @@ export default async function () {
             pair = pair.split('=');
             return obj[pair[0]] = pair[1], obj;
         }, {})
+
         return d.loc;
     }
     return null
