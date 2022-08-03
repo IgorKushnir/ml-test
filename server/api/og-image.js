@@ -1,5 +1,5 @@
 import renderSocialImage from "puppeteer-social-image";
-import puppeteer from "puppeteer-core";
+import puppeteer from "puppeteer";
 // import chromium  from 'chrome-aws-lambda';
 
 export default defineEventHandler(async (event) => {
