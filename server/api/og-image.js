@@ -1,6 +1,7 @@
 import renderSocialImage from "puppeteer-social-image";
 import puppeteer from "puppeteer";
 
+
 export default  defineEventHandler(async (event) => {
 
     const url = new URL('http://test.test' + event.req.url).search;
@@ -8,7 +9,6 @@ export default  defineEventHandler(async (event) => {
 
     const title = urlParams.get('title');
     const image = urlParams.get('image');
-    // console.log(iii);
 
     const img = await renderSocialImage.default({
         // template: "basic",
@@ -38,7 +38,12 @@ export default  defineEventHandler(async (event) => {
         },
         output: "image.png",
         size: "facebook",
-        browser: await puppeteer.launch({})
+        browser: await puppeteer.launch({
+            // executablePath: '/Users/rodney/Documents/Dev/projects/millanova-frontend/node_modules/puppeteer/.local-chromium/mac-1022525/chrome-mac/Chromium.app/Contents/MacOS/Chromium',
+            // executablePath: __dirname + '/../../puppeteer/.local-chromium/mac-1022525/chrome-mac/Chromium.app/Contents/MacOS/Chromium',
+            // executablePath: __dirname + '/../../puppeteer/.local-chromium/linux-1022525/chrome-linux/chrome',
+            executablePath: '/workspace/node_modules/puppeteer/.local-chromium/linux-1022525/chrome-linux/chrome',
+        })
         // preview: true
     })
     return img
