@@ -95,17 +95,20 @@ const {data, pending, refresh, error} = await useLazyAsyncData('country', () => 
 
 if (countrySlug.value == null) {
   if (process.client) {
-    console.log('here');
     countryCode.value = await getCountryCode();
+
   }
   // console.log(countryCode.value);
   if (countryCode.value) {
+
     if (countries.value) {
       countrySlug.value = getSlugByCode(countryCode.value);
-      countryIndex.value = getIndexBySlug(countrySlug.value)
-
+      setTimeout(function () {
+        countryIndex.value = getIndexBySlug(countrySlug.value)
+      }, 10)
       changeRoute()
     } else {
+
       watch(countries, () => {
         countrySlug.value = getSlugByCode(countryCode.value);
         countryIndex.value = getIndexBySlug(countrySlug.value)

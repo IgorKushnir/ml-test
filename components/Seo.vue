@@ -33,12 +33,12 @@ const siteUrl = "https://millanova.com" + fullPath
 const title = props.data?.seo?.metaTitle ?? props.data?.title ?? props.title ?? defaultTitle.value;
 const description = props.description ?? "millanova.com";
 
-const ogImageQuery = new URLSearchParams({
-  description: description,
-  title: title,
-  image: props.image,
-});
-const ogImageUrl = "http://159.223.121.185/?" +ogImageQuery
+// const ogImageQuery = new URLSearchParams({
+//   description: description,
+//   title: title,
+//   image: props.image,
+// });
+// const ogImageUrl = "http://159.223.121.185/?" +ogImageQuery
 
     function setSeo() {
   useHead({
@@ -52,10 +52,12 @@ const ogImageUrl = "http://159.223.121.185/?" +ogImageQuery
       { property: 'og:site_name', content: 'Milla Nova' },
       { property: 'og:title', content: title },
       { property: 'og:type', content: 'website' },
-      { property: 'og:image', content: ogImageUrl },
+      // { property: 'og:image', content: ogImageUrl },
       { property: 'og:description', content: description },
       { property: 'og:url', content:  siteUrl },
       { property: 'twitter:card', content: 'summary_large_image' },
+      // { property: 'twitter:image', content: ogImageUrl },
+
 
       { hid: 'description', name: 'description', content: description }
 

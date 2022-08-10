@@ -23,9 +23,10 @@
   </transition>
 
 
-  <div v-if="infinite" ref="loader" style="text-align: center; padding: 80px">
-    <div v-if="showLoader">
-    </div>
+  <div v-if="infinite" ref="loader">
+<!--    <div >-->
+<!--    <div v-if="showLoader">-->
+<!--    </div>-->
   </div>
 
 </template>

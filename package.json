@@ -12,6 +12,7 @@
     "sass": "^1.54.0"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "google-maps": "^4.3.3",
     "nuxt": "^3.0.0-rc.6",
     "vue-gtag-next": "^1.14.0"
