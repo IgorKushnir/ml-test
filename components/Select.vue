@@ -1,22 +1,22 @@
 <template>
   <div class="select">
     <div
-        :class="index !== -1 ? 'custom-select active hide-md' : 'custom-select hide-md'"
+        :class="_index !== -1 ? 'custom-select active hide-md' : 'custom-select hide-md'"
         @mouseenter="showDropdown = true"
         @mouseleave="showDropdown = false"
         @click="showDropdown = false"
     >
-      <StoreFlag v-if="flag && index!== -1" class="flag big" :code="data[index].flag"/>
+      <StoreFlag v-if="flag && _index!== -1" class="flag big" :code="data[_index].flag"/>
 
       <div class="label p-small">
-        <strong>{{ index === -1 ? name : data[index].value }}</strong>
+        <strong>{{ _index === -1 ? name : data[_index].value }}</strong>
         <div class="icon-drop-down-16"></div>
       </div>
 
       <transition name="dropdown">
         <div v-show="showDropdown" ref="dropDown" :class="'drop-down ' + side">
-          <div :class="index === -1 ? 'item active p-small' : 'item p-small'" v-on:click="emitIndex( -1)">{{all}}</div>
-          <div v-for="(item, i) in data" :class="index === i ? 'item active p-small' : 'item p-small'" v-on:click="emitIndex( i)">
+          <div :class="_index === -1 ? 'item active p-small' : 'item p-small'" v-on:click="emitIndex( -1)">{{all}}</div>
+          <div v-for="(item, i) in data" :class="_index === i ? 'item active p-small' : 'item p-small'" v-on:click="emitIndex( i)">
             <StoreFlag v-if="flag" class="flag" :code="data[i].flag"/>
             <span>{{item.value}}</span>
           </div>
@@ -27,15 +27,15 @@
     </div>
 
     <div  class="select-container show-md">
-      <StoreFlag v-if="flag && index !== -1" class="flag-mobile" :code="data[index].flag"/>
+      <StoreFlag v-if="flag && _index !== -1" class="flag-mobile" :code="data[_index].flag"/>
 
-      <select :class="'select custom-select p-small hidden' + (flag && index !== -1 ? ' flag' : '')">
-        <option value="1">{{index === -1 ? all : data[index].value}}</option>
+      <select :class="'select custom-select p-small hidden' + (flag && _index !== -1 ? ' flag' : '')">
+        <option value="1">{{_index === -1 ? all : data[_index].value}}</option>
       </select>
 
       <div class="icon-drop-down-16"></div>
 
-      <select :class="(index === -1 ? 'select custom-select p-small absolute' : 'select custom-select p-small absolute active') + (flag && index !== -1 ? ' flag' : '')" v-on:change="emitIndex( index)" v-model="index">
+      <select :class="(_index === -1 ? 'select custom-select p-small absolute' : 'select custom-select p-small absolute active') + (flag && _index !== -1 ? ' flag' : '')" v-on:change="emitIndex( _index)" v-model="_index">
         <option :value="-1">{{all}}</option>
         <option  v-for="(item, i) in data" :value="i" :selected="index === i">{{item.value}}</option>
 
@@ -78,6 +78,11 @@ const props = defineProps({
   }
 })
 let showDropdown = ref(false)
+const _index = ref(props.index);
+
+watch(() => props.index, (i) => {
+  _index.value = i
+})
 
 function emitIndex(index) {
   console.log({index});
