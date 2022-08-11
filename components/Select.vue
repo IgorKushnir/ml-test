@@ -15,8 +15,8 @@
 
       <transition name="dropdown">
         <div v-show="showDropdown" ref="dropDown" :class="'drop-down ' + side">
-          <div :class="index === -1 ? 'item active p-small' : 'item p-small'" v-on:click="$emit('index', -1)">{{all}}</div>
-          <div v-for="(item, i) in data" :class="index === i ? 'item active p-small' : 'item p-small'" v-on:click="$emit('index', i)">
+          <div :class="index === -1 ? 'item active p-small' : 'item p-small'" v-on:click="emitIndex( -1)">{{all}}</div>
+          <div v-for="(item, i) in data" :class="index === i ? 'item active p-small' : 'item p-small'" v-on:click="emitIndex( i)">
             <StoreFlag v-if="flag" class="flag" :code="data[i].flag"/>
             <span>{{item.value}}</span>
           </div>
@@ -35,7 +35,7 @@
 
       <div class="icon-drop-down-16"></div>
 
-      <select :class="(index === -1 ? 'select custom-select p-small absolute' : 'select custom-select p-small absolute active') + (flag && index !== -1 ? ' flag' : '')" v-on:change="$emit('index', index)" v-model="index">
+      <select :class="(index === -1 ? 'select custom-select p-small absolute' : 'select custom-select p-small absolute active') + (flag && index !== -1 ? ' flag' : '')" v-on:change="emitIndex( index)" v-model="index">
         <option :value="-1">{{all}}</option>
         <option  v-for="(item, i) in data" :value="i" :selected="index === i">{{item.value}}</option>
 
@@ -46,6 +46,8 @@
 </template>
 
 <script setup>
+const emits = defineEmits(["index"]);
+
 const props = defineProps({
   name: {
     type: String,
@@ -76,6 +78,11 @@ const props = defineProps({
   }
 })
 let showDropdown = ref(false)
+
+function emitIndex(index) {
+  console.log({index});
+  emits("index", index);
+}
 
 
 </script>

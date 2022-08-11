@@ -9,14 +9,14 @@
 
         <template #center>
           <Select :data="countries" name="Country" all="All countries" :index="countryIndex" :flag="true"
-                  @index="changeCountry"/>
+                  @index="(i) => changeCountry(i)"/>
           <Select v-if="cities && cities.length > 1" :data="cities" name="City" all="All cities" :index="cityIndex"
-                  @index="changeCity"/>
+                  @index="(i) => changeCity(i)"/>
         </template>
         <template #end>
           <Select
               v-if="lines && lines.length > 1" :data="lines" name="Lines" all="All lines" side="right" :index="lineIndex"
-              @index="changeLine"
+              @index="(i) => changeLine(i)"
           />
         </template>
 
