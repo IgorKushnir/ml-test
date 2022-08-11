@@ -33,7 +33,7 @@
 
 
       <div v-if="content['__typename'] === 'ComponentContentBlocks'" :class="layout('normal')" class="p-v-0">
-        <ContentBlocks :data="content.blocks"/>
+        <ContentBlocks :data="content.blocks" :type="content.type ?? 'chess'"/>
       </div>
 
       <div v-if="content['__typename'] === 'ComponentContentCarusel'" class="anti-container">

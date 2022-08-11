@@ -122,6 +122,7 @@ function content(extra) {
           
             ...on ComponentContentBlocks {
             __typename
+            type
             blocks {
               ratio
               media {
