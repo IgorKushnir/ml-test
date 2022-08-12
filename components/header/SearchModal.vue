@@ -34,7 +34,7 @@
         </transition>
 
         <transition name="fade">
-          <div v-if="result !== null && show && result.nbHits > 0" class="result">
+          <div v-if="result !== null && show && (result.nbHits > 0 || result.estimatedTotalHits > 0)" class="result">
             <div class="container">
 <!--              <div v-if="result.nbHits === 0">No results</div>-->
               <div class="search-grid m-v-40">
@@ -122,6 +122,12 @@ async function getResult() {
         Authorization:
             'Bearer ' + config.MEILISEARCH_API_KEY,
       },
+      // baseURL: "https://millanovasearch.sarakuz.com",
+      // method: 'POST',
+      // headers: {
+      //   Authorization:
+      //       'Bearer ' + "YTQ5MmM1M2FlOTJlYWZiN2Q4NWRmZmE0",
+      // },
       body: {
         "q": search.value,
       }

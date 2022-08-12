@@ -1,6 +1,6 @@
 <template>
 
-  <div v-for="(content, index) in data"
+  <div v-for="(content, index) in _data"
        class="container"
              :class="content.size ??  'm-v-80 m-v-40-xl m-v-32-md'"
   >
@@ -105,6 +105,8 @@ function caruselData(data) {
   })
   return _data
 }
+
+const _data = computed(() => props.data.filter(d => d !== null))
 
 </script>
 
