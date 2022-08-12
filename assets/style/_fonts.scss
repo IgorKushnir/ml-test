@@ -168,6 +168,7 @@ a.button {
   font-weight: normal;
 }
 .button {
+  position: relative;
   text-transform: uppercase;
   line-height: 16px;
   font-size: 16px;
@@ -183,6 +184,7 @@ a.button {
   cursor: pointer;
   text-align: center;
 
+  transition: 0.3s;
   &.primary {
     background-color: $dark-blue;
     color: $white;
@@ -200,6 +202,21 @@ a.button {
 
 }
 
+.button:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  background-color: $dark-blue;
+  top: 100%;
+  left: 50%;
+  transition: .4s ease-in-out;
+}
+.button.white:after {
+  background-color: $white;
+}
+
+
 @include md {
   .button {
     font-size: 14px;
@@ -214,10 +231,22 @@ a.button {
     color: $dark-blue;
   }
   .link:hover:after {
-
     width: 100%;
-
   }
+
+
+  .button:hover, .button-hover {
+    border: 1px solid rgba($dark-blue, .2);
+
+    &:after {
+      width: calc(100% + 2px);
+      left: -1px;
+    }
+    &.white {
+      border: 1px solid rgba($white, .2);
+    }
+  }
+
 }
 
 

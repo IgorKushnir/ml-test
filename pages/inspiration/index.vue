@@ -13,7 +13,7 @@
 
         <Container>
           <template v-for="(item, index) in data.data">
-            <InspirationItem v-if="[0, 9, 16, 25, 32].includes(index)" :title="item.attributes.title" :to="'/inspiration/'+item.attributes.slug" :cover="item.attributes.cover_3x1" col="col-8 col-6-xl col-12-md"/>
+            <InspirationItem v-if="[0, 9, 16, 25, 32].includes(index) && (!useIsMobile().value)" :title="item.attributes.title" :to="'/inspiration/'+item.attributes.slug" :cover="item.attributes.cover_3x1" col="col-8 col-6-xl col-12-md"/>
             <InspirationItem v-else :title="item.attributes.title" :to="'/inspiration/'+item.attributes.slug" :cover="item.attributes.cover_1x1" col="col-4 col-6-xl col-12-md"/>
           </template>
 

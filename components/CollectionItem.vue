@@ -1,6 +1,9 @@
 <template>
   <div class="ratio-3x4" :class="poster ? 'ratio-4x3 ratio-3x4-md' : ''">
-    <NuxtLink :to="to" class="collection-item">
+    <NuxtLink :to="to"
+              v-on:mouseenter="hover(true, $el)" v-on:mouseleave="hover(false, $el)"
+              class="collection-item"
+    >
       <template v-if="!(poster && image_4x3)">
         <Image :path="image" :alt="title"  size="medium"/>
       </template>
@@ -69,7 +72,14 @@ const props = defineProps({
   },
 })
 
-
+function hover(hover, el) {
+  const button = el.getElementsByClassName('button')[0]
+  if (hover) {
+    button.classList.add('button-hover')
+  } else {
+    button.classList.remove('button-hover')
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -104,5 +114,16 @@ const props = defineProps({
   //max-height: 500px;
 }
 
+//@media (hover: hover) {
+//  .btn-ctn {
+//    transition: .3s;
+//  }
+//  .collection-item:hover {
+//    .btn-ctn {
+//      padding-top: 100px;
+//    }
+//
+//  }
+//}
 
 </style>

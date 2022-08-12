@@ -1,5 +1,13 @@
 <template>
   <div>
+<!--    <div style="display: flex; gap: 24px; padding: 100px">-->
+<!--      <div class="button">Button</div>-->
+<!--      <div class="button primary">Button</div>-->
+<!--    </div>-->
+<!--    <div style="display: flex; gap: 24px; padding: 100px; background-color: black">-->
+<!--      <div class="button white">Button</div>-->
+<!--      <div class="button primary white">Button</div>-->
+<!--    </div>-->
     <Header/>
     <NuxtPage/>
     <Footer/>
@@ -179,3 +187,10 @@ function loadNextHook() {
 </style>
 
 
+<!--<style lang="scss">-->
+<!--@import  "/assets/style/global.scss";-->
+
+
+
+
+<!--</style>-->
