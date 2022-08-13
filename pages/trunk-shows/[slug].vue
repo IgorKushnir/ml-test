@@ -68,6 +68,7 @@ const route = useRoute();
 let slug = route.params.slug;
 const { $getMonths, $getDatesInRange } = useNuxtApp()
 
+
 let {data, pending, refresh, error} = await getTrunkShow(slug, 'en')
 
 onMounted(() => {

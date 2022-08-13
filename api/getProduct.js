@@ -1,6 +1,7 @@
 import seo from './misc/seo'
 
-export default async function (slugOrId, extrudeIds = '') {
+export default async function (slugOrId, extrudeIds = '', publicationState = "LIVE") {
+
     if (extrudeIds) {
         extrudeIds = '(extrudeIds: ' + extrudeIds + ')'
     }
@@ -11,6 +12,7 @@ export default async function (slugOrId, extrudeIds = '') {
     let response = graphql(`
 query Product{
   products(
+    publicationState: ${publicationState}
     filters: {
       slug: {
         eq: "${slugOrId}"

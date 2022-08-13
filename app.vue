@@ -43,7 +43,6 @@ if (!error.value) allFilters.value = data.value;
 
 // Get types
 
-
 useHead({
   title: 'Milla Nova',
 

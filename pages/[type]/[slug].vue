@@ -100,10 +100,16 @@ const isMobile = useIsMobile();
 const route = useRoute();
 const router = useRouter();
 let slug = route.params.slug;
+let draft = route.query?.draft;
+
+let publicationState = "LIVE";
+if (draft === 'true') {
+  publicationState = "PREVIEW";
+}
 
 const extrudedIds = useViewedProductIds().value;
 
-let {data, pending, refresh, error} = await getProduct(slug, JSON.stringify(extrudedIds))
+let {data, pending, refresh, error} = await getProduct(slug, JSON.stringify(extrudedIds), publicationState)
 
 
 

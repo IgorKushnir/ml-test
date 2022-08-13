@@ -22,9 +22,15 @@ import getMenu from '~/api/getPage'
 
 const route = useRoute();
 let slug = route.params.slug;
+let draft = route.query?.draft;
+
+let publicationState = "LIVE";
+if (draft === 'true') {
+  publicationState = "PREVIEW";
+}
 
 
-let { data, pending, refresh, error } = await getMenu(slug, 'en')
+let { data, pending, refresh, error } = await getMenu(slug, 'en', publicationState)
 onMounted(() => refresh())
 
 </script>

@@ -1,13 +1,14 @@
 import content from './misc/content'
 import seo from './misc/seo'
 
-export default async function (slug, lang) {
+export default async function (slug, lang, publicationState = "LIVE") {
     const graphql = useStrapiGraphQL()
     const collection = 'pages';
 
     const response = graphql(`
 query Page{
   pages (
+  publicationState: ${publicationState}
   locale: "${lang}"
     filters: {
       slug: {
