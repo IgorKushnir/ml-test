@@ -1,7 +1,19 @@
 <template>
   <div class="img-component-container">
     <img :src="placeholder" :alt="alt" class="img-component placeholder">
-    <img v-if="!path.data?.attributes?.mime?.startsWith('video/')" :src="$getImage(path, size)" :alt="alt" class="img-component base" loading="lazy">
+
+    <template v-if="isNotSvg">
+      <nuxt-img
+          v-if="!path.data?.attributes?.mime?.startsWith('video/')"
+          format="webp"
+          :src="$getImage(path, size)"
+          :alt="alt"
+          class="img-component base"
+          loading="lazy"
+      />
+    </template>
+    <template v-else><img v-if="!path.data?.attributes?.mime?.startsWith('video/')" :src="$getImage(path, size)" :alt="alt" class="img-component base" loading="lazy"></template>
+
     <video
         v-if="path.data?.attributes?.mime?.startsWith('video/')"
         playsinline=""
@@ -40,7 +52,12 @@ const placeholder = computed(() => {
 })
 
 
+const isNotSvg = computed(() => props.path.data?.attributes?.url.endsWith('.jpg') || props.path.data?.attributes?.url.endsWith('.jpeg') || props.path.data?.attributes?.url.endsWith('.png') || props.path.data?.attributes?.url.endsWith('.JPG') || props.path.data?.attributes?.url.endsWith('.JPEG') || props.path.data?.attributes?.url.endsWith('.PNG'))
 
+
+// function loaded() {
+//   console.log('done');
+// }
 
 </script>
 

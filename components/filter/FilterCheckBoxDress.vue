@@ -1,8 +1,8 @@
 <template>
   <div v-on:click="$emit('value', !filter.value) " :class="'dress-container'  + (filter.value ? ' active' : '')">
     <div class="dress">
-      <img v-show="filter.value" :src="'../img/silhouette/' + ( filter.slug ) + '.png'" width="100" height="100" :alt="filter.title">
-      <img v-show="!filter.value" :src="'../img/silhouette/' + (  filter.slug + '_s') + '.png'" width="100" height="100" :alt="filter.title">
+      <nuxt-img v-show="filter.value" :src="'/img/silhouette/' + ( filter.slug ) + '.png'" format="webp" :alt="filter.title"/>
+      <nuxt-img v-show="!filter.value" :src="'/img/silhouette/' + (  filter.slug + '_s') + '.png'" format="webp" :alt="filter.title"/>
     </div>
     <div class="p label m-v-16">{{filter.title}}</div>
 

@@ -85,7 +85,7 @@ useHead({
 
 onMounted(async () => {
   reportWindowSize()
-  window.addEventListener('resize', reportWindowSize);
+  window.addEventListener('resize', reportWindowSize, {passive: true});
 
   loadNextHook()
 });
@@ -155,7 +155,7 @@ function loadNextHook() {
       }
     }
 
-  });
+  }, {passive: true});
 }
 
 </script>

@@ -8,7 +8,9 @@ export default defineNuxtConfig({
         // 'nuxt-vite',
         '@nuxtjs/strapi',
     ],
-
+    modules: [
+        '@nuxt/image-edge',
+    ],
 
     build: {
 
@@ -46,6 +48,20 @@ export default defineNuxtConfig({
         MEILISEARCH_API_KEY: process.env.MEILISEARCH_API_KEY,
         GOOGLE_ANALYTICS: process.env.GOOGLE_ANALYTICS,
         // SEARCH_URL: process.env.SEARCH_URL || 'http://167.172.227.234',
+    },
+
+    image: {
+        domains: ['nyc3.digitaloceanspaces.com', 'nyc3.cdn.digitaloceanspaces.com', 'millanova.nyc3.cdn.digitaloceanspaces.com', 'localhost'],
+        // staticFilename: '[publicPath]/img',
+        screens: {
+            xs: 320,
+            sm: 640,
+            md: 768,
+            lg: 1024,
+            xl: 1280,
+            xxl: 1536,
+            '2xl': 1536
+        },
     }
 })
 

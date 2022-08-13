@@ -1,5 +1,6 @@
 <template>
   <div class="ratio-3x4" :class="poster ? 'ratio-4x3 ratio-3x4-md' : ''">
+
     <NuxtLink :to="to"
               v-on:mouseenter="hover(true, $el)" v-on:mouseleave="hover(false, $el)"
               class="collection-item"
