@@ -31,8 +31,11 @@ if (draft === 'true') {
 
 
 let { data, pending, refresh, error } = await getMenu(slug, 'en', publicationState)
-onMounted(() => refresh())
+// onMounted(() => refresh())
 
+// watch(data, () => {
+//   console.log(data.value);
+// })
 </script>
 
 <style scoped lang="scss">

@@ -143,9 +143,6 @@ function nextHandler() {
 
 
 
-
-
-
 </script>
 
 <style scoped lang="scss">
