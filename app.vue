@@ -24,7 +24,8 @@ import getAllFilters from '~/api/getAllFilters'
 import {useFiltersData, useMenuData, useTypesData, usePreviousRoute, useIsMobile, useTranslationsData} from "~/composables/states";
 
 const nuxtApp = useNuxtApp()
-
+const likeCounter = useFavCount()
+const { $getLikedProducts } = useNuxtApp()
 
 // get Initial data (Menu, Lines, Types)
 let {data: initialData, error: initialError} = await getInitialData('en');
@@ -87,6 +88,10 @@ onMounted(async () => {
   window.addEventListener('resize', reportWindowSize, {passive: true});
 
   loadNextHook()
+
+
+  //Like list counter
+  likeCounter.value = $getLikedProducts().length
 });
 
 // Check size

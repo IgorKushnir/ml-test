@@ -9,7 +9,11 @@
 
         <div :class="grid === 3 ? 'col-4 col-6-lg col-12-sm' : 'col-3 col-4-lg col-12-sm'">
           <ProductItem :title="product.attributes.title" :to="'/' + product.attributes.type.data.attributes.slug + '/' + product.attributes.slug"
-                       :image="product.attributes.cover_3x4"/>
+                       :image="product.attributes.cover_3x4"
+                       :id="product.id"
+                       :like-list="likeList"
+                       @updateLikes="updateLikes"
+          />
         </div>
       </template>
     </Container>
@@ -32,6 +36,9 @@
 </template>
 
 <script setup>
+import ProductItem from "./ProductItem";
+const likeCounter = useFavCount()
+
 const emits = defineEmits(['load'])
 const props = defineProps({
   productsData: {
@@ -58,9 +65,11 @@ const props = defineProps({
     default: false
   }
 })
+const { $getLikedProducts } = useNuxtApp()
 
 const loader = ref();
 let showLoader = ref(false)
+const likeList = ref([])
 
 watch(() => props.productsData.data, () => {
   showLoader.value = false
@@ -99,7 +108,13 @@ onMounted(() => {
   if (props.infinite) {
     document.addEventListener('scroll', scroll);
   }
+  likeList.value = $getLikedProducts();
 })
+
+function updateLikes() {
+  likeList.value = $getLikedProducts();
+  likeCounter.value = likeList.value.length
+}
 
 addRouteMiddleware(async (to, from) => {
   if (props.infinite) {

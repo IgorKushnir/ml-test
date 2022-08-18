@@ -202,7 +202,7 @@ a.button {
 
 }
 
-.button:after {
+.button:before {
   content: '';
   position: absolute;
   width: 0;
@@ -212,7 +212,7 @@ a.button {
   left: 50%;
   transition: .4s ease-in-out;
 }
-.button.white:after {
+.button.white:before {
   background-color: $white;
 }
 
@@ -238,7 +238,7 @@ a.button {
   .button:hover, .button-hover {
     border: 1px solid rgba($dark-blue, .2);
 
-    &:after {
+    &:before {
       width: calc(100% + 2px);
       left: -1px;
     }

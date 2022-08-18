@@ -27,6 +27,7 @@ query Product{
       extra${extrudeIds}
         title
         description
+        storeLink
         gallery {
           data {
             attributes {

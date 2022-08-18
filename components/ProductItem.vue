@@ -1,18 +1,26 @@
 <template>
   <NuxtLink :to="to">
-  <div class="product-item">
+    <div class="product-item">
+        <div class="product-item-head">
+          <h3>{{title}}</h3>
+<!--          <LikeButton :liked="liked" @click="handleLike(id)"/>-->
+        </div>
+        <Image :path="image" :alt="title"  size="medium" :class="'image ' + ratio"/>
 
-      <div class="product-item-head">
-        <h3>{{title}}</h3>
-      </div>
-      <Image :path="image" :alt="title"  size="medium" :class="'image ' + ratio"/>
-
-  </div>
+    </div>
   </NuxtLink>
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
+  id: {
+    type: String,
+    required: true
+  },
+  likeList: {
+    type: Array,
+    required: true
+  },
   title: {
     type: String,
     required: true
@@ -31,7 +39,18 @@ defineProps({
     required: true
   }
 })
+const emits = defineEmits(['updateLikes'])
+const { $toggleLikeProduct } = useNuxtApp()
 
+const liked = computed(() => props.likeList.includes(props.id.toString()))
+
+
+
+
+function handleLike(id) {
+  liked.value = $toggleLikeProduct(id)
+  emits('updateLikes')
+}
 </script>
 
 <style scoped lang="scss">
@@ -57,12 +76,19 @@ $transition: .5s ease-in-out;
 
   .product-item-head {
     position: absolute;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     bottom: 0;
     padding: 24px;
-    opacity: 0;
     z-index: 2;
     transition: $transition;
+    opacity: 0;
   }
+  //.product-item-head :not(.icon-heart-yes-24.active) {
+  //  opacity: 0;
+  //}
   .image {
     //position: absolute;
     //width: 100%;
@@ -77,12 +103,11 @@ $transition: .5s ease-in-out;
 }
 
 
-
 @media (hover: hover) {
   :deep(.img-component.base) {
     transition: 2.5s ease-in-out;
   }
-  .product-item:hover {
+  .product-item:hover  {
     &:after {
       opacity: 1;
     }

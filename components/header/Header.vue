@@ -1,7 +1,7 @@
 <template>
   <HeaderSearchModal :show="showSearch" @close="showSearch = false"/>
 
-  <HeaderWishCounter v-if="isMobile"/>
+  <HeaderWishCounter v-if="isMobile" class="show-md"/>
   <header class="navigation">
 
     <div class="container" style="position: static;">
@@ -21,7 +21,7 @@
         </NuxtLink>
 
         <div class="right-side">
-          <HeaderWishCounter v-if="!isMobile"/>
+          <HeaderWishCounter v-if="!isMobile" class="hide-md"/>
           <div class="nav-icon hover" v-on:click="showHideSearch">
             <div :class="showSearch ? 'icon-close-24' : 'icon-search-24'"/>
           </div>

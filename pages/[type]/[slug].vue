@@ -20,8 +20,9 @@
       <Container>
 
         <div class="col-4 col-5-lg col-12-md">
-          <div class="">
+          <div class="title-container">
             <h1 class="title m-t-0">{{ data.title }}</h1>
+<!--            <LikeButton/>-->
           </div>
           <div class="sticky-content">
             <p class="m-b-32" v-if="data.description" v-html="$handleNewLine(data.description)" />
@@ -57,6 +58,8 @@
                 </strong></div>
               </div>
             </div>
+
+            <NuxtLink v-if="data.storeLink" :to="data.storeLink" target="_blank" class="button m-t-16 m-t-0-md m-b-24-md target">Buy online</NuxtLink>
           </div>
         </div>
 
@@ -148,6 +151,15 @@ function nextHandler() {
 <style scoped lang="scss">
 @import  "/assets/style/global.scss";
 
+.title-container {
+  display: flex;
+  justify-content: space-between;
+  align-content: flex-start;
+  .icon-like {
+    font-size: 32px;
+    height: 48px;
+  }
+}
 .info > * {
   display: inline-block;
 }

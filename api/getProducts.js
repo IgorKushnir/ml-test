@@ -49,6 +49,7 @@ query ProductsWithFilters{
     }
     
     data {
+    id
       attributes {
         title
         slug
