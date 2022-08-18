@@ -51,7 +51,7 @@
             </div>
 
             <div v-if="data.properties.length > 0" class="info m-b-32">
-              <div v-for="property in data.properties" class="m-b-32">
+              <div v-for="property in data.properties" class="m-b-32 m-r-16">
                 <div class="subheader small">{{ property.title }}</div>
                 <div v-if="property.description" class="p-small"><strong>
                   {{ property.description }}
