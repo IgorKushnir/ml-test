@@ -89,6 +89,7 @@ onMounted(() => {
 addRouteMiddleware(async (to, from) => {
   if (to.path !== from.path) {
     document.removeEventListener("scroll", scroll);
+    shift.value = false
   }
 });
 

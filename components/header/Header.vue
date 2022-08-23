@@ -1,7 +1,7 @@
 <template>
   <HeaderSearchModal :show="showSearch" @close="showSearch = false"/>
 
-  <HeaderWishCounter v-if="isMobile" class="show-md"/>
+<!--  <HeaderWishCounter  class="show-md"/>-->
   <header class="navigation">
 
     <div class="container" style="position: static;">
@@ -21,7 +21,7 @@
         </NuxtLink>
 
         <div class="right-side">
-          <HeaderWishCounter v-if="!isMobile" class="hide-md"/>
+<!--          <HeaderWishCounter class="hide-md"/>-->
           <div class="nav-icon hover" v-on:click="showHideSearch">
             <div :class="showSearch ? 'icon-close-24' : 'icon-search-24'"/>
           </div>
@@ -57,9 +57,8 @@
             </li>
           </ul>
 
-          <div class="m-v-32">
+          <div class="m-v-32 show-md">
             <NuxtLink
-                v-if="isMobile"
                 v-for="item in menu['primary_additional']" :to="item.url"
                 style="display: block"
                 :class="'nav-link__tertiary hover p-v-8 m-v-4' + (item.target ? ' target' : '')"
@@ -121,23 +120,12 @@ const showSubMenu = (index) => {
 
   link.value[activeIndex.value].$el.parentElement.classList.add('active')
 
-  // if (!isMobile.value) return
-  // // scroll to active menu
-  // setTimeout(function () {
-  //   link.value[activeIndex.value].$el.scrollIntoView({block: "start", behavior: "smooth"})
-  // },400)
 }
 // Hide submenu
 const hideSubMenu = () => {
   menu.primary[activeIndex.value].show = false;
 
   link.value[activeIndex.value].$el.parentElement.classList.remove('active')
-
-  // if (!isMobile.value) return
-  // // scroll to active menu
-  // setTimeout(function () {
-  //   menu_wrapper.value.scroll({top: 0, behavior: 'smooth'})
-  // },10)
 }
 
 
