@@ -67,7 +67,7 @@
       </div>
     </transition>
 
-    <Loading :pending="pendingProducts"/>
+<!--    <Loading :pending="pendingProducts"/>-->
     <PageNotFound  :show="dataCollection === null"/>
 
   </div>
@@ -77,8 +77,10 @@
 import getCollection from '~/api/getCollection'
 import getProducts from '~/api/getProducts'
 import getActiveFilters from '~/api/getActiveFilters'
+import {useCashData} from "~/composables/states";
 
 const {$getAbsoluteUrl} = useNuxtApp();
+
 
 const route = useRoute();
 const router = useRouter();
@@ -111,7 +113,9 @@ let {
   pending: pendingProducts,
   refresh: refreshProducts,
   error: errorProducts
-} = await getProducts({filters: [...filters.value, ...initialFilters.value], lang: 'en', type: 'dress', page: 1});
+} = await getProducts({filters: [...filters.value, ...initialFilters.value], lang: 'en', type: 'dress', page: 1,
+  pages: router.options.history?.pages?.[slug]
+});
 let {
   data: dataAvailableFilters,
   pending: pendingFilters,
@@ -119,8 +123,11 @@ let {
   error: errorAvailableFilters
 } = await getActiveFilters({filters: filters.value, lang: 'en', type: 'dress', fetchFilters: true});
 
-
+let test = ref();
 onMounted(() => {
+  // console.log(router.options.history?.pages?.[slug]);
+  router.options.history.pages = {}
+
   dataAvailableFilters.value = null;
   refreshCollection();
   refreshProducts();
@@ -151,6 +158,9 @@ async function filterData(e, page) {
   pendingProducts.value = true;
   const {data, pending, refresh, error} = await getProducts({filters: f, lang: 'en', type: 'dress', page: page});
 
+  // set uploaded page to history
+  router.options.history.pages[slug] = page
+
   refresh()
 
   watch(() => pending.value, (p) => {
@@ -167,6 +177,7 @@ async function filterData(e, page) {
     // console.log(dataProducts.value.meta.pagination);
   })
 }
+
 
 async function checkFiltersHandler(e) {
   let f = [...filters.value];

@@ -87,7 +87,7 @@ let {
   pending: pendingProducts,
   refresh: refreshProducts,
   error: errorProducts
-} = await getProducts({filters: initialFilters.value, lang: 'en', type: slug, page: 1});
+} = await getProducts({filters: initialFilters.value, lang: 'en', type: slug, page: 1, pages: router.options.history?.pages?.[slug]});
 let {
   data: dataAvailableFilters,
   pending: pendingFilters,
@@ -96,6 +96,9 @@ let {
 } = await getActiveFilters({filters: [], lang: 'en', type: slug, fetchFilters: true});
 
 onMounted(() => {
+  // console.log(router.options.history?.pages);
+  router.options.history.pages = {}
+
   dataAvailableFilters.value = null;
   refreshProducts();
   refreshAvailableFilters()
@@ -124,6 +127,9 @@ async function filterData(e, page) {
 
   pendingProducts.value = true;
   const {data, pending, refresh, error} = await getProducts({filters: f, lang: 'en', type: slug, page: page});
+
+  // set uploaded page to history
+  router.options.history.pages[slug] = page
 
   refresh()
 

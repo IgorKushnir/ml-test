@@ -1,15 +1,9 @@
 <template>
-  <div>
-<!--    <div style="display: flex; gap: 24px; padding: 100px">-->
-<!--      <div class="button">Button</div>-->
-<!--      <div class="button primary">Button</div>-->
-<!--    </div>-->
-<!--    <div style="display: flex; gap: 24px; padding: 100px; background-color: black">-->
-<!--      <div class="button white">Button</div>-->
-<!--      <div class="button primary white">Button</div>-->
-<!--    </div>-->
-    <Header/>
-    <NuxtPage/>
+  <div class="body" id="body">
+    <div>
+      <Header/>
+      <NuxtPage/>
+    </div>
     <Footer/>
   </div>
 </template>
@@ -87,7 +81,7 @@ onMounted(async () => {
   reportWindowSize()
   window.addEventListener('resize', reportWindowSize, {passive: true});
 
-  loadNextHook()
+  // loadNextHook()
 
 
   //Like list counter
@@ -142,30 +136,36 @@ function reportWindowSize() {
 
 
 
-function loadNextHook() {
-  let currentPageHeight = ref(0);
-  let allowLoadNext = true;
-  watch(currentPageHeight, () => {
-    allowLoadNext = true;
-  })
-
-  document.addEventListener('scroll', function(e) {
-    currentPageHeight.value = document.body.scrollHeight;
-    const Y = window.scrollY - (document.body.scrollHeight - window.innerHeight);
-    if (-Y < window.innerHeight) {
-      if (allowLoadNext) {
-        nuxtApp.callHook('page:loadNext')
-        allowLoadNext = false;
-      }
-    }
-
-  }, {passive: true});
-}
+// function loadNextHook() {
+//   let currentPageHeight = ref(0);
+//   let allowLoadNext = true;
+//   watch(currentPageHeight, () => {
+//     allowLoadNext = true;
+//   })
+//
+//   document.addEventListener('scroll', function(e) {
+//     currentPageHeight.value = document.body.scrollHeight;
+//     const Y = window.scrollY - (document.body.scrollHeight - window.innerHeight);
+//     if (-Y < window.innerHeight) {
+//       if (allowLoadNext) {
+//         nuxtApp.callHook('page:loadNext')
+//         allowLoadNext = false;
+//       }
+//     }
+//
+//   }, {passive: true});
+// }
 
 </script>
 
 <style lang="scss">
 @import  "/assets/style/global.scss";
+
+.body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
 
 .page-enter-active,

@@ -71,7 +71,7 @@ const loader = ref();
 let showLoader = ref(false)
 const likeList = ref([])
 
-watch(() => props.productsData.data, () => {
+watch(() => props.productsData?.data, () => {
   showLoader.value = false
 })
 
@@ -80,28 +80,33 @@ function needsToLoad() {
 }
 
 function scroll() {
-  document.addEventListener('scroll', function(e) {
-    if (loader.value !== null) {
-      if (props.productsData !== null && !props.pendingProducts) {
-        if (needsToLoad()) {
-          const loaderY = loader.value.getBoundingClientRect().top - window.innerHeight;
+  if (loader.value !== null) {
+    if (props.productsData !== null && !props.pendingProducts) {
+      if (needsToLoad()) {
+        const loaderY = loader.value.getBoundingClientRect().top - window.innerHeight;
 
-          if (loaderY < 0) {
-            if (!showLoader.value) {
-              showLoader.value = true
-              const nextPage = props.productsData.meta.pagination.page + 1;
-              emits('load', nextPage)
-              console.log('load next page: ', nextPage);
-            }
-
+        if (loaderY < 0) {
+          if (!showLoader.value) {
+            showLoader.value = true
+            const nextPage = props.productsData.meta.pagination.page + 1;
+            emits('load', nextPage)
+            console.log('load next page: ', nextPage);
           }
-
         }
       }
     }
-
-  });
+  }
 }
+
+// let i = 0;
+// const mountCheck = setInterval(function () {
+//   scroll();
+//   if (needsToLoad()) {
+//     console.log('stop');
+//     clearInterval(mountCheck)
+//   }
+//   i++;
+// }, 10)
 
 
 onMounted(() => {

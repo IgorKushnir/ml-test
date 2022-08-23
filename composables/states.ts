@@ -17,3 +17,6 @@ export const usePreviousRoute = () => useState<object>('previousRoute', () => []
 
 export const useViewedProductIds = () => useState<object>('viewedProductIds', () => []);
 
+
+
+

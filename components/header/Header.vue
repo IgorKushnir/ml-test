@@ -34,7 +34,7 @@
             <li>
               <NuxtLink
                   ref="link"
-                  :to="!(hasSubMenu(item) && isMobile) ? item.url : false"
+                  :to="!(hasSubMenu(item) && isMobile) ? item.url : null"
                   :target="item.target ? '_blank' : '_self'"
                   :class="(item.target ? 'nav-link hover target' : 'nav-link hover') + (hasSubMenu(item) ? ' dropdown' : '')"
                   v-on:click="navClickHandler(hasSubMenu(item), index)"
