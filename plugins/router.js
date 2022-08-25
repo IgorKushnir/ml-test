@@ -1,10 +1,17 @@
 import { defineNuxtPlugin } from '#app'
 
 export default defineNuxtPlugin((nuxtApp) => {
-    nuxtApp.$router.options.scrollBehavior = (to, from, savedPosition) => {
-        // Set minimum height of body
-        document.getElementById('body').style.minHeight = savedPosition?.top ?  savedPosition?.top + window.innerHeight + 'px' : 0
 
+    nuxtApp.$router.options.scrollBehavior = (to, from, savedPosition) => {
+        document.getElementById('body').style.minHeight = savedPosition?.top ?  savedPosition?.top + window.innerHeight *2 + 'px' : 0
+
+        // var body = document.body,
+        //     html = document.documentElement;
+        //
+        // var height = Math.max( body.scrollHeight, body.offsetHeight,
+        //     html.clientHeight, html.scrollHeight, html.offsetHeight );
+        //
+        // console.log(height - savedPosition?.top);
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve({

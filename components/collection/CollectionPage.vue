@@ -25,7 +25,6 @@
             />
           </template>
         </StickyHeader>
-
         <!--      {{ filterSelected }}-->
         <TagContainer class="hide-md">
           <div
@@ -35,10 +34,7 @@
           >
             {{item.value}} <span class="icon-close-16"/>
           </div>
-
         </TagContainer>
-
-
         <ProductGrid
             :products-data="dataProducts"
             :pending-products="pendingProducts"
@@ -61,34 +57,23 @@
               <Fact :data="dataCollection.fact"/>
             </div>
           </template>
-
         </ProductGrid>
-
       </div>
     </transition>
-
-<!--    <Loading :pending="pendingProducts"/>-->
+    <!--    <Loading :pending="pendingProducts"/>-->
     <PageNotFound  :show="dataCollection === null"/>
-
   </div>
 </template>
-
 <script setup lang="ts">
 import getCollection from '~/api/getCollection'
 import getProducts from '~/api/getProducts'
 import getActiveFilters from '~/api/getActiveFilters'
-import {useCashData} from "~/composables/states";
-
 const {$getAbsoluteUrl} = useNuxtApp();
-
-
 const route = useRoute();
 const router = useRouter();
-
 let slug = route.params.slug;
 let filterSelected = ref([])
 const initialFilters = ref(parseQuery());
-
 initialFilters.value.forEach(item => {
   item.values.forEach(it => {
     filterSelected.value.push({
@@ -102,6 +87,7 @@ let filters = ref([{
   key: 'collection',
   values: [slug]
 }])
+
 const {
   data: dataCollection,
   pending: pendingCollection,
@@ -122,20 +108,20 @@ let {
   refresh: refreshAvailableFilters,
   error: errorAvailableFilters
 } = await getActiveFilters({filters: filters.value, lang: 'en', type: 'dress', fetchFilters: true});
-
 let test = ref();
 onMounted(() => {
   // console.log(router.options.history?.pages?.[slug]);
+  const previousPages = router.options.history?.pages?.[slug]
   router.options.history.pages = {}
+  router.options.history.pages[slug] = previousPages;
 
   dataAvailableFilters.value = null;
   refreshCollection();
   refreshProducts();
   refreshAvailableFilters()
 })
-
-
 let currentFilters =  ref([])
+
 async function filterData(e, page) {
   currentFilters.value = e;
   let f = [...filters.value];
@@ -143,7 +129,6 @@ async function filterData(e, page) {
     let newFilters = e.filter(d => d.values.length > 0)
     f = [...filters.value, ...newFilters];
   }
-
   // Get selected filters in one array
   let selected = []
   e.forEach(f => f.values.forEach(item => {
@@ -153,16 +138,11 @@ async function filterData(e, page) {
     })
   }))
   filterSelected.value = selected;
-
-
   pendingProducts.value = true;
   const {data, pending, refresh, error} = await getProducts({filters: f, lang: 'en', type: 'dress', page: page});
-
   // set uploaded page to history
   router.options.history.pages[slug] = page
-
   refresh()
-
   watch(() => pending.value, (p) => {
     if (page === 1) {
       dataProducts.value = data.value;
@@ -170,33 +150,25 @@ async function filterData(e, page) {
     } else  {
       dataProducts.value.meta = data.value.meta;
       dataProducts.value.data = [...dataProducts.value.data, ...data.value.data];
-
       pendingProducts.value = pending.value;
     }
-
     // console.log(dataProducts.value.meta.pagination);
   })
 }
-
-
 async function checkFiltersHandler(e) {
   let f = [...filters.value];
   if (e !== null) {
     let newFilters = e.filter(d => d.values.length > 0)
     f = [...filters.value, ...newFilters];
   }
-
   pendingFilters.value = true;
   const {data, pending, refresh, error} = await getActiveFilters({filters: f, lang: 'en', type: 'dress', fetchFilters: false});
-
   refresh()
-
   watch(() => pending.value, (p) => {
     dataAvailableFilters.value = data.value;
     pendingFilters.value = pending.value;
   })
 }
-
 function setQuery(filters) {
   const query = {}
   filters.forEach(q => {
@@ -209,7 +181,6 @@ function setQuery(filters) {
     query: query,
   })
 }
-
 function parseQuery() {
   const query = route.query;
   const queryKeys = Object.keys(query);
@@ -220,15 +191,12 @@ function parseQuery() {
     }
   })
 }
-
 function handleFilter(e) {
   setQuery(e);
-
   pendingProducts.value = true
   dataProducts.value.data = []
   filterData(e, 1)
 }
-
 function cutOneFilter(index) {
   filterSelected.value.splice(index, 1)
   const filters = [];
@@ -239,21 +207,16 @@ function cutOneFilter(index) {
     } else {
       filters[index].values.push(filter.value)
     }
-
   })
   initialFilters.value = filters;
   setQuery(filters)
-
   pendingProducts.value = true
   dataProducts.value.data = []
   filterData(filters, 1)
 }
-
 </script>
-
 <style scoped lang="scss">
 @import  "/assets/style/global.scss";
-
 .selected-item {
   padding: 8px 10px 8px 12px;
   background-color: $gray;
@@ -266,13 +229,9 @@ function cutOneFilter(index) {
     margin-left: 4px;
   }
 }
-
-
-
 .promo {
   height: 100%;
   position: relative;
-
   .video {
     width: 100%;
     height: 100%;
@@ -282,12 +241,10 @@ function cutOneFilter(index) {
     left: 0;
   }
 }
-
 .promo * {
   height: 100%;
   position: relative;
 }
-
 @include lg {
   .promo {
     padding-top: 66%;
@@ -300,5 +257,4 @@ function cutOneFilter(index) {
     }
   }
 }
-
 </style>

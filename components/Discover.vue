@@ -97,7 +97,9 @@ let {
 
 onMounted(() => {
   // console.log(router.options.history?.pages);
+  const previousPages = router.options.history?.pages?.[slug]
   router.options.history.pages = {}
+  router.options.history.pages[slug] = previousPages;
 
   dataAvailableFilters.value = null;
   refreshProducts();
