@@ -10,7 +10,7 @@ export default defineNuxtConfig({
         '@nuxtjs/strapi',
     ],
     modules: [
-        '@nuxt/image-edge',
+        // '@nuxt/image-edge',
     ],
 
     build: {

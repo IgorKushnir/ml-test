@@ -2,17 +2,13 @@
   <div class="img-component-container">
     <img :src="placeholder" :alt="alt" class="img-component placeholder">
 
-    <template v-if="isNotSvg">
-      <nuxt-img
-          v-if="!path.data?.attributes?.mime?.startsWith('video/')"
-          format="webp"
-          :src="$getImage(path, size)"
-          :alt="alt"
-          class="img-component base"
-          loading="lazy"
-      />
-    </template>
-    <template v-else><img v-if="!path.data?.attributes?.mime?.startsWith('video/')" :src="$getImage(path, size)" :alt="alt" class="img-component base" loading="lazy"></template>
+    <img
+        v-if="!path.data?.attributes?.mime?.startsWith('video/')"
+        :src="$getImage(path, size)"
+        :alt="alt"
+        class="img-component base"
+        loading="lazy"
+    />
 
     <video
         v-if="path.data?.attributes?.mime?.startsWith('video/')"
