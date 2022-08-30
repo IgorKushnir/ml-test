@@ -165,7 +165,7 @@ function getLink(slug) {
 </script>
 
 <style scoped lang="scss">
-@import  "/assets/style/global.scss";
+
 
 .overflow {
   //overflow: hidden;
@@ -272,7 +272,7 @@ function getLink(slug) {
 </style>
 
 <style lang="scss">
-@import  "/assets/style/global.scss";
+
 
 .swiper-scrollbar-drag {
   border-radius: 0;

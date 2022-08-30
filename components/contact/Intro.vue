@@ -31,7 +31,7 @@ defineProps({
 </script>
 
 <style scoped lang="scss">
-@import  "/assets/style/global.scss";
+
 
 .contact {
   width: 100%;

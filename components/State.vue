@@ -3,7 +3,7 @@
     <div class="row gap-S justify-center">
       <div class="state-container col-6 col-12-md center">
         <div v-if="!hideIcon" class="icon">
-          <img src="@/assets/img/small-logo-dark.svg" alt="Milla Nova">
+          <img :src="imagePath" alt="Milla Nova">
         </div>
         <h1 v-if="title">{{ title }}</h1>
         <p v-if="text">{{text}}</p>
@@ -30,12 +30,17 @@ defineProps({
   button: {
     type: Object,
     required: false,
+  },
+  imagePath: {
+    type: String,
+    required: false,
+    default: '/img/small-logo-dark.svg'
   }
 })
 </script>
 
 <style scoped lang="scss">
-@import  "/assets/style/global.scss";
+
 
 .stage {
   min-height: calc(100vh - 152px);
@@ -51,7 +56,7 @@ defineProps({
 }
 .icon img {
   background-image: none;
-  width: 100px;
+  height: 100px;
   margin: 0 auto 32px;
 }
 

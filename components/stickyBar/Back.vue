@@ -51,7 +51,7 @@ const isBackAndNoHistory = computed(() => {
 </script>
 
 <style scoped lang="scss">
-@import  "/assets/style/global.scss";
+
 
 .back-btn {
   display: inline-flex;

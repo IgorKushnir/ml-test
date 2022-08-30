@@ -1,0 +1,3126 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+union GenericMorph = Accessory | Backneckline | Budget | Category | Collection | Color | ComponentContactUsContactEntry | ComponentContactUsEmailList | ComponentContactUsInput | ComponentContentBanner | ComponentContentBlocks | ComponentContentCarusel | ComponentContentCaruselItem | ComponentContentDivider | ComponentContentEmbedVideo | ComponentContentFact | ComponentContentImageVideo | ComponentContentImageVideoGrig | ComponentContentItemsButtonItem | ComponentContentItemsPosterItem | ComponentContentLatestContent | ComponentContentMediaBanner | ComponentContentPoster | ComponentContentSilhouettes | ComponentContentText | ComponentMenuFooterAdditionalLinkItem | ComponentMenuItem | ComponentMenuLink | ComponentMenuSocialItem | ComponentMenuSubMenu | ComponentProductProduct | ComponentProductPropertiesItem | ComponentProductRecommended | ComponentSharedMetaSocial | ComponentSharedSeo | ComponentStoreFinderCity | ComponentStoreFinderStore | ContactUs | Decoration | Fabric | I18NLocale | Inspiration | Line | Main | Menu | Neckline | Newspost | Other | Page | Product | Redirect | Shoe | Silhouette | StoreFinder | Style | Transtation | TrunkShow | Type | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
+
+union InspirationContentDynamicZone = ComponentContentBlocks | ComponentContentCarusel | ComponentContentDivider | ComponentContentEmbedVideo | ComponentContentFact | ComponentContentImageVideoGrig | ComponentContentLatestContent | ComponentContentMediaBanner | ComponentContentPoster | ComponentContentText | Error
+
+union MainContentDynamicZone = ComponentContentBlocks | ComponentContentCarusel | ComponentContentDivider | ComponentContentEmbedVideo | ComponentContentFact | ComponentContentImageVideoGrig | ComponentContentLatestContent | ComponentContentMediaBanner | ComponentContentPoster | ComponentContentSilhouettes | ComponentContentText | Error
+
+union NewspostContentDynamicZone = ComponentContentBlocks | ComponentContentCarusel | ComponentContentDivider | ComponentContentEmbedVideo | ComponentContentFact | ComponentContentImageVideoGrig | ComponentContentLatestContent | ComponentContentMediaBanner | ComponentContentPoster | ComponentContentText | Error
+
+union PageContentDynamicZone = ComponentContentBlocks | ComponentContentCarusel | ComponentContentDivider | ComponentContentEmbedVideo | ComponentContentFact | ComponentContentImageVideoGrig | ComponentContentLatestContent | ComponentContentMediaBanner | ComponentContentPoster | ComponentContentText | Error
+
+type Accessory {
+    createdAt: DateTime
+    locale: String
+    localizations(filters: AccessoryFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): AccessoryRelationResponseCollection
+    products(filters: ProductFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ProductRelationResponseCollection
+    publishedAt: DateTime
+    slug: String
+    title: String!
+    updatedAt: DateTime
+}
+
+type AccessoryEntity {
+    attributes: Accessory
+    id: ID
+}
+
+type AccessoryEntityResponse {
+    data: AccessoryEntity
+}
+
+type AccessoryEntityResponseCollection {
+    data: [AccessoryEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type AccessoryRelationResponseCollection {
+    data: [AccessoryEntity!]!
+}
+
+type Backneckline {
+    createdAt: DateTime
+    locale: String
+    localizations(filters: BacknecklineFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): BacknecklineRelationResponseCollection
+    products(filters: ProductFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ProductRelationResponseCollection
+    publishedAt: DateTime
+    slug: String
+    title: String
+    updatedAt: DateTime
+}
+
+type BacknecklineEntity {
+    attributes: Backneckline
+    id: ID
+}
+
+type BacknecklineEntityResponse {
+    data: BacknecklineEntity
+}
+
+type BacknecklineEntityResponseCollection {
+    data: [BacknecklineEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type BacknecklineRelationResponseCollection {
+    data: [BacknecklineEntity!]!
+}
+
+type Budget {
+    createdAt: DateTime
+    locale: String
+    localizations(filters: BudgetFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): BudgetRelationResponseCollection
+    products(filters: ProductFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ProductRelationResponseCollection
+    publishedAt: DateTime
+    slug: String
+    title: String!
+    updatedAt: DateTime
+}
+
+type BudgetEntity {
+    attributes: Budget
+    id: ID
+}
+
+type BudgetEntityResponse {
+    data: BudgetEntity
+}
+
+type BudgetEntityResponseCollection {
+    data: [BudgetEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type BudgetRelationResponseCollection {
+    data: [BudgetEntity!]!
+}
+
+type Category {
+    createdAt: DateTime
+    inspirations(filters: InspirationFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): InspirationRelationResponseCollection
+    locale: String
+    localizations(filters: CategoryFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): CategoryRelationResponseCollection
+    order: Int
+    postLength: Int
+    publishedAt: DateTime
+    slug: String
+    title: String!
+    updatedAt: DateTime
+}
+
+type CategoryEntity {
+    attributes: Category
+    id: ID
+}
+
+type CategoryEntityResponse {
+    data: CategoryEntity
+}
+
+type CategoryEntityResponseCollection {
+    data: [CategoryEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type CategoryRelationResponseCollection {
+    data: [CategoryEntity!]!
+}
+
+type Collection {
+    cover_3x4: UploadFileEntityResponse
+    cover_4x3: UploadFileEntityResponse
+    createdAt: DateTime
+    description: String
+    fact: ComponentContentFact
+    line: LineEntityResponse
+    locale: String
+    localizations(filters: CollectionFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): CollectionRelationResponseCollection
+    order: Int
+    products(filters: ProductFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ProductRelationResponseCollection
+    publishedAt: DateTime
+    seo: ComponentSharedSeo
+    show_promo: Boolean
+    slug: String
+    title: String!
+    updatedAt: DateTime
+    video: UploadFileEntityResponse
+}
+
+type CollectionEntity {
+    attributes: Collection
+    id: ID
+}
+
+type CollectionEntityResponse {
+    data: CollectionEntity
+}
+
+type CollectionEntityResponseCollection {
+    data: [CollectionEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type CollectionRelationResponseCollection {
+    data: [CollectionEntity!]!
+}
+
+type Color {
+    createdAt: DateTime
+    locale: String
+    localizations(filters: ColorFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ColorRelationResponseCollection
+    products(filters: ProductFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ProductRelationResponseCollection
+    publishedAt: DateTime
+    slug: String
+    title: String!
+    updatedAt: DateTime
+}
+
+type ColorEntity {
+    attributes: Color
+    id: ID
+}
+
+type ColorEntityResponse {
+    data: ColorEntity
+}
+
+type ColorEntityResponseCollection {
+    data: [ColorEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type ColorRelationResponseCollection {
+    data: [ColorEntity!]!
+}
+
+type ComponentContactUsContactEntry {
+    emails(filters: ComponentContactUsEmailListFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentContactUsEmailList]!
+    error_message_sent_text: String
+    error_message_sent_title: String!
+    form(filters: ComponentContactUsInputFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentContactUsInput]
+    id: ID!
+    slug: String!
+    successful_message_sent_text: String
+    successful_message_sent_title: String!
+    title: String!
+}
+
+type ComponentContactUsEmailList {
+    email: String!
+    id: ID!
+}
+
+type ComponentContactUsInput {
+    id: ID!
+    required: Boolean!
+    size: Int!
+    title: String!
+    type: ENUM_COMPONENTCONTACTUSINPUT_TYPE!
+}
+
+type ComponentContentBanner {
+    button: Boolean
+    button_link: String
+    button_text: String
+    cover_3x4: UploadFileEntityResponse
+    cover_4x3: UploadFileEntityResponse!
+    id: ID!
+    text: String
+    title: String
+}
+
+type ComponentContentBlocks {
+    blocks(filters: ComponentContentImageVideoFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentContentImageVideo]
+    id: ID!
+    type: ENUM_COMPONENTCONTENTBLOCKS_TYPE!
+}
+
+type ComponentContentCarusel {
+    carusel(filters: ComponentContentCaruselItemFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentContentCaruselItem]
+    column: ENUM_COMPONENTCONTENTCARUSEL_COLUMN!
+    id: ID!
+    layout: ENUM_COMPONENTCONTENTCARUSEL_LAYOUT!
+}
+
+type ComponentContentCaruselItem {
+    id: ID!
+    link: String
+    media: UploadFileEntityResponse!
+    text: String
+    title: String
+}
+
+type ComponentContentDivider {
+    id: ID!
+    line: Boolean!
+    size: ENUM_COMPONENTCONTENTDIVIDER_SIZE!
+}
+
+type ComponentContentEmbedVideo {
+    embed: JSON!
+    id: ID!
+    layout: ENUM_COMPONENTCONTENTEMBEDVIDEO_LAYOUT!
+    url: String!
+}
+
+type ComponentContentFact {
+    background_color: String!
+    fact: String
+    id: ID!
+    layout: ENUM_COMPONENTCONTENTFACT_LAYOUT!
+    logo: Boolean
+    ratio: ENUM_COMPONENTCONTENTFACT_RATIO!
+    text: String
+    text_color: String!
+    title: String
+}
+
+type ComponentContentImageVideo {
+    id: ID!
+    media: UploadFileEntityResponse!
+    ratio: ENUM_COMPONENTCONTENTIMAGEVIDEO_RATIO!
+    text: String!
+}
+
+type ComponentContentImageVideoGrig {
+    columns: ENUM_COMPONENTCONTENTIMAGEVIDEOGRIG_COLUMNS!
+    id: ID!
+    layout: ENUM_COMPONENTCONTENTIMAGEVIDEOGRIG_LAYOUT!
+    media(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection!
+}
+
+type ComponentContentItemsButtonItem {
+    button: JSON!
+    id: ID!
+}
+
+type ComponentContentItemsPosterItem {
+    button: Boolean
+    button_link: String
+    button_text: String
+    cover_3x4: UploadFileEntityResponse
+    cover_4x3: UploadFileEntityResponse
+    id: ID!
+    text: String
+    title: String
+}
+
+type ComponentContentLatestContent {
+    amount: Int!
+    id: ID!
+    instance: ENUM_COMPONENTCONTENTLATESTCONTENT_INSTANCE!
+}
+
+type ComponentContentMediaBanner {
+    banner: ComponentContentBanner!
+    id: ID!
+    layout: ENUM_COMPONENTCONTENTMEDIABANNER_LAYOUT!
+}
+
+type ComponentContentPoster {
+    id: ID!
+    poster(filters: ComponentContentItemsPosterItemFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentContentItemsPosterItem]
+}
+
+type ComponentContentSilhouettes {
+    id: ID!
+    silhouettes(filters: SilhouetteFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): SilhouetteRelationResponseCollection
+    text: String
+    title: String
+}
+
+type ComponentContentText {
+    id: ID!
+    layout: ENUM_COMPONENTCONTENTTEXT_LAYOUT!
+    text: String
+}
+
+type ComponentMenuFooterAdditionalLinkItem {
+    description: String
+    id: ID!
+    logo: UploadFileEntityResponse
+    target: Boolean!
+    title: String!
+    url: String!
+}
+
+type ComponentMenuItem {
+    collections: Boolean
+    cover_4x3: UploadFileEntityResponse
+    id: ID!
+    items(filters: ComponentMenuLinkFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentMenuLink]
+    target: Boolean
+    title: String!
+    url: String!
+}
+
+type ComponentMenuLink {
+    id: ID!
+    target: Boolean
+    title: String!
+    url: String!
+}
+
+type ComponentMenuSocialItem {
+    icon: ENUM_COMPONENTMENUSOCIALITEM_ICON!
+    id: ID!
+    title: String!
+    url: String!
+}
+
+type ComponentMenuSubMenu {
+    collection: CollectionEntityResponse
+    cover: UploadFileEntityResponse!
+    id: ID!
+}
+
+type ComponentProductProduct {
+    id: ID!
+    product: ProductEntityResponse
+}
+
+type ComponentProductPropertiesItem {
+    description: String!
+    id: ID!
+    title: String!
+}
+
+type ComponentProductRecommended {
+    id: ID!
+    products(filters: ProductFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ProductRelationResponseCollection
+}
+
+type ComponentSharedMetaSocial {
+    description: String!
+    id: ID!
+    image: UploadFileEntityResponse
+    socialNetwork: ENUM_COMPONENTSHAREDMETASOCIAL_SOCIALNETWORK!
+    title: String!
+}
+
+type ComponentSharedSeo {
+    canonicalURL: String
+    id: ID!
+    keywords: String
+    metaDescription: String!
+    metaImage: UploadFileEntityResponse!
+    metaRobots: String
+    metaSocial(filters: ComponentSharedMetaSocialFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedMetaSocial]
+    metaTitle: String!
+    metaViewport: String
+    structuredData: JSON
+}
+
+type ComponentStoreFinderCity {
+    id: ID!
+    name: String!
+    store(filters: ComponentStoreFinderStoreFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentStoreFinderStore]
+}
+
+type ComponentStoreFinderStore {
+    address: String
+    description: String
+    id: ID!
+    lat: Float
+    lines(filters: LineFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): LineRelationResponseCollection
+    lng: Float
+    phone: String
+    publish: Boolean
+    title: String!
+    website: String
+}
+
+type ContactUs {
+    cover_1x1: UploadFileEntityResponse!
+    createdAt: DateTime
+    entry(filters: ComponentContactUsContactEntryFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentContactUsContactEntry]
+    locale: String
+    localizations(publicationState: PublicationState = LIVE): ContactUsRelationResponseCollection
+    publishedAt: DateTime
+    seo: ComponentSharedSeo
+    text: String
+    title: String!
+    updatedAt: DateTime
+}
+
+type ContactUsEntity {
+    attributes: ContactUs
+    id: ID
+}
+
+type ContactUsEntityResponse {
+    data: ContactUsEntity
+}
+
+type ContactUsRelationResponseCollection {
+    data: [ContactUsEntity!]!
+}
+
+type Decoration {
+    createdAt: DateTime
+    locale: String
+    localizations(filters: DecorationFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): DecorationRelationResponseCollection
+    products(filters: ProductFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ProductRelationResponseCollection
+    publishedAt: DateTime
+    slug: String
+    title: String!
+    updatedAt: DateTime
+}
+
+type DecorationEntity {
+    attributes: Decoration
+    id: ID
+}
+
+type DecorationEntityResponse {
+    data: DecorationEntity
+}
+
+type DecorationEntityResponseCollection {
+    data: [DecorationEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type DecorationRelationResponseCollection {
+    data: [DecorationEntity!]!
+}
+
+type Error {
+    code: String!
+    message: String
+}
+
+type Fabric {
+    createdAt: DateTime
+    locale: String
+    localizations(filters: FabricFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): FabricRelationResponseCollection
+    products(filters: ProductFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ProductRelationResponseCollection
+    publishedAt: DateTime
+    slug: String
+    title: String!
+    updatedAt: DateTime
+}
+
+type FabricEntity {
+    attributes: Fabric
+    id: ID
+}
+
+type FabricEntityResponse {
+    data: FabricEntity
+}
+
+type FabricEntityResponseCollection {
+    data: [FabricEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type FabricRelationResponseCollection {
+    data: [FabricEntity!]!
+}
+
+type I18NLocale {
+    code: String
+    createdAt: DateTime
+    name: String
+    updatedAt: DateTime
+}
+
+type I18NLocaleEntity {
+    attributes: I18NLocale
+    id: ID
+}
+
+type I18NLocaleEntityResponse {
+    data: I18NLocaleEntity
+}
+
+type I18NLocaleEntityResponseCollection {
+    data: [I18NLocaleEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type Inspiration {
+    categories(filters: CategoryFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): CategoryRelationResponseCollection
+    content: [InspirationContentDynamicZone]
+    cover_1x1: UploadFileEntityResponse!
+    cover_3x1: UploadFileEntityResponse
+    created: Date!
+    createdAt: DateTime
+    locale: String
+    localizations(filters: InspirationFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): InspirationRelationResponseCollection
+    publishedAt: DateTime
+    seo: ComponentSharedSeo
+    slug: String
+    title: String!
+    updatedAt: DateTime
+}
+
+type InspirationEntity {
+    attributes: Inspiration
+    id: ID
+}
+
+type InspirationEntityResponse {
+    data: InspirationEntity
+}
+
+type InspirationEntityResponseCollection {
+    data: [InspirationEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type InspirationRelationResponseCollection {
+    data: [InspirationEntity!]!
+}
+
+type Line {
+    collections(filters: CollectionFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): CollectionRelationResponseCollection
+    createdAt: DateTime
+    locale: String
+    localizations(filters: LineFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): LineRelationResponseCollection
+    order: Int
+    publishedAt: DateTime
+    seo: ComponentSharedSeo
+    slug: String
+    title: String!
+    updatedAt: DateTime
+}
+
+type LineEntity {
+    attributes: Line
+    id: ID
+}
+
+type LineEntityResponse {
+    data: LineEntity
+}
+
+type LineEntityResponseCollection {
+    data: [LineEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type LineRelationResponseCollection {
+    data: [LineEntity!]!
+}
+
+type Main {
+    banner: ComponentContentBanner
+    content: [MainContentDynamicZone]
+    createdAt: DateTime
+    locale: String
+    localizations(publicationState: PublicationState = LIVE): MainRelationResponseCollection
+    publishedAt: DateTime
+    seo: ComponentSharedSeo
+    updatedAt: DateTime
+}
+
+type MainEntity {
+    attributes: Main
+    id: ID
+}
+
+type MainEntityResponse {
+    data: MainEntity
+}
+
+type MainRelationResponseCollection {
+    data: [MainEntity!]!
+}
+
+type Menu {
+    createdAt: DateTime
+    footer_additional(filters: ComponentMenuFooterAdditionalLinkItemFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentMenuFooterAdditionalLinkItem]
+    locale: String
+    localizations: MenuRelationResponseCollection
+    primary(filters: ComponentMenuItemFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentMenuItem]
+    primary_additional(filters: ComponentMenuLinkFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentMenuLink]
+    social(filters: ComponentMenuSocialItemFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentMenuSocialItem]
+    updatedAt: DateTime
+}
+
+type MenuEntity {
+    attributes: Menu
+    id: ID
+}
+
+type MenuEntityResponse {
+    data: MenuEntity
+}
+
+type MenuRelationResponseCollection {
+    data: [MenuEntity!]!
+}
+
+type Mutation {
+    "Change user password. Confirm with the current password."
+    changePassword(currentPassword: String!, password: String!, passwordConfirmation: String!): UsersPermissionsLoginPayload
+    createAccessory(data: AccessoryInput!, locale: I18NLocaleCode): AccessoryEntityResponse
+    createAccessoryLocalization(data: AccessoryInput, id: ID, locale: I18NLocaleCode): AccessoryEntityResponse
+    createBackneckline(data: BacknecklineInput!, locale: I18NLocaleCode): BacknecklineEntityResponse
+    createBacknecklineLocalization(data: BacknecklineInput, id: ID, locale: I18NLocaleCode): BacknecklineEntityResponse
+    createBudget(data: BudgetInput!, locale: I18NLocaleCode): BudgetEntityResponse
+    createBudgetLocalization(data: BudgetInput, id: ID, locale: I18NLocaleCode): BudgetEntityResponse
+    createCategory(data: CategoryInput!, locale: I18NLocaleCode): CategoryEntityResponse
+    createCategoryLocalization(data: CategoryInput, id: ID, locale: I18NLocaleCode): CategoryEntityResponse
+    createCollection(data: CollectionInput!, locale: I18NLocaleCode): CollectionEntityResponse
+    createCollectionLocalization(data: CollectionInput, id: ID, locale: I18NLocaleCode): CollectionEntityResponse
+    createColor(data: ColorInput!, locale: I18NLocaleCode): ColorEntityResponse
+    createColorLocalization(data: ColorInput, id: ID, locale: I18NLocaleCode): ColorEntityResponse
+    createContactUsLocalization(data: ContactUsInput, id: ID, locale: I18NLocaleCode): ContactUsEntityResponse
+    createDecoration(data: DecorationInput!, locale: I18NLocaleCode): DecorationEntityResponse
+    createDecorationLocalization(data: DecorationInput, id: ID, locale: I18NLocaleCode): DecorationEntityResponse
+    createFabric(data: FabricInput!, locale: I18NLocaleCode): FabricEntityResponse
+    createFabricLocalization(data: FabricInput, id: ID, locale: I18NLocaleCode): FabricEntityResponse
+    createInspiration(data: InspirationInput!, locale: I18NLocaleCode): InspirationEntityResponse
+    createInspirationLocalization(data: InspirationInput, id: ID, locale: I18NLocaleCode): InspirationEntityResponse
+    createLine(data: LineInput!, locale: I18NLocaleCode): LineEntityResponse
+    createLineLocalization(data: LineInput, id: ID, locale: I18NLocaleCode): LineEntityResponse
+    createMainLocalization(data: MainInput, id: ID, locale: I18NLocaleCode): MainEntityResponse
+    createMenuLocalization(data: MenuInput, id: ID, locale: I18NLocaleCode): MenuEntityResponse
+    createNeckline(data: NecklineInput!, locale: I18NLocaleCode): NecklineEntityResponse
+    createNecklineLocalization(data: NecklineInput, id: ID, locale: I18NLocaleCode): NecklineEntityResponse
+    createNewspost(data: NewspostInput!, locale: I18NLocaleCode): NewspostEntityResponse
+    createNewspostLocalization(data: NewspostInput, id: ID, locale: I18NLocaleCode): NewspostEntityResponse
+    createOther(data: OtherInput!, locale: I18NLocaleCode): OtherEntityResponse
+    createOtherLocalization(data: OtherInput, id: ID, locale: I18NLocaleCode): OtherEntityResponse
+    createPage(data: PageInput!, locale: I18NLocaleCode): PageEntityResponse
+    createPageLocalization(data: PageInput, id: ID, locale: I18NLocaleCode): PageEntityResponse
+    createProduct(data: ProductInput!, locale: I18NLocaleCode): ProductEntityResponse
+    createProductLocalization(data: ProductInput, id: ID, locale: I18NLocaleCode): ProductEntityResponse
+    createRedirect(data: RedirectInput!): RedirectEntityResponse
+    createShoe(data: ShoeInput!, locale: I18NLocaleCode): ShoeEntityResponse
+    createShoeLocalization(data: ShoeInput, id: ID, locale: I18NLocaleCode): ShoeEntityResponse
+    createSilhouette(data: SilhouetteInput!, locale: I18NLocaleCode): SilhouetteEntityResponse
+    createSilhouetteLocalization(data: SilhouetteInput, id: ID, locale: I18NLocaleCode): SilhouetteEntityResponse
+    createStoreFinder(data: StoreFinderInput!, locale: I18NLocaleCode): StoreFinderEntityResponse
+    createStoreFinderLocalization(data: StoreFinderInput, id: ID, locale: I18NLocaleCode): StoreFinderEntityResponse
+    createStyle(data: StyleInput!, locale: I18NLocaleCode): StyleEntityResponse
+    createStyleLocalization(data: StyleInput, id: ID, locale: I18NLocaleCode): StyleEntityResponse
+    createTranstationLocalization(data: TranstationInput, id: ID, locale: I18NLocaleCode): TranstationEntityResponse
+    createTrunkShow(data: TrunkShowInput!, locale: I18NLocaleCode): TrunkShowEntityResponse
+    createTrunkShowLocalization(data: TrunkShowInput, id: ID, locale: I18NLocaleCode): TrunkShowEntityResponse
+    createType(data: TypeInput!, locale: I18NLocaleCode): TypeEntityResponse
+    createTypeLocalization(data: TypeInput, id: ID, locale: I18NLocaleCode): TypeEntityResponse
+    createUploadFile(data: UploadFileInput!): UploadFileEntityResponse
+    createUploadFolder(data: UploadFolderInput!): UploadFolderEntityResponse
+    "Create a new role"
+    createUsersPermissionsRole(data: UsersPermissionsRoleInput!): UsersPermissionsCreateRolePayload
+    "Create a new user"
+    createUsersPermissionsUser(data: UsersPermissionsUserInput!): UsersPermissionsUserEntityResponse!
+    deleteAccessory(id: ID!, locale: I18NLocaleCode): AccessoryEntityResponse
+    deleteBackneckline(id: ID!, locale: I18NLocaleCode): BacknecklineEntityResponse
+    deleteBudget(id: ID!, locale: I18NLocaleCode): BudgetEntityResponse
+    deleteCategory(id: ID!, locale: I18NLocaleCode): CategoryEntityResponse
+    deleteCollection(id: ID!, locale: I18NLocaleCode): CollectionEntityResponse
+    deleteColor(id: ID!, locale: I18NLocaleCode): ColorEntityResponse
+    deleteContactUs(locale: I18NLocaleCode): ContactUsEntityResponse
+    deleteDecoration(id: ID!, locale: I18NLocaleCode): DecorationEntityResponse
+    deleteFabric(id: ID!, locale: I18NLocaleCode): FabricEntityResponse
+    deleteInspiration(id: ID!, locale: I18NLocaleCode): InspirationEntityResponse
+    deleteLine(id: ID!, locale: I18NLocaleCode): LineEntityResponse
+    deleteMain(locale: I18NLocaleCode): MainEntityResponse
+    deleteMenu(locale: I18NLocaleCode): MenuEntityResponse
+    deleteNeckline(id: ID!, locale: I18NLocaleCode): NecklineEntityResponse
+    deleteNewspost(id: ID!, locale: I18NLocaleCode): NewspostEntityResponse
+    deleteOther(id: ID!, locale: I18NLocaleCode): OtherEntityResponse
+    deletePage(id: ID!, locale: I18NLocaleCode): PageEntityResponse
+    deleteProduct(id: ID!, locale: I18NLocaleCode): ProductEntityResponse
+    deleteRedirect(id: ID!): RedirectEntityResponse
+    deleteShoe(id: ID!, locale: I18NLocaleCode): ShoeEntityResponse
+    deleteSilhouette(id: ID!, locale: I18NLocaleCode): SilhouetteEntityResponse
+    deleteStoreFinder(id: ID!, locale: I18NLocaleCode): StoreFinderEntityResponse
+    deleteStyle(id: ID!, locale: I18NLocaleCode): StyleEntityResponse
+    deleteTranstation(locale: I18NLocaleCode): TranstationEntityResponse
+    deleteTrunkShow(id: ID!, locale: I18NLocaleCode): TrunkShowEntityResponse
+    deleteType(id: ID!, locale: I18NLocaleCode): TypeEntityResponse
+    deleteUploadFile(id: ID!): UploadFileEntityResponse
+    deleteUploadFolder(id: ID!): UploadFolderEntityResponse
+    "Delete an existing role"
+    deleteUsersPermissionsRole(id: ID!): UsersPermissionsDeleteRolePayload
+    "Delete an existing user"
+    deleteUsersPermissionsUser(id: ID!): UsersPermissionsUserEntityResponse!
+    "Confirm an email users email address"
+    emailConfirmation(confirmation: String!): UsersPermissionsLoginPayload
+    "Request a reset password token"
+    forgotPassword(email: String!): UsersPermissionsPasswordPayload
+    login(input: UsersPermissionsLoginInput!): UsersPermissionsLoginPayload!
+    multipleUpload(field: String, files: [Upload]!, ref: String, refId: ID): [UploadFileEntityResponse]!
+    "Register a user"
+    register(input: UsersPermissionsRegisterInput!): UsersPermissionsLoginPayload!
+    removeFile(id: ID!): UploadFileEntityResponse
+    "Reset user password. Confirm with a code (resetToken from forgotPassword)"
+    resetPassword(code: String!, password: String!, passwordConfirmation: String!): UsersPermissionsLoginPayload
+    updateAccessory(data: AccessoryInput!, id: ID!, locale: I18NLocaleCode): AccessoryEntityResponse
+    updateBackneckline(data: BacknecklineInput!, id: ID!, locale: I18NLocaleCode): BacknecklineEntityResponse
+    updateBudget(data: BudgetInput!, id: ID!, locale: I18NLocaleCode): BudgetEntityResponse
+    updateCategory(data: CategoryInput!, id: ID!, locale: I18NLocaleCode): CategoryEntityResponse
+    updateCollection(data: CollectionInput!, id: ID!, locale: I18NLocaleCode): CollectionEntityResponse
+    updateColor(data: ColorInput!, id: ID!, locale: I18NLocaleCode): ColorEntityResponse
+    updateContactUs(data: ContactUsInput!, locale: I18NLocaleCode): ContactUsEntityResponse
+    updateDecoration(data: DecorationInput!, id: ID!, locale: I18NLocaleCode): DecorationEntityResponse
+    updateFabric(data: FabricInput!, id: ID!, locale: I18NLocaleCode): FabricEntityResponse
+    updateFileInfo(id: ID!, info: FileInfoInput): UploadFileEntityResponse!
+    updateInspiration(data: InspirationInput!, id: ID!, locale: I18NLocaleCode): InspirationEntityResponse
+    updateLine(data: LineInput!, id: ID!, locale: I18NLocaleCode): LineEntityResponse
+    updateMain(data: MainInput!, locale: I18NLocaleCode): MainEntityResponse
+    updateMenu(data: MenuInput!, locale: I18NLocaleCode): MenuEntityResponse
+    updateNeckline(data: NecklineInput!, id: ID!, locale: I18NLocaleCode): NecklineEntityResponse
+    updateNewspost(data: NewspostInput!, id: ID!, locale: I18NLocaleCode): NewspostEntityResponse
+    updateOther(data: OtherInput!, id: ID!, locale: I18NLocaleCode): OtherEntityResponse
+    updatePage(data: PageInput!, id: ID!, locale: I18NLocaleCode): PageEntityResponse
+    updateProduct(data: ProductInput!, id: ID!, locale: I18NLocaleCode): ProductEntityResponse
+    updateRedirect(data: RedirectInput!, id: ID!): RedirectEntityResponse
+    updateShoe(data: ShoeInput!, id: ID!, locale: I18NLocaleCode): ShoeEntityResponse
+    updateSilhouette(data: SilhouetteInput!, id: ID!, locale: I18NLocaleCode): SilhouetteEntityResponse
+    updateStoreFinder(data: StoreFinderInput!, id: ID!, locale: I18NLocaleCode): StoreFinderEntityResponse
+    updateStyle(data: StyleInput!, id: ID!, locale: I18NLocaleCode): StyleEntityResponse
+    updateTranstation(data: TranstationInput!, locale: I18NLocaleCode): TranstationEntityResponse
+    updateTrunkShow(data: TrunkShowInput!, id: ID!, locale: I18NLocaleCode): TrunkShowEntityResponse
+    updateType(data: TypeInput!, id: ID!, locale: I18NLocaleCode): TypeEntityResponse
+    updateUploadFile(data: UploadFileInput!, id: ID!): UploadFileEntityResponse
+    updateUploadFolder(data: UploadFolderInput!, id: ID!): UploadFolderEntityResponse
+    "Update an existing role"
+    updateUsersPermissionsRole(data: UsersPermissionsRoleInput!, id: ID!): UsersPermissionsUpdateRolePayload
+    "Update an existing user"
+    updateUsersPermissionsUser(data: UsersPermissionsUserInput!, id: ID!): UsersPermissionsUserEntityResponse!
+    upload(field: String, file: Upload!, info: FileInfoInput, ref: String, refId: ID): UploadFileEntityResponse!
+}
+
+type Neckline {
+    createdAt: DateTime
+    locale: String
+    localizations(filters: NecklineFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): NecklineRelationResponseCollection
+    products(filters: ProductFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ProductRelationResponseCollection
+    publishedAt: DateTime
+    slug: String
+    title: String!
+    updatedAt: DateTime
+}
+
+type NecklineEntity {
+    attributes: Neckline
+    id: ID
+}
+
+type NecklineEntityResponse {
+    data: NecklineEntity
+}
+
+type NecklineEntityResponseCollection {
+    data: [NecklineEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type NecklineRelationResponseCollection {
+    data: [NecklineEntity!]!
+}
+
+type Newspost {
+    content: [NewspostContentDynamicZone]
+    cover_1x1: UploadFileEntityResponse
+    cover_3x1: UploadFileEntityResponse
+    created: Date!
+    createdAt: DateTime
+    locale: String
+    localizations(filters: NewspostFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): NewspostRelationResponseCollection
+    publishedAt: DateTime
+    seo: ComponentSharedSeo
+    slug: String
+    title: String!
+    updatedAt: DateTime
+}
+
+type NewspostEntity {
+    attributes: Newspost
+    id: ID
+}
+
+type NewspostEntityResponse {
+    data: NewspostEntity
+}
+
+type NewspostEntityResponseCollection {
+    data: [NewspostEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type NewspostRelationResponseCollection {
+    data: [NewspostEntity!]!
+}
+
+type Other {
+    createdAt: DateTime
+    locale: String
+    localizations(filters: OtherFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): OtherRelationResponseCollection
+    products(filters: ProductFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ProductRelationResponseCollection
+    publishedAt: DateTime
+    slug: String
+    title: String!
+    updatedAt: DateTime
+}
+
+type OtherEntity {
+    attributes: Other
+    id: ID
+}
+
+type OtherEntityResponse {
+    data: OtherEntity
+}
+
+type OtherEntityResponseCollection {
+    data: [OtherEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type OtherRelationResponseCollection {
+    data: [OtherEntity!]!
+}
+
+type Page {
+    banner: ComponentContentBanner
+    content: [PageContentDynamicZone]
+    createdAt: DateTime
+    locale: String
+    localizations(filters: PageFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): PageRelationResponseCollection
+    publishedAt: DateTime
+    seo: ComponentSharedSeo
+    slug: String
+    sub_header: String
+    text: String
+    title: String!
+    updatedAt: DateTime
+}
+
+type PageEntity {
+    attributes: Page
+    id: ID
+}
+
+type PageEntityResponse {
+    data: PageEntity
+}
+
+type PageEntityResponseCollection {
+    data: [PageEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type PageRelationResponseCollection {
+    data: [PageEntity!]!
+}
+
+type Pagination {
+    page: Int!
+    pageCount: Int!
+    pageSize: Int!
+    total: Int!
+}
+
+type Product {
+    accessoires(filters: AccessoryFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): AccessoryRelationResponseCollection
+    backnecklines(filters: BacknecklineFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): BacknecklineRelationResponseCollection
+    budgets: BudgetEntityResponse
+    collection: CollectionEntityResponse
+    colors(filters: ColorFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ColorRelationResponseCollection
+    cover_3x4: UploadFileEntityResponse
+    createdAt: DateTime
+    decorations(filters: DecorationFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): DecorationRelationResponseCollection
+    description: String
+    extra(extrudeIds: [ID]): JSON
+    fabrics(filters: FabricFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): FabricRelationResponseCollection
+    fact: ComponentContentFact
+    gallery(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
+    locale: String
+    localizations(filters: ProductFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ProductRelationResponseCollection
+    necklines(filters: NecklineFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): NecklineRelationResponseCollection
+    others(filters: OtherFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): OtherRelationResponseCollection
+    properties(filters: ComponentProductPropertiesItemFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentProductPropertiesItem]
+    publishedAt: DateTime
+    recommended: ComponentProductRecommended
+    seo: ComponentSharedSeo
+    shoes(filters: ShoeFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ShoeRelationResponseCollection
+    silhouettes: SilhouetteEntityResponse
+    slug: String
+    storeLink: String
+    styles(filters: StyleFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): StyleRelationResponseCollection
+    title: String!
+    type: TypeEntityResponse
+    updatedAt: DateTime
+}
+
+type ProductEntity {
+    attributes: Product
+    id: ID
+}
+
+type ProductEntityResponse {
+    data: ProductEntity
+}
+
+type ProductEntityResponseCollection {
+    data: [ProductEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type ProductRelationResponseCollection {
+    data: [ProductEntity!]!
+}
+
+type Query {
+    accessoires(filters: AccessoryFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): AccessoryEntityResponseCollection
+    accessory(id: ID, locale: I18NLocaleCode): AccessoryEntityResponse
+    backneckline(id: ID, locale: I18NLocaleCode): BacknecklineEntityResponse
+    backnecklines(filters: BacknecklineFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): BacknecklineEntityResponseCollection
+    budget(id: ID, locale: I18NLocaleCode): BudgetEntityResponse
+    budgets(filters: BudgetFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): BudgetEntityResponseCollection
+    categories(filters: CategoryFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): CategoryEntityResponseCollection
+    category(id: ID, locale: I18NLocaleCode): CategoryEntityResponse
+    collection(id: ID, locale: I18NLocaleCode): CollectionEntityResponse
+    collections(filters: CollectionFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): CollectionEntityResponseCollection
+    color(id: ID, locale: I18NLocaleCode): ColorEntityResponse
+    colors(filters: ColorFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ColorEntityResponseCollection
+    contactUs(locale: I18NLocaleCode, publicationState: PublicationState = LIVE): ContactUsEntityResponse
+    decoration(id: ID, locale: I18NLocaleCode): DecorationEntityResponse
+    decorations(filters: DecorationFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): DecorationEntityResponseCollection
+    fabric(id: ID, locale: I18NLocaleCode): FabricEntityResponse
+    fabrics(filters: FabricFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): FabricEntityResponseCollection
+    i18NLocale(id: ID): I18NLocaleEntityResponse
+    i18NLocales(filters: I18NLocaleFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): I18NLocaleEntityResponseCollection
+    inspiration(locale: I18NLocaleCode, slug: String): InspirationEntityResponse
+    inspirations(filters: InspirationFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): InspirationEntityResponseCollection
+    line(id: ID, locale: I18NLocaleCode): LineEntityResponse
+    lines(filters: LineFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): LineEntityResponseCollection
+    main(locale: I18NLocaleCode, publicationState: PublicationState = LIVE): MainEntityResponse
+    me: UsersPermissionsMe
+    menu(locale: I18NLocaleCode): MenuEntityResponse
+    neckline(id: ID, locale: I18NLocaleCode): NecklineEntityResponse
+    necklines(filters: NecklineFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): NecklineEntityResponseCollection
+    news(filters: NewspostFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): NewspostEntityResponseCollection
+    newspost(locale: I18NLocaleCode, slug: String): NewspostEntityResponse
+    other(id: ID, locale: I18NLocaleCode): OtherEntityResponse
+    others(filters: OtherFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): OtherEntityResponseCollection
+    page(id: ID, locale: I18NLocaleCode): PageEntityResponse
+    pages(filters: PageFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): PageEntityResponseCollection
+    product(id: ID, locale: I18NLocaleCode): ProductEntityResponse
+    products(filters: ProductFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ProductEntityResponseCollection
+    redirect(id: ID): RedirectEntityResponse
+    redirects(filters: RedirectFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): RedirectEntityResponseCollection
+    shoe(id: ID, locale: I18NLocaleCode): ShoeEntityResponse
+    shoes(filters: ShoeFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ShoeEntityResponseCollection
+    silhouette(id: ID, locale: I18NLocaleCode): SilhouetteEntityResponse
+    silhouettes(filters: SilhouetteFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): SilhouetteEntityResponseCollection
+    storeFinder(locale: I18NLocaleCode, slug: String): StoreFinderEntityResponse
+    storeFinders(filters: StoreFinderFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): StoreFinderEntityResponseCollection
+    style(id: ID, locale: I18NLocaleCode): StyleEntityResponse
+    styles(filters: StyleFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): StyleEntityResponseCollection
+    transtation(locale: I18NLocaleCode): TranstationEntityResponse
+    trunkShow(locale: I18NLocaleCode, slug: String): TrunkShowEntityResponse
+    trunkShows(filters: TrunkShowFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): TrunkShowEntityResponseCollection
+    type(id: ID, locale: I18NLocaleCode): TypeEntityResponse
+    types(filters: TypeFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): TypeEntityResponseCollection
+    uploadFile(id: ID): UploadFileEntityResponse
+    uploadFiles(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileEntityResponseCollection
+    uploadFolder(id: ID): UploadFolderEntityResponse
+    uploadFolders(filters: UploadFolderFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFolderEntityResponseCollection
+    usersPermissionsRole(id: ID): UsersPermissionsRoleEntityResponse
+    usersPermissionsRoles(filters: UsersPermissionsRoleFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UsersPermissionsRoleEntityResponseCollection
+    usersPermissionsUser(id: ID): UsersPermissionsUserEntityResponse
+    usersPermissionsUsers(filters: UsersPermissionsUserFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UsersPermissionsUserEntityResponseCollection
+}
+
+type Redirect {
+    createdAt: DateTime
+    from: String!
+    publishedAt: DateTime
+    status: Int!
+    to: String!
+    updatedAt: DateTime
+}
+
+type RedirectEntity {
+    attributes: Redirect
+    id: ID
+}
+
+type RedirectEntityResponse {
+    data: RedirectEntity
+}
+
+type RedirectEntityResponseCollection {
+    data: [RedirectEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type ResponseCollectionMeta {
+    filters: JSON
+    pagination: Pagination!
+}
+
+type Shoe {
+    createdAt: DateTime
+    locale: String
+    localizations(filters: ShoeFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ShoeRelationResponseCollection
+    products(filters: ProductFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ProductRelationResponseCollection
+    publishedAt: DateTime
+    slug: String
+    title: String!
+    updatedAt: DateTime
+}
+
+type ShoeEntity {
+    attributes: Shoe
+    id: ID
+}
+
+type ShoeEntityResponse {
+    data: ShoeEntity
+}
+
+type ShoeEntityResponseCollection {
+    data: [ShoeEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type ShoeRelationResponseCollection {
+    data: [ShoeEntity!]!
+}
+
+type Silhouette {
+    createdAt: DateTime
+    locale: String
+    localizations(filters: SilhouetteFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): SilhouetteRelationResponseCollection
+    products(filters: ProductFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ProductRelationResponseCollection
+    publishedAt: DateTime
+    slug: String
+    title: String!
+    updatedAt: DateTime
+}
+
+type SilhouetteEntity {
+    attributes: Silhouette
+    id: ID
+}
+
+type SilhouetteEntityResponse {
+    data: SilhouetteEntity
+}
+
+type SilhouetteEntityResponseCollection {
+    data: [SilhouetteEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type SilhouetteRelationResponseCollection {
+    data: [SilhouetteEntity!]!
+}
+
+type StoreFinder {
+    city(filters: ComponentStoreFinderCityFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentStoreFinderCity]
+    country: String!
+    country_code: ENUM_STOREFINDER_COUNTRY_CODE
+    createdAt: DateTime
+    locale: String
+    localizations(filters: StoreFinderFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): StoreFinderRelationResponseCollection
+    publishedAt: DateTime
+    slug: String
+    updatedAt: DateTime
+}
+
+type StoreFinderEntity {
+    attributes: StoreFinder
+    id: ID
+}
+
+type StoreFinderEntityResponse {
+    data: StoreFinderEntity
+}
+
+type StoreFinderEntityResponseCollection {
+    data: [StoreFinderEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type StoreFinderRelationResponseCollection {
+    data: [StoreFinderEntity!]!
+}
+
+type Style {
+    createdAt: DateTime
+    locale: String
+    localizations(filters: StyleFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): StyleRelationResponseCollection
+    products(filters: ProductFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ProductRelationResponseCollection
+    publishedAt: DateTime
+    slug: String
+    title: String!
+    updatedAt: DateTime
+}
+
+type StyleEntity {
+    attributes: Style
+    id: ID
+}
+
+type StyleEntityResponse {
+    data: StyleEntity
+}
+
+type StyleEntityResponseCollection {
+    data: [StyleEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type StyleRelationResponseCollection {
+    data: [StyleEntity!]!
+}
+
+type Transtation {
+    createdAt: DateTime
+    footer_copyright: String
+    footer_title: String
+    locale: String
+    localizations: TranstationRelationResponseCollection
+    site_description: String!
+    site_title: String!
+    updatedAt: DateTime
+}
+
+type TranstationEntity {
+    attributes: Transtation
+    id: ID
+}
+
+type TranstationEntityResponse {
+    data: TranstationEntity
+}
+
+type TranstationRelationResponseCollection {
+    data: [TranstationEntity!]!
+}
+
+type TrunkShow {
+    address: String
+    apply_for: String
+    city: String!
+    content: String
+    country: String!
+    cover_4x3: UploadFileEntityResponse
+    createdAt: DateTime
+    description: String
+    from: Date!
+    locale: String
+    localizations(filters: TrunkShowFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): TrunkShowRelationResponseCollection
+    offered: ComponentProductRecommended
+    phone: String
+    publishedAt: DateTime
+    seo: ComponentSharedSeo
+    slug: String
+    title: String!
+    to: Date!
+    updatedAt: DateTime
+    website: String
+}
+
+type TrunkShowEntity {
+    attributes: TrunkShow
+    id: ID
+}
+
+type TrunkShowEntityResponse {
+    data: TrunkShowEntity
+}
+
+type TrunkShowEntityResponseCollection {
+    data: [TrunkShowEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type TrunkShowRelationResponseCollection {
+    data: [TrunkShowEntity!]!
+}
+
+type Type {
+    createdAt: DateTime
+    locale: String
+    localizations(filters: TypeFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): TypeRelationResponseCollection
+    order: Int
+    products(filters: ProductFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ProductRelationResponseCollection
+    publishedAt: DateTime
+    seo: ComponentSharedSeo
+    slug: String
+    title: String!
+    updatedAt: DateTime
+}
+
+type TypeEntity {
+    attributes: Type
+    id: ID
+}
+
+type TypeEntityResponse {
+    data: TypeEntity
+}
+
+type TypeEntityResponseCollection {
+    data: [TypeEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type TypeRelationResponseCollection {
+    data: [TypeEntity!]!
+}
+
+type UploadFile {
+    alternativeText: String
+    caption: String
+    createdAt: DateTime
+    ext: String
+    formats: JSON
+    hash: String!
+    height: Int
+    mime: String!
+    name: String!
+    placeholder: String
+    previewUrl: String
+    provider: String!
+    provider_metadata: JSON
+    related: [GenericMorph]
+    size: Float!
+    updatedAt: DateTime
+    url: String!
+    width: Int
+}
+
+type UploadFileEntity {
+    attributes: UploadFile
+    id: ID
+}
+
+type UploadFileEntityResponse {
+    data: UploadFileEntity
+}
+
+type UploadFileEntityResponseCollection {
+    data: [UploadFileEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type UploadFileRelationResponseCollection {
+    data: [UploadFileEntity!]!
+}
+
+type UploadFolder {
+    children(filters: UploadFolderFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFolderRelationResponseCollection
+    createdAt: DateTime
+    files(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
+    name: String!
+    parent: UploadFolderEntityResponse
+    path: String!
+    pathId: Int!
+    updatedAt: DateTime
+}
+
+type UploadFolderEntity {
+    attributes: UploadFolder
+    id: ID
+}
+
+type UploadFolderEntityResponse {
+    data: UploadFolderEntity
+}
+
+type UploadFolderEntityResponseCollection {
+    data: [UploadFolderEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type UploadFolderRelationResponseCollection {
+    data: [UploadFolderEntity!]!
+}
+
+type UsersPermissionsCreateRolePayload {
+    ok: Boolean!
+}
+
+type UsersPermissionsDeleteRolePayload {
+    ok: Boolean!
+}
+
+type UsersPermissionsLoginPayload {
+    jwt: String
+    user: UsersPermissionsMe!
+}
+
+type UsersPermissionsMe {
+    blocked: Boolean
+    confirmed: Boolean
+    email: String
+    id: ID!
+    role: UsersPermissionsMeRole
+    username: String!
+}
+
+type UsersPermissionsMeRole {
+    description: String
+    id: ID!
+    name: String!
+    type: String
+}
+
+type UsersPermissionsPasswordPayload {
+    ok: Boolean!
+}
+
+type UsersPermissionsPermission {
+    action: String!
+    createdAt: DateTime
+    role: UsersPermissionsRoleEntityResponse
+    updatedAt: DateTime
+}
+
+type UsersPermissionsPermissionEntity {
+    attributes: UsersPermissionsPermission
+    id: ID
+}
+
+type UsersPermissionsPermissionRelationResponseCollection {
+    data: [UsersPermissionsPermissionEntity!]!
+}
+
+type UsersPermissionsRole {
+    createdAt: DateTime
+    description: String
+    name: String!
+    permissions(filters: UsersPermissionsPermissionFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UsersPermissionsPermissionRelationResponseCollection
+    type: String
+    updatedAt: DateTime
+    users(filters: UsersPermissionsUserFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UsersPermissionsUserRelationResponseCollection
+}
+
+type UsersPermissionsRoleEntity {
+    attributes: UsersPermissionsRole
+    id: ID
+}
+
+type UsersPermissionsRoleEntityResponse {
+    data: UsersPermissionsRoleEntity
+}
+
+type UsersPermissionsRoleEntityResponseCollection {
+    data: [UsersPermissionsRoleEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type UsersPermissionsUpdateRolePayload {
+    ok: Boolean!
+}
+
+type UsersPermissionsUser {
+    blocked: Boolean
+    confirmed: Boolean
+    createdAt: DateTime
+    email: String!
+    provider: String
+    role: UsersPermissionsRoleEntityResponse
+    updatedAt: DateTime
+    username: String!
+}
+
+type UsersPermissionsUserEntity {
+    attributes: UsersPermissionsUser
+    id: ID
+}
+
+type UsersPermissionsUserEntityResponse {
+    data: UsersPermissionsUserEntity
+}
+
+type UsersPermissionsUserEntityResponseCollection {
+    data: [UsersPermissionsUserEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type UsersPermissionsUserRelationResponseCollection {
+    data: [UsersPermissionsUserEntity!]!
+}
+
+enum ENUM_COMPONENTCONTACTUSINPUT_TYPE {
+    date
+    divider
+    email
+    tel
+    text
+    textarea
+    url
+}
+
+enum ENUM_COMPONENTCONTENTBLOCKS_TYPE {
+    chess
+    list
+    tiles
+}
+
+enum ENUM_COMPONENTCONTENTCARUSEL_COLUMN {
+    four
+    six
+}
+
+enum ENUM_COMPONENTCONTENTCARUSEL_LAYOUT {
+    normal
+    tight
+    wide
+}
+
+enum ENUM_COMPONENTCONTENTDIVIDER_SIZE {
+    decrease
+    increase
+    none
+}
+
+enum ENUM_COMPONENTCONTENTEMBEDVIDEO_LAYOUT {
+    normal
+    tight
+    wide
+}
+
+enum ENUM_COMPONENTCONTENTFACT_LAYOUT {
+    normal
+    tight
+    wide
+}
+
+enum ENUM_COMPONENTCONTENTFACT_RATIO {
+    horizontal
+    vertical
+}
+
+enum ENUM_COMPONENTCONTENTIMAGEVIDEOGRIG_COLUMNS {
+    four
+    one
+    three
+    two
+}
+
+enum ENUM_COMPONENTCONTENTIMAGEVIDEOGRIG_LAYOUT {
+    normal
+    wide
+}
+
+enum ENUM_COMPONENTCONTENTIMAGEVIDEO_RATIO {
+    auto
+    original
+    square
+}
+
+enum ENUM_COMPONENTCONTENTLATESTCONTENT_INSTANCE {
+    inspiration
+    news
+}
+
+enum ENUM_COMPONENTCONTENTMEDIABANNER_LAYOUT {
+    full
+    normal
+    tight
+    wide
+}
+
+enum ENUM_COMPONENTCONTENTTEXT_LAYOUT {
+    normal
+    tight
+}
+
+enum ENUM_COMPONENTMENUSOCIALITEM_ICON {
+    behance
+    facebook
+    instagram
+    linkedin
+    pinterest
+    telegram
+    tiktok
+    twitter
+    youtube
+}
+
+enum ENUM_COMPONENTSHAREDMETASOCIAL_SOCIALNETWORK {
+    Facebook
+    Twitter
+}
+
+enum ENUM_STOREFINDER_COUNTRY_CODE {
+    AD
+    AE
+    AF
+    AG
+    AI
+    AL
+    AM
+    AN
+    AO
+    AQ
+    AR
+    AS
+    AT
+    AU
+    AW
+    AX
+    AZ
+    BA
+    BB
+    BD
+    BE
+    BF
+    BG
+    BH
+    BI
+    BJ
+    BM
+    BN
+    BO
+    BR
+    BS
+    BT
+    BV
+    BW
+    BY
+    BZ
+    CA
+    CC
+    CD
+    CF
+    CG
+    CH
+    CI
+    CK
+    CL
+    CM
+    CN
+    CO
+    CR
+    CS
+    CU
+    CV
+    CX
+    CY
+    CZ
+    DE
+    DJ
+    DK
+    DM
+    DO
+    DZ
+    EC
+    EE
+    EG
+    EH
+    ER
+    ES
+    ET
+    FI
+    FJ
+    FK
+    FM
+    FO
+    FR
+    GA
+    GB
+    GD
+    GE
+    GF
+    GG
+    GH
+    GI
+    GL
+    GM
+    GN
+    GP
+    GQ
+    GR
+    GS
+    GT
+    GU
+    GW
+    GY
+    HK
+    HM
+    HN
+    HR
+    HT
+    HU
+    ID
+    IE
+    IL
+    IM
+    IN
+    IO
+    IQ
+    IR
+    IS
+    IT
+    JE
+    JM
+    JO
+    JP
+    KE
+    KG
+    KH
+    KI
+    KM
+    KN
+    KP
+    KR
+    KW
+    KY
+    KZ
+    LA
+    LB
+    LC
+    LI
+    LK
+    LR
+    LS
+    LT
+    LU
+    LV
+    LY
+    MA
+    MC
+    MD
+    MG
+    MH
+    MK
+    ML
+    MM
+    MN
+    MO
+    MP
+    MQ
+    MR
+    MS
+    MT
+    MU
+    MV
+    MW
+    MX
+    MY
+    MZ
+    NA
+    NC
+    NE
+    NF
+    NG
+    NI
+    NL
+    NO
+    NP
+    NR
+    NU
+    NZ
+    OM
+    PA
+    PE
+    PF
+    PG
+    PH
+    PK
+    PL
+    PM
+    PN
+    PR
+    PS
+    PT
+    PW
+    PY
+    QA
+    RE
+    RO
+    RU
+    RW
+    SA
+    SB
+    SC
+    SD
+    SE
+    SG
+    SH
+    SI
+    SJ
+    SK
+    SL
+    SM
+    SN
+    SO
+    SR
+    ST
+    SV
+    SY
+    SZ
+    TC
+    TD
+    TF
+    TG
+    TH
+    TJ
+    TK
+    TL
+    TM
+    TN
+    TO
+    TR
+    TT
+    TV
+    TW
+    TZ
+    UA
+    UG
+    UM
+    US
+    UY
+    UZ
+    VA
+    VC
+    VE
+    VG
+    VI
+    VN
+    VU
+    WF
+    WS
+    YE
+    YT
+    ZA
+    ZM
+    ZW
+}
+
+enum PublicationState {
+    LIVE
+    PREVIEW
+}
+
+"A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar."
+scalar Date
+
+"A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar."
+scalar DateTime
+
+"A string used to identify an i18n locale"
+scalar I18NLocaleCode
+
+scalar InspirationContentDynamicZoneInput
+
+"The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf)."
+scalar JSON
+
+scalar MainContentDynamicZoneInput
+
+scalar NewspostContentDynamicZoneInput
+
+scalar PageContentDynamicZoneInput
+
+"The `Upload` scalar type represents a file upload."
+scalar Upload
+
+input AccessoryFiltersInput {
+    and: [AccessoryFiltersInput]
+    createdAt: DateTimeFilterInput
+    id: IDFilterInput
+    locale: StringFilterInput
+    localizations: AccessoryFiltersInput
+    not: AccessoryFiltersInput
+    or: [AccessoryFiltersInput]
+    products: ProductFiltersInput
+    publishedAt: DateTimeFilterInput
+    slug: StringFilterInput
+    title: StringFilterInput
+    updatedAt: DateTimeFilterInput
+}
+
+input AccessoryInput {
+    products: [ID]
+    publishedAt: DateTime
+    slug: String
+    title: String
+}
+
+input BacknecklineFiltersInput {
+    and: [BacknecklineFiltersInput]
+    createdAt: DateTimeFilterInput
+    id: IDFilterInput
+    locale: StringFilterInput
+    localizations: BacknecklineFiltersInput
+    not: BacknecklineFiltersInput
+    or: [BacknecklineFiltersInput]
+    products: ProductFiltersInput
+    publishedAt: DateTimeFilterInput
+    slug: StringFilterInput
+    title: StringFilterInput
+    updatedAt: DateTimeFilterInput
+}
+
+input BacknecklineInput {
+    products: [ID]
+    publishedAt: DateTime
+    slug: String
+    title: String
+}
+
+input BooleanFilterInput {
+    and: [Boolean]
+    between: [Boolean]
+    contains: Boolean
+    containsi: Boolean
+    endsWith: Boolean
+    eq: Boolean
+    eqi: Boolean
+    gt: Boolean
+    gte: Boolean
+    in: [Boolean]
+    lt: Boolean
+    lte: Boolean
+    ne: Boolean
+    not: BooleanFilterInput
+    notContains: Boolean
+    notContainsi: Boolean
+    notIn: [Boolean]
+    notNull: Boolean
+    null: Boolean
+    or: [Boolean]
+    startsWith: Boolean
+}
+
+input BudgetFiltersInput {
+    and: [BudgetFiltersInput]
+    createdAt: DateTimeFilterInput
+    id: IDFilterInput
+    locale: StringFilterInput
+    localizations: BudgetFiltersInput
+    not: BudgetFiltersInput
+    or: [BudgetFiltersInput]
+    products: ProductFiltersInput
+    publishedAt: DateTimeFilterInput
+    slug: StringFilterInput
+    title: StringFilterInput
+    updatedAt: DateTimeFilterInput
+}
+
+input BudgetInput {
+    products: [ID]
+    publishedAt: DateTime
+    slug: String
+    title: String
+}
+
+input CategoryFiltersInput {
+    and: [CategoryFiltersInput]
+    createdAt: DateTimeFilterInput
+    id: IDFilterInput
+    inspirations: InspirationFiltersInput
+    locale: StringFilterInput
+    localizations: CategoryFiltersInput
+    not: CategoryFiltersInput
+    or: [CategoryFiltersInput]
+    order: IntFilterInput
+    publishedAt: DateTimeFilterInput
+    slug: StringFilterInput
+    title: StringFilterInput
+    updatedAt: DateTimeFilterInput
+}
+
+input CategoryInput {
+    inspirations: [ID]
+    order: Int
+    publishedAt: DateTime
+    slug: String
+    title: String
+}
+
+input CollectionFiltersInput {
+    and: [CollectionFiltersInput]
+    createdAt: DateTimeFilterInput
+    description: StringFilterInput
+    fact: ComponentContentFactFiltersInput
+    id: IDFilterInput
+    line: LineFiltersInput
+    locale: StringFilterInput
+    localizations: CollectionFiltersInput
+    not: CollectionFiltersInput
+    or: [CollectionFiltersInput]
+    order: IntFilterInput
+    products: ProductFiltersInput
+    publishedAt: DateTimeFilterInput
+    seo: ComponentSharedSeoFiltersInput
+    show_promo: BooleanFilterInput
+    slug: StringFilterInput
+    title: StringFilterInput
+    updatedAt: DateTimeFilterInput
+}
+
+input CollectionInput {
+    cover_3x4: ID
+    cover_4x3: ID
+    description: String
+    fact: ComponentContentFactInput
+    line: ID
+    order: Int
+    products: [ID]
+    publishedAt: DateTime
+    seo: ComponentSharedSeoInput
+    show_promo: Boolean
+    slug: String
+    title: String
+    video: ID
+}
+
+input ColorFiltersInput {
+    and: [ColorFiltersInput]
+    createdAt: DateTimeFilterInput
+    id: IDFilterInput
+    locale: StringFilterInput
+    localizations: ColorFiltersInput
+    not: ColorFiltersInput
+    or: [ColorFiltersInput]
+    products: ProductFiltersInput
+    publishedAt: DateTimeFilterInput
+    slug: StringFilterInput
+    title: StringFilterInput
+    updatedAt: DateTimeFilterInput
+}
+
+input ColorInput {
+    products: [ID]
+    publishedAt: DateTime
+    slug: String
+    title: String
+}
+
+input ComponentContactUsContactEntryFiltersInput {
+    and: [ComponentContactUsContactEntryFiltersInput]
+    emails: ComponentContactUsEmailListFiltersInput
+    error_message_sent_text: StringFilterInput
+    error_message_sent_title: StringFilterInput
+    form: ComponentContactUsInputFiltersInput
+    not: ComponentContactUsContactEntryFiltersInput
+    or: [ComponentContactUsContactEntryFiltersInput]
+    slug: StringFilterInput
+    successful_message_sent_text: StringFilterInput
+    successful_message_sent_title: StringFilterInput
+    title: StringFilterInput
+}
+
+input ComponentContactUsContactEntryInput {
+    emails: [ComponentContactUsEmailListInput]
+    error_message_sent_text: String
+    error_message_sent_title: String
+    form: [ComponentContactUsInputInput]
+    id: ID
+    slug: String
+    successful_message_sent_text: String
+    successful_message_sent_title: String
+    title: String
+}
+
+input ComponentContactUsEmailListFiltersInput {
+    and: [ComponentContactUsEmailListFiltersInput]
+    email: StringFilterInput
+    not: ComponentContactUsEmailListFiltersInput
+    or: [ComponentContactUsEmailListFiltersInput]
+}
+
+input ComponentContactUsEmailListInput {
+    email: String
+    id: ID
+}
+
+input ComponentContactUsInputFiltersInput {
+    and: [ComponentContactUsInputFiltersInput]
+    not: ComponentContactUsInputFiltersInput
+    or: [ComponentContactUsInputFiltersInput]
+    required: BooleanFilterInput
+    size: IntFilterInput
+    title: StringFilterInput
+    type: StringFilterInput
+}
+
+input ComponentContactUsInputInput {
+    id: ID
+    required: Boolean
+    size: Int
+    title: String
+    type: ENUM_COMPONENTCONTACTUSINPUT_TYPE
+}
+
+input ComponentContentBannerFiltersInput {
+    and: [ComponentContentBannerFiltersInput]
+    button: BooleanFilterInput
+    button_link: StringFilterInput
+    button_text: StringFilterInput
+    not: ComponentContentBannerFiltersInput
+    or: [ComponentContentBannerFiltersInput]
+    text: StringFilterInput
+    title: StringFilterInput
+}
+
+input ComponentContentBannerInput {
+    button: Boolean
+    button_link: String
+    button_text: String
+    cover_3x4: ID
+    cover_4x3: ID
+    id: ID
+    text: String
+    title: String
+}
+
+input ComponentContentCaruselItemFiltersInput {
+    and: [ComponentContentCaruselItemFiltersInput]
+    link: StringFilterInput
+    not: ComponentContentCaruselItemFiltersInput
+    or: [ComponentContentCaruselItemFiltersInput]
+    text: StringFilterInput
+    title: StringFilterInput
+}
+
+input ComponentContentFactFiltersInput {
+    and: [ComponentContentFactFiltersInput]
+    background_color: StringFilterInput
+    fact: StringFilterInput
+    layout: StringFilterInput
+    logo: BooleanFilterInput
+    not: ComponentContentFactFiltersInput
+    or: [ComponentContentFactFiltersInput]
+    ratio: StringFilterInput
+    text: StringFilterInput
+    text_color: StringFilterInput
+    title: StringFilterInput
+}
+
+input ComponentContentFactInput {
+    background_color: String
+    fact: String
+    id: ID
+    layout: ENUM_COMPONENTCONTENTFACT_LAYOUT
+    logo: Boolean
+    ratio: ENUM_COMPONENTCONTENTFACT_RATIO
+    text: String
+    text_color: String
+    title: String
+}
+
+input ComponentContentImageVideoFiltersInput {
+    and: [ComponentContentImageVideoFiltersInput]
+    not: ComponentContentImageVideoFiltersInput
+    or: [ComponentContentImageVideoFiltersInput]
+    ratio: StringFilterInput
+    text: StringFilterInput
+}
+
+input ComponentContentItemsPosterItemFiltersInput {
+    and: [ComponentContentItemsPosterItemFiltersInput]
+    button: BooleanFilterInput
+    button_link: StringFilterInput
+    button_text: StringFilterInput
+    not: ComponentContentItemsPosterItemFiltersInput
+    or: [ComponentContentItemsPosterItemFiltersInput]
+    text: StringFilterInput
+    title: StringFilterInput
+}
+
+input ComponentMenuFooterAdditionalLinkItemFiltersInput {
+    and: [ComponentMenuFooterAdditionalLinkItemFiltersInput]
+    description: StringFilterInput
+    not: ComponentMenuFooterAdditionalLinkItemFiltersInput
+    or: [ComponentMenuFooterAdditionalLinkItemFiltersInput]
+    target: BooleanFilterInput
+    title: StringFilterInput
+    url: StringFilterInput
+}
+
+input ComponentMenuFooterAdditionalLinkItemInput {
+    description: String
+    id: ID
+    logo: ID
+    target: Boolean
+    title: String
+    url: String
+}
+
+input ComponentMenuItemFiltersInput {
+    and: [ComponentMenuItemFiltersInput]
+    collections: BooleanFilterInput
+    items: ComponentMenuLinkFiltersInput
+    not: ComponentMenuItemFiltersInput
+    or: [ComponentMenuItemFiltersInput]
+    target: BooleanFilterInput
+    title: StringFilterInput
+    url: StringFilterInput
+}
+
+input ComponentMenuItemInput {
+    collections: Boolean
+    cover_4x3: ID
+    id: ID
+    items: [ComponentMenuLinkInput]
+    target: Boolean
+    title: String
+    url: String
+}
+
+input ComponentMenuLinkFiltersInput {
+    and: [ComponentMenuLinkFiltersInput]
+    not: ComponentMenuLinkFiltersInput
+    or: [ComponentMenuLinkFiltersInput]
+    target: BooleanFilterInput
+    title: StringFilterInput
+    url: StringFilterInput
+}
+
+input ComponentMenuLinkInput {
+    id: ID
+    target: Boolean
+    title: String
+    url: String
+}
+
+input ComponentMenuSocialItemFiltersInput {
+    and: [ComponentMenuSocialItemFiltersInput]
+    icon: StringFilterInput
+    not: ComponentMenuSocialItemFiltersInput
+    or: [ComponentMenuSocialItemFiltersInput]
+    title: StringFilterInput
+    url: StringFilterInput
+}
+
+input ComponentMenuSocialItemInput {
+    icon: ENUM_COMPONENTMENUSOCIALITEM_ICON
+    id: ID
+    title: String
+    url: String
+}
+
+input ComponentProductPropertiesItemFiltersInput {
+    and: [ComponentProductPropertiesItemFiltersInput]
+    description: StringFilterInput
+    not: ComponentProductPropertiesItemFiltersInput
+    or: [ComponentProductPropertiesItemFiltersInput]
+    title: StringFilterInput
+}
+
+input ComponentProductPropertiesItemInput {
+    description: String
+    id: ID
+    title: String
+}
+
+input ComponentProductRecommendedFiltersInput {
+    and: [ComponentProductRecommendedFiltersInput]
+    not: ComponentProductRecommendedFiltersInput
+    or: [ComponentProductRecommendedFiltersInput]
+    products: ProductFiltersInput
+}
+
+input ComponentProductRecommendedInput {
+    id: ID
+    products: [ID]
+}
+
+input ComponentSharedMetaSocialFiltersInput {
+    and: [ComponentSharedMetaSocialFiltersInput]
+    description: StringFilterInput
+    not: ComponentSharedMetaSocialFiltersInput
+    or: [ComponentSharedMetaSocialFiltersInput]
+    socialNetwork: StringFilterInput
+    title: StringFilterInput
+}
+
+input ComponentSharedMetaSocialInput {
+    description: String
+    id: ID
+    image: ID
+    socialNetwork: ENUM_COMPONENTSHAREDMETASOCIAL_SOCIALNETWORK
+    title: String
+}
+
+input ComponentSharedSeoFiltersInput {
+    and: [ComponentSharedSeoFiltersInput]
+    canonicalURL: StringFilterInput
+    keywords: StringFilterInput
+    metaDescription: StringFilterInput
+    metaRobots: StringFilterInput
+    metaSocial: ComponentSharedMetaSocialFiltersInput
+    metaTitle: StringFilterInput
+    metaViewport: StringFilterInput
+    not: ComponentSharedSeoFiltersInput
+    or: [ComponentSharedSeoFiltersInput]
+    structuredData: JSONFilterInput
+}
+
+input ComponentSharedSeoInput {
+    canonicalURL: String
+    id: ID
+    keywords: String
+    metaDescription: String
+    metaImage: ID
+    metaRobots: String
+    metaSocial: [ComponentSharedMetaSocialInput]
+    metaTitle: String
+    metaViewport: String
+    structuredData: JSON
+}
+
+input ComponentStoreFinderCityFiltersInput {
+    and: [ComponentStoreFinderCityFiltersInput]
+    name: StringFilterInput
+    not: ComponentStoreFinderCityFiltersInput
+    or: [ComponentStoreFinderCityFiltersInput]
+    store: ComponentStoreFinderStoreFiltersInput
+}
+
+input ComponentStoreFinderCityInput {
+    id: ID
+    name: String
+    store: [ComponentStoreFinderStoreInput]
+}
+
+input ComponentStoreFinderStoreFiltersInput {
+    address: StringFilterInput
+    and: [ComponentStoreFinderStoreFiltersInput]
+    description: StringFilterInput
+    lat: FloatFilterInput
+    lines: LineFiltersInput
+    lng: FloatFilterInput
+    not: ComponentStoreFinderStoreFiltersInput
+    or: [ComponentStoreFinderStoreFiltersInput]
+    phone: StringFilterInput
+    publish: BooleanFilterInput
+    title: StringFilterInput
+    website: StringFilterInput
+}
+
+input ComponentStoreFinderStoreInput {
+    address: String
+    description: String
+    id: ID
+    lat: Float
+    lines: [ID]
+    lng: Float
+    phone: String
+    publish: Boolean
+    title: String
+    website: String
+}
+
+input ContactUsInput {
+    cover_1x1: ID
+    entry: [ComponentContactUsContactEntryInput]
+    publishedAt: DateTime
+    seo: ComponentSharedSeoInput
+    text: String
+    title: String
+}
+
+input DateFilterInput {
+    and: [Date]
+    between: [Date]
+    contains: Date
+    containsi: Date
+    endsWith: Date
+    eq: Date
+    eqi: Date
+    gt: Date
+    gte: Date
+    in: [Date]
+    lt: Date
+    lte: Date
+    ne: Date
+    not: DateFilterInput
+    notContains: Date
+    notContainsi: Date
+    notIn: [Date]
+    notNull: Boolean
+    null: Boolean
+    or: [Date]
+    startsWith: Date
+}
+
+input DateTimeFilterInput {
+    and: [DateTime]
+    between: [DateTime]
+    contains: DateTime
+    containsi: DateTime
+    endsWith: DateTime
+    eq: DateTime
+    eqi: DateTime
+    gt: DateTime
+    gte: DateTime
+    in: [DateTime]
+    lt: DateTime
+    lte: DateTime
+    ne: DateTime
+    not: DateTimeFilterInput
+    notContains: DateTime
+    notContainsi: DateTime
+    notIn: [DateTime]
+    notNull: Boolean
+    null: Boolean
+    or: [DateTime]
+    startsWith: DateTime
+}
+
+input DecorationFiltersInput {
+    and: [DecorationFiltersInput]
+    createdAt: DateTimeFilterInput
+    id: IDFilterInput
+    locale: StringFilterInput
+    localizations: DecorationFiltersInput
+    not: DecorationFiltersInput
+    or: [DecorationFiltersInput]
+    products: ProductFiltersInput
+    publishedAt: DateTimeFilterInput
+    slug: StringFilterInput
+    title: StringFilterInput
+    updatedAt: DateTimeFilterInput
+}
+
+input DecorationInput {
+    products: [ID]
+    publishedAt: DateTime
+    slug: String
+    title: String
+}
+
+input FabricFiltersInput {
+    and: [FabricFiltersInput]
+    createdAt: DateTimeFilterInput
+    id: IDFilterInput
+    locale: StringFilterInput
+    localizations: FabricFiltersInput
+    not: FabricFiltersInput
+    or: [FabricFiltersInput]
+    products: ProductFiltersInput
+    publishedAt: DateTimeFilterInput
+    slug: StringFilterInput
+    title: StringFilterInput
+    updatedAt: DateTimeFilterInput
+}
+
+input FabricInput {
+    products: [ID]
+    publishedAt: DateTime
+    slug: String
+    title: String
+}
+
+input FileInfoInput {
+    alternativeText: String
+    caption: String
+    name: String
+}
+
+input FloatFilterInput {
+    and: [Float]
+    between: [Float]
+    contains: Float
+    containsi: Float
+    endsWith: Float
+    eq: Float
+    eqi: Float
+    gt: Float
+    gte: Float
+    in: [Float]
+    lt: Float
+    lte: Float
+    ne: Float
+    not: FloatFilterInput
+    notContains: Float
+    notContainsi: Float
+    notIn: [Float]
+    notNull: Boolean
+    null: Boolean
+    or: [Float]
+    startsWith: Float
+}
+
+input I18NLocaleFiltersInput {
+    and: [I18NLocaleFiltersInput]
+    code: StringFilterInput
+    createdAt: DateTimeFilterInput
+    id: IDFilterInput
+    name: StringFilterInput
+    not: I18NLocaleFiltersInput
+    or: [I18NLocaleFiltersInput]
+    updatedAt: DateTimeFilterInput
+}
+
+input IDFilterInput {
+    and: [ID]
+    between: [ID]
+    contains: ID
+    containsi: ID
+    endsWith: ID
+    eq: ID
+    eqi: ID
+    gt: ID
+    gte: ID
+    in: [ID]
+    lt: ID
+    lte: ID
+    ne: ID
+    not: IDFilterInput
+    notContains: ID
+    notContainsi: ID
+    notIn: [ID]
+    notNull: Boolean
+    null: Boolean
+    or: [ID]
+    startsWith: ID
+}
+
+input InspirationFiltersInput {
+    and: [InspirationFiltersInput]
+    categories: CategoryFiltersInput
+    created: DateFilterInput
+    createdAt: DateTimeFilterInput
+    id: IDFilterInput
+    locale: StringFilterInput
+    localizations: InspirationFiltersInput
+    not: InspirationFiltersInput
+    or: [InspirationFiltersInput]
+    publishedAt: DateTimeFilterInput
+    seo: ComponentSharedSeoFiltersInput
+    slug: StringFilterInput
+    title: StringFilterInput
+    updatedAt: DateTimeFilterInput
+}
+
+input InspirationInput {
+    categories: [ID]
+    content: [InspirationContentDynamicZoneInput!]
+    cover_1x1: ID
+    cover_3x1: ID
+    created: Date
+    publishedAt: DateTime
+    seo: ComponentSharedSeoInput
+    slug: String
+    title: String
+}
+
+input IntFilterInput {
+    and: [Int]
+    between: [Int]
+    contains: Int
+    containsi: Int
+    endsWith: Int
+    eq: Int
+    eqi: Int
+    gt: Int
+    gte: Int
+    in: [Int]
+    lt: Int
+    lte: Int
+    ne: Int
+    not: IntFilterInput
+    notContains: Int
+    notContainsi: Int
+    notIn: [Int]
+    notNull: Boolean
+    null: Boolean
+    or: [Int]
+    startsWith: Int
+}
+
+input JSONFilterInput {
+    and: [JSON]
+    between: [JSON]
+    contains: JSON
+    containsi: JSON
+    endsWith: JSON
+    eq: JSON
+    eqi: JSON
+    gt: JSON
+    gte: JSON
+    in: [JSON]
+    lt: JSON
+    lte: JSON
+    ne: JSON
+    not: JSONFilterInput
+    notContains: JSON
+    notContainsi: JSON
+    notIn: [JSON]
+    notNull: Boolean
+    null: Boolean
+    or: [JSON]
+    startsWith: JSON
+}
+
+input LineFiltersInput {
+    and: [LineFiltersInput]
+    collections: CollectionFiltersInput
+    createdAt: DateTimeFilterInput
+    id: IDFilterInput
+    locale: StringFilterInput
+    localizations: LineFiltersInput
+    not: LineFiltersInput
+    or: [LineFiltersInput]
+    order: IntFilterInput
+    publishedAt: DateTimeFilterInput
+    seo: ComponentSharedSeoFiltersInput
+    slug: StringFilterInput
+    title: StringFilterInput
+    updatedAt: DateTimeFilterInput
+}
+
+input LineInput {
+    collections: [ID]
+    order: Int
+    publishedAt: DateTime
+    seo: ComponentSharedSeoInput
+    slug: String
+    title: String
+}
+
+input MainInput {
+    banner: ComponentContentBannerInput
+    content: [MainContentDynamicZoneInput!]
+    publishedAt: DateTime
+    seo: ComponentSharedSeoInput
+}
+
+input MenuInput {
+    footer_additional: [ComponentMenuFooterAdditionalLinkItemInput]
+    primary: [ComponentMenuItemInput]
+    primary_additional: [ComponentMenuLinkInput]
+    social: [ComponentMenuSocialItemInput]
+}
+
+input NecklineFiltersInput {
+    and: [NecklineFiltersInput]
+    createdAt: DateTimeFilterInput
+    id: IDFilterInput
+    locale: StringFilterInput
+    localizations: NecklineFiltersInput
+    not: NecklineFiltersInput
+    or: [NecklineFiltersInput]
+    products: ProductFiltersInput
+    publishedAt: DateTimeFilterInput
+    slug: StringFilterInput
+    title: StringFilterInput
+    updatedAt: DateTimeFilterInput
+}
+
+input NecklineInput {
+    products: [ID]
+    publishedAt: DateTime
+    slug: String
+    title: String
+}
+
+input NewspostFiltersInput {
+    and: [NewspostFiltersInput]
+    created: DateFilterInput
+    createdAt: DateTimeFilterInput
+    id: IDFilterInput
+    locale: StringFilterInput
+    localizations: NewspostFiltersInput
+    not: NewspostFiltersInput
+    or: [NewspostFiltersInput]
+    publishedAt: DateTimeFilterInput
+    seo: ComponentSharedSeoFiltersInput
+    slug: StringFilterInput
+    title: StringFilterInput
+    updatedAt: DateTimeFilterInput
+}
+
+input NewspostInput {
+    content: [NewspostContentDynamicZoneInput!]
+    cover_1x1: ID
+    cover_3x1: ID
+    created: Date
+    publishedAt: DateTime
+    seo: ComponentSharedSeoInput
+    slug: String
+    title: String
+}
+
+input OtherFiltersInput {
+    and: [OtherFiltersInput]
+    createdAt: DateTimeFilterInput
+    id: IDFilterInput
+    locale: StringFilterInput
+    localizations: OtherFiltersInput
+    not: OtherFiltersInput
+    or: [OtherFiltersInput]
+    products: ProductFiltersInput
+    publishedAt: DateTimeFilterInput
+    slug: StringFilterInput
+    title: StringFilterInput
+    updatedAt: DateTimeFilterInput
+}
+
+input OtherInput {
+    products: [ID]
+    publishedAt: DateTime
+    slug: String
+    title: String
+}
+
+input PageFiltersInput {
+    and: [PageFiltersInput]
+    banner: ComponentContentBannerFiltersInput
+    createdAt: DateTimeFilterInput
+    id: IDFilterInput
+    locale: StringFilterInput
+    localizations: PageFiltersInput
+    not: PageFiltersInput
+    or: [PageFiltersInput]
+    publishedAt: DateTimeFilterInput
+    seo: ComponentSharedSeoFiltersInput
+    slug: StringFilterInput
+    sub_header: StringFilterInput
+    text: StringFilterInput
+    title: StringFilterInput
+    updatedAt: DateTimeFilterInput
+}
+
+input PageInput {
+    banner: ComponentContentBannerInput
+    content: [PageContentDynamicZoneInput!]
+    publishedAt: DateTime
+    seo: ComponentSharedSeoInput
+    slug: String
+    sub_header: String
+    text: String
+    title: String
+}
+
+input PaginationArg {
+    limit: Int
+    page: Int
+    pageSize: Int
+    start: Int
+}
+
+input ProductFiltersInput {
+    accessoires: AccessoryFiltersInput
+    and: [ProductFiltersInput]
+    backnecklines: BacknecklineFiltersInput
+    budgets: BudgetFiltersInput
+    collection: CollectionFiltersInput
+    colors: ColorFiltersInput
+    createdAt: DateTimeFilterInput
+    decorations: DecorationFiltersInput
+    description: StringFilterInput
+    fabrics: FabricFiltersInput
+    fact: ComponentContentFactFiltersInput
+    id: IDFilterInput
+    locale: StringFilterInput
+    localizations: ProductFiltersInput
+    necklines: NecklineFiltersInput
+    not: ProductFiltersInput
+    or: [ProductFiltersInput]
+    others: OtherFiltersInput
+    properties: ComponentProductPropertiesItemFiltersInput
+    publishedAt: DateTimeFilterInput
+    recommended: ComponentProductRecommendedFiltersInput
+    seo: ComponentSharedSeoFiltersInput
+    shoes: ShoeFiltersInput
+    silhouettes: SilhouetteFiltersInput
+    slug: StringFilterInput
+    storeLink: StringFilterInput
+    styles: StyleFiltersInput
+    title: StringFilterInput
+    type: TypeFiltersInput
+    updatedAt: DateTimeFilterInput
+}
+
+input ProductInput {
+    accessoires: [ID]
+    backnecklines: [ID]
+    budgets: ID
+    collection: ID
+    colors: [ID]
+    cover_3x4: ID
+    decorations: [ID]
+    description: String
+    fabrics: [ID]
+    fact: ComponentContentFactInput
+    gallery: [ID]
+    necklines: [ID]
+    others: [ID]
+    properties: [ComponentProductPropertiesItemInput]
+    publishedAt: DateTime
+    recommended: ComponentProductRecommendedInput
+    seo: ComponentSharedSeoInput
+    shoes: [ID]
+    silhouettes: ID
+    slug: String
+    storeLink: String
+    styles: [ID]
+    title: String
+    type: ID
+}
+
+input RedirectFiltersInput {
+    and: [RedirectFiltersInput]
+    createdAt: DateTimeFilterInput
+    from: StringFilterInput
+    id: IDFilterInput
+    not: RedirectFiltersInput
+    or: [RedirectFiltersInput]
+    publishedAt: DateTimeFilterInput
+    status: IntFilterInput
+    to: StringFilterInput
+    updatedAt: DateTimeFilterInput
+}
+
+input RedirectInput {
+    from: String
+    publishedAt: DateTime
+    status: Int
+    to: String
+}
+
+input ShoeFiltersInput {
+    and: [ShoeFiltersInput]
+    createdAt: DateTimeFilterInput
+    id: IDFilterInput
+    locale: StringFilterInput
+    localizations: ShoeFiltersInput
+    not: ShoeFiltersInput
+    or: [ShoeFiltersInput]
+    products: ProductFiltersInput
+    publishedAt: DateTimeFilterInput
+    slug: StringFilterInput
+    title: StringFilterInput
+    updatedAt: DateTimeFilterInput
+}
+
+input ShoeInput {
+    products: [ID]
+    publishedAt: DateTime
+    slug: String
+    title: String
+}
+
+input SilhouetteFiltersInput {
+    and: [SilhouetteFiltersInput]
+    createdAt: DateTimeFilterInput
+    id: IDFilterInput
+    locale: StringFilterInput
+    localizations: SilhouetteFiltersInput
+    not: SilhouetteFiltersInput
+    or: [SilhouetteFiltersInput]
+    products: ProductFiltersInput
+    publishedAt: DateTimeFilterInput
+    slug: StringFilterInput
+    title: StringFilterInput
+    updatedAt: DateTimeFilterInput
+}
+
+input SilhouetteInput {
+    products: [ID]
+    publishedAt: DateTime
+    slug: String
+    title: String
+}
+
+input StoreFinderFiltersInput {
+    and: [StoreFinderFiltersInput]
+    city: ComponentStoreFinderCityFiltersInput
+    country: StringFilterInput
+    country_code: StringFilterInput
+    createdAt: DateTimeFilterInput
+    id: IDFilterInput
+    locale: StringFilterInput
+    localizations: StoreFinderFiltersInput
+    not: StoreFinderFiltersInput
+    or: [StoreFinderFiltersInput]
+    publishedAt: DateTimeFilterInput
+    slug: StringFilterInput
+    updatedAt: DateTimeFilterInput
+}
+
+input StoreFinderInput {
+    city: [ComponentStoreFinderCityInput]
+    country: String
+    country_code: ENUM_STOREFINDER_COUNTRY_CODE
+    publishedAt: DateTime
+    slug: String
+}
+
+input StringFilterInput {
+    and: [String]
+    between: [String]
+    contains: String
+    containsi: String
+    endsWith: String
+    eq: String
+    eqi: String
+    gt: String
+    gte: String
+    in: [String]
+    lt: String
+    lte: String
+    ne: String
+    not: StringFilterInput
+    notContains: String
+    notContainsi: String
+    notIn: [String]
+    notNull: Boolean
+    null: Boolean
+    or: [String]
+    startsWith: String
+}
+
+input StyleFiltersInput {
+    and: [StyleFiltersInput]
+    createdAt: DateTimeFilterInput
+    id: IDFilterInput
+    locale: StringFilterInput
+    localizations: StyleFiltersInput
+    not: StyleFiltersInput
+    or: [StyleFiltersInput]
+    products: ProductFiltersInput
+    publishedAt: DateTimeFilterInput
+    slug: StringFilterInput
+    title: StringFilterInput
+    updatedAt: DateTimeFilterInput
+}
+
+input StyleInput {
+    products: [ID]
+    publishedAt: DateTime
+    slug: String
+    title: String
+}
+
+input TranstationInput {
+    footer_copyright: String
+    footer_title: String
+    site_description: String
+    site_title: String
+}
+
+input TrunkShowFiltersInput {
+    address: StringFilterInput
+    and: [TrunkShowFiltersInput]
+    apply_for: StringFilterInput
+    city: StringFilterInput
+    content: StringFilterInput
+    country: StringFilterInput
+    createdAt: DateTimeFilterInput
+    description: StringFilterInput
+    from: DateFilterInput
+    id: IDFilterInput
+    locale: StringFilterInput
+    localizations: TrunkShowFiltersInput
+    not: TrunkShowFiltersInput
+    offered: ComponentProductRecommendedFiltersInput
+    or: [TrunkShowFiltersInput]
+    phone: StringFilterInput
+    publishedAt: DateTimeFilterInput
+    seo: ComponentSharedSeoFiltersInput
+    slug: StringFilterInput
+    title: StringFilterInput
+    to: DateFilterInput
+    updatedAt: DateTimeFilterInput
+    website: StringFilterInput
+}
+
+input TrunkShowInput {
+    address: String
+    apply_for: String
+    city: String
+    content: String
+    country: String
+    cover_4x3: ID
+    description: String
+    from: Date
+    offered: ComponentProductRecommendedInput
+    phone: String
+    publishedAt: DateTime
+    seo: ComponentSharedSeoInput
+    slug: String
+    title: String
+    to: Date
+    website: String
+}
+
+input TypeFiltersInput {
+    and: [TypeFiltersInput]
+    createdAt: DateTimeFilterInput
+    id: IDFilterInput
+    locale: StringFilterInput
+    localizations: TypeFiltersInput
+    not: TypeFiltersInput
+    or: [TypeFiltersInput]
+    order: IntFilterInput
+    products: ProductFiltersInput
+    publishedAt: DateTimeFilterInput
+    seo: ComponentSharedSeoFiltersInput
+    slug: StringFilterInput
+    title: StringFilterInput
+    updatedAt: DateTimeFilterInput
+}
+
+input TypeInput {
+    order: Int
+    products: [ID]
+    publishedAt: DateTime
+    seo: ComponentSharedSeoInput
+    slug: String
+    title: String
+}
+
+input UploadFileFiltersInput {
+    alternativeText: StringFilterInput
+    and: [UploadFileFiltersInput]
+    caption: StringFilterInput
+    createdAt: DateTimeFilterInput
+    ext: StringFilterInput
+    folder: UploadFolderFiltersInput
+    folderPath: StringFilterInput
+    formats: JSONFilterInput
+    hash: StringFilterInput
+    height: IntFilterInput
+    id: IDFilterInput
+    mime: StringFilterInput
+    name: StringFilterInput
+    not: UploadFileFiltersInput
+    or: [UploadFileFiltersInput]
+    placeholder: StringFilterInput
+    previewUrl: StringFilterInput
+    provider: StringFilterInput
+    provider_metadata: JSONFilterInput
+    size: FloatFilterInput
+    updatedAt: DateTimeFilterInput
+    url: StringFilterInput
+    width: IntFilterInput
+}
+
+input UploadFileInput {
+    alternativeText: String
+    caption: String
+    ext: String
+    folder: ID
+    folderPath: String
+    formats: JSON
+    hash: String
+    height: Int
+    mime: String
+    name: String
+    placeholder: String
+    previewUrl: String
+    provider: String
+    provider_metadata: JSON
+    size: Float
+    url: String
+    width: Int
+}
+
+input UploadFolderFiltersInput {
+    and: [UploadFolderFiltersInput]
+    children: UploadFolderFiltersInput
+    createdAt: DateTimeFilterInput
+    files: UploadFileFiltersInput
+    id: IDFilterInput
+    name: StringFilterInput
+    not: UploadFolderFiltersInput
+    or: [UploadFolderFiltersInput]
+    parent: UploadFolderFiltersInput
+    path: StringFilterInput
+    pathId: IntFilterInput
+    updatedAt: DateTimeFilterInput
+}
+
+input UploadFolderInput {
+    children: [ID]
+    files: [ID]
+    name: String
+    parent: ID
+    path: String
+    pathId: Int
+}
+
+input UsersPermissionsLoginInput {
+    identifier: String!
+    password: String!
+    provider: String! = "local"
+}
+
+input UsersPermissionsPermissionFiltersInput {
+    action: StringFilterInput
+    and: [UsersPermissionsPermissionFiltersInput]
+    createdAt: DateTimeFilterInput
+    id: IDFilterInput
+    not: UsersPermissionsPermissionFiltersInput
+    or: [UsersPermissionsPermissionFiltersInput]
+    role: UsersPermissionsRoleFiltersInput
+    updatedAt: DateTimeFilterInput
+}
+
+input UsersPermissionsRegisterInput {
+    email: String!
+    password: String!
+    username: String!
+}
+
+input UsersPermissionsRoleFiltersInput {
+    and: [UsersPermissionsRoleFiltersInput]
+    createdAt: DateTimeFilterInput
+    description: StringFilterInput
+    id: IDFilterInput
+    name: StringFilterInput
+    not: UsersPermissionsRoleFiltersInput
+    or: [UsersPermissionsRoleFiltersInput]
+    permissions: UsersPermissionsPermissionFiltersInput
+    type: StringFilterInput
+    updatedAt: DateTimeFilterInput
+    users: UsersPermissionsUserFiltersInput
+}
+
+input UsersPermissionsRoleInput {
+    description: String
+    name: String
+    permissions: [ID]
+    type: String
+    users: [ID]
+}
+
+input UsersPermissionsUserFiltersInput {
+    and: [UsersPermissionsUserFiltersInput]
+    blocked: BooleanFilterInput
+    confirmationToken: StringFilterInput
+    confirmed: BooleanFilterInput
+    createdAt: DateTimeFilterInput
+    email: StringFilterInput
+    id: IDFilterInput
+    not: UsersPermissionsUserFiltersInput
+    or: [UsersPermissionsUserFiltersInput]
+    password: StringFilterInput
+    provider: StringFilterInput
+    resetPasswordToken: StringFilterInput
+    role: UsersPermissionsRoleFiltersInput
+    updatedAt: DateTimeFilterInput
+    username: StringFilterInput
+}
+
+input UsersPermissionsUserInput {
+    blocked: Boolean
+    confirmationToken: String
+    confirmed: Boolean
+    email: String
+    password: String
+    provider: String
+    resetPasswordToken: String
+    role: ID
+    username: String
+}

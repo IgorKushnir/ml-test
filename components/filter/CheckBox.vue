@@ -25,7 +25,7 @@ const props = defineProps({
 </script>
 
 <style scoped lang="scss">
-@import  "/assets/style/global.scss";
+
 
 .check-box-container {
   height: 24px;

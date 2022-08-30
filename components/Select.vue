@@ -95,7 +95,7 @@ function emitIndex(index) {
 
 
 <style scoped lang="scss">
-@import  "/assets/style/global.scss";
+
 
 .select {
   display: inline-block;

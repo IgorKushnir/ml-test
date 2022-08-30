@@ -49,7 +49,7 @@ function isLandscape(width, height) {
 </script>
 
 <style scoped lang="scss">
-@import  "/assets/style/global.scss";
+
 
 .gallery {
   display: grid;

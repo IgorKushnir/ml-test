@@ -17,7 +17,7 @@ defineProps({
 </script>
 
 <style scoped lang="scss">
-@import  "/assets/style/global.scss";
+
 
 .filter {
   display: inline-flex;

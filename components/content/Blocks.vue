@@ -56,7 +56,7 @@ function ratio(item) {
 </script>
 
 <style scoped lang="scss">
-@import  "/assets/style/global.scss";
+
 
 .chess .blocks:first-child .row, .list .blocks:first-child .row  {
   margin-top: 0!important;

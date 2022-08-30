@@ -84,7 +84,7 @@ function hover(hover, el) {
 </script>
 
 <style scoped lang="scss">
-@import  "/assets/style/global.scss";
+
 
 .collection-item > * {
   position: absolute;

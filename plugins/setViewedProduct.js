@@ -2,35 +2,32 @@ export default defineNuxtPlugin(() => {
 
     return {
         provide: {
-            setViewedProduct: (id, slug) => {
-                if (!localStorage['viewed']) localStorage['viewed'] = '[]';
-                let store = localStorage['viewed'];
+            setViewedProduct: (id) => {
+                if (!localStorage['viewedProducts']) localStorage['viewedProducts'] = '[]';
+                let store = localStorage['viewedProducts'];
 
-                if (!id || !slug) return
+                if (!id) return
 
                 let jsonStore = JSON.parse(store)
 
                 // Find existing product and remove
-                const existingIndex = jsonStore.findIndex(p => p.id === id)
+                const existingIndex = jsonStore.findIndex(p => p === id)
                 if (existingIndex !== -1) {
                     jsonStore.splice(existingIndex, 1)
                 }
 
-                jsonStore.unshift({
-                    id: id,
-                    slug: slug
-                })
+                jsonStore.unshift(id)
 
 
                 // Reduce array
                 if (jsonStore.length > 20) jsonStore.pop()
 
-                localStorage['viewed'] = JSON.stringify(jsonStore);
+                localStorage['viewedProducts'] = JSON.stringify(jsonStore);
 
             },
             getViewedProduct: () => {
-                if (!localStorage['viewed']) localStorage['viewed'] = '[]';
-                let store = localStorage['viewed'];
+                if (!localStorage['viewedProducts']) localStorage['viewedProducts'] = '[]';
+                let store = localStorage['viewedProducts'];
 
                 return JSON.parse(store)
             }

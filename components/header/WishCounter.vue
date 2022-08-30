@@ -1,9 +1,9 @@
 <template>
-<!--  <NuxtLink to="/mood-board" class="nav-icon wish-icon hover">-->
-<!--    <div class="icon-heart-no-24">-->
-<!--      <div class="wish-counter" v-if="counter > 0">{{ counter }}</div>-->
-<!--    </div>-->
-<!--  </NuxtLink>-->
+  <NuxtLink to="/moodboard" class="nav-icon wish-icon hover">
+    <div class="icon-heart-no-24">
+      <div class="wish-counter" v-if="counter > 0">{{ counter }}</div>
+    </div>
+  </NuxtLink>
 </template>
 
 <script setup>
@@ -12,7 +12,7 @@ const counter = useFavCount()
 </script>
 
 <style scoped lang="scss">
-@import  "/assets/style/global.scss";
+
 
 .nav-icon .wish-counter {
   position: absolute;

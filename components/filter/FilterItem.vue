@@ -128,7 +128,7 @@ function isFilterItemsAvailable(filter) {
 </script>
 
 <style scoped lang="scss">
-@import  "/assets/style/global.scss";
+
 
 .head {
   border-width: 1px 0;

@@ -1,7 +1,10 @@
 <template>
   <HeaderSearchModal :show="showSearch" @close="showSearch = false"/>
 
-<!--  <HeaderWishCounter  class="show-md"/>-->
+
+  <transition name="fade">
+    <HeaderWishCounter v-if="$route.name !== 'moodboard'"  class="show-md"/>
+  </transition>
   <header class="navigation">
 
     <div class="container" style="position: static;">
@@ -21,7 +24,7 @@
         </NuxtLink>
 
         <div class="right-side">
-<!--          <HeaderWishCounter class="hide-md"/>-->
+          <HeaderWishCounter class="hide-md"/>
           <div class="nav-icon hover" v-on:click="showHideSearch">
             <div :class="showSearch ? 'icon-close-24' : 'icon-search-24'"/>
           </div>
@@ -186,7 +189,7 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-@import  "/assets/style/global.scss";
+
 
 .navigation {
   //height: 152px;

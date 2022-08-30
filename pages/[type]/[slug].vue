@@ -22,7 +22,7 @@
         <div class="col-4 col-5-lg col-12-md">
           <div class="title-container">
             <h1 class="title m-t-0">{{ data.title }}</h1>
-<!--            <LikeButton/>-->
+            <LikeButton :liked="liked" @click="handleLike(data.id)"/>
           </div>
           <div class="sticky-content">
             <p class="m-b-32" v-if="data.description" v-html="$handleNewLine(data.description)" />
@@ -97,13 +97,14 @@
 
 <script setup lang="ts">
 import getProduct from '~/api/getProduct'
-const { $setViewedProduct, $getViewedProduct } = useNuxtApp()
+const { $setViewedProduct, $getViewedProduct, $getLikedProducts, $toggleLikeProduct } = useNuxtApp()
 const isMobile = useIsMobile();
 
 const route = useRoute();
 const router = useRouter();
 let slug = route.params.slug;
 let draft = route.query?.draft;
+const likeList = ref([])
 
 let publicationState = "LIVE";
 if (draft === 'true') {
@@ -117,10 +118,13 @@ let {data, pending, refresh, error} = await getProduct(slug, JSON.stringify(extr
 
 
 onMounted(() => {
+  getLikeList()
+
   refresh().then(_ => {
     $setViewedProduct(data.value.id, data.value.slug)
 
-    const viewedIds = $getViewedProduct().map(p => p.id ?? 0)
+    const viewedIds = $getViewedProduct()
+
     useViewedProductIds().value = viewedIds;
 
     data.value.extra.also = data.value.extra.also.filter(item => {
@@ -131,8 +135,15 @@ onMounted(() => {
   });
 })
 
+function getLikeList() {
+  likeList.value = $getLikedProducts();
+}
 
-
+const liked = computed(() => likeList.value.includes(data.value.id.toString()))
+function handleLike(id) {
+  $toggleLikeProduct(id)
+  getLikeList()
+}
 
 
 function prevHandler() {
@@ -149,7 +160,7 @@ function nextHandler() {
 </script>
 
 <style scoped lang="scss">
-@import  "/assets/style/global.scss";
+
 
 .title-container {
   display: flex;
@@ -203,6 +214,10 @@ function nextHandler() {
   .white-overlay {
     height: calc(100% + 1px);
     background: linear-gradient(180deg, rgba(255, 255, 255, 0) 80%, #FFFFFF 100%);
+  }
+
+  .icon-like {
+    padding-top: 3px
   }
 
 }

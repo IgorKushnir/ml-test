@@ -116,7 +116,7 @@ const _data = computed(() => props.data.filter(d => d !== null))
 
 
 <style lang="scss">
-@import  "/assets/style/global.scss";
+
 
 .decrease {
   .row {

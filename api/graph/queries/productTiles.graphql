@@ -1,0 +1,38 @@
+query ProductTiles($products: [ID]!, $lang: I18NLocaleCode) {
+    products (
+        filters: {
+            id: {
+                in: $products
+            }
+        }
+        locale: $lang
+        publicationState: LIVE
+        pagination: {limit: -1}
+    ) {
+        data {
+            id
+            attributes {
+                title
+                slug
+                type {
+                    data {
+                        attributes {
+                            slug
+                        }
+                    }
+                }
+                cover_3x4 {
+                    data {
+                        attributes {
+                            formats
+                            url
+                            placeholder
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+

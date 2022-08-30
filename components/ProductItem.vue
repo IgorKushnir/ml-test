@@ -3,7 +3,7 @@
     <div class="product-item">
         <div class="product-item-head">
           <h3>{{title}}</h3>
-<!--          <LikeButton :liked="liked" @click="handleLike(id)"/>-->
+          <LikeButton :liked="liked" :class="hideLikedDefault ? 'hide-liked-default' : ''" @click="handleLike(id)"/>
         </div>
         <Image :path="image" :alt="title"  size="medium" :class="'image ' + ratio"/>
 
@@ -37,6 +37,11 @@ const props = defineProps({
   image: {
     type: Object,
     required: true
+  },
+  hideLikedDefault: {
+    type: Boolean,
+    required: false,
+    default: false
   }
 })
 const emits = defineEmits(['updateLikes'])
@@ -49,15 +54,16 @@ const liked = computed(() => props.likeList.includes(props.id.toString()))
 
 function handleLike(id) {
   liked.value = $toggleLikeProduct(id)
-  emits('updateLikes')
+  emits('updateLikes', id)
 }
 </script>
 
 <style scoped lang="scss">
-@import  "/assets/style/global.scss";
+
 
 $transition: .5s ease-in-out;
 .product-item {
+
   position: relative;
   width: 100%;
   height: 100%;
@@ -84,15 +90,24 @@ $transition: .5s ease-in-out;
     padding: 24px;
     z-index: 2;
     transition: $transition;
+  }
+  h3 {
     opacity: 0;
   }
-  //.product-item-head :not(.icon-heart-yes-24.active) {
-  //  opacity: 0;
-  //}
-  .image {
-    //position: absolute;
-    //width: 100%;
+
+  .icon-like {
+    margin-right: -8px!important;
   }
+  .icon-heart-no-24 {
+    opacity: 0;
+  }
+
+  .hide-liked-default.icon-heart-yes-24 {
+    opacity: 0;
+  }
+
+
+
 
   .product-item-head > *:first-child{
     margin-bottom: 8px;
@@ -102,6 +117,27 @@ $transition: .5s ease-in-out;
   }
 }
 
+@include md {
+
+  .product-item .product-item-head {
+    padding: 16px 24px;
+  }
+  .product-item-head h3 {
+    opacity: 1;
+  }
+
+
+  .hide-liked-default.icon-heart-yes-24,
+  .product-item-head .icon-heart-no-24,
+  .product-item-head .icon-heart-yes-24 {
+    opacity: 1!important;
+  }
+
+
+  .icon-like {
+    padding-top: 16px;
+  }
+}
 
 @media (hover: hover) {
   :deep(.img-component.base) {
@@ -111,7 +147,10 @@ $transition: .5s ease-in-out;
     &:after {
       opacity: 1;
     }
-    .product-item-head{
+
+    .product-item-head h3,
+    .product-item-head .icon-heart-no-24,
+    .product-item-head .icon-heart-yes-24 {
       opacity: 1;
     }
 

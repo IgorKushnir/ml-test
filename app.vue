@@ -159,8 +159,6 @@ function reportWindowSize() {
 </script>
 
 <style lang="scss">
-@import  "/assets/style/global.scss";
-
 .body {
   display: flex;
   flex-direction: column;

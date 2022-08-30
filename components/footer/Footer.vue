@@ -80,7 +80,7 @@ const additional = useMenuData().value[0].footer_additional
 </script>
 
 <style scoped lang="scss">
-@import  "/assets/style/global.scss";
+
 
 .footer {
   width: 100%;

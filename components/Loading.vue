@@ -21,7 +21,7 @@ defineProps({
 </script>
 
 <style scoped>
-@import  "/assets/style/global.scss";
+
 
 .loading {
   opacity: .8;

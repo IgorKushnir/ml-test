@@ -33,7 +33,7 @@ defineProps({
 </script>
 
 <style scoped lang="scss">
-@import  "/assets/style/global.scss";
+
 
 .overlay {
   width: 100%;

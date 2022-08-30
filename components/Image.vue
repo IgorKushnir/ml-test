@@ -62,7 +62,7 @@ const isNotSvg = computed(() => props.path.data?.attributes?.url.endsWith('.jpg'
 </script>
 
 <style lang="scss">
-@import  "/assets/style/global.scss";
+
 
 .img-component-container {
   overflow: hidden;

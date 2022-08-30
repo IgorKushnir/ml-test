@@ -1,4 +1,5 @@
 import {defineNuxtConfig} from 'nuxt'
+import graphql from '@rollup/plugin-graphql';
 
 export default defineNuxtConfig({
     css: [
@@ -14,8 +15,22 @@ export default defineNuxtConfig({
 
     build: {
 
-
     },
+
+
+    vite: {
+        plugins: [ graphql() ],
+        css: {
+            preprocessorOptions: {
+                scss: {
+                    additionalData: '@import "@/assets/style/global.scss";',
+                },
+            },
+        },
+    },
+
+
+
     // package.json - "nuxt-vite": "^0.3.5"
     // vite: {
     //     build: {

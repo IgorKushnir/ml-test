@@ -31,7 +31,7 @@ const props = defineProps({
 </script>
 
 <style scoped lang="scss">
-@import  "/assets/style/global.scss";
+
 
 .nav-link {
   display: inline-block;

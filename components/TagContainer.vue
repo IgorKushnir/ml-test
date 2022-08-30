@@ -13,7 +13,7 @@
 </script>
 
 <style scoped lang="scss">
-@import  "/assets/style/global.scss";
+
 
 .tag-container {
   height: auto;
