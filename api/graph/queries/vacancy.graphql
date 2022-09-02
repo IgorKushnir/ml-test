@@ -1,0 +1,21 @@
+query Vacancy($lang: I18NLocaleCode) {
+    vacancies(
+        sort: "created"
+        locale: $lang
+        pagination: {
+            limit: -1
+        }
+    ) {
+        data {
+            attributes {
+                title
+                location
+                content
+                job_link
+            }
+        }
+    }
+
+}
+
+

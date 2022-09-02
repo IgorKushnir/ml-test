@@ -10,18 +10,6 @@ function seo() {
               }
             }
           }
-          metaSocial {
-            socialNetwork
-            title
-            description
-            image {
-              data {
-                attributes {
-                  url
-                }
-              }
-            }
-          }
           keywords
           metaRobots
           structuredData

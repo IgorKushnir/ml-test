@@ -5,7 +5,7 @@ schema {
     mutation: Mutation
 }
 
-union GenericMorph = Accessory | Backneckline | Budget | Category | Collection | Color | ComponentContactUsContactEntry | ComponentContactUsEmailList | ComponentContactUsInput | ComponentContentBanner | ComponentContentBlocks | ComponentContentCarusel | ComponentContentCaruselItem | ComponentContentDivider | ComponentContentEmbedVideo | ComponentContentFact | ComponentContentImageVideo | ComponentContentImageVideoGrig | ComponentContentItemsButtonItem | ComponentContentItemsPosterItem | ComponentContentLatestContent | ComponentContentMediaBanner | ComponentContentPoster | ComponentContentSilhouettes | ComponentContentText | ComponentMenuFooterAdditionalLinkItem | ComponentMenuItem | ComponentMenuLink | ComponentMenuSocialItem | ComponentMenuSubMenu | ComponentProductProduct | ComponentProductPropertiesItem | ComponentProductRecommended | ComponentSharedMetaSocial | ComponentSharedSeo | ComponentStoreFinderCity | ComponentStoreFinderStore | ContactUs | Decoration | Fabric | I18NLocale | Inspiration | Line | Main | Menu | Neckline | Newspost | Other | Page | Product | Redirect | Shoe | Silhouette | StoreFinder | Style | Transtation | TrunkShow | Type | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
+union GenericMorph = Accessory | Backneckline | Budget | Category | Collection | Color | ComponentContactUsContactEntry | ComponentContactUsEmailList | ComponentContactUsInput | ComponentContentBanner | ComponentContentBlocks | ComponentContentCarusel | ComponentContentCaruselItem | ComponentContentDivider | ComponentContentEmbedVideo | ComponentContentFact | ComponentContentImageVideo | ComponentContentImageVideoGrig | ComponentContentItemsButtonItem | ComponentContentItemsPosterItem | ComponentContentLatestContent | ComponentContentMediaBanner | ComponentContentPoster | ComponentContentSilhouettes | ComponentContentText | ComponentMenuFooterAdditionalLinkItem | ComponentMenuItem | ComponentMenuLink | ComponentMenuSocialItem | ComponentMenuSubMenu | ComponentProductProduct | ComponentProductPropertiesItem | ComponentProductRecommended | ComponentSharedMetaSocial | ComponentSharedSeo | ComponentStoreFinderCity | ComponentStoreFinderStore | ContactUs | Decoration | Fabric | I18NLocale | Inspiration | Line | Main | Menu | Neckline | Newspost | Other | Page | Product | Redirect | Shoe | Silhouette | StoreFinder | Style | Transtation | TrunkShow | Type | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Vacancy
 
 union InspirationContentDynamicZone = ComponentContentBlocks | ComponentContentCarusel | ComponentContentDivider | ComponentContentEmbedVideo | ComponentContentFact | ComponentContentImageVideoGrig | ComponentContentLatestContent | ComponentContentMediaBanner | ComponentContentPoster | ComponentContentText | Error
 
@@ -716,6 +716,8 @@ type Mutation {
     createUsersPermissionsRole(data: UsersPermissionsRoleInput!): UsersPermissionsCreateRolePayload
     "Create a new user"
     createUsersPermissionsUser(data: UsersPermissionsUserInput!): UsersPermissionsUserEntityResponse!
+    createVacancy(data: VacancyInput!, locale: I18NLocaleCode): VacancyEntityResponse
+    createVacancyLocalization(data: VacancyInput, id: ID, locale: I18NLocaleCode): VacancyEntityResponse
     deleteAccessory(id: ID!, locale: I18NLocaleCode): AccessoryEntityResponse
     deleteBackneckline(id: ID!, locale: I18NLocaleCode): BacknecklineEntityResponse
     deleteBudget(id: ID!, locale: I18NLocaleCode): BudgetEntityResponse
@@ -748,6 +750,7 @@ type Mutation {
     deleteUsersPermissionsRole(id: ID!): UsersPermissionsDeleteRolePayload
     "Delete an existing user"
     deleteUsersPermissionsUser(id: ID!): UsersPermissionsUserEntityResponse!
+    deleteVacancy(id: ID!, locale: I18NLocaleCode): VacancyEntityResponse
     "Confirm an email users email address"
     emailConfirmation(confirmation: String!): UsersPermissionsLoginPayload
     "Request a reset password token"
@@ -792,6 +795,7 @@ type Mutation {
     updateUsersPermissionsRole(data: UsersPermissionsRoleInput!, id: ID!): UsersPermissionsUpdateRolePayload
     "Update an existing user"
     updateUsersPermissionsUser(data: UsersPermissionsUserInput!, id: ID!): UsersPermissionsUserEntityResponse!
+    updateVacancy(data: VacancyInput!, id: ID!, locale: I18NLocaleCode): VacancyEntityResponse
     upload(field: String, file: Upload!, info: FileInfoInput, ref: String, refId: ID): UploadFileEntityResponse!
 }
 
@@ -1036,6 +1040,8 @@ type Query {
     usersPermissionsRoles(filters: UsersPermissionsRoleFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UsersPermissionsRoleEntityResponseCollection
     usersPermissionsUser(id: ID): UsersPermissionsUserEntityResponse
     usersPermissionsUsers(filters: UsersPermissionsUserFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UsersPermissionsUserEntityResponseCollection
+    vacancies(filters: VacancyFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): VacancyEntityResponseCollection
+    vacancy(id: ID, locale: I18NLocaleCode): VacancyEntityResponse
 }
 
 type Redirect {
@@ -1451,6 +1457,38 @@ type UsersPermissionsUserEntityResponseCollection {
 
 type UsersPermissionsUserRelationResponseCollection {
     data: [UsersPermissionsUserEntity!]!
+}
+
+type Vacancy {
+    content: String
+    created: Date!
+    createdAt: DateTime
+    job_link: String
+    locale: String
+    localizations(filters: VacancyFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): VacancyRelationResponseCollection
+    location: String
+    publishedAt: DateTime
+    slug: String
+    title: String!
+    updatedAt: DateTime
+}
+
+type VacancyEntity {
+    attributes: Vacancy
+    id: ID
+}
+
+type VacancyEntityResponse {
+    data: VacancyEntity
+}
+
+type VacancyEntityResponseCollection {
+    data: [VacancyEntity!]!
+    meta: ResponseCollectionMeta!
+}
+
+type VacancyRelationResponseCollection {
+    data: [VacancyEntity!]!
 }
 
 enum ENUM_COMPONENTCONTACTUSINPUT_TYPE {
@@ -3123,4 +3161,32 @@ input UsersPermissionsUserInput {
     resetPasswordToken: String
     role: ID
     username: String
+}
+
+input VacancyFiltersInput {
+    and: [VacancyFiltersInput]
+    content: StringFilterInput
+    created: DateFilterInput
+    createdAt: DateTimeFilterInput
+    id: IDFilterInput
+    job_link: StringFilterInput
+    locale: StringFilterInput
+    localizations: VacancyFiltersInput
+    location: StringFilterInput
+    not: VacancyFiltersInput
+    or: [VacancyFiltersInput]
+    publishedAt: DateTimeFilterInput
+    slug: StringFilterInput
+    title: StringFilterInput
+    updatedAt: DateTimeFilterInput
+}
+
+input VacancyInput {
+    content: String
+    created: Date
+    job_link: String
+    location: String
+    publishedAt: DateTime
+    slug: String
+    title: String
 }
