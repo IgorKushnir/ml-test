@@ -1,7 +1,7 @@
 <template>
   <div class="ratio-3x4" :class="poster ? 'ratio-4x3 ratio-3x4-md' : ''">
 
-    <NuxtLink :to="to"
+    <NuxtLink :to="button ? to : null"
               v-on:mouseenter="hover(true, $el)" v-on:mouseleave="hover(false, $el)"
               class="collection-item"
     >
@@ -22,7 +22,7 @@
           <h2>{{title}}</h2>
           <p v-if="text">{{ text }}</p>
 
-          <div class="p-v-16">
+          <div class="p-v-16" v-show="button">
             <div class="button white">{{ button_text }}</div>
           </div>
         </div>
@@ -56,6 +56,11 @@ const props = defineProps({
   image: {
     type: Object,
     required: true
+  },
+  button: {
+    type: Boolean,
+    required: false,
+    default: true
   },
   button_text: {
     type: String,

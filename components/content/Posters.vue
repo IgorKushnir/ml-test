@@ -8,6 +8,7 @@
         :to="poster.button_link"
         poster
         :image_4x3="poster.cover_4x3"
+        :button="poster.button"
     />
   </div>
 </template>
