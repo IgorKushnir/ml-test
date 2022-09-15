@@ -52,7 +52,7 @@
           v-else
           title="No open positions at the moment"
           text="Be the first to learn about Milla Nova latest positions."
-          :button="{text: 'Subscribe', path: '/subscribe'}"
+          :button="{text: 'Subscribe', path: '/newsletter'}"
           image-path="/img/decline.svg"
           class="half"
       />
