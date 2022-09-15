@@ -73,6 +73,11 @@ export default defineNuxtPlugin(() => {
                     return e;
                 })
                 return subMenu;
+            },
+
+            validateEmail: (email) => {
+                const re = /\S+@\S+\.\S+/;
+                return re.test(email);
             }
         }
     }

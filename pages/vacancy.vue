@@ -11,7 +11,7 @@
       >
 
         <template v-for="(item, index) in data">
-          <div class="col-8 vacancy">
+          <div class="col-8  col-10-xl col-12-lg vacancy">
             <div>
               <h2 class="m-t-0">{{ item.attributes.title }}</h2>
               <div v-if="item.attributes.location">
@@ -29,12 +29,23 @@
           </div>
 
 
-          <div class="col-8 m-v-32" v-if="data.length - 1 > index"><div class="divider"/></div>
+          <div class="col-8  col-10-xl col-12-lg m-v-32 m-v-0-md" v-if="data.length - 1 > index"><div class="divider"/></div>
 
         </template>
-
-        <div class="col-8">
-          <Promo/>
+      </Container>
+      <Container
+          v-if="data?.length > 0"
+          justify="justify-center"
+      >
+        <div v-if="newsletterData?.promo" class="col-10 col-12-xl">
+          <Promo
+              :title="newsletterData.promo.title"
+              :description="newsletterData.promo.description"
+              :subheader="newsletterData.promo.sub_header"
+              :button="newsletterData.promo.button"
+              :button_text="newsletterData.promo.button_text"
+              :button_link="newsletterData.promo.button_link"
+          />
         </div>
       </Container>
       <State
@@ -56,24 +67,36 @@ import vacancyResponse from '~/api/getVacancies'
 import State from "../components/State";
 import Container from "../components/Container";
 import Promo from "../components/Promo";
+import newsletterResponse from "~/api/getNewsletter";
+const nuxtApp = useNuxtApp()
+
 const {data, pending, refresh, error} = useLazyAsyncData('vacancy', () => vacancyResponse({ lang: "en" }), { transform: (d) => d.data?.vacancies?.data })
+const {data: newsletterData} = useLazyAsyncData('newsletter', () => newsletterResponse({ lang: "en" }), { transform: (d) => d.data?.newsletter?.data?.attributes })
 
 const content = ref()
 const link = ref()
 
-onMounted(() => {
+watch(pending, () => {
+  setTimeout(checkReedMoreButton, 500)
+})
+nuxtApp.hook("page:resize", () => {
+  checkReedMoreButton()
+})
+
+function checkReedMoreButton() {
   if (content.value) {
     content.value.forEach((item, index) => {
       const contentHeight = item.scrollHeight;
       if (contentHeight > item.clientHeight) {
         link.value[index].style.display = "inline-block"
+        content.value[index].classList.remove('visible')
       } else {
+        link.value[index].style.display = "none"
         content.value[index].classList.add('visible')
       }
     })
   }
-
-})
+}
 
 function toggleContent(index) {
   const contentHeight = content.value[index].scrollHeight;
@@ -88,7 +111,7 @@ function toggleContent(index) {
     content.value[index].style.height = contentHeight + "px"
     link.value[index].innerHTML = 'Show less <span class="icon-drop-up-16" style="vertical-align: middle;"/>'
   }
-  console.log(contentHeight);
+  // console.log(contentHeight);
 }
 
 
@@ -135,6 +158,15 @@ function toggleContent(index) {
 .button {
   flex-shrink: 0;
   align-self: center;
+}
+
+@include md {
+  .vacancy {
+    flex-direction: column;
+  }
+  .button {
+    width: 100%;
+  }
 }
 
 </style>

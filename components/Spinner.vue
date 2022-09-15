@@ -22,6 +22,7 @@ defineProps({
   width: 24px;
   height: 24px;
   position: relative;
+  margin: 0 auto;
 }
 .lds-spinner {
   display: inline-block;

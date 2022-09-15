@@ -43,7 +43,7 @@
 
             <div class="c-4 m-v-24 center">
               <div class="button primary" :class="loading ? 'loading' : ''" v-on:click="send">
-                <transition name="fade">
+                <transition name="fade" mode="out-in">
                   <span v-if="!loading">Send</span>
                   <Spinner v-else white/>
                 </transition>
@@ -151,72 +151,6 @@ function send() {
 <style scoped lang="scss">
 
 
-label.required:after {
-  content: " *";
-  color: $red;
-}
-.input {
-  display: block;
-  height: 48px;
-  background-color: $light-gray;
-  border: unset;
-  padding: 0 16px;
-  border-radius: 0;
-  width: 100%;
-  font-size: 16px;
-  transition: .3s;
-}
-.input:disabled {
-  background-color: $border-dark;
-}
-textarea {
-  resize: none;
-  height: 140px!important;
-  padding: 16px!important;
-  font-family: inherit;
-}
-.form {
-  display: grid;
-  column-gap: 40px;
-  row-gap: 24px;
-  grid-template-columns: repeat(4, 1fr);
-}
-.form *:first-child .subheader{
-  margin-top: 0!important;
-}
-
-.c-1 {
-  grid-column: auto/span 1;
-}
-.c-2 {
-  grid-column: auto/span 2;
-}
-.c-3 {
-  grid-column: auto/span 3;
-}
-.c-4 {
-  grid-column: auto/span 4;
-}
-@include md {
-  .c-1, .c-2, .c-3, .c-4 {
-    grid-column: auto/span 4;
-  }
-}
-
-.error-message {
-  display: none;
-}
-.error {
-  .input {
-    border: 1px solid $red;
-  }
-  .error-message {
-    display: unset;
-    font-size: 13px;
-    color: $red;
-    margin-top: 8px;
-  }
-}
 
 
 .button {

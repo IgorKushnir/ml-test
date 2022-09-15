@@ -7,13 +7,14 @@
         </div>
         <h1 v-if="title">{{ title }}</h1>
         <p v-if="text">{{text}}</p>
-        <Button v-if="button" :path="button.path" class="m-b-40 m-b-24-md m-t-32">{{ button.text }}</Button>
+        <Button v-if="button" :path="button.path" v-on:click="clickHandle" class="m-b-40 m-b-24-md m-t-32">{{ button.text }}</Button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+const emits = defineEmits(["click"])
 defineProps({
   hideIcon: {
     type: Boolean,
@@ -37,6 +38,9 @@ defineProps({
     default: '/img/small-logo-dark.svg'
   }
 })
+function clickHandle() {
+  emits('click')
+}
 </script>
 
 <style scoped lang="scss">

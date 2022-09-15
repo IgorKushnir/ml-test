@@ -246,6 +246,9 @@ img {
     padding-bottom: calc(100vh - 56px);
   }
 
+  .center-md {
+    text-align: center;
+  }
 }
 
 @include lg {

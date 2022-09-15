@@ -1,0 +1,38 @@
+query NewsLatter($lang: I18NLocaleCode) {
+    newsletter(locale: $lang) {
+        data {
+            attributes {
+                title
+                description
+                type {
+                    title
+                    description
+                }
+                promo {
+                    sub_header
+                    title
+                    description
+                    button
+                    button_link
+                    button_text
+                }
+                seo {
+                    metaTitle
+                    metaDescription
+                    metaImage {
+                        data {
+                            attributes {
+                                url
+                            }
+                        }
+                    }
+                    keywords
+                    metaRobots
+                    structuredData
+                    metaViewport
+                    canonicalURL
+                }
+            }
+        }
+    }
+}

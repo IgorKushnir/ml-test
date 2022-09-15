@@ -3,6 +3,7 @@
        v-on:click="available ? $emit('value', !value) : ''">
     <div class="check-box"/>
     <div class="p label">{{ label }}</div>
+    <div class="p-small gray m-l-40" v-if="description">{{ description }}</div>
   </div>
 </template>
 
@@ -19,6 +20,10 @@ const props = defineProps({
   available: {
     type: Boolean,
     required: true
+  },
+  description: {
+    type: String,
+    required: false
   }
 })
 
@@ -28,7 +33,7 @@ const props = defineProps({
 
 
 .check-box-container {
-  height: 24px;
+  //height: 24px;
   margin: 24px 0;
   cursor: pointer;
 }

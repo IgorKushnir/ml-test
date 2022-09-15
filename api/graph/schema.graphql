@@ -5,7 +5,7 @@ schema {
     mutation: Mutation
 }
 
-union GenericMorph = Accessory | Backneckline | Budget | Category | Collection | Color | ComponentContactUsContactEntry | ComponentContactUsEmailList | ComponentContactUsInput | ComponentContentBanner | ComponentContentBlocks | ComponentContentCarusel | ComponentContentCaruselItem | ComponentContentDivider | ComponentContentEmbedVideo | ComponentContentFact | ComponentContentImageVideo | ComponentContentImageVideoGrig | ComponentContentItemsButtonItem | ComponentContentItemsPosterItem | ComponentContentLatestContent | ComponentContentMediaBanner | ComponentContentPoster | ComponentContentSilhouettes | ComponentContentText | ComponentMenuFooterAdditionalLinkItem | ComponentMenuItem | ComponentMenuLink | ComponentMenuSocialItem | ComponentMenuSubMenu | ComponentProductProduct | ComponentProductPropertiesItem | ComponentProductRecommended | ComponentSharedMetaSocial | ComponentSharedSeo | ComponentStoreFinderCity | ComponentStoreFinderStore | ContactUs | Decoration | Fabric | I18NLocale | Inspiration | Line | Main | Menu | Neckline | Newspost | Other | Page | Product | Redirect | Shoe | Silhouette | StoreFinder | Style | Transtation | TrunkShow | Type | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Vacancy
+union GenericMorph = Accessory | Backneckline | Budget | Category | Collection | Color | ComponentContactUsContactEntry | ComponentContactUsEmailList | ComponentContactUsInput | ComponentContentBanner | ComponentContentBlocks | ComponentContentCarusel | ComponentContentCaruselItem | ComponentContentDivider | ComponentContentEmbedVideo | ComponentContentFact | ComponentContentImageVideo | ComponentContentImageVideoGrig | ComponentContentItemsButtonItem | ComponentContentItemsPosterItem | ComponentContentLatestContent | ComponentContentMediaBanner | ComponentContentPoster | ComponentContentPromo | ComponentContentSilhouettes | ComponentContentText | ComponentMenuFooterAdditionalLinkItem | ComponentMenuItem | ComponentMenuLink | ComponentMenuSocialItem | ComponentMenuSubMenu | ComponentNewslatterType | ComponentProductProduct | ComponentProductPropertiesItem | ComponentProductRecommended | ComponentSharedMetaSocial | ComponentSharedSeo | ComponentStoreFinderCity | ComponentStoreFinderStore | ContactUs | Decoration | Fabric | I18NLocale | Inspiration | Line | Main | Menu | Neckline | Newsletter | Newspost | Other | Page | Product | Redirect | Shoe | Silhouette | StoreFinder | Style | Transtation | TrunkShow | Type | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Vacancy
 
 union InspirationContentDynamicZone = ComponentContentBlocks | ComponentContentCarusel | ComponentContentDivider | ComponentContentEmbedVideo | ComponentContentFact | ComponentContentImageVideoGrig | ComponentContentLatestContent | ComponentContentMediaBanner | ComponentContentPoster | ComponentContentText | Error
 
@@ -297,7 +297,6 @@ type ComponentContentImageVideoGrig {
 }
 
 type ComponentContentItemsButtonItem {
-    button: JSON!
     id: ID!
 }
 
@@ -327,6 +326,16 @@ type ComponentContentMediaBanner {
 type ComponentContentPoster {
     id: ID!
     poster(filters: ComponentContentItemsPosterItemFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentContentItemsPosterItem]
+}
+
+type ComponentContentPromo {
+    button: Boolean!
+    button_link: String
+    button_text: String
+    description: String
+    id: ID!
+    sub_header: String
+    title: String!
 }
 
 type ComponentContentSilhouettes {
@@ -381,6 +390,12 @@ type ComponentMenuSubMenu {
     id: ID!
 }
 
+type ComponentNewslatterType {
+    description: String
+    id: ID!
+    title: String!
+}
+
 type ComponentProductProduct {
     id: ID!
     product: ProductEntityResponse
@@ -409,11 +424,10 @@ type ComponentSharedSeo {
     canonicalURL: String
     id: ID!
     keywords: String
-    metaDescription: String!
-    metaImage: UploadFileEntityResponse!
+    metaDescription: String
+    metaImage: UploadFileEntityResponse
     metaRobots: String
-    metaSocial(filters: ComponentSharedMetaSocialFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedMetaSocial]
-    metaTitle: String!
+    metaTitle: String
     metaViewport: String
     structuredData: JSON
 }
@@ -688,6 +702,7 @@ type Mutation {
     createMenuLocalization(data: MenuInput, id: ID, locale: I18NLocaleCode): MenuEntityResponse
     createNeckline(data: NecklineInput!, locale: I18NLocaleCode): NecklineEntityResponse
     createNecklineLocalization(data: NecklineInput, id: ID, locale: I18NLocaleCode): NecklineEntityResponse
+    createNewsletterLocalization(data: NewsletterInput, id: ID, locale: I18NLocaleCode): NewsletterEntityResponse
     createNewspost(data: NewspostInput!, locale: I18NLocaleCode): NewspostEntityResponse
     createNewspostLocalization(data: NewspostInput, id: ID, locale: I18NLocaleCode): NewspostEntityResponse
     createOther(data: OtherInput!, locale: I18NLocaleCode): OtherEntityResponse
@@ -732,6 +747,7 @@ type Mutation {
     deleteMain(locale: I18NLocaleCode): MainEntityResponse
     deleteMenu(locale: I18NLocaleCode): MenuEntityResponse
     deleteNeckline(id: ID!, locale: I18NLocaleCode): NecklineEntityResponse
+    deleteNewsletter(locale: I18NLocaleCode): NewsletterEntityResponse
     deleteNewspost(id: ID!, locale: I18NLocaleCode): NewspostEntityResponse
     deleteOther(id: ID!, locale: I18NLocaleCode): OtherEntityResponse
     deletePage(id: ID!, locale: I18NLocaleCode): PageEntityResponse
@@ -777,6 +793,7 @@ type Mutation {
     updateMain(data: MainInput!, locale: I18NLocaleCode): MainEntityResponse
     updateMenu(data: MenuInput!, locale: I18NLocaleCode): MenuEntityResponse
     updateNeckline(data: NecklineInput!, id: ID!, locale: I18NLocaleCode): NecklineEntityResponse
+    updateNewsletter(data: NewsletterInput!, locale: I18NLocaleCode): NewsletterEntityResponse
     updateNewspost(data: NewspostInput!, id: ID!, locale: I18NLocaleCode): NewspostEntityResponse
     updateOther(data: OtherInput!, id: ID!, locale: I18NLocaleCode): OtherEntityResponse
     updatePage(data: PageInput!, id: ID!, locale: I18NLocaleCode): PageEntityResponse
@@ -826,6 +843,31 @@ type NecklineEntityResponseCollection {
 
 type NecklineRelationResponseCollection {
     data: [NecklineEntity!]!
+}
+
+type Newsletter {
+    createdAt: DateTime
+    description: String
+    locale: String
+    localizations: NewsletterRelationResponseCollection
+    promo: ComponentContentPromo
+    seo: ComponentSharedSeo
+    title: String!
+    type(filters: ComponentNewslatterTypeFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentNewslatterType]
+    updatedAt: DateTime
+}
+
+type NewsletterEntity {
+    attributes: Newsletter
+    id: ID
+}
+
+type NewsletterEntityResponse {
+    data: NewsletterEntity
+}
+
+type NewsletterRelationResponseCollection {
+    data: [NewsletterEntity!]!
 }
 
 type Newspost {
@@ -1010,6 +1052,7 @@ type Query {
     neckline(id: ID, locale: I18NLocaleCode): NecklineEntityResponse
     necklines(filters: NecklineFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): NecklineEntityResponseCollection
     news(filters: NewspostFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): NewspostEntityResponseCollection
+    newsletter(locale: I18NLocaleCode): NewsletterEntityResponse
     newspost(locale: I18NLocaleCode, slug: String): NewspostEntityResponse
     other(id: ID, locale: I18NLocaleCode): OtherEntityResponse
     others(filters: OtherFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): OtherEntityResponseCollection
@@ -2172,6 +2215,16 @@ input ComponentContentItemsPosterItemFiltersInput {
     title: StringFilterInput
 }
 
+input ComponentContentPromoInput {
+    button: Boolean
+    button_link: String
+    button_text: String
+    description: String
+    id: ID
+    sub_header: String
+    title: String
+}
+
 input ComponentMenuFooterAdditionalLinkItemFiltersInput {
     and: [ComponentMenuFooterAdditionalLinkItemFiltersInput]
     description: StringFilterInput
@@ -2244,6 +2297,20 @@ input ComponentMenuSocialItemInput {
     url: String
 }
 
+input ComponentNewslatterTypeFiltersInput {
+    and: [ComponentNewslatterTypeFiltersInput]
+    description: StringFilterInput
+    not: ComponentNewslatterTypeFiltersInput
+    or: [ComponentNewslatterTypeFiltersInput]
+    title: StringFilterInput
+}
+
+input ComponentNewslatterTypeInput {
+    description: String
+    id: ID
+    title: String
+}
+
 input ComponentProductPropertiesItemFiltersInput {
     and: [ComponentProductPropertiesItemFiltersInput]
     description: StringFilterInput
@@ -2270,30 +2337,12 @@ input ComponentProductRecommendedInput {
     products: [ID]
 }
 
-input ComponentSharedMetaSocialFiltersInput {
-    and: [ComponentSharedMetaSocialFiltersInput]
-    description: StringFilterInput
-    not: ComponentSharedMetaSocialFiltersInput
-    or: [ComponentSharedMetaSocialFiltersInput]
-    socialNetwork: StringFilterInput
-    title: StringFilterInput
-}
-
-input ComponentSharedMetaSocialInput {
-    description: String
-    id: ID
-    image: ID
-    socialNetwork: ENUM_COMPONENTSHAREDMETASOCIAL_SOCIALNETWORK
-    title: String
-}
-
 input ComponentSharedSeoFiltersInput {
     and: [ComponentSharedSeoFiltersInput]
     canonicalURL: StringFilterInput
     keywords: StringFilterInput
     metaDescription: StringFilterInput
     metaRobots: StringFilterInput
-    metaSocial: ComponentSharedMetaSocialFiltersInput
     metaTitle: StringFilterInput
     metaViewport: StringFilterInput
     not: ComponentSharedSeoFiltersInput
@@ -2308,7 +2357,6 @@ input ComponentSharedSeoInput {
     metaDescription: String
     metaImage: ID
     metaRobots: String
-    metaSocial: [ComponentSharedMetaSocialInput]
     metaTitle: String
     metaViewport: String
     structuredData: JSON
@@ -2659,6 +2707,14 @@ input NecklineInput {
     publishedAt: DateTime
     slug: String
     title: String
+}
+
+input NewsletterInput {
+    description: String
+    promo: ComponentContentPromoInput
+    seo: ComponentSharedSeoInput
+    title: String
+    type: [ComponentNewslatterTypeInput]
 }
 
 input NewspostFiltersInput {

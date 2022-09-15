@@ -90,6 +90,7 @@ onMounted(async () => {
 
 // Check size
 function reportWindowSize() {
+  nuxtApp.callHook('page:resize')
   const mobile = window.document.body.offsetWidth < 769;
   if (useIsMobile().value !== mobile) {
     useIsMobile().value = mobile;
