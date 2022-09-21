@@ -35,7 +35,7 @@
 
                   <div class="m-t-16 m-t-24-sm">
                     <NuxtLink :to="'/trunk-shows/'+item.attributes.slug" class="button m-v-16 m-r-16 m-r-0-sm display-block-sm">Learn more</NuxtLink>
-                    <NuxtLink v-if="item.attributes.apply_for" :to="item.attributes.apply_for" target="_blank" class="button m-v-16 primary target display-block-sm">Apply for</NuxtLink>
+                    <NuxtLink v-if="item.attributes.apply_for" :to="item.attributes.apply_for" target="_blank" rel=”nofollow” class="button m-v-16 primary target display-block-sm">Apply for</NuxtLink>
                   </div>
                 </div>
 

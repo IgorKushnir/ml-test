@@ -2,10 +2,10 @@
   <NuxtLink :to="to">
     <div class="product-item">
         <div class="product-item-head">
-          <h3>{{title}}</h3>
+          <span class="h3">{{title}}</span>
           <LikeButton :liked="liked" :class="hideLikedDefault ? 'hide-liked-default' : ''" @click="handleLike(id)"/>
         </div>
-        <Image :path="image" :alt="title"  size="medium" :class="'image ' + ratio"/>
+        <Image :path="image" :alt="productType ? title + ' ' + productType : title"  size="medium" :class="'image ' + ratio"/>
 
     </div>
   </NuxtLink>
@@ -24,6 +24,10 @@ const props = defineProps({
   title: {
     type: String,
     required: true
+  },
+  productType: {
+    type: String,
+    required: false
   },
   to: {
     type: String,
@@ -91,8 +95,9 @@ $transition: .5s ease-in-out;
     z-index: 2;
     transition: $transition;
   }
-  h3 {
+  .h3 {
     opacity: 0;
+    transition: $transition;
   }
 
   .icon-like {
@@ -122,7 +127,7 @@ $transition: .5s ease-in-out;
   .product-item .product-item-head {
     padding: 16px 24px;
   }
-  .product-item-head h3 {
+  .product-item-head .h3 {
     opacity: 1;
   }
 
@@ -148,7 +153,7 @@ $transition: .5s ease-in-out;
       opacity: 1;
     }
 
-    .product-item-head h3,
+    .product-item-head .h3,
     .product-item-head .icon-heart-no-24,
     .product-item-head .icon-heart-yes-24 {
       opacity: 1;

@@ -4,6 +4,8 @@
 </template>
 
 <script setup>
+import PageNotFound from "../components/PageNotFound";
+
 const typeData = useTypesData()
 const route = useRoute()
 

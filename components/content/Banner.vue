@@ -4,9 +4,18 @@
     <Image class="show-md" :path="data.cover_3x4.data ? data.cover_3x4 : data.cover_4x3" :alt="(!data.title || data.title === '') ? title : data.title"/>
     <div class="overlay"/>
     <div class="wrapper" :class="type">
+
+<!--      <div v-if="h1" style="position: absolute; top: 0; width: 100%">-->
+<!--        <div class="container m-t-40">-->
+<!--          <div class="col-12">-->
+<!--            <h1 class="subheader white">{{ h1 }}</h1>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
       <Container :justify="type === 'main' ? '' : 'justify-center'">
+
         <div  :class="type === 'main' ? 'col-4 col-6-lg col-12-md p-v-0' : 'col-6 col-10-lg col-12-md p-v-0 center'">
-          <h1 class="white" :class="type === 'main' ? '' : type === 'content' ? 'h2' : 'title'">{{(!data.title || data.title === '') ? title : data.title}}</h1>
+          <div class="h1 white" :class="type === 'main' ? '' : type === 'content' ? 'h2' : 'title'">{{(!data.title || data.title === '') ? title : data.title}}</div>
           <p class="white">{{(!data.text || data.text === '') ? text : data.text}}</p>
 
           <NuxtLink v-if="data.button" :to="data.button_link" class="button white m-v-32">{{ data.button_text }}</NuxtLink>
@@ -19,6 +28,8 @@
 </template>
 
 <script setup>
+import Container from "../Container";
+
 const props = defineProps({
   data: {
     type: Object,

@@ -2,7 +2,15 @@
   <div class="body" id="body">
     <div>
       <Header/>
-      <NuxtPage/>
+      <State
+          :title="error.statusCode == 404 ? 'Page not found' : error.message"
+          :text="error.statusCode == 404 ? 'Looks like you just missed the party! The page you are looking for was moved, removed, renamed or no longer exists.' : error.description"
+          :button="{
+            text: 'Home page',
+            path: '/'
+          }"
+          image-path="/img/decline.svg"
+      />
     </div>
     <Footer/>
   </div>
@@ -10,6 +18,12 @@
 
 
 <script setup>
+import State from "./components/State";
+
+const props = defineProps({
+  error: Object
+})
+
 import getInitialData from '~/api/getInitialData';
 import getAllFilters from '~/api/getAllFilters'
 
@@ -31,10 +45,10 @@ const translations = useTranslationsData();
 
 // Get all filters
 let allFilters = useFiltersData();
-let {data, pending, refresh, error} = await getAllFilters('en');
-if (!error.value) allFilters.value = data.value;
+let {data, pending, refresh, error: dError} = await getAllFilters('en');
+if (!dError.value) allFilters.value = data.value;
 
-// Get types
+
 
 useHead({
   title: 'Milla Nova',
@@ -61,26 +75,9 @@ useHead({
 
 
 
-// // computed
-// const count = computed(()=> 3)
-
-
-//// Have to be inside in routs
-// onBeforeRouteLeave((to, from) => {
-//   console.log('to');
-// })
-//
-// onBeforeRouteUpdate((to, from) => {
-//   console.log('to');
-// })
-
 onMounted(async () => {
   reportWindowSize()
   window.addEventListener('resize', reportWindowSize, {passive: true});
-
-  // loadNextHook()
-
-
   //Like list counter
   likeCounter.value = $getLikedProducts().length
 });
@@ -94,65 +91,6 @@ function reportWindowSize() {
   }
 }
 
-
-// let _savedPosition = null;
-// useRouter().options.scrollBehavior = (to, from, savedPosition) => {
-//   console.log(savedPosition);
-//   _savedPosition = savedPosition;
-//   // return new Promise((resolve, reject) => {
-//   //   setTimeout(() => {
-//   //     resolve({ left: 0, top: savedPosition?.top ?? 0, behaviour: "smooth" });
-//   //   }, 500);
-//   // });
-// };
-
-// nuxtApp.hook("page:finish", () => {
-//   setTimeout(go, 1000)
-//
-//
-//   function go() {
-//     // Is next and prev route Product page
-//     if ((useRoute().name === usePreviousRoute().value) && (usePreviousRoute().value === 'product-slug') && !useIsMobile().value) {
-//       window.scrollTo({
-//         top: 153,
-//         // behavior: "smooth"
-//       })
-//     } else {
-//       window.scrollTo({
-//         top:  0,
-//         // behavior: "smooth"
-//       })
-//     }
-//   }
-//
-// })
-
-
-
-
-
-
-
-
-// function loadNextHook() {
-//   let currentPageHeight = ref(0);
-//   let allowLoadNext = true;
-//   watch(currentPageHeight, () => {
-//     allowLoadNext = true;
-//   })
-//
-//   document.addEventListener('scroll', function(e) {
-//     currentPageHeight.value = document.body.scrollHeight;
-//     const Y = window.scrollY - (document.body.scrollHeight - window.innerHeight);
-//     if (-Y < window.innerHeight) {
-//       if (allowLoadNext) {
-//         nuxtApp.callHook('page:loadNext')
-//         allowLoadNext = false;
-//       }
-//     }
-//
-//   }, {passive: true});
-// }
 
 </script>
 

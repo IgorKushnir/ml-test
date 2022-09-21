@@ -5,17 +5,33 @@
         title="Page not found"
         text="Looks like you just missed the party! The page you are looking for was moved, removed, renamed or no longer exists."
         :button="{text: 'Home page', path: '/'}"
+        image-path="/img/decline.svg"
     />
   </transition>
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   show: {
     type: Boolean,
     required: true
   }
 })
+
+if (process.server && props.show) {
+  const nuxtApp = useNuxtApp()
+  const error = new Error()
+  error.statusCode = 404
+  nuxtApp.ssrContext.error = error
+
+  // throw createError({ statusCode: 404, statusMessage: 'Page Not Found' })
+
+
+  // if (nuxtApp.ssrContext) {
+  //   nuxtApp.ssrContext.nuxt.error = createError({ statusCode: 404 });
+  // }
+
+}
 </script>
 
 <style scoped>

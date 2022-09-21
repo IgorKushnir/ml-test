@@ -31,7 +31,11 @@ if (draft === 'true') {
 
 
 let { data, pending, refresh, error } = await getMenu(slug, 'en', publicationState)
-// onMounted(() => refresh())
+onMounted(() => refresh())
+
+// if (process.server) {
+//   console.log('heee', data.value, error.value);
+// }
 
 // watch(data, () => {
 //   console.log(data.value);

@@ -5,7 +5,7 @@
         <div class="col-6 col-4-xl col-12-lg p-v-0">
           <div class="h2 white m-t-0 hide-md">{{ translations.footer_title}}</div>
           <div class="m-v-40">
-            <NuxtLink v-for="item in social" :class="'icon-'+item.icon" :to="item.url" target="_blank"
+            <NuxtLink v-for="item in social" :class="'icon-'+item.icon" :to="item.url" target="_blank" rel=”nofollow”
                       class="social white hover m-r-16 m-h-8-md m-b-16"/>
           </div>
         </div>
@@ -39,7 +39,7 @@
     <div class="container m-t-80  m-b-40 m-t-40-md">
       <div class="row gap-S">
         <div class="col-6 col-12-md p-v-0 additional-items m-b-40-md">
-          <NuxtLink v-for="item in additional" :to="item.url" :target="item.target ? '_blank' : '_self'" class="additional-item white m-v-8 m-v-16-md m-r-80 m-h-0-md">
+          <NuxtLink v-for="item in additional" :to="item.url" :target="item.target ? '_blank' : '_self'" rel="nofollow" class="additional-item white m-v-8 m-v-16-md m-r-80 m-h-0-md">
             <div class="additional-logo">
               <div class="ratio-1x1">
                 <Image v-if="item.logo" :path="item.logo" size="thumbnail" :alt="item.title"/>
@@ -55,9 +55,12 @@
         <div class="col-6 col-12-md p-v-0">
           <div class="copyright">
             <div class="copyright-text m-r-24 m-r-0-md">
-              <span>Copyright © {{new Date().getFullYear()}} MillaNova. All rights reserved. </span>
+              <span>© {{new Date().getFullYear()}} Milla Nova -
+                <NuxtLink v-if="$route.path !== '/'" to="/" class="white">Bridal Dresses & Gowns</NuxtLink>
+                 <template v-else class="copyright">Bridal Dresses & Gowns</template>
+              </span>
               <br>
-              <span>Made by </span><NuxtLink to="https://sarakuz.com" target="_blank" class="white">Sarakuz</NuxtLink>
+              <span>Made by </span><NuxtLink to="https://sarakuz.com" rel=”nofollow” target="_blank" class="white">Sarakuz</NuxtLink>
             </div>
 
             <div class="logo hide-md"><Logo color="light"/></div>
@@ -115,7 +118,7 @@ const additional = useMenuData().value[0].footer_additional
 
 
   .copyright-text {
-    span {
+    > span {
       opacity: .4;
     }
 

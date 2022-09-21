@@ -1,6 +1,5 @@
 <template>
   <SnackBar ref="snackBar" @action="undoHandler"/>
-
   <transition name="fade">
     <Container v-if="productsData  && productsData?.data?.length > 0">
       <template  v-for="(product, index) in productsData.data">
@@ -15,6 +14,7 @@
                        :like-list="likeList"
                        @updateLikes="updateLikes"
                        :hideLikedDefault="moodboard"
+                       :product-type="product?.attributes?.type?.data?.attributes?.slug"
           />
         </div>
       </template>

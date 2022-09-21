@@ -4,7 +4,7 @@
 
     <transition name="fade">
       <div class="content" v-if="!pending && data != null">
-        <ContentBanner :data="data.attributes.banner" type="main" />
+        <ContentBanner :data="data.attributes.banner" type="main"/>
 
         <Content :data="data.attributes.content"/>
 

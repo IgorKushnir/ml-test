@@ -10,7 +10,7 @@
       <p v-if="store.description" class="p-small">{{store.description}}</p>
 
       <div v-if="store.address || store.phone || store.website || store?.lines?.data.length > 0" class="contacts m-t-32">
-        <ListIcon v-if="store.address" :to="'https://www.google.com/maps/place/'+store.address"  target="_blank" icon="location-16" class="m-v-16">
+        <ListIcon v-if="store.address" :to="'https://www.google.com/maps/place/'+store.address"  target="_blank"  icon="location-16" class="m-v-16">
           {{ store.address }}
           <div class="display-block m-t-8">
             <div class="p-small link" style="display: inline-block">Show on map <span class="icon-taget-16"/></div>

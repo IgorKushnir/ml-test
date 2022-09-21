@@ -2,7 +2,7 @@
   <div class="list-icon">
     <span :class="'icon icon-'+icon"/>
     <div>
-      <NuxtLink :to="to" :target="target" class="list-container p-small">
+      <NuxtLink :to="to" :target="target" rel=”nofollow” class="list-container p-small">
         <div class="text"><slot /></div>
 
       </NuxtLink>
