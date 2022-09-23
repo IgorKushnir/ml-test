@@ -28,6 +28,13 @@ query Product{
         title
         description
         storeLink
+        type {
+            data {
+                attributes {
+                title
+                }
+            }
+        }
         gallery {
           data {
             attributes {

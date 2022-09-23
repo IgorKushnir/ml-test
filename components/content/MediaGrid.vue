@@ -8,7 +8,7 @@
         <div class="gallery-item" :class="isLandscape(item.attributes.width, item.attributes.height) ? 'ratio-3x4' : 'ratio-3x2'">
           <Image
               :path="{data: item}"
-              :alt="data.title"
+              :alt="alt"
               :mime="item.attributes.mime"
           />
         </div>
@@ -39,6 +39,10 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: false
+  },
+  alt: {
+    type: String,
+    required: false
   }
 })
 

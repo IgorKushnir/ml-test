@@ -12,9 +12,11 @@
       </StickyHeader>
 
 
+      <pre>
+      </pre>
 
       <div class="promo ratio-3x4 show-md">
-        <Image :path="{data: data.gallery.data[0]}" :alt="data.title"/>
+        <Image :path="{data: data.gallery.data[0]}" :alt="data.title + ' ' + data?.type?.data?.attributes?.title"/>
         <div class="white-overlay"></div>
       </div>
       <Container>
@@ -64,7 +66,7 @@
         </div>
 
 
-        <ContentMediaGrid :data="data.gallery.data" :hide-first="isMobile" classes="col-8 col-7-lg col-12-md m-t-0" columns="product">
+        <ContentMediaGrid :data="data.gallery.data" :alt="data.title + ' ' + data?.type?.data?.attributes?.title" :hide-first="isMobile" classes="col-8 col-7-lg col-12-md m-t-0" columns="product">
           <template #end >
             <div v-if="data.fact !== null" :class="data.fact.ratio">
               <div :class="data.fact.ratio === 'horizontal' ? 'new-ratio-3x2' : 'new-ratio-3x4'">
