@@ -5,7 +5,7 @@
         <div class="col-6 col-4-xl col-12-lg p-v-0">
           <div class="h2 white m-t-0 hide-md">{{ translations.footer_title}}</div>
           <div class="m-v-40">
-            <NuxtLink v-for="item in social" :class="'icon-'+item.icon" :to="item.url" target="_blank" rel=”nofollow”
+            <NuxtLink v-for="item in social" :class="'icon-'+item.icon" :to="item.url" target="_blank" rel="nofollow"
                       class="social white hover m-r-16 m-h-8-md m-b-16"/>
           </div>
         </div>
@@ -60,7 +60,7 @@
                  <template v-else class="copyright">Bridal Dresses & Gowns</template>
               </span>
               <br>
-              <span>Made by </span><NuxtLink to="https://sarakuz.com" rel=”nofollow” target="_blank" class="white">Sarakuz</NuxtLink>
+              <span>Made by </span><NuxtLink to="https://sarakuz.com" rel="nofollow" target="_blank" class="white">Sarakuz</NuxtLink>
             </div>
 
             <div class="logo hide-md"><Logo color="light"/></div>

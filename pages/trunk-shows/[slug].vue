@@ -14,7 +14,7 @@
             <div class="head center m-v-80 m-v-40-md">
               <div class="subheader gray">Trunk show</div>
               <h1 class="title">{{data.attributes.title}}</h1>
-              <NuxtLink v-if="data.attributes.apply_for" :to="data.attributes.apply_for" target="_blank" rel=”nofollow” class="button primary target m-v-8">Apply for</NuxtLink>
+              <NuxtLink v-if="data.attributes.apply_for" :to="data.attributes.apply_for" target="_blank" rel="nofollow" class="button primary target m-v-8">Apply for</NuxtLink>
             </div>
 
 

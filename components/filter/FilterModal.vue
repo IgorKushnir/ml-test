@@ -9,7 +9,7 @@
 
             <div class="header-container p-r-0">
               <div class="btn close" v-on:click="closeFilter"><div class="icon-close-24"></div></div>
-              <h4 class="title"><strong>Filters</strong></h4>
+              <div class="h4 title"><strong>Filters</strong></div>
 
               <transition name="fade">
                 <div v-if="isSelectedFilters" v-on:click="resetHandler" class="btn reset p-small"><strong>Reset all</strong></div>
