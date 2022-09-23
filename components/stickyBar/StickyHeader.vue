@@ -83,7 +83,7 @@ function scroll() {
 
 onMounted(() => {
   // navigation = wrapper;
-  document.addEventListener('scroll', scroll);
+  document.addEventListener('scroll', scroll, {passive: true});
 });
 
 addRouteMiddleware(async (to, from) => {

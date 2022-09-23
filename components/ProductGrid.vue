@@ -128,7 +128,7 @@ function scroll() {
 
 onMounted(() => {
   if (props.infinite) {
-    document.addEventListener('scroll', scroll);
+    document.addEventListener('scroll', scroll, {passive: true});
   }
   likeList.value = $getLikedProducts();
 })
