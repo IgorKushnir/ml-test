@@ -20,10 +20,10 @@
 
         <!-- Logo-->
         <NuxtLink v-if="$route.path !== '/'" to="/" class="logo-container">
-          <img src="@/assets/img/logo.svg" alt="MillaNova Logo" class="logo">
+          <img src="@/assets/img/logo.svg" alt="Milla Nova Logo" class="logo">
         </NuxtLink>
         <div v-else to="/" class="logo-container">
-          <img src="@/assets/img/logo.svg" alt="MillaNova Logo" class="logo">
+          <img src="@/assets/img/logo.svg" alt="Milla Nova Logo" class="logo">
         </div>
 
         <div class="right-side">
