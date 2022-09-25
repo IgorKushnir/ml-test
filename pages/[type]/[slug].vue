@@ -133,7 +133,7 @@ if (process.server) {
   useHead({
     script: [
       {
-        type: 'application/ld-json',
+        type: 'application/ld+json',
         children: JSON.stringify(structuredData),
       },
     ]
