@@ -78,6 +78,7 @@ function parseVariablesInBrackets(str) {
   }
   return str;
 }
+
 function setSeo() {
   useHead({
     title: title,
