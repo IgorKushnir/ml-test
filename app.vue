@@ -39,7 +39,6 @@ if (!error.value) allFilters.value = data.value;
 useHead({
   title: 'Milla Nova',
 
-  titleTemplate: (title) => `${title} - ${translations.value.site_title}`,
   viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
   charset: 'utf-8',
 

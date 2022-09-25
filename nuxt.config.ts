@@ -2,6 +2,7 @@ import {defineNuxtConfig} from 'nuxt'
 import graphql from '@rollup/plugin-graphql';
 
 export default defineNuxtConfig({
+    ssr: true,
     css: [
         '@/assets/style/main.scss',
     ],
@@ -10,12 +11,12 @@ export default defineNuxtConfig({
         '@nuxtjs/strapi',
     ],
     modules: [
-        // '@nuxt/image-edge',
     ],
 
     build: {
 
     },
+
 
 
     vite: {
@@ -67,18 +68,23 @@ export default defineNuxtConfig({
     },
 
     image: {
-        domains: ['nyc3.digitaloceanspaces.com', 'nyc3.cdn.digitaloceanspaces.com', 'millanova.nyc3.cdn.digitaloceanspaces.com', 'localhost'],
+        domains: ['nyc3.digitaloceanspaces.com', 'nyc3.cdn.digitaloceanspaces.com', 'millanova.nyc3.cdn.digitaloceanspaces.com', 'localhost', 'img.youtube.com', 'i.vimeocdn.com'],
         // staticFilename: '[publicPath]/img',
         screens: {
-            xs: 320,
-            sm: 640,
-            md: 768,
-            lg: 1024,
-            xl: 1280,
-            xxl: 1536,
-            '2xl': 1536
+            default: 320,
+            xxs: 480,
+            xs: 576,
+            sm: 768,
+            md: 996,
+            lg: 1200,
+            xl: 1367,
+            xxl: 1600,
+            '4k': 1921
         },
+        alias: {
+            youtube: 'https://img.youtube.com',
+            vimeo: 'https://i.vimeocdn.com',
+        }
     }
 })
-
 
