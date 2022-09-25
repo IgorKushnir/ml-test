@@ -50,6 +50,21 @@ const keywords = computed(() => props.data?.seo?.keywords ??parseVariablesInBrac
 
 const ogImageUrl = 'https://millanova.com/img/og-image.jpg'
 
+// Add structured data
+if (process.server) {
+  if (props.data?.seo?.structuredData) {
+    useHead({
+      script: [
+        {
+          type: 'application/ld-json',
+          children: JSON.stringify(props.data?.seo?.structuredData),
+        },
+      ]
+    })
+  }
+}
+
+
 function parseVariablesInBrackets(str) {
   if (!str) return null;
 

@@ -12,8 +12,6 @@
       </StickyHeader>
 
 
-      <pre>
-      </pre>
 
       <div class="promo ratio-3x4 show-md">
         <Image :path="{data: data.gallery.data[0]}" :alt="data.title + ' ' + data?.type?.data?.attributes?.title"/>
@@ -117,13 +115,37 @@ const extrudedIds = useViewedProductIds().value;
 
 let {data, pending, refresh, error} = await getProduct(slug, JSON.stringify(extrudedIds), publicationState)
 
+if (process.server) {
+  const indexOfFirsImage = data.value?.gallery?.data.findIndex(item => item.attributes.mime.startsWith('image'))
+  console.log({indexOfFirsImage});
+  let structuredData = {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": data.value.title,
+    "description": data.value.description ?? '',
+    "brand": {
+      "@type": "Brand",
+      "name": "Milla Nova"
+    }
+  }
+  if (indexOfFirsImage !== -1) structuredData["image"] = data.value.gallery?.data[indexOfFirsImage]?.attributes?.formats?.medium?.url ?? data.value.gallery?.data[indexOfFirsImage]?.attributes?.url ?? ''
+
+  useHead({
+    script: [
+      {
+        type: 'application/ld-json',
+        children: JSON.stringify(structuredData),
+      },
+    ]
+  })
+}
 
 
 onMounted(() => {
   getLikeList()
 
   refresh().then(_ => {
-    $setViewedProduct(data.value.id, data.value.slug)
+    $setViewedProduct(data.value.id)
 
     const viewedIds = $getViewedProduct()
 

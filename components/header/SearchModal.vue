@@ -46,7 +46,6 @@
                   </div>
                   <div class="m-t-8 brake-word" v-html="highlight(item.title, search)"/>
                   <div class="collection-label gray m-t-4">{{ item.collection?.title }}</div>
-                  <!--              <pre>{{item}}</pre>-->
                 </NuxtLink>
               </div>
             </div>

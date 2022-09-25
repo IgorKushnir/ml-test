@@ -34,7 +34,8 @@ let allFilters = useFiltersData();
 let {data, pending, refresh, error} = await getAllFilters('en');
 if (!error.value) allFilters.value = data.value;
 
-// Get types
+
+
 
 useHead({
   title: 'Milla Nova',
