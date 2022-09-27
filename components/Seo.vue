@@ -1,11 +1,11 @@
 <template>
-      <pre>
-        {{ breadcrumbs }}
+<!--      <pre>-->
+<!--        {{ breadcrumbs }}-->
 <!--      {{ patternIndex }}-->
 <!--      {{ title }}-->
 <!--      {{ description }}-->
 <!--      {{ keywords }}-->
-      </pre>
+<!--      </pre>-->
 </template>
 <script setup>
 const props = defineProps({
