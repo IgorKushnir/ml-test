@@ -1,7 +1,15 @@
 <template>
   <div>
 
-    <Seo :data="dataCollection"/>
+    <Seo :data="dataCollection" :breadcrumbs="[
+        {
+          title: 'Collections',
+          path: '/collections'
+        },
+        {
+          title: dataCollection?.title
+        }
+    ]"/>
     <transition name="fade">
       <div v-if="!pendingCollection && dataCollection != null">
 

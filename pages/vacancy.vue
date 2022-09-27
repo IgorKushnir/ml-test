@@ -1,6 +1,10 @@
 <template>
   <div>
-    <Seo title="Vacancy"/>
+    <Seo title="Vacancy" :breadcrumbs="[
+        {
+          title: 'Vacancy',
+        }
+    ]"/>
     <InnerHeader title="Vacancy"/>
 
 

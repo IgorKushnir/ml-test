@@ -1,6 +1,10 @@
 <template>
   <div>
-    <Seo title="News"/>
+    <Seo title="News" :breadcrumbs="[
+        {
+          title: 'News',
+        }
+    ]"/>
 
     <transition name="fade">
       <div v-if="newsData != null">

@@ -1,6 +1,14 @@
 <template>
   <div>
-    <Seo :data="data?.attributes"/>
+    <Seo :data="data?.attributes" :breadcrumbs="[
+        {
+          title: 'News',
+          path: '/news'
+        },
+        {
+          title: data?.attributes?.title,
+        }
+    ]"/>
 
     <transition name="fade">
       <div v-if="!pending && data != null">

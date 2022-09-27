@@ -1,10 +1,11 @@
 <template>
-<!--      <pre>-->
+      <pre>
+        {{ breadcrumbs }}
 <!--      {{ patternIndex }}-->
 <!--      {{ title }}-->
 <!--      {{ description }}-->
 <!--      {{ keywords }}-->
-<!--      </pre>-->
+      </pre>
 </template>
 <script setup>
 const props = defineProps({
@@ -16,6 +17,10 @@ const props = defineProps({
     type: String,
     required: false
   },
+  breadcrumbs: {
+    type: Array,
+    required: false
+  }
   // description: {
   //   type: String,
   //   required: false
@@ -30,7 +35,8 @@ const translations = useTranslationsData();
 
 const fullPath = useRoute().fullPath;
 const name = useRoute().name;
-const siteUrl = "https://millanova.com" + fullPath
+const site = "https://millanova.com"
+const siteUrl = site + fullPath
 
 const patternIndex = computed(() => {
   let index = translations.value.seo_pattern.map((item) => {
@@ -50,6 +56,7 @@ const keywords = computed(() => props.data?.seo?.keywords ??parseVariablesInBrac
 
 const ogImageUrl = 'https://millanova.com/img/og-image.jpg'
 
+
 // Add structured data
 if (process.server) {
   if (props.data?.seo?.structuredData) {
@@ -58,6 +65,40 @@ if (process.server) {
         {
           type: 'application/ld+json',
           children: JSON.stringify(props.data?.seo?.structuredData),
+        },
+      ]
+    })
+  }
+
+  // Breadcrumbs
+  if (props.breadcrumbs) {
+    let breadcrumbs = [
+      {
+        title: 'Milla Nova',
+        path: '/'
+      },
+      ...props.breadcrumbs
+    ]
+
+    breadcrumbs = breadcrumbs.map((b, index) => {
+      let res = {
+        "@type": "ListItem",
+        "position": index + 1,
+        "name": b.title,
+      }
+      if (b.path) res.item = site + b.path
+      return res
+    })
+
+    useHead({
+      script: [
+        {
+          type: 'application/ld+json',
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [...breadcrumbs]
+          }),
         },
       ]
     })

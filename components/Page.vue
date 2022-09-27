@@ -1,6 +1,10 @@
 <template>
   <div>
-    <Seo :data="data"/>
+    <Seo :data="data" :breadcrumbs="[
+        {
+          title: data?.title,
+        }
+    ]"/>
     <transition name="fade">
       <div class="content" v-if="!pending && data != null">
         <InnerHeader v-if="!data.banner" :title="data.title" :sub_header="data.sub_header" :sub_title="data.text"/>

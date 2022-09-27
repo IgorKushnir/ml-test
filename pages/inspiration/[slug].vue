@@ -1,6 +1,14 @@
 <template>
   <div>
-    <Seo :data="data?.attributes"/>
+    <Seo :data="data?.attributes" :breadcrumbs="[
+        {
+          title: 'Inspiration',
+          path: '/inspiration/' + data?.attributes?.slug
+        },
+        {
+          title: '' + data?.attributes?.title
+        }
+    ]"/>
 
     <transition name="fade">
       <div v-if="!pending && data != null">
@@ -14,7 +22,7 @@
 
         <Container justify="justify-center">
           <div class="col-8 col-12-md p-t-0 p-b-0">
-            <h1 class="title center m-t-0">{{data.attributes.title}}</h1>
+            <h1 class="title center m-t-0">{{ data.attributes.title }}</h1>
             <p class="center">{{ $getDate(data.attributes.created, $getMonths) }}</p>
           </div>
         </Container>
@@ -33,7 +41,7 @@ import {getInspiration} from '~/api/inspiration'
 
 const route = useRoute()
 const slug = route.params.slug
-const { $getDate, $getMonths } = useNuxtApp()
+const {$getDate, $getMonths} = useNuxtApp()
 
 const {data, pending, refresh, error} = await getInspiration(slug, 'en')
 onMounted(() => {

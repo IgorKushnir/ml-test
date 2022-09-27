@@ -1,6 +1,14 @@
 <template>
   <div>
-    <Seo :data="data?.attributes"/>
+    <Seo :data="data?.attributes" :breadcrumbs="[
+        {
+          title: 'Trunk shows',
+          path: '/trunk-shows/' + data?.attributes?.slug,
+        },
+        {
+          title: data?.attributes?.title,
+        }
+    ]"/>
 
     <transition name="fade">
       <div v-if="!pending && data != null">

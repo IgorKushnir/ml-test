@@ -1,7 +1,11 @@
 <template>
   <div>
 <!--    Create route store-->
-    <Seo title="Store finder"/>
+    <Seo title="Store finder" :breadcrumbs="[
+        {
+          title: 'Store finder',
+        }
+    ]"/>
 
     <div v-if="countries">
       <InnerHeader title="Store finder"/>

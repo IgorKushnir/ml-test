@@ -1,6 +1,14 @@
 <template>
   <div>
-    <Seo :data="data"/>
+    <Seo :data="data" :breadcrumbs="[
+        {
+          title: data?.collection?.data?.attributes?.title,
+          path: '/collection/' + data?.collection?.data?.attributes?.slug,
+        },
+        {
+          title: data?.title,
+        }
+    ]"/>
 
     <div v-if="data != null">
 

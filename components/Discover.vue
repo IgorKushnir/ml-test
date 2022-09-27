@@ -1,6 +1,10 @@
 <template>
   <div>
-    <Seo :data="type"/>
+    <Seo :data="type" :breadcrumbs="[
+        {
+          title: type?.title,
+        }
+    ]"/>
     <div v-if="dataProducts!== null">
       <InnerHeader :title="type.title"/>
 

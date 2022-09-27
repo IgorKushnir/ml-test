@@ -1,6 +1,10 @@
 <template>
   <div>
-    <Seo title="Trunk shows"/>
+    <Seo title="Trunk shows" :breadcrumbs="[
+        {
+          title: 'Trunk shows',
+        }
+    ]"/>
 
     <transition name="fade">
       <div v-if="!pending && data != null">

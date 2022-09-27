@@ -1,7 +1,11 @@
 <template>
   <div>
+    <Seo :data="data" :breadcrumbs="[
+        {
+          title: 'Newsletter',
+        }
+    ]"/>
     <div v-if="!pending">
-      <Seo :data="data"/>
       <InnerHeader :title="data.title" :sub_title="data.description"/>
 
 

@@ -1,6 +1,10 @@
 <template>
   <div>
-    <Seo :data="data"/>
+    <Seo :data="data" :breadcrumbs="[
+        {
+          title: 'Contact us',
+        }
+    ]"/>
     <transition name="fade">
       <div v-if="data != null">
         <transition name="fade">
