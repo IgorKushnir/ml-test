@@ -1,6 +1,6 @@
 <template>
 <!--      <pre>-->
-<!--        {{ breadcrumbs }}-->
+        {{ // breadcrumbs }}
 <!--      {{ patternIndex }}-->
 <!--      {{ title }}-->
 <!--      {{ description }}-->

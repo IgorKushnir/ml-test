@@ -1,7 +1,11 @@
 <template>
   <div>
-    <Seo title="Moodboard"/>
-    <InnerHeader title="Moodboard"/>
+    <Seo title="Mood board" :breadcrumbs="[
+        {
+          title: 'Mood board',
+        }
+    ]"/>
+    <InnerHeader title="Mood board"/>
 
 
 

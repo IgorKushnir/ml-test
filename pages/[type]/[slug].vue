@@ -1,14 +1,6 @@
 <template>
   <div>
-    <Seo :data="data" :breadcrumbs="[
-        {
-          title: data?.collection?.data?.attributes?.title,
-          path: '/collection/' + data?.collection?.data?.attributes?.slug,
-        },
-        {
-          title: data?.title,
-        }
-    ]"/>
+    <Seo :data="data" :breadcrumbs="breadcrumbs"/>
 
     <div v-if="data != null">
 
@@ -187,6 +179,34 @@ function nextHandler() {
 }
 
 
+const breadcrumbs = computed(() => {
+  let res = [
+    {
+      title: data?.value.title,
+      path: null
+    }
+  ]
+  if (data?.value.collection?.data) {
+    res = [
+      {
+        title: data?.value.collection?.data?.attributes?.title,
+        path: '/collection/' + data?.value.collection?.data?.attributes?.slug,
+      },
+        ...res
+    ]
+  } else {
+    if (data?.value.type?.data) {
+      res = [
+        {
+          title: data?.value.type?.data?.attributes?.title,
+          path: '/' + data?.value.type?.data?.attributes?.slug,
+        },
+        ...res
+      ]
+    }
+  }
+  return res;
+})
 
 
 </script>

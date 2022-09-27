@@ -32,6 +32,7 @@ query Product{
             data {
                 attributes {
                 title
+                slug
                 }
             }
         }
