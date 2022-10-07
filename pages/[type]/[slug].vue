@@ -139,11 +139,11 @@ if (process.server) {
       ]
     })
 
-    if (!indexOfFirsImage) {
-      console.error('Check product error: ', data.value.title);
+    if (!indexOfFirsImage && indexOfFirsImage != 0) {
+      console.error('Check product error: ', data.value.title, indexOfFirsImage);
     }
   } else {
-    console.error(false, 'process.server && !error.value && data.value');
+    console.error(404, route.fullPath);
   }
 
 }
