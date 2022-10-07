@@ -1,0 +1,68 @@
+query PersonalStylist($lang: I18NLocaleCode) {
+    personalStylist (
+        locale: $lang
+    ) {
+        data {
+            attributes {
+                title
+                description
+                questions {
+                    ...on ComponentPersonalStylistQuestion {
+                        __typename
+                        question
+                        select_text: select
+                        option_text: option {
+                            title
+                            filter
+                        }
+                    }
+                    ...on ComponentPersonalStylistPhotoQuestion {
+                        __typename
+                        question
+                        select_photo: select
+                        option_photo: option {
+                            title
+                            filter
+                            cover_3x4 {
+                                data {
+                                    attributes {
+                                        url
+                                        width
+                                        height
+                                        mime
+                                        placeholder
+                                        formats
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                cover_4x3 {
+                    data {
+                        attributes {
+                            width
+                            mime
+                            height
+                            placeholder
+                            url
+                            formats
+                        }
+                    }
+                }
+                cover_3x4 {
+                    data {
+                        attributes {
+                            width
+                            mime
+                            height
+                            placeholder
+                            url
+                            formats
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

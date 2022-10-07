@@ -5,7 +5,7 @@ schema {
     mutation: Mutation
 }
 
-union GenericMorph = Accessory | Backneckline | Budget | Category | Collection | Color | ComponentContactUsContactEntry | ComponentContactUsEmailList | ComponentContactUsInput | ComponentContentBanner | ComponentContentBlocks | ComponentContentCarusel | ComponentContentCaruselItem | ComponentContentDivider | ComponentContentEmbedVideo | ComponentContentFact | ComponentContentImageVideo | ComponentContentImageVideoGrig | ComponentContentItemsButtonItem | ComponentContentItemsPosterItem | ComponentContentLatestContent | ComponentContentMediaBanner | ComponentContentPoster | ComponentContentPromo | ComponentContentSilhouettes | ComponentContentText | ComponentMenuFooterAdditionalLinkItem | ComponentMenuItem | ComponentMenuLink | ComponentMenuSocialItem | ComponentMenuSubMenu | ComponentNewslatterType | ComponentProductProduct | ComponentProductPropertiesItem | ComponentProductRecommended | ComponentSharedMetaSocial | ComponentSharedSeo | ComponentStoreFinderCity | ComponentStoreFinderStore | ContactUs | Decoration | Fabric | I18NLocale | Inspiration | Line | Main | Menu | Neckline | Newsletter | Newspost | Other | Page | Product | Redirect | Shoe | Silhouette | StoreFinder | Style | Transtation | TrunkShow | Type | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Vacancy
+union GenericMorph = Accessory | Backneckline | Budget | Category | Collection | Color | ComponentContactUsContactEntry | ComponentContactUsEmailList | ComponentContactUsInput | ComponentContentBanner | ComponentContentBlocks | ComponentContentCarusel | ComponentContentCaruselItem | ComponentContentDivider | ComponentContentEmbedVideo | ComponentContentFact | ComponentContentImageVideo | ComponentContentImageVideoGrig | ComponentContentItemsButtonItem | ComponentContentItemsPosterItem | ComponentContentLatestContent | ComponentContentMediaBanner | ComponentContentPoster | ComponentContentPromo | ComponentContentSilhouettes | ComponentContentText | ComponentMenuFooterAdditionalLinkItem | ComponentMenuItem | ComponentMenuLink | ComponentMenuSocialItem | ComponentMenuSubMenu | ComponentNewslatterType | ComponentPersonalStylistPhoto | ComponentPersonalStylistPhotoQuestion | ComponentPersonalStylistQuestion | ComponentPersonalStylistText | ComponentProductProduct | ComponentProductPropertiesItem | ComponentProductRecommended | ComponentSharedMetaSocial | ComponentSharedSeo | ComponentSharedSeoPattern | ComponentStoreFinderCity | ComponentStoreFinderStore | ContactUs | Decoration | Fabric | I18NLocale | Inspiration | Line | Main | Menu | Neckline | Newsletter | Newspost | Other | Page | PersonalStylist | Product | Redirect | Shoe | Silhouette | StoreFinder | Style | Transtation | TrunkShow | Type | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Vacancy
 
 union InspirationContentDynamicZone = ComponentContentBlocks | ComponentContentCarusel | ComponentContentDivider | ComponentContentEmbedVideo | ComponentContentFact | ComponentContentImageVideoGrig | ComponentContentLatestContent | ComponentContentMediaBanner | ComponentContentPoster | ComponentContentText | Error
 
@@ -14,6 +14,8 @@ union MainContentDynamicZone = ComponentContentBlocks | ComponentContentCarusel 
 union NewspostContentDynamicZone = ComponentContentBlocks | ComponentContentCarusel | ComponentContentDivider | ComponentContentEmbedVideo | ComponentContentFact | ComponentContentImageVideoGrig | ComponentContentLatestContent | ComponentContentMediaBanner | ComponentContentPoster | ComponentContentText | Error
 
 union PageContentDynamicZone = ComponentContentBlocks | ComponentContentCarusel | ComponentContentDivider | ComponentContentEmbedVideo | ComponentContentFact | ComponentContentImageVideoGrig | ComponentContentLatestContent | ComponentContentMediaBanner | ComponentContentPoster | ComponentContentText | Error
+
+union PersonalStylistQuestionsDynamicZone = ComponentPersonalStylistPhotoQuestion | ComponentPersonalStylistQuestion | Error
 
 type Accessory {
     createdAt: DateTime
@@ -396,6 +398,33 @@ type ComponentNewslatterType {
     title: String!
 }
 
+type ComponentPersonalStylistPhoto {
+    cover_3x4: UploadFileEntityResponse!
+    filter: String!
+    id: ID!
+    title: String
+}
+
+type ComponentPersonalStylistPhotoQuestion {
+    id: ID!
+    option(filters: ComponentPersonalStylistPhotoFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentPersonalStylistPhoto]!
+    question: String!
+    select: ENUM_COMPONENTPERSONALSTYLISTPHOTOQUESTION_SELECT!
+}
+
+type ComponentPersonalStylistQuestion {
+    id: ID!
+    option(filters: ComponentPersonalStylistTextFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentPersonalStylistText]!
+    question: String!
+    select: ENUM_COMPONENTPERSONALSTYLISTQUESTION_SELECT!
+}
+
+type ComponentPersonalStylistText {
+    filter: String!
+    id: ID!
+    title: String!
+}
+
 type ComponentProductProduct {
     id: ID!
     product: ProductEntityResponse
@@ -430,6 +459,14 @@ type ComponentSharedSeo {
     metaTitle: String
     metaViewport: String
     structuredData: JSON
+}
+
+type ComponentSharedSeoPattern {
+    description: String!
+    id: ID!
+    keywords: String!
+    name: String!
+    title: String!
 }
 
 type ComponentStoreFinderCity {
@@ -709,6 +746,7 @@ type Mutation {
     createOtherLocalization(data: OtherInput, id: ID, locale: I18NLocaleCode): OtherEntityResponse
     createPage(data: PageInput!, locale: I18NLocaleCode): PageEntityResponse
     createPageLocalization(data: PageInput, id: ID, locale: I18NLocaleCode): PageEntityResponse
+    createPersonalStylistLocalization(data: PersonalStylistInput, id: ID, locale: I18NLocaleCode): PersonalStylistEntityResponse
     createProduct(data: ProductInput!, locale: I18NLocaleCode): ProductEntityResponse
     createProductLocalization(data: ProductInput, id: ID, locale: I18NLocaleCode): ProductEntityResponse
     createRedirect(data: RedirectInput!): RedirectEntityResponse
@@ -751,6 +789,7 @@ type Mutation {
     deleteNewspost(id: ID!, locale: I18NLocaleCode): NewspostEntityResponse
     deleteOther(id: ID!, locale: I18NLocaleCode): OtherEntityResponse
     deletePage(id: ID!, locale: I18NLocaleCode): PageEntityResponse
+    deletePersonalStylist(locale: I18NLocaleCode): PersonalStylistEntityResponse
     deleteProduct(id: ID!, locale: I18NLocaleCode): ProductEntityResponse
     deleteRedirect(id: ID!): RedirectEntityResponse
     deleteShoe(id: ID!, locale: I18NLocaleCode): ShoeEntityResponse
@@ -797,6 +836,7 @@ type Mutation {
     updateNewspost(data: NewspostInput!, id: ID!, locale: I18NLocaleCode): NewspostEntityResponse
     updateOther(data: OtherInput!, id: ID!, locale: I18NLocaleCode): OtherEntityResponse
     updatePage(data: PageInput!, id: ID!, locale: I18NLocaleCode): PageEntityResponse
+    updatePersonalStylist(data: PersonalStylistInput!, locale: I18NLocaleCode): PersonalStylistEntityResponse
     updateProduct(data: ProductInput!, id: ID!, locale: I18NLocaleCode): ProductEntityResponse
     updateRedirect(data: RedirectInput!, id: ID!): RedirectEntityResponse
     updateShoe(data: ShoeInput!, id: ID!, locale: I18NLocaleCode): ShoeEntityResponse
@@ -972,6 +1012,30 @@ type Pagination {
     total: Int!
 }
 
+type PersonalStylist {
+    cover_16x9: UploadFileEntityResponse!
+    createdAt: DateTime
+    description: String
+    locale: String
+    localizations: PersonalStylistRelationResponseCollection
+    questions: [PersonalStylistQuestionsDynamicZone]!
+    title: String!
+    updatedAt: DateTime
+}
+
+type PersonalStylistEntity {
+    attributes: PersonalStylist
+    id: ID
+}
+
+type PersonalStylistEntityResponse {
+    data: PersonalStylistEntity
+}
+
+type PersonalStylistRelationResponseCollection {
+    data: [PersonalStylistEntity!]!
+}
+
 type Product {
     accessoires(filters: AccessoryFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): AccessoryRelationResponseCollection
     backnecklines(filters: BacknecklineFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): BacknecklineRelationResponseCollection
@@ -1058,6 +1122,7 @@ type Query {
     others(filters: OtherFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): OtherEntityResponseCollection
     page(id: ID, locale: I18NLocaleCode): PageEntityResponse
     pages(filters: PageFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): PageEntityResponseCollection
+    personalStylist(locale: I18NLocaleCode): PersonalStylistEntityResponse
     product(id: ID, locale: I18NLocaleCode): ProductEntityResponse
     products(filters: ProductFiltersInput, locale: I18NLocaleCode, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ProductEntityResponseCollection
     redirect(id: ID): RedirectEntityResponse
@@ -1238,8 +1303,7 @@ type Transtation {
     footer_title: String
     locale: String
     localizations: TranstationRelationResponseCollection
-    site_description: String!
-    site_title: String!
+    seo_pattern(filters: ComponentSharedSeoPatternFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedSeoPattern]
     updatedAt: DateTime
 }
 
@@ -1631,6 +1695,16 @@ enum ENUM_COMPONENTMENUSOCIALITEM_ICON {
     youtube
 }
 
+enum ENUM_COMPONENTPERSONALSTYLISTPHOTOQUESTION_SELECT {
+    multiple
+    single
+}
+
+enum ENUM_COMPONENTPERSONALSTYLISTQUESTION_SELECT {
+    multiple
+    single
+}
+
 enum ENUM_COMPONENTSHAREDMETASOCIAL_SOCIALNETWORK {
     Facebook
     Twitter
@@ -1907,6 +1981,8 @@ scalar NewspostContentDynamicZoneInput
 
 scalar PageContentDynamicZoneInput
 
+scalar PersonalStylistQuestionsDynamicZoneInput
+
 "The `Upload` scalar type represents a file upload."
 scalar Upload
 
@@ -1920,6 +1996,7 @@ input AccessoryFiltersInput {
     or: [AccessoryFiltersInput]
     products: ProductFiltersInput
     publishedAt: DateTimeFilterInput
+    sitemap_exclude: BooleanFilterInput
     slug: StringFilterInput
     title: StringFilterInput
     updatedAt: DateTimeFilterInput
@@ -1928,6 +2005,7 @@ input AccessoryFiltersInput {
 input AccessoryInput {
     products: [ID]
     publishedAt: DateTime
+    sitemap_exclude: Boolean
     slug: String
     title: String
 }
@@ -1942,6 +2020,7 @@ input BacknecklineFiltersInput {
     or: [BacknecklineFiltersInput]
     products: ProductFiltersInput
     publishedAt: DateTimeFilterInput
+    sitemap_exclude: BooleanFilterInput
     slug: StringFilterInput
     title: StringFilterInput
     updatedAt: DateTimeFilterInput
@@ -1950,6 +2029,7 @@ input BacknecklineFiltersInput {
 input BacknecklineInput {
     products: [ID]
     publishedAt: DateTime
+    sitemap_exclude: Boolean
     slug: String
     title: String
 }
@@ -1988,6 +2068,7 @@ input BudgetFiltersInput {
     or: [BudgetFiltersInput]
     products: ProductFiltersInput
     publishedAt: DateTimeFilterInput
+    sitemap_exclude: BooleanFilterInput
     slug: StringFilterInput
     title: StringFilterInput
     updatedAt: DateTimeFilterInput
@@ -1996,6 +2077,7 @@ input BudgetFiltersInput {
 input BudgetInput {
     products: [ID]
     publishedAt: DateTime
+    sitemap_exclude: Boolean
     slug: String
     title: String
 }
@@ -2011,6 +2093,7 @@ input CategoryFiltersInput {
     or: [CategoryFiltersInput]
     order: IntFilterInput
     publishedAt: DateTimeFilterInput
+    sitemap_exclude: BooleanFilterInput
     slug: StringFilterInput
     title: StringFilterInput
     updatedAt: DateTimeFilterInput
@@ -2020,6 +2103,7 @@ input CategoryInput {
     inspirations: [ID]
     order: Int
     publishedAt: DateTime
+    sitemap_exclude: Boolean
     slug: String
     title: String
 }
@@ -2040,6 +2124,7 @@ input CollectionFiltersInput {
     publishedAt: DateTimeFilterInput
     seo: ComponentSharedSeoFiltersInput
     show_promo: BooleanFilterInput
+    sitemap_exclude: BooleanFilterInput
     slug: StringFilterInput
     title: StringFilterInput
     updatedAt: DateTimeFilterInput
@@ -2056,6 +2141,7 @@ input CollectionInput {
     publishedAt: DateTime
     seo: ComponentSharedSeoInput
     show_promo: Boolean
+    sitemap_exclude: Boolean
     slug: String
     title: String
     video: ID
@@ -2071,6 +2157,7 @@ input ColorFiltersInput {
     or: [ColorFiltersInput]
     products: ProductFiltersInput
     publishedAt: DateTimeFilterInput
+    sitemap_exclude: BooleanFilterInput
     slug: StringFilterInput
     title: StringFilterInput
     updatedAt: DateTimeFilterInput
@@ -2079,6 +2166,7 @@ input ColorFiltersInput {
 input ColorInput {
     products: [ID]
     publishedAt: DateTime
+    sitemap_exclude: Boolean
     slug: String
     title: String
 }
@@ -2311,6 +2399,22 @@ input ComponentNewslatterTypeInput {
     title: String
 }
 
+input ComponentPersonalStylistPhotoFiltersInput {
+    and: [ComponentPersonalStylistPhotoFiltersInput]
+    filter: StringFilterInput
+    not: ComponentPersonalStylistPhotoFiltersInput
+    or: [ComponentPersonalStylistPhotoFiltersInput]
+    title: StringFilterInput
+}
+
+input ComponentPersonalStylistTextFiltersInput {
+    and: [ComponentPersonalStylistTextFiltersInput]
+    filter: StringFilterInput
+    not: ComponentPersonalStylistTextFiltersInput
+    or: [ComponentPersonalStylistTextFiltersInput]
+    title: StringFilterInput
+}
+
 input ComponentProductPropertiesItemFiltersInput {
     and: [ComponentProductPropertiesItemFiltersInput]
     description: StringFilterInput
@@ -2362,6 +2466,24 @@ input ComponentSharedSeoInput {
     structuredData: JSON
 }
 
+input ComponentSharedSeoPatternFiltersInput {
+    and: [ComponentSharedSeoPatternFiltersInput]
+    description: StringFilterInput
+    keywords: StringFilterInput
+    name: StringFilterInput
+    not: ComponentSharedSeoPatternFiltersInput
+    or: [ComponentSharedSeoPatternFiltersInput]
+    title: StringFilterInput
+}
+
+input ComponentSharedSeoPatternInput {
+    description: String
+    id: ID
+    keywords: String
+    name: String
+    title: String
+}
+
 input ComponentStoreFinderCityFiltersInput {
     and: [ComponentStoreFinderCityFiltersInput]
     name: StringFilterInput
@@ -2409,6 +2531,7 @@ input ContactUsInput {
     entry: [ComponentContactUsContactEntryInput]
     publishedAt: DateTime
     seo: ComponentSharedSeoInput
+    sitemap_exclude: Boolean
     text: String
     title: String
 }
@@ -2471,6 +2594,7 @@ input DecorationFiltersInput {
     or: [DecorationFiltersInput]
     products: ProductFiltersInput
     publishedAt: DateTimeFilterInput
+    sitemap_exclude: BooleanFilterInput
     slug: StringFilterInput
     title: StringFilterInput
     updatedAt: DateTimeFilterInput
@@ -2479,6 +2603,7 @@ input DecorationFiltersInput {
 input DecorationInput {
     products: [ID]
     publishedAt: DateTime
+    sitemap_exclude: Boolean
     slug: String
     title: String
 }
@@ -2493,6 +2618,7 @@ input FabricFiltersInput {
     or: [FabricFiltersInput]
     products: ProductFiltersInput
     publishedAt: DateTimeFilterInput
+    sitemap_exclude: BooleanFilterInput
     slug: StringFilterInput
     title: StringFilterInput
     updatedAt: DateTimeFilterInput
@@ -2501,6 +2627,7 @@ input FabricFiltersInput {
 input FabricInput {
     products: [ID]
     publishedAt: DateTime
+    sitemap_exclude: Boolean
     slug: String
     title: String
 }
@@ -2582,6 +2709,7 @@ input InspirationFiltersInput {
     or: [InspirationFiltersInput]
     publishedAt: DateTimeFilterInput
     seo: ComponentSharedSeoFiltersInput
+    sitemap_exclude: BooleanFilterInput
     slug: StringFilterInput
     title: StringFilterInput
     updatedAt: DateTimeFilterInput
@@ -2595,6 +2723,7 @@ input InspirationInput {
     created: Date
     publishedAt: DateTime
     seo: ComponentSharedSeoInput
+    sitemap_exclude: Boolean
     slug: String
     title: String
 }
@@ -2659,6 +2788,7 @@ input LineFiltersInput {
     order: IntFilterInput
     publishedAt: DateTimeFilterInput
     seo: ComponentSharedSeoFiltersInput
+    sitemap_exclude: BooleanFilterInput
     slug: StringFilterInput
     title: StringFilterInput
     updatedAt: DateTimeFilterInput
@@ -2669,6 +2799,7 @@ input LineInput {
     order: Int
     publishedAt: DateTime
     seo: ComponentSharedSeoInput
+    sitemap_exclude: Boolean
     slug: String
     title: String
 }
@@ -2678,12 +2809,14 @@ input MainInput {
     content: [MainContentDynamicZoneInput!]
     publishedAt: DateTime
     seo: ComponentSharedSeoInput
+    sitemap_exclude: Boolean
 }
 
 input MenuInput {
     footer_additional: [ComponentMenuFooterAdditionalLinkItemInput]
     primary: [ComponentMenuItemInput]
     primary_additional: [ComponentMenuLinkInput]
+    sitemap_exclude: Boolean
     social: [ComponentMenuSocialItemInput]
 }
 
@@ -2697,6 +2830,7 @@ input NecklineFiltersInput {
     or: [NecklineFiltersInput]
     products: ProductFiltersInput
     publishedAt: DateTimeFilterInput
+    sitemap_exclude: BooleanFilterInput
     slug: StringFilterInput
     title: StringFilterInput
     updatedAt: DateTimeFilterInput
@@ -2705,6 +2839,7 @@ input NecklineFiltersInput {
 input NecklineInput {
     products: [ID]
     publishedAt: DateTime
+    sitemap_exclude: Boolean
     slug: String
     title: String
 }
@@ -2713,6 +2848,7 @@ input NewsletterInput {
     description: String
     promo: ComponentContentPromoInput
     seo: ComponentSharedSeoInput
+    sitemap_exclude: Boolean
     title: String
     type: [ComponentNewslatterTypeInput]
 }
@@ -2728,6 +2864,7 @@ input NewspostFiltersInput {
     or: [NewspostFiltersInput]
     publishedAt: DateTimeFilterInput
     seo: ComponentSharedSeoFiltersInput
+    sitemap_exclude: BooleanFilterInput
     slug: StringFilterInput
     title: StringFilterInput
     updatedAt: DateTimeFilterInput
@@ -2740,6 +2877,7 @@ input NewspostInput {
     created: Date
     publishedAt: DateTime
     seo: ComponentSharedSeoInput
+    sitemap_exclude: Boolean
     slug: String
     title: String
 }
@@ -2754,6 +2892,7 @@ input OtherFiltersInput {
     or: [OtherFiltersInput]
     products: ProductFiltersInput
     publishedAt: DateTimeFilterInput
+    sitemap_exclude: BooleanFilterInput
     slug: StringFilterInput
     title: StringFilterInput
     updatedAt: DateTimeFilterInput
@@ -2762,6 +2901,7 @@ input OtherFiltersInput {
 input OtherInput {
     products: [ID]
     publishedAt: DateTime
+    sitemap_exclude: Boolean
     slug: String
     title: String
 }
@@ -2777,6 +2917,7 @@ input PageFiltersInput {
     or: [PageFiltersInput]
     publishedAt: DateTimeFilterInput
     seo: ComponentSharedSeoFiltersInput
+    sitemap_exclude: BooleanFilterInput
     slug: StringFilterInput
     sub_header: StringFilterInput
     text: StringFilterInput
@@ -2789,6 +2930,7 @@ input PageInput {
     content: [PageContentDynamicZoneInput!]
     publishedAt: DateTime
     seo: ComponentSharedSeoInput
+    sitemap_exclude: Boolean
     slug: String
     sub_header: String
     text: String
@@ -2800,6 +2942,14 @@ input PaginationArg {
     page: Int
     pageSize: Int
     start: Int
+}
+
+input PersonalStylistInput {
+    cover_16x9: ID
+    description: String
+    questions: [PersonalStylistQuestionsDynamicZoneInput!]
+    sitemap_exclude: Boolean
+    title: String
 }
 
 input ProductFiltersInput {
@@ -2827,6 +2977,7 @@ input ProductFiltersInput {
     seo: ComponentSharedSeoFiltersInput
     shoes: ShoeFiltersInput
     silhouettes: SilhouetteFiltersInput
+    sitemap_exclude: BooleanFilterInput
     slug: StringFilterInput
     storeLink: StringFilterInput
     styles: StyleFiltersInput
@@ -2855,6 +3006,7 @@ input ProductInput {
     seo: ComponentSharedSeoInput
     shoes: [ID]
     silhouettes: ID
+    sitemap_exclude: Boolean
     slug: String
     storeLink: String
     styles: [ID]
@@ -2870,6 +3022,7 @@ input RedirectFiltersInput {
     not: RedirectFiltersInput
     or: [RedirectFiltersInput]
     publishedAt: DateTimeFilterInput
+    sitemap_exclude: BooleanFilterInput
     status: IntFilterInput
     to: StringFilterInput
     updatedAt: DateTimeFilterInput
@@ -2878,6 +3031,7 @@ input RedirectFiltersInput {
 input RedirectInput {
     from: String
     publishedAt: DateTime
+    sitemap_exclude: Boolean
     status: Int
     to: String
 }
@@ -2892,6 +3046,7 @@ input ShoeFiltersInput {
     or: [ShoeFiltersInput]
     products: ProductFiltersInput
     publishedAt: DateTimeFilterInput
+    sitemap_exclude: BooleanFilterInput
     slug: StringFilterInput
     title: StringFilterInput
     updatedAt: DateTimeFilterInput
@@ -2900,6 +3055,7 @@ input ShoeFiltersInput {
 input ShoeInput {
     products: [ID]
     publishedAt: DateTime
+    sitemap_exclude: Boolean
     slug: String
     title: String
 }
@@ -2914,6 +3070,7 @@ input SilhouetteFiltersInput {
     or: [SilhouetteFiltersInput]
     products: ProductFiltersInput
     publishedAt: DateTimeFilterInput
+    sitemap_exclude: BooleanFilterInput
     slug: StringFilterInput
     title: StringFilterInput
     updatedAt: DateTimeFilterInput
@@ -2922,6 +3079,7 @@ input SilhouetteFiltersInput {
 input SilhouetteInput {
     products: [ID]
     publishedAt: DateTime
+    sitemap_exclude: Boolean
     slug: String
     title: String
 }
@@ -2938,6 +3096,7 @@ input StoreFinderFiltersInput {
     not: StoreFinderFiltersInput
     or: [StoreFinderFiltersInput]
     publishedAt: DateTimeFilterInput
+    sitemap_exclude: BooleanFilterInput
     slug: StringFilterInput
     updatedAt: DateTimeFilterInput
 }
@@ -2947,6 +3106,7 @@ input StoreFinderInput {
     country: String
     country_code: ENUM_STOREFINDER_COUNTRY_CODE
     publishedAt: DateTime
+    sitemap_exclude: Boolean
     slug: String
 }
 
@@ -2984,6 +3144,7 @@ input StyleFiltersInput {
     or: [StyleFiltersInput]
     products: ProductFiltersInput
     publishedAt: DateTimeFilterInput
+    sitemap_exclude: BooleanFilterInput
     slug: StringFilterInput
     title: StringFilterInput
     updatedAt: DateTimeFilterInput
@@ -2992,6 +3153,7 @@ input StyleFiltersInput {
 input StyleInput {
     products: [ID]
     publishedAt: DateTime
+    sitemap_exclude: Boolean
     slug: String
     title: String
 }
@@ -2999,8 +3161,8 @@ input StyleInput {
 input TranstationInput {
     footer_copyright: String
     footer_title: String
-    site_description: String
-    site_title: String
+    seo_pattern: [ComponentSharedSeoPatternInput]
+    sitemap_exclude: Boolean
 }
 
 input TrunkShowFiltersInput {
@@ -3022,6 +3184,7 @@ input TrunkShowFiltersInput {
     phone: StringFilterInput
     publishedAt: DateTimeFilterInput
     seo: ComponentSharedSeoFiltersInput
+    sitemap_exclude: BooleanFilterInput
     slug: StringFilterInput
     title: StringFilterInput
     to: DateFilterInput
@@ -3042,6 +3205,7 @@ input TrunkShowInput {
     phone: String
     publishedAt: DateTime
     seo: ComponentSharedSeoInput
+    sitemap_exclude: Boolean
     slug: String
     title: String
     to: Date
@@ -3060,6 +3224,7 @@ input TypeFiltersInput {
     products: ProductFiltersInput
     publishedAt: DateTimeFilterInput
     seo: ComponentSharedSeoFiltersInput
+    sitemap_exclude: BooleanFilterInput
     slug: StringFilterInput
     title: StringFilterInput
     updatedAt: DateTimeFilterInput
@@ -3070,6 +3235,7 @@ input TypeInput {
     products: [ID]
     publishedAt: DateTime
     seo: ComponentSharedSeoInput
+    sitemap_exclude: Boolean
     slug: String
     title: String
 }
@@ -3094,6 +3260,7 @@ input UploadFileFiltersInput {
     previewUrl: StringFilterInput
     provider: StringFilterInput
     provider_metadata: JSONFilterInput
+    sitemap_exclude: BooleanFilterInput
     size: FloatFilterInput
     updatedAt: DateTimeFilterInput
     url: StringFilterInput
@@ -3115,6 +3282,7 @@ input UploadFileInput {
     previewUrl: String
     provider: String
     provider_metadata: JSON
+    sitemap_exclude: Boolean
     size: Float
     url: String
     width: Int
@@ -3132,6 +3300,7 @@ input UploadFolderFiltersInput {
     parent: UploadFolderFiltersInput
     path: StringFilterInput
     pathId: IntFilterInput
+    sitemap_exclude: BooleanFilterInput
     updatedAt: DateTimeFilterInput
 }
 
@@ -3142,6 +3311,7 @@ input UploadFolderInput {
     parent: ID
     path: String
     pathId: Int
+    sitemap_exclude: Boolean
 }
 
 input UsersPermissionsLoginInput {
@@ -3203,6 +3373,7 @@ input UsersPermissionsUserFiltersInput {
     provider: StringFilterInput
     resetPasswordToken: StringFilterInput
     role: UsersPermissionsRoleFiltersInput
+    sitemap_exclude: BooleanFilterInput
     updatedAt: DateTimeFilterInput
     username: StringFilterInput
 }
@@ -3216,6 +3387,7 @@ input UsersPermissionsUserInput {
     provider: String
     resetPasswordToken: String
     role: ID
+    sitemap_exclude: Boolean
     username: String
 }
 
@@ -3232,6 +3404,7 @@ input VacancyFiltersInput {
     not: VacancyFiltersInput
     or: [VacancyFiltersInput]
     publishedAt: DateTimeFilterInput
+    sitemap_exclude: BooleanFilterInput
     slug: StringFilterInput
     title: StringFilterInput
     updatedAt: DateTimeFilterInput
@@ -3243,6 +3416,7 @@ input VacancyInput {
     job_link: String
     location: String
     publishedAt: DateTime
+    sitemap_exclude: Boolean
     slug: String
     title: String
 }

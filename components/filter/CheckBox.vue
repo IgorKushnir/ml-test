@@ -1,8 +1,10 @@
 <template>
-  <div v-if="available" :class="'check-box-container' + (value ? ' active' : '')"
+  <div v-if="available"
+       :class="['check-box-container', (value ? 'active' : ''),  (box ? ' box p-h-24 p-v-16 m-v-8' : 'm-v-24'), (single ? 'single' : '')].join(' ')"
        v-on:click="available ? $emit('value', !value) : ''">
-    <div class="check-box"/>
+    <div v-if="!single" class="check-box"/>
     <div class="p label">{{ label }}</div>
+    <span v-if="single" class="icon-arrow-16"/>
     <div class="p-small gray m-l-40" v-if="description">{{ description }}</div>
   </div>
 </template>
@@ -24,6 +26,16 @@ const props = defineProps({
   description: {
     type: String,
     required: false
+  },
+  box: {
+    type: Boolean,
+    required: false,
+    default: false
+  },
+  single: {
+    type: Boolean,
+    required: false,
+    default: false
   }
 })
 
@@ -33,8 +45,6 @@ const props = defineProps({
 
 
 .check-box-container {
-  //height: 24px;
-  margin: 24px 0;
   cursor: pointer;
 }
 
@@ -99,11 +109,39 @@ const props = defineProps({
     font-weight: bold;
   }
 }
-
+.single {
+  .p.label {
+    margin-right: 16px;
+    margin-left: 0;
+  }
+}
+.box {
+  border: 1px solid $border-dark;
+  display: flex;
+  justify-content: space-between;
+  .check-box {
+    flex-shrink: 0;
+  }
+  .p.label {
+    flex-grow: 1;
+  }
+}
+.active.box {
+  background-color: $light-gray;
+}
+.icon-arrow-16 {
+  float: right;
+}
 @media (hover: hover) {
   .check-box-container:hover {
     .check-box {
       background-color: $light-gray;
+    }
+  }
+  .check-box-container.box:hover {
+    background-color: $light-gray;
+    .check-box {
+      background-color: $white;
     }
   }
 

@@ -116,28 +116,36 @@ const extrudedIds = useViewedProductIds().value;
 let {data, pending, refresh, error} = await getProduct(slug, JSON.stringify(extrudedIds), publicationState)
 
 if (process.server) {
-  const indexOfFirsImage = data.value?.gallery?.data.findIndex(item => item.attributes.mime.startsWith('image'))
-  console.log({indexOfFirsImage});
-  let structuredData = {
-    "@context": "https://schema.org/",
-    "@type": "Product",
-    "name": data.value.title,
-    "description": data.value.description ?? '',
-    "brand": {
-      "@type": "Brand",
-      "name": "Milla Nova"
+  if (!error.value && data.value) {
+    const indexOfFirsImage = data.value?.gallery?.data.findIndex(item => item.attributes.mime.startsWith('image'))
+    let structuredData = {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": data.value.title,
+      "description": data.value.description ?? '',
+      "brand": {
+        "@type": "Brand",
+        "name": "Milla Nova"
+      }
     }
-  }
-  if (indexOfFirsImage !== -1) structuredData["image"] = data.value.gallery?.data[indexOfFirsImage]?.attributes?.formats?.medium?.url ?? data.value.gallery?.data[indexOfFirsImage]?.attributes?.url ?? ''
+    if (indexOfFirsImage !== -1) structuredData["image"] = data.value.gallery?.data[indexOfFirsImage]?.attributes?.formats?.medium?.url ?? data.value.gallery?.data[indexOfFirsImage]?.attributes?.url ?? ''
 
-  useHead({
-    script: [
-      {
-        type: 'application/ld+json',
-        children: JSON.stringify(structuredData),
-      },
-    ]
-  })
+    useHead({
+      script: [
+        {
+          type: 'application/ld+json',
+          children: JSON.stringify(structuredData),
+        },
+      ]
+    })
+
+    if (!indexOfFirsImage) {
+      console.error('Check product error: ', data.value.title);
+    }
+  } else {
+    console.error(false, 'process.server && !error.value && data.value');
+  }
+
 }
 
 
@@ -182,11 +190,11 @@ function nextHandler() {
 const breadcrumbs = computed(() => {
   let res = [
     {
-      title: data?.value.title,
+      title: data?.value?.title,
       path: null
     }
   ]
-  if (data?.value.collection?.data) {
+  if (data?.value?.collection?.data) {
     res = [
       {
         title: data?.value.collection?.data?.attributes?.title,
@@ -195,7 +203,7 @@ const breadcrumbs = computed(() => {
         ...res
     ]
   } else {
-    if (data?.value.type?.data) {
+    if (data?.value?.type?.data) {
       res = [
         {
           title: data?.value.type?.data?.attributes?.title,

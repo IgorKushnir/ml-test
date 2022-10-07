@@ -5,16 +5,31 @@
         <div v-if="!hideIcon" class="icon">
           <img :src="imagePath" alt="Milla Nova">
         </div>
-        <h1 v-if="title">{{ title }}</h1>
-        <p v-if="text">{{text}}</p>
-        <Button v-if="button" :path="button.path" v-on:click="clickHandle" class="m-b-40 m-b-24-md m-t-32">{{ button.text }}</Button>
+        <h1 v-if="title" :class="white ? 'white' : ''">{{ title }}</h1>
+        <p v-if="text" :class="white ? 'white' : ''">{{text}}</p>
+
+        <div v-if="button" class="m-b-40 m-b-24-md m-t-32">
+          <NuxtLink v-if="button.path"
+                    :to="button.path"
+                    v-on:click="clickHandle"
+                    v-on:mouseenter="hoverHandle(true)"
+                    v-on:mouseleave="hoverHandle(false)"
+                    class="button"
+                    :class="(white ? 'white ' : '') + (button.type ? ' ' + button.type : '') + (button.target ?? '')" >{{ button.text }}</NuxtLink>
+          <div v-else
+               v-on:click="clickHandle"
+               v-on:mouseenter="hoverHandle(true)"
+               v-on:mouseleave="hoverHandle(false)"
+               class="button"
+               :class="(white ? 'white ' : '') + (button.type ? ' ' + button.type : '') + (button.target ?? '')">{{ button.text }}</div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-const emits = defineEmits(["click"])
+const emits = defineEmits(["click", "hover"])
 defineProps({
   hideIcon: {
     type: Boolean,
@@ -36,10 +51,18 @@ defineProps({
     type: String,
     required: false,
     default: '/img/small-logo-dark.svg'
+  },
+  white: {
+    type: Boolean,
+    required: false,
+    default: false
   }
 })
 function clickHandle() {
   emits('click')
+}
+function hoverHandle(status) {
+  emits('hover', status)
 }
 </script>
 

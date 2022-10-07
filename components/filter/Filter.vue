@@ -52,6 +52,9 @@ watch(() => props.availableFilters, (f)=> {
 import {useFiltersData} from "~/composables/states";
 
 let allFilters = useFiltersData();
+
+
+
 let showFilters = ref(false)
 let count = ref(0)
 
@@ -67,10 +70,6 @@ function toggleFilters(state) {
 }
 
 function emitFilters(e) {
-  // window.scrollTo({
-  //   top: isMobile.value ? 0 : 153,
-  //   behavior: 'smooth'
-  // });
   emits('filters', e)
   count.value = e.map(d => d.values.length).reduce((partialSum, a) => partialSum + a, 0)
 }

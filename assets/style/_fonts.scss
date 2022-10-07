@@ -201,6 +201,11 @@ a.button {
 
   }
 
+  &.disable {
+    opacity: 0.2;
+    cursor: not-allowed;
+  }
+
 }
 
 .button:before {

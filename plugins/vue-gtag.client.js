@@ -14,14 +14,15 @@ export default defineNuxtPlugin((nuxtApp) => {
     const config = useRuntimeConfig();
 
     const id = config.GOOGLE_ANALYTICS;
-    if (!id) return
 
+    if (!id) return
     // console.log('Google analytics: ' + id);
+
     nuxtApp.vueApp.use(VueGtag, {
         property: {
             id: id
         },
         enabled: true,
-        pageTrackerScreenviewEnabled: true
+        pageTrackerScreenviewEnabled: true,
     }, nuxtApp.vueApp.router);
 });
