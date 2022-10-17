@@ -14,6 +14,7 @@ export default async  (req, res, next) => {
     // })
 
 
+
     // Redirect from '/' to ''
     if (req.url !== '/' && req.url.endsWith('/')) {
         redirect(req.url, req.url.slice(0, -1), 301)
@@ -44,10 +45,11 @@ export default async  (req, res, next) => {
     function redirect(from, to, status = 301) {
         if (!from.startsWith('/')) from = '/' + from
 
-        if (req.url === from || req.url === from + '/') {
+        if (req.url === from || req.url === from + '/' || req.url  + '/' === from) {
             res.writeHead(status, { Location: to });
             res.end();
         } else {
+
             next();
         }
     }

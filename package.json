@@ -16,7 +16,8 @@
     "axios": "^0.27.2",
     "google-maps": "^4.3.3",
     "nuxt": "^3.0.0-rc.6",
-    "vue-gtag-next": "^1.14.0"
+    "vue-gtag-next": "^1.14.0",
+    "vue3-circle-progress": "^1.0.7"
   },
   "engines": {
     "node": "16.11.0"

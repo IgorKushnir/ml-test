@@ -29,7 +29,7 @@ import personalStylistResponse from '~/api/getPersonalStylist'
 
 const {data, pending, refresh, error} = useLazyAsyncData('personalStylist', () => personalStylistResponse({ lang: "en" }), { transform: (d) => d.data?.personalStylist?.data?.attributes })
 
-const start = ref(true)
+const start = ref(false)
 
 
 </script>
