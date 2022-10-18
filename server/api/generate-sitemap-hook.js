@@ -12,13 +12,13 @@ export default async  (req, res, next) => {
         // console.log(data);
         // res.end(data)
 
-        fs.writeFile('public/sitemap.xml', data, function (err) {
+        fs.writeFile('.output/public/sitemap.xml', data, function (err) {
             if (err) return console.log(err);
             console.log('Sitemap generated');
         });
     } else {
         console.log('Error Sitemap generated');
     }
-    res.end()
+    res.end('Generated: ' + new Date().toDateString())
 
 }
