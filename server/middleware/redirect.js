@@ -14,6 +14,12 @@ export default async  (req, res, next) => {
     // })
 
 
+    // // Redirect Sitemap
+    // if (req.url === '/sitemap.xml') {
+    //     redirect(req.url, 'https://admin.millanova.com/sitemap/index.xml', 301)
+    //     return
+    // }
+
 
     // Redirect from '/' to ''
     if (req.url !== '/' && req.url.endsWith('/')) {

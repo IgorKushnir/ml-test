@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 Disallow: /moodboard/
-Sitemap: https://admin.millanova.com/sitemap/index.xml
+Sitemap: https://millanova.com/sitemap.xml
