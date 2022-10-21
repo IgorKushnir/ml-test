@@ -13,7 +13,6 @@
         <Container justify="justify-center">
           <div class="col-8 col-10-xl col-12-lg">
             <template v-for="(item, index) in data" >
-
               <div v-if="getMonthSection[index]" class="subheader center m-b-80 m-b-40-xl">{{getMonthSection[index]}}</div>
 
               <div class="row gap-L m-b-40">
@@ -73,7 +72,7 @@ const getMonthSection = computed(()=> {
   d.forEach((e, i) => {
     if (e[0] !== prev) {
       prev = e[0];
-      d[i] = $getMonths[e[0] - 1][0] + ' ' + e[1]
+      d[i] = $getMonths[e[0]][0] + ' ' + e[1]
     } else {
       d[i] = null;
     }

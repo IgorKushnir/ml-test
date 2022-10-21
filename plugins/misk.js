@@ -3,6 +3,7 @@ export default defineNuxtPlugin(() => {
     return {
         provide: {
             getMonths: [
+                ['January', 'Jan.'],
                 ['February', 'Feb.'],
                 ['March', 'Mar.'],
                 ['April', 'Apr.'],
@@ -27,8 +28,8 @@ export default defineNuxtPlugin(() => {
                     _toYear = ', ' + _to.getFullYear()
                 }
 
-                const mFrom = months[_from.getMonth() - 1][1]
-                const mTo = months[_to.getMonth() - 1][1]
+                const mFrom = months[_from.getMonth()][1]
+                const mTo = months[_to.getMonth()][1]
                 if (compareDate) {
                     return mFrom + ' ' + _from.getDate() + '-' + _to.getDate() + _fromYear;
                 }
