@@ -36,6 +36,7 @@ async function getCountry(slug, lang) {
                     website
                     lat
                     lng
+                    premium
                     lines {
                     data {
                       attributes {
