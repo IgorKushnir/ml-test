@@ -151,10 +151,11 @@ const stores = computed(() => {
   }
   if (lineIndex.value !== -1) {
     sores = sores.filter(store => {
-      // console.log('lines: ', lineIndex.value,  lines.value[lineIndex.value]?.value);
-      return lines.value[lineIndex.value]?.value ? store.lines.data.map(line => line.attributes.title).includes(lines.value[lineIndex.value]?.value) : true
+      return lines.value[lineIndex.value]?.value ? store.lines.data.map(line => line.attributes.title).includes(lines.value[lineIndex.value]?.value) : true;
     } )
   }
+  // Sorting premium first
+  // return [...sores.filter(store => store.premium), ...sores.filter(store => !store.premium)];
   return sores;
 })
 

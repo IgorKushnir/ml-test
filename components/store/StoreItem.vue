@@ -109,7 +109,7 @@ defineProps({
   margin-top: -0.2em;
   margin-left: 8px;
   position: relative;
-  z-index: 10;
+  z-index: 5;
 }
 
 
@@ -128,7 +128,7 @@ defineProps({
     top: -1em;
     left: -60px;
     text-align: center;
-    z-index: 9;
+    z-index: 4;
     pointer-events: none;
     opacity: 0;
     transition: .3s;
