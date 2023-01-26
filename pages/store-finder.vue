@@ -155,8 +155,8 @@ const stores = computed(() => {
     } )
   }
   // Sorting premium first
-  // return [...sores.filter(store => store.premium), ...sores.filter(store => !store.premium)];
-  return sores;
+  return [...sores.filter(store => store.premium), ...sores.filter(store => !store.premium)];
+  // return sores;
 })
 
 
