@@ -1,7 +1,7 @@
 <template>
   <div class="select">
     <div
-        :class="_index !== -1 ? 'custom-select active hide-md' : 'custom-select hide-md'"
+        :class="_index !== -1 ? 'custom-select active desktop' : 'custom-select desktop'"
         @mouseenter="showDropdown = true"
         @mouseleave="showDropdown = false"
         @click="showDropdown = false"
@@ -26,7 +26,7 @@
 
     </div>
 
-    <div  class="select-container show-md">
+    <div  class="select-container mobile">
       <StoreFlag v-if="flag && _index !== -1" class="flag-mobile" :code="data[_index].flag"/>
 
       <select :class="'select custom-select p-small hidden' + (flag && _index !== -1 ? ' flag' : '')">
@@ -238,18 +238,52 @@ select {
   z-index: -1;
   opacity: 0;
 }
+
+
+
+.custom-select {
+  &.flag {
+    padding: 15px 0px 15px 60px;
+    margin-right: -60px;
+  }
+}
+.icon-drop-down-16 {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  margin-right: 24px;
+  margin-bottom: 1px;
+  margin-left: -14px;
+  vertical-align: middle;
+}
+.flag-mobile {
+  margin-left: 24px;
+}
+.desktop {
+  display: none;
+}
 @media (hover: hover) {
+  .desktop {
+    display: inline-block;
+  }
+  .mobile {
+    display: none;
+  }
   .custom-select:hover {
     padding-top: 19px;
     background-color: $light-gray;
     border-top: 1px solid $border-dark;
     border-bottom: 2px solid $light-gray;
   }
-  //.item:hover {
-  //  background-color: rgba($light-gray, .5);
-  //}
+
   .item:hover:before {
     opacity: 1;
+  }
+  .icon-drop-down-16 {
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 16px;
   }
 }
 
@@ -258,23 +292,6 @@ select {
     position: relative;
     height: 56px;
     padding: 15px 24px;
-    &.flag {
-      padding: 15px 0px 15px 60px;
-      margin-right: -60px;
-    }
-  }
-  .icon-drop-down-16 {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    font-size: 16px;
-    margin-right: 24px;
-    margin-bottom: 1px;
-    margin-left: -14px;
-    vertical-align: middle;
-  }
-  .flag-mobile {
-    margin-left: 24px;
   }
 }
 

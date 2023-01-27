@@ -92,6 +92,9 @@ function reportWindowSize() {
   if (useIsMobile().value !== mobile) {
     useIsMobile().value = mobile;
   }
+
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
 }
 
 

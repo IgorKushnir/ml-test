@@ -37,6 +37,7 @@ async function getCountry(slug, lang) {
                     lat
                     lng
                     premium
+                    instagram
                     lines {
                     data {
                       attributes {

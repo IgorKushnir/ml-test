@@ -19,7 +19,7 @@
         <ListIcon v-if="store.address" :to="'https://www.google.com/maps/place/'+store.address"  target="_blank"  icon="location-16" class="m-v-16">
           {{ store.address }}
           <div class="display-block m-t-8">
-            <div class="p-small link" style="display: inline-block">Show on map <span class="icon-taget-16"/></div>
+            <div class="p-small link" style="display: inline-block">Show on map</div>
           </div>
         </ListIcon>
 
@@ -27,8 +27,12 @@
           <div class="p-small link">{{store.phone}}</div>
         </ListIcon>
 
-        <ListIcon v-if="store.website" :to="store.website" target="_blank" :text="store.website" icon="taget-16" class="m-v-16">
+        <ListIcon v-if="store.website" :to="store.website" target="_blank" :text="store.website" icon="globe-16" class="m-v-16">
           <div class="p-small link">{{store.website}}</div>
+        </ListIcon>
+
+        <ListIcon v-if="store.instagram" :to="store.instagram" target="_blank" :text="store.website" icon="instagram-16" class="m-v-16">
+          <div class="p-small link">{{store.instagram}}</div>
         </ListIcon>
 
         <template v-if="store?.lines?.data.length > 0">
