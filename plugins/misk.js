@@ -37,7 +37,7 @@ export default defineNuxtPlugin(() => {
             },
             getDate: (date, months) => {
                 const _date = new Date(date);
-                const m = months[_date.getMonth() - 1][0]
+                const m = months[_date.getMonth()][0]
 
                 return m + ' ' +  _date.getDate() + ', ' + _date.getFullYear()
             },
