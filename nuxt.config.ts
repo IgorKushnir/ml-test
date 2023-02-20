@@ -63,6 +63,7 @@ export default defineNuxtConfig({
         MEILISEARCH_API_KEY: process.env.MEILISEARCH_API_KEY,
         GOOGLE_ANALYTICS: process.env.GOOGLE_ANALYTICS,
         STRAPI_PREVIEW_SECRET: process.env.STRAPI_PREVIEW_SECRET,
+        GTM: process.env.GTM,
         // SEARCH_URL: process.env.SEARCH_URL || 'http://167.172.227.234',
     },
 
