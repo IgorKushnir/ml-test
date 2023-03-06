@@ -1,5 +1,5 @@
 <template>
-  <div class="footer m-t-120 m-t-80-md p-v-16 white">
+  <div class="footer m-t-64 m-t-40-md p-v-16 white">
     <div class="container row-reverse-md m-t-80 m-t-40-md">
       <div class="row gap-S">
         <div class="col-6 col-4-xl col-12-lg p-v-0">

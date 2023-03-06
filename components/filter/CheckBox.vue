@@ -85,7 +85,7 @@ const props = defineProps({
 }
 
 .label {
-  display: inline-block;
+  display: inline;
   vertical-align: super;
   margin: 0 0 0 16px;
   color: $dark-blue;

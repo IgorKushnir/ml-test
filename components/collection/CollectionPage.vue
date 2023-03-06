@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <Seo :data="dataCollection" :breadcrumbs="[
         {
           title: 'Collections',
@@ -81,6 +80,20 @@ const route = useRoute();
 const router = useRouter();
 let slug = route.params.slug;
 let filterSelected = ref([])
+
+
+let filters = ref([{
+  key: 'collection',
+  values: [slug]
+}])
+
+let {
+  data: dataAvailableFilters,
+  pending: pendingFilters,
+  refresh: refreshAvailableFilters,
+  error: errorAvailableFilters
+} = await getActiveFilters({filters: filters.value, lang: 'en', type: 'dress', fetchFilters: true});
+
 const initialFilters = ref(parseQuery());
 initialFilters.value.forEach(item => {
   item.values.forEach(it => {
@@ -91,10 +104,6 @@ initialFilters.value.forEach(item => {
   })
 })
 
-let filters = ref([{
-  key: 'collection',
-  values: [slug]
-}])
 
 const {
   data: dataCollection,
@@ -110,12 +119,7 @@ let {
 } = await getProducts({filters: [...filters.value, ...initialFilters.value], lang: 'en', type: 'dress', page: 1,
   pages: router.options.history?.pages?.[slug]
 });
-let {
-  data: dataAvailableFilters,
-  pending: pendingFilters,
-  refresh: refreshAvailableFilters,
-  error: errorAvailableFilters
-} = await getActiveFilters({filters: filters.value, lang: 'en', type: 'dress', fetchFilters: true});
+
 let test = ref();
 onMounted(() => {
   // console.log(router.options.history?.pages?.[slug]);
@@ -191,7 +195,12 @@ function setQuery(filters) {
 }
 function parseQuery() {
   const query = route.query;
-  const queryKeys = Object.keys(query);
+  let queryKeys = Object.keys(query);
+
+  // Filter query by list of allows
+  let allowQuery = Object.keys(dataAvailableFilters.value.filters);
+  queryKeys = queryKeys.filter((k) => allowQuery.includes(k))
+
   return queryKeys.map(key => {
     return {
       key: key,
