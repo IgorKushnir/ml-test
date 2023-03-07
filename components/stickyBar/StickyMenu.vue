@@ -79,6 +79,9 @@ const props = defineProps({
   .nav-link {
     margin: 18px 12px;
   }
+  .nav-link:after {
+    top: 35px;
+  }
   .nav-link:last-child {
     margin-right: 32px;
   }

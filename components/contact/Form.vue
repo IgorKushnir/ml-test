@@ -9,10 +9,10 @@
       </StickyHeader>
 
 
-      <transition name="fade">
+      <transition mode="out-in" name="fade">
 
         <Container justify="justify-center" v-if="!sent">
-          <form class="col-6 col-8-xl col-10-lg col-12-mg form" @submit.prevent="send">
+          <form class="col-6 col-8-xl col-10-lg col-12-md form" @submit.prevent="send">
             <template v-for="(formItem, index) in item.form">
               <div class="input-block" :class="'c-'+formItem.size + (sendData[formItem.title].error ? ' error' : '')">
                 <label v-if="formItem.type !== 'divider'" class="p-small" :for="index" :class="formItem.required ? 'required' : ''">{{ formItem.title }}</label>
@@ -138,7 +138,7 @@ function send() {
           }
         }
     ).then(res => {
-      console.log(res);
+      // console.log(res);
       sent.value = true;
     }).catch(error => console.log('error', error))
   }

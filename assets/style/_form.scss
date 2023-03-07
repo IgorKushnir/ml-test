@@ -8,20 +8,34 @@ label.required:after {
   height: 48px;
   background-color: $light-gray;
   border: unset;
-  padding: 0 16px;
+  padding: 0 14px;
   border-radius: 0;
   width: 100%;
   font-size: 16px;
   transition: .3s;
+  border: 1px solid $light-gray;
 }
+
 .input:disabled {
   background-color: $border-dark;
+  border: 1px solid $border-dark;
+  cursor: not-allowed;
 }
 textarea {
   resize: none;
   height: 140px!important;
   padding: 16px!important;
   font-family: inherit;
+}
+select.input {
+  -moz-appearance:none; /* Firefox */
+  -webkit-appearance:none; /* Safari and Chrome */
+  appearance:none;
+
+  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M12.0001 15L7.75708 10.757L9.17208 9.343L12.0001 12.172L14.8281 9.343L16.2431 10.757L12.0001 15Z'/></svg>");
+  background-repeat: no-repeat;
+  background-position-x: calc(100% - 16px);
+  background-position-y: 50%;
 }
 .form {
   display: grid;
@@ -56,12 +70,18 @@ textarea {
 }
 .error {
   .input {
-    border: 1px solid $red;
+    border: 1px solid $red!important;
   }
   .error-message {
     display: unset;
     font-size: 13px;
     color: $red;
     margin-top: 8px;
+  }
+}
+
+@media (hover: hover) {
+  .input:hover {
+    border: 1px solid $gray;
   }
 }
