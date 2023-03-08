@@ -38,6 +38,7 @@ async function getCountry(slug, lang) {
                     lng
                     premium
                     instagram
+                    email
                     lines {
                     data {
                       attributes {
