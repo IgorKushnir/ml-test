@@ -198,6 +198,7 @@ const route = useRoute();
 
 
 const countryCode = await getCountryCode();
+console.log(countryCode);
 const countries = ref(await getListOfCountries('en'));
 let countrySlug;
 if (countries.value) {
