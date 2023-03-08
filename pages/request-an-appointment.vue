@@ -1680,8 +1680,8 @@ function validateEmail(email) {
   return regex.test(email);
 }
 function validatePhone(phone) {
-  console.log(phone);
-  const regex = /^\+?([0-9]{12})$/;
+  // console.log(phone);
+  const regex = /^\+?([0-9]{10,14})$/;
   return regex.test(phone);
 }
 function getSlugByCode(code) {
