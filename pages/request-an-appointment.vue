@@ -196,9 +196,8 @@ const apiUrl = config.STRAPI_URL;
 const router = useRouter();
 const route = useRoute();
 
-
-const countryCode = await getCountryCode();
-console.log(countryCode);
+// Todo: do it on client side or refresh
+let countryCode = "US";
 const countries = ref(await getListOfCountries('en'));
 let countrySlug;
 if (countries.value) {
@@ -210,66 +209,19 @@ if (countries.value) {
   })
 }
 
+onMounted(async () => {
+// this code will only be executed on the client-side
+  countryCode = await getCountryCode();
+  countrySlug = getSlugByCode(countryCode);
+  sendData.value.country.value = getSlugByCode(countryCode);
+  refreshCountry()
+  setCountryCode()
+})
+if (process.client) {
 
-// const sendData = ref({
-//   name: {
-//     value: 'Rodney',
-//     required: true,
-//     error: null
-//   },
-//   surname: {
-//     value: 'Sarakuz',
-//     required: true,
-//     error: null
-//   },
-//   email: {
-//     value: 'ro@sar.com',
-//     required: true,
-//     error: null
-//   },
-//   phone: {
-//     value: '+38099',
-//     required: true,
-//     error: null
-//   },
-//
-//   country: {
-//     value: 'ukraine',
-//     required: true,
-//     error: null
-//   },
-//   city: {
-//     value: 'kyiv',
-//     required: true,
-//     error: null
-//   },
-//   store: {
-//     value: '',
-//     index: 0,
-//     required: true,
-//     error: null
-//   },
-//
-//   celebrated_date: {
-//     value: '2023-03-07',
-//     required: true,
-//     error: null
-//   },
-//   appointment_date: {
-//     value: '2023-03-07',
-//     required: true,
-//     error: null
-//   },
-//   subscribe: {
-//     value: false,
-//     required: false,
-//     error: null
-//   },
-//
-//   store_email: {
-//     value: null
-//   }
-// })
+}
+
+
 const sendData = ref({
   name: {
     value: '',
@@ -1682,7 +1634,15 @@ function validateEmail(email) {
 function validatePhone(phone) {
   // console.log(phone);
   const regex = /^\+?([0-9]{10,14})$/;
-  return regex.test(phone);
+  const phoneCodesList = phoneCodes.map(p => p.dial_code);
+  let codeError = true;
+  for (let i = 0; i < phoneCodesList.length; i++) {
+    if (phone.startsWith(phoneCodesList[i])) {
+      codeError = false;
+      break;
+    }
+  }
+  return regex.test(phone) && !codeError;
 }
 function getSlugByCode(code) {
   const index = countries.value.findIndex(c => c.flag === code)
