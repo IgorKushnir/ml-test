@@ -109,7 +109,7 @@ function getName(uid) {
     others: "Other",
     budgets: "Budget",
     backnecklines: "Back Necklines",
-    accessoires: "Accessoires",
+    accessoires: "Accessories",
     shoes: "Shoes",
   }
   return names[uid] ?? uid

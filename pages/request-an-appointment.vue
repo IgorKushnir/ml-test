@@ -178,7 +178,7 @@
 
         </form>
       </Container>
-      <State v-else title="Thank you!" text="We have received your details and request. We will get in touch soon to confirm the time and date of your appointment." :button="{text: 'Home page', path: '/'}" />
+      <State v-else small title="Thank you!" text="We have received your details and request. We will get in touch soon to confirm the time and date of your appointment." :button="{text: 'Home page', path: '/'}" />
     </transition>
   </div>
 </template>
@@ -283,7 +283,7 @@ store_email: {
 
 
 const loading = ref(false)
-const sent = ref(false)
+const sent = ref(true)
 
 
 // Set phone code
