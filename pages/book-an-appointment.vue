@@ -1,17 +1,17 @@
 <template>
   <div>
-    <Seo title="Store finder" :breadcrumbs="[
+    <Seo title="Book an appointment" :breadcrumbs="[
         {
-          title: 'Request an appointment',
+          title: 'Book an appointment',
         }
     ]"/>
-    <InnerHeader title="Request an appointment" sub_title="To ensure an enchanting and unforgettable experience at Milla Nova, we kindly request that you furnish us with the necessary information. An expert adviser will contact you to confirm the details of your appointment."/>
+    <InnerHeader title="Book an appointment" sub_title="You are one step away from an unforgettable experience of discovering our gowns. Please fill out the form below so a retailer manager can contact you and confirm your booking."/>
 
     <transition mode="out-in" name="fade">
       <Container  v-if="!sent" justify="justify-center">
         <form class="col-6 col-8-xl col-10-lg col-12-md form" @submit.prevent="send">
           <div class="input-block c-4">
-            <div class="subheader small m-b-8 m-t-32">Your contact details</div>
+            <div class="subheader small m-b-8 m-t-32">Your contact information</div>
           </div>
 
           <div class="input-block c-2" :class="sendData['name'].error !== null ? 'error' : ''">
@@ -160,7 +160,7 @@
             <CheckBox
                 :value="sendData['subscribe'].value"
                 v-on:click="sendData['subscribe'].value = !sendData['subscribe'].value"
-                label="I would like to receive invitations to exclusive events and promotions, trends, brand news and surveys to express my opinion."
+                label="I don’t mind receiving invitations to exclusive events and staying updated on brands' promos and news."
                 available
             />
           </div>
@@ -178,7 +178,7 @@
 
         </form>
       </Container>
-      <State v-else small title="Thank you!" text="We have received your details and request. We will get in touch soon to confirm the time and date of your appointment." :button="{text: 'Home page', path: '/'}" />
+      <State v-else small title="Thank you!" text="Your request has been processed. A manager from a selected retailer will contact you shortly to confirm the reservation and clarify the details if needed." :button="{text: 'Home page', path: '/'}" />
     </transition>
   </div>
 </template>
@@ -283,7 +283,7 @@ store_email: {
 
 
 const loading = ref(false)
-const sent = ref(true)
+const sent = ref(false)
 
 
 // Set phone code
