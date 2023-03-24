@@ -23,7 +23,7 @@
         <Container justify="justify-center">
           <div class="col-8 col-12-md p-t-0 p-b-0">
             <h1 class="title center m-t-0">{{ data.attributes.title }}</h1>
-            <p class="center">{{ $getDate('2022-01-01', $getMonths) }}</p>
+            <p class="center">{{ $getDate(data.attributes.created, $getMonths) }}</p>
           </div>
         </Container>
 
