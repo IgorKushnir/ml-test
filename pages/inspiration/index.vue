@@ -69,7 +69,7 @@ watch(route, (_) => {
 })
 nuxtApp.hook('page:loadNext', () => {
   const currentPage = data.value.meta.pagination.page;
-  if (currentPage < data.value.meta.pagination.pageCount) {
+  if (currentPage < data.value.meta.pagination.pageCount && page.value !== currentPage+1) {
     console.log('load: ' + (currentPage+1));
     page.value = currentPage+1;
     refresh().then(_ => {
