@@ -78,7 +78,7 @@ onMounted(async () => {
   reportWindowSize()
   window.addEventListener('resize', reportWindowSize, {passive: true});
 
-  // loadNextHook()
+  loadNextHook()
 
 
   //Like list counter
@@ -137,25 +137,25 @@ function reportWindowSize() {
 
 
 
-// function loadNextHook() {
-//   let currentPageHeight = ref(0);
-//   let allowLoadNext = true;
-//   watch(currentPageHeight, () => {
-//     allowLoadNext = true;
-//   })
-//
-//   document.addEventListener('scroll', function(e) {
-//     currentPageHeight.value = document.body.scrollHeight;
-//     const Y = window.scrollY - (document.body.scrollHeight - window.innerHeight);
-//     if (-Y < window.innerHeight) {
-//       if (allowLoadNext) {
-//         nuxtApp.callHook('page:loadNext')
-//         allowLoadNext = false;
-//       }
-//     }
-//
-//   }, {passive: true});
-// }
+function loadNextHook() {
+  let currentPageHeight = ref(0);
+  let allowLoadNext = true;
+  watch(currentPageHeight, () => {
+    allowLoadNext = true;
+  })
+
+  document.addEventListener('scroll', function(e) {
+    currentPageHeight.value = document.body.scrollHeight;
+    const Y = window.scrollY - (document.body.scrollHeight - window.innerHeight);
+    if (-Y < window.innerHeight) {
+      if (allowLoadNext) {
+        nuxtApp.callHook('page:loadNext')
+        allowLoadNext = false;
+      }
+    }
+
+  }, {passive: true});
+}
 
 </script>
 
