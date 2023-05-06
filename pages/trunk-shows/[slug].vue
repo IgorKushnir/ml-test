@@ -53,6 +53,7 @@
         </Container>
 
         <Carusel
+            class="show-md"
             v-if="data.attributes.offered"
             :data="data.attributes.offered.products.data"
             :column="4"
@@ -63,6 +64,37 @@
           <h2 class="m-t-0 m-b-40 m-b-24-md">Product offered</h2>
         </Carusel>
 
+
+
+
+        <Container justify="justify-center" class="hide-md">
+          <h2 class="col-8 col-10-xl col-12-lg m-t-0 m-b-0">Product offered</h2>
+
+<!--          <div class="col-8 col-10-xl col-12-lg ">-->
+            <div class="container col-8 col-10-xl col-12-lg  ">
+              <div class="row gap-S">
+            <NuxtLink
+                v-for="item in data.attributes.offered.products.data"
+                class="img-hover col-3 col-4-lg col-6-md col-12-sm"
+                :to="'/product/' + item?.attributes?.slug"
+                target="_self"
+            >
+              <div class="ratio-3x4">
+                <Image :path="item.attributes.cover_3x4" :alt="item.attributes.title"/>
+              </div>
+              <div v-if="item.attributes.title || item.attributes.text" class="m-t-16">
+                <div v-if="item.attributes.title" class="p dark-blue m-v-8"><strong>{{
+                    item.attributes.title
+                  }}</strong></div>
+                <div v-if="item.attributes.text" class="p m-v-8 gray">{{ item.attributes.text }}</div>
+              </div>
+            </NuxtLink>
+          </div>
+          </div>
+
+        </Container>
+
+
       </div>
     </transition>
     <Loading :pending="pending"/>
@@ -72,6 +104,7 @@
 
 <script setup>
 import {getTrunkShow} from '~/api/trunkShows'
+import Container from "../../components/Container";
 const route = useRoute();
 let slug = route.params.slug;
 const { $getMonths, $getDatesInRange } = useNuxtApp()
@@ -85,6 +118,23 @@ onMounted(() => {
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@media (hover: hover) {
+  :deep(.img-component.base) {
+    transition: .3s ease-in-out;
+  }
+  :deep(.m-t-16) {
+    transition: 0.2s ease-in-out;
+  }
+  .img-hover:hover {
 
+    :deep(.img-component.base) {
+      transform: scale(1.1);
+    }
+
+    :deep(.m-t-16) {
+      transform: translateY(-4px);
+    }
+  }
+}
 </style>

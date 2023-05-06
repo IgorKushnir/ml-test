@@ -221,7 +221,7 @@ function getLink(slug) {
 
 @media (hover: hover) {
   :deep(.img-component.base) {
-    transition: 2.5s ease-in-out;
+    transition: .3s ease-in-out;
   }
   :deep(.m-t-16) {
     transition: 0.2s ease-in-out;

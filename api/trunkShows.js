@@ -80,7 +80,10 @@ async function getTrunkShow(slug, lang) {
           }
         }
         offered {
-          products {
+          products(
+            pagination: {
+            limit: -1
+          }) {
             data {
               attributes {
                 title
