@@ -60,6 +60,7 @@
             </div>
 
             <NuxtLink v-if="data.storeLink" :to="data.storeLink" target="_blank" class="button m-t-16 m-t-0-md m-b-24-md target">Buy online</NuxtLink>
+            <NuxtLink  to="/book-an-appointment" target="_self" class="button m-t-16 m-t-0-md m-b-24-md">Book an appointment</NuxtLink>
           </div>
         </div>
 
