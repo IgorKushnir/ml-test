@@ -46,7 +46,7 @@
               <li>
                 <NuxtLink
                     :to="sub_item.url"
-                    :class="(sub_item.url === '/dress' || sub_item.url === '/accessoires' ? 'button white m-b-16 wide-md' : '') || (sub_item.target ? 'nav-link__secondary hover target' : 'nav-link__secondary hover')"
+                    :class="sub_item.target ? 'nav-link__secondary hover target' : 'nav-link__secondary hover'"
                     :target="sub_item.target ? '_blank' : '_self'"
                 >{{ sub_item.title }}
                 </NuxtLink>

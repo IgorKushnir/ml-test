@@ -7,6 +7,14 @@
     ]"/>
     <InnerHeader title="Book an appointment" sub_title="You are one step away from an unforgettable experience of discovering our gowns. Please fill out the form below so a retailer manager can contact you and confirm your booking."/>
 
+    <div v-if="queryData.store">
+      <div class="row justify-center">
+        <div class="col-12 vanilla_ice_bg">
+          <div class="center m-t-24 m-b-24"><div>{{queryData.store}}</div></div>
+        </div>
+      </div>
+    </div>
+
     <transition mode="out-in" name="fade">
       <Container  v-if="!sent" justify="justify-center">
         <form class="col-6 col-8-xl col-10-lg col-12-md form" @submit.prevent="send">
@@ -67,66 +75,68 @@
             <label for="surname" class="error-message">{{ sendData['phone'].error }}</label>
           </div>
 
-          <div class="input-block c-4">
-            <div class="subheader small m-b-8 m-t-32">Your preferred store</div>
-          </div>
+          <template v-if="!queryData.available">
+            <div class="input-block c-4">
+              <div class="subheader small m-b-8 m-t-32">Your preferred store</div>
+            </div>
 
-          <div class="input-block c-2" :class="sendData['country'].error ? 'error' : ''">
-            <label class="p-small required" for="country">Country</label>
-            <select
-                class="input m-t-8"
-                name="country"
-                id="country"
-                v-model="sendData['country'].value"
-            >
-              <option :value="undefined" :selected="sendData['country'].value === undefined">- Choose country -</option>
-              <option v-for="country in countries" :value="country.slug" :selected="country.slug === sendData['country'].value">{{ country.value }}</option>
-            </select>
-            <label for="surname" class="error-message">{{ sendData['country'].error }}</label>
-          </div>
+            <div class="input-block c-2" :class="sendData['country'].error ? 'error' : ''">
+              <label class="p-small required" for="country">Country</label>
+              <select
+                  class="input m-t-8"
+                  name="country"
+                  id="country"
+                  v-model="sendData['country'].value"
+              >
+                <option :value="undefined" :selected="sendData['country'].value === undefined">- Choose country -</option>
+                <option v-for="country in countries" :value="country.slug" :selected="country.slug === sendData['country'].value">{{ country.value }}</option>
+              </select>
+              <label for="surname" class="error-message">{{ sendData['country'].error }}</label>
+            </div>
 
-          <div class="input-block c-2" :class="sendData['city'].error ? 'error' : ''">
-            <label class="p-small required" for="city">City</label>
-            <transition mode="out-in" name="fade">
-              <div v-if="!pendingCountry">
-                <select
-                    class="input m-t-8"
-                    name="city"
-                    id="city"
-                    v-model="sendData['city'].value"
-                    :disabled="sendData['country'].value === undefined"
-                >
-                  <option :value="undefined" :selected="sendData['city'] === undefined"><strong>- Choose city -</strong></option>
-                  <option v-for="city in cities" :value="city.name.toLowerCase()">{{ city.name }}</option>
-                </select>
-                <label for="surname" class="error-message">{{ sendData['city'].error }}</label>
-              </div>
-              <Spinner class="m-l-16 m-t-16 m-b-16" v-else />
-            </transition>
-          </div>
+            <div class="input-block c-2" :class="sendData['city'].error ? 'error' : ''">
+              <label class="p-small required" for="city">City</label>
+              <transition mode="out-in" name="fade">
+                <div v-if="!pendingCountry">
+                  <select
+                      class="input m-t-8"
+                      name="city"
+                      id="city"
+                      v-model="sendData['city'].value"
+                      :disabled="sendData['country'].value === undefined"
+                  >
+                    <option :value="undefined" :selected="sendData['city'] === undefined"><strong>- Choose city -</strong></option>
+                    <option v-for="city in cities" :value="city.name.toLowerCase()">{{ city.name }}</option>
+                  </select>
+                  <label for="surname" class="error-message">{{ sendData['city'].error }}</label>
+                </div>
+                <Spinner class="m-l-16 m-t-16 m-b-16" v-else />
+              </transition>
+            </div>
 
-          <div class="input-block c-4" :class="sendData['store'].error ? 'error' : ''">
-            <label class="p-small required" for="store">Store</label>
-            <transition mode="out-in" name="fade">
-              <div v-if="!pendingCountry">
-                <select
-                    class="input m-t-8"
-                    name="store"
-                    id="store"
-                    v-model="sendData['store'].index"
-                    :disabled="sendData['city'].value === undefined"
-                >
-                  <option :value="-1" :selected="sendData['store'].value === -1">- Choose store -</option>
-                  <option
-                      v-for="(store, index) in stores?.store"
-                      :value="index"
-                  >{{ store.title + ' (' + store.address + ')'}}</option>
-                </select>
-                <label for="surname" class="error-message">{{ sendData['store'].error }}</label>
-              </div>
-              <Spinner class="m-l-16 m-t-16 m-b-16" v-else />
-            </transition>
-          </div>
+            <div class="input-block c-4" :class="sendData['store'].error ? 'error' : ''">
+              <label class="p-small required" for="store">Store</label>
+              <transition mode="out-in" name="fade">
+                <div v-if="!pendingCountry">
+                  <select
+                      class="input m-t-8"
+                      name="store"
+                      id="store"
+                      v-model="sendData['store'].index"
+                      :disabled="sendData['city'].value === undefined"
+                  >
+                    <option :value="-1" :selected="sendData['store'].value === -1">- Choose store -</option>
+                    <option
+                        v-for="(store, index) in stores?.store"
+                        :value="index"
+                    >{{ store.title + ' (' + store.address + ')'}}</option>
+                  </select>
+                  <label for="surname" class="error-message">{{ sendData['store'].error }}</label>
+                </div>
+                <Spinner class="m-l-16 m-t-16 m-b-16" v-else />
+              </transition>
+            </div>
+          </template>
 
           <div class="input-block c-4">
             <div class="subheader small m-b-8 m-t-32">Your timing</div>
@@ -196,6 +206,36 @@ const apiUrl = config.STRAPI_URL;
 const router = useRouter();
 const route = useRoute();
 
+const queryData = ref({
+  available: false,
+  country_slug: null,
+  city: null,
+  store: null,
+  store_email: null,
+});
+
+if (route.query.q) {
+  try {
+    let qString = decodeFromBase64(route.query.q);
+    let qData = JSON.parse(qString);
+    queryData.value = {
+      available: true,
+      country_slug: qData[0],
+      city: qData[1],
+      store: qData[2],
+      store_email: qData[3],
+    }
+  } catch (e) {
+  }
+}
+function decodeFromBase64(string) {
+  if (process.client) {
+    return atob(string);
+  } else {
+    return Buffer.from(string, 'base64').toString('utf-8');
+  }
+}
+
 // Todo: do it on client side or refresh
 let countryCode = "US";
 const countries = ref(await getListOfCountries('en'));
@@ -204,22 +244,28 @@ if (countries.value) {
   countrySlug = getSlugByCode(countryCode);
 } else {
   watch(() => countries.value, () => {
-    sendData.value.country.value = getSlugByCode(countryCode);
+    if (!queryData.value.available) {
+      sendData.value.country.value = getSlugByCode(countryCode);
+    }
     setTimeout(refreshCountry, 100)
   })
 }
 
 onMounted(async () => {
-// this code will only be executed on the client-side
+  // this code will only be executed on the client-side
   countryCode = await getCountryCode();
   countrySlug = getSlugByCode(countryCode);
-  sendData.value.country.value = getSlugByCode(countryCode);
-  refreshCountry()
+  if (!queryData.value.available) {
+    sendData.value.country.value = getSlugByCode(countryCode);
+    refreshCountry()
+  }
   setCountryCode()
-})
-if (process.client) {
 
-}
+
+})
+// if (process.client) {
+//
+// }
 
 
 const sendData = ref({
@@ -245,17 +291,17 @@ const sendData = ref({
   },
 
   country: {
-    value: route.query.country ?? countrySlug ,
+    value: queryData.value.country_slug ?? countrySlug ,
     required: true,
     error: null
   },
   city: {
-    value: route.query.city,
+    value: queryData.value.city,
     required: true,
     error: null
   },
   store: {
-    value: route.query.store,
+    value: queryData.value.store,
     required: true,
     error: null
   },
@@ -277,7 +323,7 @@ const sendData = ref({
     error: null
   },
 store_email: {
-    value: null
+    value: queryData.value.store_email
   }
 })
 
