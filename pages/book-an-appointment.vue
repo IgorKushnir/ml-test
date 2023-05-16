@@ -10,7 +10,7 @@
     <div v-if="queryData.store">
       <div class="row justify-center">
         <div class="col-12 vanilla_ice_bg">
-          <div class="center m-t-24 m-b-24"><div>{{queryData.store}}</div></div>
+          <div class="center m-t-24 m-b-24"><div>{{queryData.store}}, {{capitalizeFirstLetter(queryData.city)}}, {{phoneCodes.find(e => e.code === queryData.country_slug)?.name}}</div></div>
         </div>
       </div>
     </div>
@@ -1559,9 +1559,10 @@ const cities = computed(() => {
   let cities = countryData?.value?.data?.attributes?.city
 
   // Exclude the stores with only 'milla-evening' line slug
+  // Exclude the stores without store email
   cities = cities.filter(c => {
     c.store = c.store.filter(s => {
-      return  s.lines.data.length !== 0 && !(s.lines.data.length <= 1 && s.lines.data.map(l => l.attributes.slug).includes('milla-evening'))
+      return  s.lines.data.length !== 0 && !(s.lines.data.length <= 1 && s.lines.data.map(l => l.attributes.slug).includes('milla-evening')) && (s.email !== null && s.email !== '')
     })
     return c.store.length > 0
   })
@@ -1693,6 +1694,10 @@ function validatePhone(phone) {
 function getSlugByCode(code) {
   const index = countries.value.findIndex(c => c.flag === code)
   return countries.value[index]?.slug
+}
+function capitalizeFirstLetter(str) {
+  if (!str) return ''
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }
 </script>
 
