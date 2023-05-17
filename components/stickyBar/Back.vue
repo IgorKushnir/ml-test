@@ -4,8 +4,9 @@
       :class="'back-btn' + (text ? ' text' : '') + (reverse ? ' reverse' : '') + (light ? ' light' : '')">
     <div class="back-btn-container">
       <div class="p-small hide-md"><strong>{{ text }}</strong></div>
-      <div class="icon-arrow-16"></div>
+      <div class="icon-container"><div class="icon-arrow-16"></div></div>
     </div>
+
   </div>
 </template>
 
@@ -51,8 +52,17 @@ const isBackAndNoHistory = computed(() => {
 </script>
 
 <style scoped lang="scss">
-
-
+.icon-container {
+  height: 10px;
+  width: 16px;
+  position: relative;
+}
+.icon-arrow-16 {
+  position: absolute;
+  margin-top: -5px!important;
+  margin-left: 0px !important;
+  //background-color: #6FCF97;
+}
 .back-btn {
   display: inline-flex;
   justify-content: center;
@@ -64,7 +74,7 @@ const isBackAndNoHistory = computed(() => {
   border-color: $border-dark;
   height: 64px;
   min-width: 64px;
-  margin: -1px -.5px;
+  margin: 0 -.5px;
   background-color: $white;
 }
 .back-btn.light {
@@ -73,7 +83,7 @@ const isBackAndNoHistory = computed(() => {
 }
 .back-btn.reverse {
   margin-left: 0;
-  margin-top: -1px;
+  //margin-top: -1px;
   .back-btn-container {
     flex-direction: row-reverse;
     .icon-arrow-16 {

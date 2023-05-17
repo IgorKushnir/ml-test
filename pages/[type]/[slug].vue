@@ -31,12 +31,12 @@
             <div class="info m-t-40" v-if="data.collection.data">
               <div class="m-b-32 m-r-40">
                 <div class="subheader small">Collection</div>
-                <div class="p-small"><strong>{{ data.collection.data.attributes.title }}</strong></div>
+                <NuxtLink :to="'/collection/'+data.collection.data.attributes.slug" class="p-small link">{{ data.collection.data.attributes.title }}</NuxtLink>
               </div>
               <div class="m-b-32">
                 <div class="subheader small">Line</div>
-                <div class="p-small">
-                  <strong>{{ data.collection.data.attributes.line.data.attributes.title }}</strong>
+                <div class="p-small dark-blue">
+                  {{ data.collection.data.attributes.line.data.attributes.title }}
                 </div>
               </div>
             </div>
@@ -44,18 +44,20 @@
             <div v-if="data.colors.data.length > 0" class="info m-b-32">
               <div>
                 <div class="subheader small">Color</div>
-                <div class="p-small"><strong>
-                  {{ data.colors.data.map(color => color.attributes.title).join(', ') }}
-                </strong></div>
+                <div class="p-small">
+                  <template v-for="(color, index) in data.colors.data">
+                    <NuxtLink :to="'/'+data.type.data.attributes.slug+'?colors='+color.attributes.slug" class="p-small link">{{ color.attributes.title }}</NuxtLink><span v-if="index+1 < data.colors.data.length">, </span>
+                  </template>
+                </div>
               </div>
             </div>
 
             <div v-if="data.properties.length > 0" class="info">
               <div v-for="property in data.properties" class="m-b-32 m-r-16">
                 <div class="subheader small">{{ property.title }}</div>
-                <div v-if="property.description" class="p-small"><strong>
+                <div v-if="property.description" class="p-small dark-blue">
                   {{ property.description }}
-                </strong></div>
+                </div>
               </div>
             </div>
 

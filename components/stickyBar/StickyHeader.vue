@@ -150,9 +150,10 @@ addRouteMiddleware(async (to, from) => {
   height: 64px;
   max-height: 64px;
   width: 100%;
-  border-width: 1px 0px;
-  border-style: solid;
-  border-color: $border-dark;
+  //border-width: 1px 0px;
+  //border-style: solid;
+  //border-color: $border-dark;
+  border-bottom: 1px solid $border-dark;
   background-color: $white;
   z-index: 8;
 

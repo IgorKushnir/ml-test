@@ -23,7 +23,7 @@
           </div>
 
           <div class="input-block c-2" :class="sendData['name'].error !== null ? 'error' : ''">
-            <label class="p-small required" for="name">Name</label>
+            <label class="p-small required" for="name">First name</label>
             <input
                 autofocus
                 class="input m-t-8"
@@ -37,7 +37,7 @@
           </div>
 
           <div class="input-block c-2" :class="sendData['surname'].error !== null ? 'error' : ''">
-            <label class="p-small required" for="surname">Surname</label>
+            <label class="p-small required" for="surname">Last name</label>
             <input
                 class="input m-t-8"
                 type="text"
@@ -63,14 +63,14 @@
           </div>
 
           <div class="input-block c-2" :class="sendData['phone'].error ? 'error' : ''">
-            <label class="p-small required" for="phone">Telephone number</label>
+            <label class="p-small required" for="phone">Phone number</label>
             <input
                 class="input m-t-8"
                 type="tel"
                 name="phone"
                 id="phone"
                 v-model="sendData['phone'].value"
-                placeholder="Enter your telephone number"
+                placeholder="Enter your phone number"
             />
             <label for="surname" class="error-message">{{ sendData['phone'].error }}</label>
           </div>
@@ -1666,7 +1666,7 @@ function checkField(key) {
       // item.value = '+380993283756'
 
       if (!validatePhone(item.value)) {
-        item.error = 'Telephone number is not valid';
+        item.error = 'Phone number is not valid';
         return false
       }
     }
