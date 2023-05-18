@@ -9,8 +9,8 @@
 
     <div v-if="queryData.store">
       <div class="row justify-center">
-        <div class="col-12 vanilla_ice_bg">
-          <div class="center m-t-24 m-b-24"><div>{{queryData.store}}, {{capitalizeFirstLetter(queryData.city)}}, {{phoneCodes.find(e => e.code === queryData.country_slug)?.name}}</div></div>
+        <div class="col-12 light-blue">
+          <div class="center m-v-24 m-v-16-md p-h-16"><div>{{queryData.store}}, {{capitalizeFirstLetter(queryData.city)}}, {{phoneCodes.find(e => e.code === queryData.country_slug)?.name}}</div></div>
         </div>
       </div>
     </div>
@@ -31,7 +31,7 @@
                 name="name"
                 id="name"
                 v-model="sendData['name'].value"
-                placeholder="Enter your name"
+                placeholder="Enter your first name"
             />
             <label for="name" class="error-message">{{ sendData['name'].error }}</label>
           </div>
@@ -44,7 +44,7 @@
                 name="surname"
                 id="surname"
                 v-model="sendData['surname'].value"
-                placeholder="Enter your surname"
+                placeholder="Enter your last name"
             />
             <label for="surname" class="error-message">{{ sendData['surname'].error }}</label>
           </div>
