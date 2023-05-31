@@ -10,7 +10,7 @@
     <div v-if="queryData.store">
       <div class="row justify-center">
         <div class="col-12 light-blue">
-          <div class="center m-v-24 m-v-16-md p-h-16"><div>{{queryData.store}}, {{capitalizeFirstLetter(queryData.city)}}, {{phoneCodes.find(e => e.code === queryData.country_slug)?.name}}</div></div>
+          <div class="center m-v-24 m-v-16-md p-h-16"><div>{{queryData.store}}, {{capitalizeFirstLetter(queryData.city)}}, {{capitalizeFirstLetter(queryData.country_slug)}}</div></div>
         </div>
       </div>
     </div>
