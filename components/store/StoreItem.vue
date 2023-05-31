@@ -70,7 +70,11 @@ defineProps({
 
 function encodeToBase64(string) {
   if (process.client) {
-    return btoa(string);
+    const encoder = new TextEncoder();
+    const data = encoder.encode(string);
+    const base64 = btoa(String.fromCharCode.apply(null, data));
+    return base64;
+
   } else {
     return Buffer.from(string, 'utf-8').toString('base64');
   }
