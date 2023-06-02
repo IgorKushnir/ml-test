@@ -137,7 +137,11 @@ img {
     object-position: top center;
   }
 }
-
+@include lg {
+  .display-block-lg {
+    display: block!important;
+  }
+}
 @include sm {
   .hide-sm {
     display: none!important;

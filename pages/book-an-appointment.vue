@@ -155,7 +155,7 @@
           </div>
 
           <div class="input-block c-2" :class="sendData['appointment_date'].error ? 'error' : ''">
-            <label class="p-small required" for="appointment_date">Appointment date</label>
+            <label class="p-small required" for="appointment_date">Preferable appointment date</label>
             <input
                 class="input m-t-8"
                 type="date"
@@ -188,7 +188,7 @@
 
         </form>
       </Container>
-      <State v-else small title="Thank you!" text="Your request has been processed. A manager from a selected retailer will contact you shortly to confirm the reservation and clarify the details if needed." :button="{text: 'Home page', path: '/'}" />
+      <State v-else small title="Thank you!" text="Your request has been processed. A manager from a selected retailer will contact you shortly to confirm the reservation and clarify the details if needed. Please be informed that this is not the final confirmation of the appointment. The boutique will contact you within 24 hours after receiving your request to finalize the date of your appointment." :button="{text: 'Home page', path: '/'}" />
     </transition>
   </div>
 </template>
