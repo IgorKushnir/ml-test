@@ -111,8 +111,10 @@ onMounted(() => {
 })
 
 
-let currentFilters =  ref([])
+let currentFilters =  ref(initialFilters.value)
+
 async function filterData(e, page) {
+  // console.log(initialFilters.value);
   currentFilters.value = e;
   let f = [];
   if (e !== null) {

@@ -12,6 +12,7 @@ export default async function ({filters, type, lang, page, pages = null}) {
 
 
 
+
     const _filters = filters.map(f => {
         const val = f.values.map(v => {
             return `{
@@ -22,7 +23,7 @@ export default async function ({filters, type, lang, page, pages = null}) {
         }).join(' ')
         return `{ ${f.key}  : { or: [ ${val} ] } }`
     }).join(' ');
-
+    // console.log(_filters);
 
     const response = graphql(`
 query ProductsWithFilters{
@@ -59,6 +60,13 @@ query ProductsWithFilters{
         title
         slug
         type {
+          data {
+            attributes {
+              slug
+            }
+          }
+        }
+        silhouettes {
           data {
             attributes {
               slug
