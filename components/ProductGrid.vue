@@ -9,7 +9,8 @@
 
         <div :class="grid === 3 ? 'col-4 col-6-lg col-12-sm' : 'col-3 col-4-lg col-6-md col-12-sm'">
 <!--          {{index+1}}<br>{{product?.attributes?.silhouettes?.data?.attributes?.slug}}-->
-          <ProductItem :title="product.attributes.title" :to="'/' + product.attributes.type.data.attributes.slug + '/' + product.attributes.slug"
+          <ProductItem :title="product.attributes.title"
+                       :to="'/' + (product.attributes.type.data?.attributes.slug ?? 'product') + '/' + product.attributes.slug"
                        :image="product.attributes.cover_3x4"
                        :id="product.id"
                        :like-list="likeList"
