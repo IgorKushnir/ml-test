@@ -198,7 +198,7 @@ function parseQuery() {
   let queryKeys = Object.keys(query);
 
   // Filter query by list of allows
-  let allowQuery = Object.keys(dataAvailableFilters.value.filters);
+  let allowQuery = Object.keys(dataAvailableFilters.value.filters ?? {});
   queryKeys = queryKeys.filter((k) => allowQuery.includes(k))
 
   return queryKeys.map(key => {

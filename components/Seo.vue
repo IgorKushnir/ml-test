@@ -15,6 +15,11 @@ const props = defineProps({
   breadcrumbs: {
     type: Array,
     required: false
+  },
+  blockRobots: {
+    type: Boolean,
+    required: false,
+    default: false
   }
   // description: {
   //   type: String,
@@ -101,6 +106,7 @@ if (process.server) {
 }
 
 
+
 function parseVariablesInBrackets(str) {
   if (!str) return null;
 
@@ -149,7 +155,10 @@ function setSeo() {
 
 
       {hid: 'description', name: 'description', content: description},
-      {hid: 'keywords', name: 'keywords', content: keywords}
+      {hid: 'keywords', name: 'keywords', content: keywords},
+
+
+      {name: 'robots', content: props.blockRobots ? "noindex, nofollow" : "index, follow"},
 
     ],
     htmlAttrs: [
