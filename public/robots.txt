@@ -1,3 +1,4 @@
 User-agent: *
 Disallow: /moodboard
+Disallow: /book-an-appointment?q=*
 Sitemap: https://millanova.com/sitemap.xml
