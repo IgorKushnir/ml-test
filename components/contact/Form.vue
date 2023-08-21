@@ -2,11 +2,11 @@
   <div>
     <div v-if="item">
       <InnerHeader :title="item.title"/>
-      <StickyHeader>
+      <StickyBarStickyHeaderMilla>
         <template #center>
-          <StickyMenu :data="data.entry" path="?" :activeItem="index"/>
+          <StickyBarStickyMenu :data="data.entry" path="?" :activeItem="index"/>
         </template>
-      </StickyHeader>
+      </StickyBarStickyHeaderMilla>
 
 
       <transition mode="out-in" name="fade">
@@ -65,7 +65,7 @@
 
 <script setup>
 const config = useRuntimeConfig();
-const apiUrl = config.STRAPI_URL;
+const apiUrl = config.public.strapi.url;
 
 const props = defineProps({
   data: {

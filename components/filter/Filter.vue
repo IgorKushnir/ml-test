@@ -13,6 +13,8 @@
       :initialFilterSelected="initialFilterSelected"
       :pendingInitial="pendingInitial"
   />
+  <div class="test" style="position: absolute; left: 0; background-color: white">
+  </div>
 </template>
 
 <script setup>
@@ -52,8 +54,6 @@ watch(() => props.availableFilters, (f)=> {
 import {useFiltersData} from "~/composables/states";
 
 let allFilters = useFiltersData();
-
-
 
 let showFilters = ref(false)
 let count = ref(0)

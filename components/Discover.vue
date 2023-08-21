@@ -8,9 +8,9 @@
     <div v-if="dataProducts!== null">
       <InnerHeader :title="type.title"/>
 
-      <StickyHeader>
+      <StickyBarStickyHeaderMilla>
         <template #center>
-          <StickyMenu :data="typeData" path="/" class="grid-column-center"/>
+          <StickyBarStickyMenu :data="typeData" path="/" class="grid-column-center"/>
         </template>
 
         <template #end>
@@ -24,7 +24,7 @@
               :pendingInitial="pendingFilters && dataAvailableFilters === null"
           />
         </template>
-      </StickyHeader>
+      </StickyBarStickyHeaderMilla>
 
       <TagContainer class="hide-md">
         <div
@@ -53,11 +53,13 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="js">
+
 import getCollection from '~/api/getCollection'
 import getProducts from '~/api/getProducts'
 import getActiveFilters from '~/api/getActiveFilters'
 import {useTypesData} from "~/composables/states";
+
 
 const {$getAbsoluteUrl} = useNuxtApp();
 
@@ -66,9 +68,37 @@ const typeData = useTypesData()
 const route = useRoute();
 const router = useRouter();
 
+const productPage = ref(1)
+const pages = ref(1)
+const fetchFilters = ref(true)
+
 let slug = route.params.slug;
 let filterSelected = ref([])
-const initialFilters = ref(parseQuery());
+let filters = ref([]);
+
+
+const previousPages = router.options.history?.pages?.[slug]
+router.options.history.pages = {}
+router.options.history.pages[slug] = previousPages;
+// console.log({previousPages});
+
+pages.value = previousPages ?? 1;
+
+
+let {
+  data: dataAvailableFilters,
+  pending: pendingFilters,
+} = await useAsyncData('data_activeFilters', () => getActiveFilters({filters: filters.value, lang: 'en', type: slug, fetchFilters: fetchFilters.value}), {
+  transform: (d) => {
+    return d.data['products']['meta']
+  },
+})
+let initialAvailableFilters = dataAvailableFilters.value;
+
+
+
+const initialFilters = ref();
+initialFilters.value = parseQuery();
 
 initialFilters.value.forEach(item => {
   item.values.forEach(it => {
@@ -78,110 +108,115 @@ initialFilters.value.forEach(item => {
     })
   })
 })
-
-
+filters.value = [...filters.value, ...initialFilters.value];
 
 const type = computed(() => typeData.value.find(e => e.slug === slug))
 
 
 
-// let dataProducts = {}
+let initialData = ref([])
 let {
   data: dataProducts,
   pending: pendingProducts,
-  refresh: refreshProducts,
-  error: errorProducts
-} = await getProducts({filters: initialFilters.value, lang: 'en', type: slug, page: 1, pages: router.options.history?.pages?.[slug]});
-let {
-  data: dataAvailableFilters,
-  pending: pendingFilters,
-  refresh: refreshAvailableFilters,
-  error: errorAvailableFilters
-} = await getActiveFilters({filters: [], lang: 'en', type: slug, fetchFilters: true});
+} = await useLazyAsyncData('data_products', () => getProducts({filters: filters.value, lang: 'en', type: slug, page: productPage.value, pages: pages.value }), {
+  transform: (d) => {
+    const collection = 'products';
+    let initialPageSize = 12;
+    pages.value = 1;
+
+    const p = router.options.history?.pages?.[slug];
+    if (p) {
+      d.data[collection].meta.pagination.EDITED = true
+      d.data[collection].meta.pagination.pageCount = Math.ceil(d.data[collection].meta.pagination.total / initialPageSize)
+      d.data[collection].meta.pagination.page = p
+      d.data[collection].meta.pagination.pageSize = initialPageSize
+    }
+
+
+    if (productPage.value === 1 || pages.value !== 1) {
+      initialData.value = []
+    }
+    initialData.value.push(...d.data[collection].data)
+
+    d.data[collection].data = initialData.value;
+
+    return d.data[collection]
+  },
+})
+
+
 
 onMounted(() => {
-  // console.log(router.options.history?.pages);
-  const previousPages = router.options.history?.pages?.[slug]
-  router.options.history.pages = {}
-  router.options.history.pages[slug] = previousPages;
-
-  dataAvailableFilters.value = null;
-  refreshProducts();
-  refreshAvailableFilters()
+  initialData.value = dataProducts.value?.data ?? []
 })
 
 
 let currentFilters =  ref(initialFilters.value)
 
 async function filterData(e, page) {
-  // console.log(initialFilters.value);
-  currentFilters.value = e;
-  let f = [];
-  if (e !== null) {
-    let newFilters = e.filter(d => d.values.length > 0)
-    f = [...newFilters];
-  }
+  productPage.value = page;
+  // console.log('page--: ',page);
 
-  // Get selected filters in one array
+
+  // // Get selected filters in one array
   let selected = []
-  e.forEach(f => f.values.forEach(item => {
+
+  filters.value.forEach(f => f.values.forEach(item => {
     selected.push({
       key: f.key,
       value: item
     })
   }))
+
+  // console.log(filters.value);
+  // Filter query by list of allows
+  let allowQuery = Object.keys(initialAvailableFilters.filters ?? {});
+  selected = selected.filter((k) => allowQuery.includes(k.key))
+
   filterSelected.value = selected;
 
-
-  pendingProducts.value = true;
-  const {data, pending, refresh, error} = await getProducts({filters: f, lang: 'en', type: slug, page: page});
-
-  // set uploaded page to history
   router.options.history.pages[slug] = page
 
-  refresh()
-
-  watch(() => pending.value, (p) => {
+  refreshNuxtData('data_products').then(_ => {
     if (page === 1) {
-      dataProducts.value = data.value;
-      pendingProducts.value = pending.value;
-    } else  {
-      dataProducts.value.meta = data.value.meta;
-      dataProducts.value.data = [...dataProducts.value.data, ...data.value.data];
-
-      pendingProducts.value = pending.value;
+      window.scroll({top: 0})
     }
-
-    // console.log(dataProducts.value.meta.pagination);
   })
+
 }
 
 async function checkFiltersHandler(e) {
-  let f = [];
+  let f = [...filters.value];
   if (e !== null) {
-    let newFilters = e.filter(d => d.values.length > 0)
-    f = [ ...newFilters];
+    e.forEach(eF => {
+      const index = f.findIndex(fF => eF.key === fF.key)
+      if (index !== -1) {
+        f[index] = eF
+      } else {
+        f.push(eF)
+      }
+    })
+    f = f.filter(d => d.values.length > 0)
   }
-
   pendingFilters.value = true;
-  const {data, pending, refresh, error} = await getActiveFilters({filters: f, lang: 'en', type: slug, fetchFilters: false});
+  fetchFilters.value = false
+  filters.value = f
+  refreshNuxtData('data_activeFilters')
 
-  refresh()
-
-  watch(() => pending.value, (p) => {
-    dataAvailableFilters.value = data.value;
-    pendingFilters.value = pending.value;
-  })
 }
 
 function setQuery(filters) {
   const query = {}
+  let allowQuery = Object.keys(initialAvailableFilters.filters ?? {});
   filters.forEach(q => {
-    query[q.key] = q.values.join(',');
-    if (query[q.key] === '') {
-      delete query[q.key];
+    if (allowQuery.includes(q.key)) { // Filter query by list of allows
+      query[q.key] = q.values.join(',');
+      if (query[q.key] === '') {
+        delete query[q.key];
+      }
     }
   })
+
   router.replace({
     query: query,
   })
@@ -189,7 +224,15 @@ function setQuery(filters) {
 
 function parseQuery() {
   const query = route.query;
-  const queryKeys = Object.keys(query);
+  let queryKeys = Object.keys(query);
+
+  // console.log(dataAvailableFilters.value.filters, '0');
+
+  // Filter query by list of allows
+  let allowQuery = Object.keys(initialAvailableFilters.filters ?? {});
+  queryKeys = queryKeys.filter((k) => allowQuery.includes(k))
+
+
   return queryKeys.map(key => {
     return {
       key: key,
@@ -201,31 +244,42 @@ function parseQuery() {
 
 function handleFilter(e) {
   setQuery(e);
-  // console.log(e);
-
   pendingProducts.value = true
   dataProducts.value.data = []
   filterData(e, 1)
 }
-
 function cutOneFilter(index) {
+  const filterToRemove = filterSelected.value[index]
   filterSelected.value.splice(index, 1)
-  const filters = [];
-  filterSelected.value.forEach(filter => {
-    const index = filters.findIndex(i => i.key === filter.key)
-    if (index === -1) {
-      filters.push({key: filter.key, values: [filter.value]});
-    } else {
-      filters[index].values.push(filter.value)
+  // console.log({filterToRemove});
+
+  const index1 = filters.value.findIndex((f) => f.key === filterToRemove.key );
+  if (index1 !== -1) {
+    const index2 = filters.value[index1].values.findIndex((f) => f === filterToRemove.value )
+    if (index2 !== -1) {
+      filters.value[index1].values.splice(index2, 1)
+      if (filters.value[index1].values.length === 0) {
+        filters.value.splice(index1, 1)
+      }
     }
+  }
 
+  // selected filters
+  const _filters = [];
+  filterSelected.value.forEach(filter => {
+    const index = _filters.findIndex(i => i.key === filter.key)
+    if (index === -1) {
+      _filters.push({key: filter.key, values: [filter.value]});
+    } else {
+      _filters[index].values.push(filter.value)
+    }
   })
-  initialFilters.value = filters;
-  setQuery(filters)
+  initialFilters.value = _filters;
 
-  pendingProducts.value = true
+
+  setQuery(filters.value)
   dataProducts.value.data = []
-  filterData(filters, 1)
+  filterData(filters.value, 1)
 }
 
 </script>

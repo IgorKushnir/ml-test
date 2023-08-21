@@ -186,6 +186,5 @@ query getAllFilters{
             })
         },
     })
-
     return { data, pending, refresh, error };
 }

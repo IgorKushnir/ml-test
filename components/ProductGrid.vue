@@ -2,13 +2,14 @@
   <SnackBar ref="snackBar" @action="undoHandler"/>
   <transition name="fade">
     <Container v-if="productsData  && productsData?.data?.length > 0">
-      <template  v-for="(product, index) in productsData.data">
-
+      <!--    v-if="productsData  && productsData?.data?.length > 0"-->
+      <template v-for="(product, index) in productsData.data">
         <slot name="promo" v-if="index === 0"/>
         <slot name="fact" v-if="promo ? (index === 8) : (index === 7)"/>
 
+
         <div :class="grid === 3 ? 'col-4 col-6-lg col-12-sm' : 'col-3 col-4-lg col-6-md col-12-sm'">
-<!--          {{index+1}}<br>{{product?.attributes?.silhouettes?.data?.attributes?.slug}}-->
+          <!--          {{index+1}}<br>{{product?.attributes?.silhouettes?.data?.attributes?.slug}}-->
           <ProductItem :title="product.attributes.title"
                        :to="'/' + (product.attributes.type.data?.attributes.slug ?? 'product') + '/' + product.attributes.slug"
                        :image="product.attributes.cover_3x4"
@@ -20,15 +21,20 @@
           />
         </div>
       </template>
+
+      <template v-if="shimmerItems" v-for="index in Array.from(Array(shimmerItems ?? 0).keys())">
+        <div class="shimmer" :class="grid === 3 ? 'col-4 col-6-lg col-12-sm' : 'col-3 col-4-lg col-6-md col-12-sm'">
+          <ProductItem shimmer/>
+        </div>
+      </template>
     </Container>
   </transition>
 
 
-
-  <Loading :pending="pendingProducts"  extended-class="half"/>
+  <Loading :pending="pendingProducts" extended-class="half"/>
   <transition name="fade">
     <div v-if="productsData && !pendingProducts && productsData.data.length === 0">
-      <State v-if="!moodboard" title="No products"  class="half"></State>
+      <State v-if="!moodboard" title="No products" class="half"></State>
       <State v-if="moodboard"
              title="Your Moodboard is empty"
              text="Discover products and add it to your list."
@@ -41,22 +47,23 @@
 
 
   <div v-if="infinite" ref="loader">
-<!--    <div >-->
-<!--    <div v-if="showLoader">-->
-<!--    </div>-->
+    <!--    <div >-->
+    <!--    <div v-if="showLoader">-->
+    <!--    </div>-->
   </div>
 
 </template>
 
 <script setup>
 import ProductItem from "./ProductItem";
+
 const snackBar = ref(null);
 
 const emits = defineEmits(['load'])
 const props = defineProps({
   productsData: {
     type: Object,
-    required: true
+    required: false
   },
   pendingProducts: {
     type: Boolean,
@@ -81,21 +88,27 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: false
+  },
+  shimmerItems: {
+    type: Number,
+    required: false,
+    default: 0
   }
 })
-const { $getLikedProducts, $toggleLikeProduct } = useNuxtApp()
+const {$getLikedProducts, $toggleLikeProduct} = useNuxtApp()
 
 const loader = ref();
 let showLoader = ref(false)
 const likeList = ref([])
 const lastRemovedProduct = ref([])
 
-watch(() => props.productsData?.data, () => {
+watch(() => props.productsData, () => {
+  // console.log('false');
   showLoader.value = false
 })
 
 function needsToLoad() {
-  return (props.productsData !== null) && (props.productsData.meta.pagination.pageCount > 0 ) && (props.productsData.meta.pagination.page < props.productsData.meta.pagination.pageCount )
+  return (props.productsData !== null) && (props.productsData.meta.pagination.pageCount > 0) && (props.productsData.meta.pagination.page < props.productsData.meta.pagination.pageCount)
 }
 
 function scroll() {
@@ -103,9 +116,9 @@ function scroll() {
     if (props.productsData !== null && !props.pendingProducts) {
       if (needsToLoad()) {
         const loaderY = loader.value.getBoundingClientRect().top - window.innerHeight;
-
         if (loaderY < 0) {
           if (!showLoader.value) {
+            // console.log('true');
             showLoader.value = true
             const nextPage = props.productsData.meta.pagination.page + 1;
             emits('load', nextPage)

@@ -10,13 +10,13 @@
         }
     ]"/>
     <transition name="fade">
+
       <div v-if="!pendingCollection && dataCollection != null">
 
 
         <InnerHeader :title="dataCollection.title" :sub_header="dataCollection.line.data.attributes.title"
                      :sub_title="dataCollection.description"/>
-
-        <StickyHeader
+        <StickyBarStickyHeaderMilla
             :back="router.options?.history?.state?.back === '/collections'"
             :title="dataCollection.title"
         >
@@ -31,7 +31,7 @@
                 :pendingInitial="pendingFilters && dataAvailableFilters === null"
             />
           </template>
-        </StickyHeader>
+        </StickyBarStickyHeaderMilla>
         <!--      {{ filterSelected }}-->
         <TagContainer class="hide-md">
           <div
@@ -46,8 +46,9 @@
             :products-data="dataProducts"
             :pending-products="pendingProducts"
             :promo="dataCollection.show_promo"
-            @load="page => filterData(currentFilters, page)"
+            @load="page => filterData(filters, page)"
             infinite
+            :shimmerItems="0"
         >
           <template #promo>
             <div class="col-8 col-12-lg"
@@ -71,7 +72,7 @@
     <PageNotFound  :show="dataCollection === null"/>
   </div>
 </template>
-<script setup lang="ts">
+<script setup lang="js">
 import getCollection from '~/api/getCollection'
 import getProducts from '~/api/getProducts'
 import getActiveFilters from '~/api/getActiveFilters'
@@ -80,6 +81,19 @@ const route = useRoute();
 const router = useRouter();
 let slug = route.params.slug;
 let filterSelected = ref([])
+const fetchFilters = ref(true)
+const productPage = ref(1)
+const pages = ref(1)
+
+
+
+
+const previousPages = router.options.history?.pages?.[slug]
+router.options.history.pages = {}
+router.options.history.pages[slug] = previousPages;
+// console.log({previousPages});
+
+pages.value = previousPages ?? 1;
 
 
 let filters = ref([{
@@ -90,11 +104,16 @@ let filters = ref([{
 let {
   data: dataAvailableFilters,
   pending: pendingFilters,
-  refresh: refreshAvailableFilters,
-  error: errorAvailableFilters
-} = await getActiveFilters({filters: filters.value, lang: 'en', type: 'dress', fetchFilters: true});
+} = await useAsyncData('data_activeFilters', () => getActiveFilters({filters: filters.value, lang: 'en', type: 'dress', fetchFilters: fetchFilters.value}), {
+  transform: (d) => {
+    return d.data['products']['meta']
+  },
+})
+let initialAvailableFilters = dataAvailableFilters.value;
 
-const initialFilters = ref(parseQuery());
+
+const initialFilters = ref();
+initialFilters.value = parseQuery();
 initialFilters.value.forEach(item => {
   item.values.forEach(it => {
     filterSelected.value.push({
@@ -103,103 +122,127 @@ initialFilters.value.forEach(item => {
     })
   })
 })
+filters.value = [...filters.value, ...initialFilters.value];
+// console.log(route.query, parseQuery());
 
 
 const {
   data: dataCollection,
   pending: pendingCollection,
-  refresh: refreshCollection,
-  error: errorCollection
 } = await getCollection(slug, 'en')
+
+let initialData = ref([])
 let {
   data: dataProducts,
   pending: pendingProducts,
-  refresh: refreshProducts,
-  error: errorProducts
-} = await getProducts({filters: [...filters.value, ...initialFilters.value], lang: 'en', type: 'dress', page: 1,
-  pages: router.options.history?.pages?.[slug]
-});
+} = await useLazyAsyncData('data_products', () => getProducts({filters: filters.value, lang: 'en', type: 'dress', page: productPage.value, pages: pages.value }), {
+  transform: (d) => {
+    const collection = 'products';
+    let initialPageSize = 12;
+    pages.value = 1;
 
-let test = ref();
+    const p = router.options.history?.pages?.[slug];
+    if (p) {
+      d.data[collection].meta.pagination.EDITED = true
+      d.data[collection].meta.pagination.pageCount = Math.ceil(d.data[collection].meta.pagination.total / initialPageSize)
+      d.data[collection].meta.pagination.page = p
+      d.data[collection].meta.pagination.pageSize = initialPageSize
+    }
+
+
+    if (productPage.value === 1 || pages.value !== 1) {
+      initialData.value = []
+    }
+    initialData.value.push(...d.data[collection].data)
+
+    d.data[collection].data = initialData.value;
+
+    return d.data[collection]
+  },
+})
+
 onMounted(() => {
-  // console.log(router.options.history?.pages?.[slug]);
-  const previousPages = router.options.history?.pages?.[slug]
-  router.options.history.pages = {}
-  router.options.history.pages[slug] = previousPages;
+  initialData.value = dataProducts.value?.data ?? []
 
-  dataAvailableFilters.value = null;
-  refreshCollection();
-  refreshProducts();
-  refreshAvailableFilters()
+
 })
 let currentFilters =  ref([])
 
 async function filterData(e, page) {
-  currentFilters.value = e;
-  let f = [...filters.value];
-  if (e !== null) {
-    let newFilters = e.filter(d => d.values.length > 0)
-    f = [...filters.value, ...newFilters];
-  }
-  // Get selected filters in one array
+  productPage.value = page;
+  // console.log('page--: ',page);
+
+
+  // // Get selected filters in one array
   let selected = []
-  e.forEach(f => f.values.forEach(item => {
+  filters.value.forEach(f => f.values.forEach(item => {
     selected.push({
       key: f.key,
       value: item
     })
   }))
+
+  // Filter query by list of allows
+  let allowQuery = Object.keys(initialAvailableFilters.filters ?? {});
+  selected = selected.filter((k) => allowQuery.includes(k.key))
+
   filterSelected.value = selected;
-  pendingProducts.value = true;
-  const {data, pending, refresh, error} = await getProducts({filters: f, lang: 'en', type: 'dress', page: page});
-  // set uploaded page to history
+
   router.options.history.pages[slug] = page
-  refresh()
-  watch(() => pending.value, (p) => {
+
+  refreshNuxtData('data_products').then(_ => {
     if (page === 1) {
-      dataProducts.value = data.value;
-      pendingProducts.value = pending.value;
-    } else  {
-      dataProducts.value.meta = data.value.meta;
-      dataProducts.value.data = [...dataProducts.value.data, ...data.value.data];
-      pendingProducts.value = pending.value;
+      window.scroll({top: 0})
     }
-    // console.log(dataProducts.value.meta.pagination);
   })
+
 }
 async function checkFiltersHandler(e) {
   let f = [...filters.value];
   if (e !== null) {
-    let newFilters = e.filter(d => d.values.length > 0)
-    f = [...filters.value, ...newFilters];
+    e.forEach(eF => {
+      const index = f.findIndex(fF => eF.key === fF.key)
+      if (index !== -1) {
+        f[index] = eF
+      } else {
+        f.push(eF)
+      }
+    })
+    f = f.filter(d => d.values.length > 0)
   }
   pendingFilters.value = true;
-  const {data, pending, refresh, error} = await getActiveFilters({filters: f, lang: 'en', type: 'dress', fetchFilters: false});
-  refresh()
-  watch(() => pending.value, (p) => {
-    dataAvailableFilters.value = data.value;
-    pendingFilters.value = pending.value;
-  })
+  fetchFilters.value = false
+  filters.value = f
+  refreshNuxtData('data_activeFilters')
+
 }
 function setQuery(filters) {
   const query = {}
+  let allowQuery = Object.keys(initialAvailableFilters.filters ?? {});
   filters.forEach(q => {
-    query[q.key] = q.values.join(',');
-    if (query[q.key] === '') {
-      delete query[q.key];
+    if (allowQuery.includes(q.key)) { // Filter query by list of allows
+      query[q.key] = q.values.join(',');
+      if (query[q.key] === '') {
+        delete query[q.key];
+      }
     }
   })
+
   router.replace({
     query: query,
   })
 }
+
 function parseQuery() {
   const query = route.query;
   let queryKeys = Object.keys(query);
 
+  // console.log(dataAvailableFilters.value.filters, '0');
+
   // Filter query by list of allows
-  let allowQuery = Object.keys(dataAvailableFilters.value.filters ?? {});
+  let allowQuery = Object.keys(initialAvailableFilters.filters ?? {});
   queryKeys = queryKeys.filter((k) => allowQuery.includes(k))
+
 
   return queryKeys.map(key => {
     return {
@@ -208,6 +251,8 @@ function parseQuery() {
     }
   })
 }
+
+
 function handleFilter(e) {
   setQuery(e);
   pendingProducts.value = true
@@ -215,21 +260,37 @@ function handleFilter(e) {
   filterData(e, 1)
 }
 function cutOneFilter(index) {
+  const filterToRemove = filterSelected.value[index]
   filterSelected.value.splice(index, 1)
-  const filters = [];
+  // console.log({filterToRemove});
+
+  const index1 = filters.value.findIndex((f) => f.key === filterToRemove.key );
+  if (index1 !== -1) {
+    const index2 = filters.value[index1].values.findIndex((f) => f === filterToRemove.value )
+    if (index2 !== -1) {
+      filters.value[index1].values.splice(index2, 1)
+      if (filters.value[index1].values.length === 0) {
+        filters.value.splice(index1, 1)
+      }
+    }
+  }
+
+  // selected filters
+  const _filters = [];
   filterSelected.value.forEach(filter => {
-    const index = filters.findIndex(i => i.key === filter.key)
+    const index = _filters.findIndex(i => i.key === filter.key)
     if (index === -1) {
-      filters.push({key: filter.key, values: [filter.value]});
+      _filters.push({key: filter.key, values: [filter.value]});
     } else {
-      filters[index].values.push(filter.value)
+      _filters[index].values.push(filter.value)
     }
   })
-  initialFilters.value = filters;
-  setQuery(filters)
-  pendingProducts.value = true
+  initialFilters.value = _filters;
+
+
+  setQuery(filters.value)
   dataProducts.value.data = []
-  filterData(filters, 1)
+  filterData(filters.value, 1)
 }
 </script>
 <style scoped lang="scss">

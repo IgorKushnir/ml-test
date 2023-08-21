@@ -4,9 +4,7 @@
 
       <transition name="slide">
         <div v-show="showFilters" class="wrapper">
-
           <div class="filters-container p-h-56 p-t-112 p-b-120    p-h-32-md">
-
             <div class="header-container p-r-0">
               <div class="btn close" v-on:click="closeFilter"><div class="icon-close-24"></div></div>
               <div class="h4 title"><strong>Filters</strong></div>
@@ -144,7 +142,6 @@ checkIsFilterButtonShow()
 
 
 function handleValue(e) {
-  // console.log(e);
   let currentSelected = []
   props.allFilters.forEach(e => {
     e.data.forEach(d => {
@@ -165,24 +162,20 @@ function handleValue(e) {
     filters.value[index] = e
   }
 
-  // console.log('filters: ', filters.value);
-
+  // console.log('FilterModal component');
   emits('checkFilters', filters.value)
 }
 
 // // Handle initial filters
-props.initialFilterSelected.forEach(e => {
-  handleValue(e)
-})
+// props.initialFilterSelected.forEach(e => {
+//   handleValue(e)
+// })
+
+
 showFilterButton.value = true;
 watch(() => props.initialFilterSelected, () => {
+  // console.log(props.initialFilterSelected);
   filters.value = props.initialFilterSelected
-  // console.log('- ',props.initialFilterSelected);
-  // props.initialFilterSelected.forEach(e => {
-  //   // console.log('dfdf');
-  //   handleValue(e)
-  // })
-  // showFilterButton.value = true;
 })
 
 
@@ -194,7 +187,7 @@ function handleFilterButton() {
 }
 
 function closeFilter() {
-    emits("close");
+  emits("close");
 }
 const isSelectedFilters = computed(()=> {
   let selected = []
@@ -234,7 +227,6 @@ function resetHandler() {
 function getInitialItemSelected(uid) {
   return props.initialFilterSelected?.find(e => e.key === uid)?.values
 }
-
 
 
 

@@ -4,12 +4,12 @@
 
     <div v-if="data != null">
 
-      <StickyHeader :title="data.title">
+      <StickyBarStickyHeaderMilla :title="data.title">
         <template #end>
           <StickyBarBack v-if="data.extra.previous" reverse text="Previous" @clicks="prevHandler"/>
           <StickyBarBack v-if="data.extra.next" text="Next" @click="nextHandler"/>
         </template>
-      </StickyHeader>
+      </StickyBarStickyHeaderMilla>
 
 
 
@@ -116,10 +116,10 @@ if (draft === 'true') {
 
 const extrudedIds = useViewedProductIds().value;
 
-let {data, pending, refresh, error} = await getProduct(slug, JSON.stringify(extrudedIds), publicationState)
+let {data, pending} = await getProduct(slug, JSON.stringify(extrudedIds), publicationState)
 
 if (process.server) {
-  if (!error.value && data.value) {
+  if (data.value) {
     const indexOfFirsImage = data.value?.gallery?.data.findIndex(item => item.attributes.mime.startsWith('image'))
     let structuredData = {
       "@context": "https://schema.org/",
@@ -152,23 +152,7 @@ if (process.server) {
 }
 
 
-onMounted(() => {
-  getLikeList()
 
-  refresh().then(_ => {
-    $setViewedProduct(data.value.id)
-
-    const viewedIds = $getViewedProduct()
-
-    useViewedProductIds().value = viewedIds;
-
-    data.value.extra.also = data.value.extra.also.filter(item => {
-      return !viewedIds.includes(item.attributes.id.toString())
-    });
-    // const dataFiltered = computed(() => )
-
-  });
-})
 
 function getLikeList() {
   likeList.value = $getLikedProducts();
@@ -219,6 +203,45 @@ const breadcrumbs = computed(() => {
   return res;
 })
 
+
+onMounted(() => {
+  getLikeList()
+
+
+
+
+  function mount() {
+    if (pending.value) {
+      setTimeout(() => {
+        mount()
+      }, 100)
+    } else {
+      $setViewedProduct(data.value.id)
+      const viewedIds = $getViewedProduct()
+      useViewedProductIds().value = viewedIds;
+
+      data.value.extra.also = data.value.extra.also.filter(item => {
+        return !viewedIds.includes(item.attributes.id.toString())
+      });
+    }
+  }
+  mount()
+
+
+  // refresh().then(_ => {
+  //   $setViewedProduct(data.value.id)
+  //
+  //   const viewedIds = $getViewedProduct()
+  //
+  //   useViewedProductIds().value = viewedIds;
+  //
+  //   data.value.extra.also = data.value.extra.also.filter(item => {
+  //     return !viewedIds.includes(item.attributes.id.toString())
+  //   });
+  //   // const dataFiltered = computed(() => )
+  //
+  // });
+})
 
 </script>
 

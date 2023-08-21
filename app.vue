@@ -14,6 +14,7 @@ import getInitialData from '~/api/getInitialData';
 import getAllFilters from '~/api/getAllFilters'
 
 import {useFiltersData, useMenuData, useTypesData, usePreviousRoute, useIsMobile, useTranslationsData} from "~/composables/states";
+import router from "./plugins/router";
 
 const nuxtApp = useNuxtApp()
 const likeCounter = useFavCount()
@@ -33,8 +34,6 @@ const translations = useTranslationsData();
 let allFilters = useFiltersData();
 let {data, pending, refresh, error} = await getAllFilters('en');
 if (!error.value) allFilters.value = data.value;
-
-
 
 
 useHead({
@@ -135,8 +134,6 @@ function reportWindowSize() {
 
 
 
-
-
 function loadNextHook() {
   let currentPageHeight = ref(0);
   let allowLoadNext = true;
@@ -173,14 +170,20 @@ function loadNextHook() {
   transition: all 0.5s ease;
 }
 
-.page-enter-from {
-  opacity: 0;
-}
+.page-enter-from,
 .page-leave-to {
   opacity: 0;
-  //transform: scale(0.9);
 }
 
+//.page-enter-active,
+//.page-leave-active {
+//  transition: all 0.4s;
+//}
+//.page-enter-from,
+//.page-leave-to {
+//  opacity: 0;
+//  //filter: blur(1rem);
+//}
 
 @include md {
   .page {

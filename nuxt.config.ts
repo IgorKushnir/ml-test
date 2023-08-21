@@ -1,4 +1,4 @@
-import {defineNuxtConfig} from 'nuxt'
+import {defineNuxtConfig} from 'nuxt/config'
 import graphql from '@rollup/plugin-graphql';
 
 export default defineNuxtConfig({
@@ -6,17 +6,20 @@ export default defineNuxtConfig({
     css: [
         '@/assets/style/main.scss',
     ],
-    buildModules: [
-        // 'nuxt-vite',
-        '@nuxtjs/strapi',
-    ],
+    // buildModules: [
+    //     // 'nuxt-vite',
+    //     '@nuxtjs/strapi',
+    // ],
     modules: [
+        '@nuxtjs/strapi',
     ],
 
     build: {
 
     },
-
+    app: {
+        pageTransition: { name: 'page', mode: 'out-in' }
+    },
 
     vite: {
         plugins: [ graphql() ],
@@ -56,7 +59,7 @@ export default defineNuxtConfig({
         // url:  'https://millanova-backend-iwjo4.ondigitalocean.app'
     },
 
-    publicRuntimeConfig: {
+    runtimeConfig: {
         MODE: process.env.MODE,
         STRAPI_URL: process.env.STRAPI_URL,
         SEARCH_URL: process.env.SEARCH_URL || 'http://localhost:7700',

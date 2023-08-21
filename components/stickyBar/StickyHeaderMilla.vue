@@ -12,7 +12,7 @@
             </div>
           </transition>
 
-<!--          <slot></slot>-->
+          <!--          <slot></slot>-->
           <div class="grid-column-end"><slot name="end"/></div>
           <div class="grid-column-center"><slot name="center"/></div>
           <div class="grid-column-start"><slot name="start"/></div>

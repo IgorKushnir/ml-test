@@ -9,11 +9,6 @@
     <transition name="fade">
       <div v-if="data != null">
         <InnerHeader title="Inspiration"/>
-        <StickyHeader v-if="categoryData.length > 0">
-          <template #center>
-            <StickyMenu :data="categories" path="?category=" :activeItem="activeCategoryIndex"/>
-          </template>
-        </StickyHeader>
 
         <Container>
           <template v-for="(item, index) in data.data">
@@ -38,69 +33,57 @@
 import {getCategories, getInspirations} from '~/api/inspiration'
 
 const route = useRoute()
-let category = ref( route.query.category);
 const nuxtApp = useNuxtApp()
 const page = ref(1);
-const data = ref()
+// const data = ref()
 
-const {data: categoryData, pending: categoryPending, refresh: categoryRefresh, error: categoryError} = await getCategories('en')
-const {data: postData, pending, refresh, error} = await useLazyAsyncData('inspirations', () => getInspirations('en', category.value, page.value), {
+const {data, pending, refresh, error} = await useLazyAsyncData('inspirations', () => getInspirations('en', null, page.value), {
   transform: (d) => {
+    // if (page.value === 1) {
+    //   console.log('here');
+    //   data.value = d.data['inspirations']
+    // }
+
     return d.data['inspirations']
   }
 })
+// if (page.value === 1) {
+//   data.value = postData.value
+// }
+//
+// onMounted(() => {
+//   data.value = postData.value
+//   // refresh()
+// })
 
-onMounted(() => {
-  data.value = postData.value
-  // refresh()
-})
+// watch(postData, () => {
+//   if (!data.value) {
+//     data.value = postData.value
+//   }
+// })
+// watch(route, (_) => {
+//   page.value = 1;
+//   refreshNuxtData('inspirations').then(() => {
+//     data.value = postData.value
+//   })
+//
+// })
 
-watch(postData, () => {
-  if (!data.value) {
-    data.value = postData.value
-  }
-})
-watch(route, (_) => {
-  category.value = route.query.category
-  page.value = 1;
-  refresh().then(_ => {
-    data.value = postData.value
-  })
-})
+
 nuxtApp.hook('page:loadNext', () => {
   const currentPage = data.value.meta.pagination.page;
   if (currentPage < data.value.meta.pagination.pageCount && page.value !== currentPage+1) {
     console.log('load: ' + (currentPage+1));
     page.value = currentPage+1;
-    refresh().then(_ => {
-      data.value.meta = postData.value.meta
-      data.value.data = [...data.value.data, ...postData.value.data]
+
+    const d = data.value.data;
+    refreshNuxtData('inspirations').then(() => {
+      data.value.data = [...d, ...data.value.data]
     })
+
   }
 })
 
-const activeCategoryIndex = computed(()  => {
-  let index = 0;
-  if (route.query.category) {
-    index = categoryData.value.findIndex(d => d.attributes.slug === route.query.category) + 1
-  }
-  return index
-})
-
-
-
-const categories = computed(()  => {
-  const cat = categoryData.value.map(d => {
-    return d.attributes
-  })
-  const all = {
-    slug: 'all',
-    title: 'all',
-  }
-
-  return [all, ...cat]
-
-})
 
 
 

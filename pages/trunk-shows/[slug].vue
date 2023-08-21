@@ -67,14 +67,14 @@
 
 
 
-        <Container justify="justify-center" class="hide-md">
+        <Container justify="justify-center" class="hide-md" v-if="data.attributes.offered">
           <h2 class="col-8 col-10-xl col-12-lg m-t-0 m-b-0">Product offered</h2>
 
 <!--          <div class="col-8 col-10-xl col-12-lg ">-->
             <div class="container col-8 col-10-xl col-12-lg  ">
               <div class="row gap-S">
             <NuxtLink
-                v-for="item in data.attributes.offered.products.data"
+                v-for="item in data.attributes.offered?.products?.data"
                 class="img-hover col-3 col-4-lg col-6-md col-12-sm"
                 :to="'/product/' + item?.attributes?.slug"
                 target="_self"

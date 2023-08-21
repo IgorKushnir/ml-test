@@ -3,6 +3,7 @@
   </div>
 </template>
 <script setup>
+
 const props = defineProps({
   data: {
     type: Object,
@@ -172,6 +173,37 @@ watch(() => props.data, () => {
 })
 
 setSeo()
+
+
+
+
+
+const router = useRouter();
+const route = useRoute();
+
+// router.beforeEach((to, from) => {
+//   if (to.fullPath === '/silhouette/a-line') {
+//     console.log('1');
+//     router.replace('/dress?silhouettes=a-line')
+//   }
+//
+// });
+//
+// router.afterEach((to, from) => {
+//   if (to.fullPath === '/dress?silhouettes=a-line') {
+//     console.log('2');
+//     window.history.replaceState('', '', '/silhouette/a-line');
+//   }
+// })
+//
+//
+
+// onMounted(() => {
+//   if (route.fullPath === '/silhouette/a-line') {
+//     console.log('0');
+//     router.replace('/dress?silhouettes=a-line')
+//   }
+// })
 </script>
 
 <style scoped>

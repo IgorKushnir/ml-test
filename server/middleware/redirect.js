@@ -1,10 +1,42 @@
-// const axios = require('axios').default;
 import axios from 'axios';
+export default fromNodeMiddleware(async (req, res, next) => {
 
-export default async  (req, res, next) => {
     const config = useRuntimeConfig();
-    // console.log('New request: ' + req.url)
 
+    const protocol = req.connection.encrypted ? 'https' : 'http';
+    const baseUrl = protocol + '://' + req.headers.host;
+
+
+
+
+    // if (req.url === '/dress?silhouettes=a-line') {
+    //     res.writeHead(301, { Location: '/silhouette/a-line' });
+    //     res.end();
+    // }
+
+
+    // if (req.url === '/silhouette/a-line') {
+    //     try {
+    //         const page1Response = await axios.get(baseUrl + '/dress?silhouettes=a-line');
+    //         res.setHeader('Content-Type', 'text/html');
+    //         res.end(page1Response.data);
+    //
+    //     } catch (error) {
+    //         next();
+    //     }
+    // }
+
+
+
+
+
+
+
+
+
+
+
+    // console.log('New request: ' + req.url)
 
     // // Redirects from predefined list
     // redirects.forEach(item => {
@@ -12,13 +44,6 @@ export default async  (req, res, next) => {
     //         redirect(red.from, red.to, red.status)
     //     })
     // })
-
-
-    // // Redirect Sitemap
-    // if (req.url === '/sitemap.xml') {
-    //     redirect(req.url, 'https://admin.millanova.com/sitemap/index.xml', 301)
-    //     return
-    // }
 
 
     // Redirect from '/' to ''
@@ -60,5 +85,5 @@ export default async  (req, res, next) => {
         }
     }
 
-}
+})
 

@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink :to="to">
+  <NuxtLink :to="to" v-if="!shimmer">
     <div class="product-item">
         <div class="product-item-head">
           <span class="h3">{{title}}</span>
@@ -9,21 +9,22 @@
 
     </div>
   </NuxtLink>
+  <div v-else class="shimmer ratio-3x4"></div>
 </template>
 
 <script setup>
 const props = defineProps({
   id: {
     type: String,
-    required: true
+    required: false
   },
   likeList: {
     type: Array,
-    required: true
+    required: false
   },
   title: {
     type: String,
-    required: true
+    required: false
   },
   productType: {
     type: String,
@@ -31,7 +32,7 @@ const props = defineProps({
   },
   to: {
     type: String,
-    required: true
+    required: false
   },
   ratio: {
     type: String,
@@ -40,9 +41,14 @@ const props = defineProps({
   },
   image: {
     type: Object,
-    required: true
+    required: false
   },
   hideLikedDefault: {
+    type: Boolean,
+    required: false,
+    default: false
+  },
+  shimmer: {
     type: Boolean,
     required: false,
     default: false
@@ -51,7 +57,7 @@ const props = defineProps({
 const emits = defineEmits(['updateLikes'])
 const { $toggleLikeProduct } = useNuxtApp()
 
-const liked = computed(() => props.likeList.includes(props.id.toString()))
+const liked = computed(() => props.likeList?.includes(props.id.toString()))
 
 
 
@@ -64,6 +70,16 @@ function handleLike(id) {
 
 <style scoped lang="scss">
 
+.shimmer {
+  -webkit-mask:linear-gradient(-60deg,#000 40%,#0001,#000 60%) right/400% 100%;
+  animation: shimmer 2s infinite;
+  //background-color: $gray;
+  background-color: $light-gray;
+}
+
+@keyframes shimmer {
+  100% {-webkit-mask-position:left}
+}
 
 $transition: .5s ease-in-out;
 .product-item {

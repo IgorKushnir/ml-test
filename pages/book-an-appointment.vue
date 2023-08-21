@@ -201,7 +201,8 @@ import getCountryCode from '~/api/getCountryCode'
 import {getCountry} from "~/api/stores";
 
 const config = useRuntimeConfig();
-const apiUrl = config.STRAPI_URL;
+const apiUrl = config.public.strapi.url;
+
 
 const router = useRouter();
 const route = useRoute();

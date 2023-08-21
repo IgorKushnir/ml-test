@@ -7,7 +7,7 @@
 defineProps({
   code: {
     type: String,
-    required: true
+    required: false
   }
 })
 

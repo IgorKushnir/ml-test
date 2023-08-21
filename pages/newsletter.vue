@@ -82,7 +82,7 @@ import CheckBox from "../components/filter/CheckBox";
 import State from "../components/State";
 const { $validateEmail } = useNuxtApp();
 const config = useRuntimeConfig();
-const apiUrl = config.STRAPI_URL;
+const apiUrl = config.public.strapi.url;
 
 const {
   data,

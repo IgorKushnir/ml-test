@@ -56,7 +56,6 @@
               <div class="nav-dropdown-container" v-if="hasSubMenu(item)" ref="dropdown">
                 <Transition name="slide-fade" @enter="enterAnimation" @leave="leaveAnimation">
                   <HeaderDropdown v-show="item.show ?? false" :item="item" :lines="lines" :show="item.show ?? false"/>
-
                 </Transition>
               </div>
 

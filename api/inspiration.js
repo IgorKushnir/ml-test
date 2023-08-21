@@ -37,7 +37,7 @@ function getInspirations(lang, category, page = 1, pageSize = 8) {
     const collection = 'inspirations';
 
     let filters = ''
-     console.log(category);
+     // console.log(category);
      if (category != null && category !== 'all') {
         filters = `
         filters: {
@@ -147,11 +147,12 @@ async function getInspiration(slug, lang) {
 }
     `);
 
-    const {data, pending, refresh, error} = await useLazyAsyncData('data_' + collection, () => response, {
+    console.log('data_' + collection);
+    const {data, pending} = await useLazyAsyncData('data_' + collection, () => response, {
         transform: (d) => d.data[collection].data
     })
 
-    return {data, pending, refresh, error};
+    return {data, pending};
 }
 
 export { getCategories, getInspirations, getInspiration };

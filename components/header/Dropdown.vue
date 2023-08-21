@@ -61,7 +61,7 @@
 
 </template>
 
-<script setup lang="ts">
+<script setup lang="js">
 import Image from "~/components/Image.vue";
 
 const {$getImage} = useNuxtApp()
@@ -119,6 +119,9 @@ function collectionHoverOutHandler() {
 
 
 a {
+  color: $light-gray;
+}
+a:hover {
   color: $light-gray;
 }
 

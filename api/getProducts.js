@@ -2,12 +2,11 @@ export default async function ({filters, type, lang, page, pages = null}) {
     const graphql = useStrapiGraphQL()
     const collection = 'products';
 
-
     let initialPageSize = 12;
     let pageSize = initialPageSize;
     if (pages) {
         pageSize = pageSize * pages
-        console.log({pages, pageSize, page});
+        // console.log({pages, pageSize, page});
     }
 
 
@@ -90,17 +89,5 @@ query ProductsWithFilters{
 
 
 
-    return await useLazyAsyncData('data_'+collection, () => response, {
-        transform: (d) => {
-            if (pages) {
-                d.data[collection].meta.pagination.EDITED = true
-                d.data[collection].meta.pagination.pageCount = Math.ceil(d.data[collection].meta.pagination.total / initialPageSize)
-                d.data[collection].meta.pagination.page = pages
-                d.data[collection].meta.pagination.pageSize = initialPageSize
-            }
-            // console.log(d.data[collection].meta.pagination);
-
-            return d.data[collection]
-        },
-    })
+    return response
 }

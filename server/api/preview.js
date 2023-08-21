@@ -1,50 +1,45 @@
-export default async  (req, res, next) => {
+export default  defineEventHandler((event) => {
     const config = useRuntimeConfig();
     const secret = config.STRAPI_PREVIEW_SECRET;
-    const host = 'http://' + req.headers.host
 
-    const url = new URL(host + req.url)
+    const url = getRequestURL(event)
     const q = url.searchParams
 
     if (secret !== q.get('secret')) {
-        res.end('You have no permission');
+        return 'You have no permission'
     }
 
 
     if (q.get('type') === 'product') {
         const slug = q.get('slug')
         const _url = '/product/' + slug + '?draft=true';
-        res.end(iFrame(_url))
-
+        return iFrame(_url)
     }
 
     if (q.get('type') === 'page') {
         const slug = q.get('slug')
         const _url = '/' + slug + '?draft=true';
-        res.end(iFrame(_url))
+        return iFrame(_url)
     }
 
     if (q.get('type') === 'trunk-shows') {
         const slug = q.get('slug')
         const _url = '/trunk-shows/' + slug + '?draft=true';
-        res.end(iFrame(_url))
+        return iFrame(_url)
     }
 
     if (q.get('type') === 'inspiration') {
         const slug = q.get('slug')
         const _url = '/inspiration/' + slug + '?draft=true';
-        res.end(iFrame(_url))
+        return iFrame(_url)
     }
 
     if (q.get('type') === 'news') {
         const slug = q.get('slug')
         const _url = '/news/' + slug + '?draft=true';
-        res.end(iFrame(_url))
+        return iFrame(_url)
     }
-
-
-
-}
+})
 
 
 function iFrame(url) {

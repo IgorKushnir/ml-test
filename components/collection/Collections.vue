@@ -8,12 +8,12 @@
     <transition name="fade">
       <div v-if="!pending && data != null">
         <InnerHeader title="Collections"/>
-        <StickyHeader>
+        <StickyBarStickyHeaderMilla>
           <!--        // Data types to global data-->
           <template #center>
-            <StickyMenu :data="typeData" path="/" class="grid-column-center"/>
+            <StickyBarStickyMenu :data="typeData" path="/" class="grid-column-center"/>
           </template>
-        </StickyHeader>
+        </StickyBarStickyHeaderMilla>
 
         <Container>
           <template v-for="line in data">
@@ -42,6 +42,7 @@
 
 import getCollections from '~/api/getCollections'
 import {useTypesData} from "../../composables/states";
+import StickyHeaderMilla from "../stickyBar/StickyHeaderMilla";
 
 let {data, pending, refresh, error} = await getCollections('en')
 

@@ -71,15 +71,15 @@ onMounted(() => {
   viewedProductIds.value = $getViewedProduct()
   likedProductIds.value = $getLikedProducts()
 
-  // Check unexisting products and remove from the like list
-  if (data.value?.liked?.length > 0) {
-    likedProductIds.value.forEach(likedProductId => {
-      const index = data.value.liked.findIndex(p => p.id === likedProductId)
-      if (index === -1) {
-        $toggleLikeProduct(likedProductId)
-      }
-    })
-  }
+  // // Check unexisting products and remove from the like list
+  // if (data.value?.liked?.length > 0) {
+  //   likedProductIds.value.forEach(likedProductId => {
+  //     const index = data.value.liked.findIndex(p => p.id === likedProductId)
+  //     if (index === -1) {
+  //       $toggleLikeProduct(likedProductId)
+  //     }
+  //   })
+  // }
 
 
   getInitialData()
@@ -88,7 +88,7 @@ onMounted(() => {
 
 function getInitialData() {
   if (!pending.value) {
-    refresh()
+    refreshNuxtData('moodboard')
     firstLoading.value = false;
   } else {
     setTimeout(getInitialData, 100)

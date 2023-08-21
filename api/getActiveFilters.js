@@ -1,5 +1,6 @@
 export default async function ({filters, type, lang, fetchFilters}) {
 
+    // console.log( filters);
     const graphql = useStrapiGraphQL()
     const collection = 'activeFilters';
     const activeFiltersData = fetchFilters ? 'filters' : '';
@@ -55,11 +56,11 @@ query ProductsWithFilters{
 }
 `);
 
+    return response
 
-
-    return await useAsyncData('data_'+collection, () => response, {
-        transform: (d) => {
-            return d.data['products']['meta']
-        },
-    })
+    // return await useAsyncData('data_'+collection, () => response, {
+    //     transform: (d) => {
+    //         return d.data['products']['meta']
+    //     },
+    // })
 }

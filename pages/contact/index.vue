@@ -25,7 +25,10 @@ const {data, pending, refresh, error} = await getContacts('en')
 
 const route = useRoute()
 const query = ref(route.query)
-watch(route, (r) => query.value = r.query)
+console.log(route);
+watch(() => route.query, (r) => {
+  query.value = route.query
+})
 const type = computed(() => Object.keys(query.value)[0])
 
 

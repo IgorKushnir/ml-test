@@ -1,5 +1,6 @@
 <template>
   <div class="img-component-container">
+
     <img :src="placeholder" :alt="alt" class="img-component placeholder">
 
     <img
@@ -24,6 +25,7 @@
 </template>
 
 <script setup>
+const { $getAbsoluteUrl,  $getImage} = useNuxtApp();
 
 let props = defineProps({
   path: {

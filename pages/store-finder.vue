@@ -9,7 +9,7 @@
 
     <div v-if="countries">
       <InnerHeader title="Store finder"/>
-      <StickyHeader>
+      <StickyBarStickyHeaderMilla>
 
         <template #center>
           <Select :data="countries" name="Country" all="All countries" :index="countryIndex" :flag="true"
@@ -25,7 +25,7 @@
         </template>
 
 
-      </StickyHeader>
+      </StickyBarStickyHeaderMilla>
 
       <!-- Toggle-->
       <transition name="fade">
