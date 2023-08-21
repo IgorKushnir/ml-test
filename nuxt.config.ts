@@ -6,10 +6,6 @@ export default defineNuxtConfig({
     css: [
         '@/assets/style/main.scss',
     ],
-    // buildModules: [
-    //     // 'nuxt-vite',
-    //     '@nuxtjs/strapi',
-    // ],
     modules: [
         '@nuxtjs/strapi',
     ],
@@ -33,26 +29,6 @@ export default defineNuxtConfig({
     },
 
 
-
-    // package.json - "nuxt-vite": "^0.3.5"
-    // vite: {
-    //     build: {
-    //         rollupOptions: {
-    //             external: [
-    //                 'swiper/vue',
-    //                 'vue-gtag-next',
-    //                 'vue',
-    //             ]
-    //         }
-    //     },
-    //     css: {
-    //         preprocessorOptions: {
-    //             scss: {
-    //                 additionalData: '@import "@/assets/style/global.scss";',
-    //             },
-    //         },
-    //     },
-    // },
 
     strapi: {
         url: process.env.STRAPI_URL || 'http://localhost:1337',

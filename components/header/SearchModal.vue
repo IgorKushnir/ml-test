@@ -114,22 +114,20 @@ async function getResult() {
   if (search.value.length === 0) {
     result.value = [];
   } else {
-    const data = await $fetch(`indexes/product/search`, {
-      baseURL: config.SEARCH_URL,
-      method: 'POST',
-      headers: {
-        Authorization:
-            'Bearer ' + config.MEILISEARCH_API_KEY,
-      },
-      // baseURL: "https://millanovasearch.sarakuz.com",
-      // method: 'POST',
-      // headers: {
-      //   Authorization:
-      //       'Bearer ' + "YTQ5MmM1M2FlOTJlYWZiN2Q4NWRmZmE0",
-      // },
-      body: {
-        "q": search.value,
-      }
+    // const data = await $fetch(`indexes/product/search`, {
+    //   baseURL: config.SEARCH_URL,
+    //   method: 'POST',
+    //   headers: {
+    //     Authorization:
+    //         'Bearer ' + config.MEILISEARCH_API_KEY,
+    //   },
+    //   body: {
+    //     "q": search.value,
+    //   }
+    // });
+
+    const data = await $fetch(`/api/search?q=${search.value}`, {
+      method: 'GET'
     });
     result.value = data;
   }

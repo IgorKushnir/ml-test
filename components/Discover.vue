@@ -88,27 +88,32 @@ pages.value = previousPages ?? 1;
 let {
   data: dataAvailableFilters,
   pending: pendingFilters,
-} = await useAsyncData('data_activeFilters', () => getActiveFilters({filters: filters.value, lang: 'en', type: slug, fetchFilters: fetchFilters.value}), {
+} = await useLazyAsyncData('data_activeFilters', () => getActiveFilters({filters: filters.value, lang: 'en', type: slug, fetchFilters: fetchFilters.value}), {
   transform: (d) => {
     return d.data['products']['meta']
   },
 })
-let initialAvailableFilters = dataAvailableFilters.value;
+let initialAvailableFilters = [];
 
 
 
-const initialFilters = ref();
-initialFilters.value = parseQuery();
+const initialFilters = ref([]);
+onMounted(() => {
+  initialAvailableFilters = dataAvailableFilters.value;
 
-initialFilters.value.forEach(item => {
-  item.values.forEach(it => {
-    filterSelected.value.push({
-      key: item.key,
-      value: it
+  initialFilters.value = parseQuery();
+
+  initialFilters.value.forEach(item => {
+    item.values.forEach(it => {
+      filterSelected.value.push({
+        key: item.key,
+        value: it
+      })
     })
   })
+  filters.value = [...filters.value, ...initialFilters.value];
 })
-filters.value = [...filters.value, ...initialFilters.value];
+
 
 const type = computed(() => typeData.value.find(e => e.slug === slug))
 
@@ -154,6 +159,8 @@ onMounted(() => {
 let currentFilters =  ref(initialFilters.value)
 
 async function filterData(e, page) {
+  console.log('-------');
+
   productPage.value = page;
   // console.log('page--: ',page);
 
@@ -229,7 +236,7 @@ function parseQuery() {
   // console.log(dataAvailableFilters.value.filters, '0');
 
   // Filter query by list of allows
-  let allowQuery = Object.keys(initialAvailableFilters.filters ?? {});
+  let allowQuery = Object.keys(initialAvailableFilters?.filters ?? {});
   queryKeys = queryKeys.filter((k) => allowQuery.includes(k))
 
 

@@ -104,26 +104,34 @@ let filters = ref([{
 let {
   data: dataAvailableFilters,
   pending: pendingFilters,
-} = await useAsyncData('data_activeFilters', () => getActiveFilters({filters: filters.value, lang: 'en', type: 'dress', fetchFilters: fetchFilters.value}), {
+} = await useLazyAsyncData('data_activeFilters', () => getActiveFilters({filters: filters.value, lang: 'en', type: 'dress', fetchFilters: fetchFilters.value}), {
   transform: (d) => {
     return d.data['products']['meta']
   },
 })
-let initialAvailableFilters = dataAvailableFilters.value;
+let initialAvailableFilters = [];
 
 
-const initialFilters = ref();
-initialFilters.value = parseQuery();
-initialFilters.value.forEach(item => {
-  item.values.forEach(it => {
-    filterSelected.value.push({
-      key: item.key,
-      value: it
+
+const initialFilters = ref([]);
+onMounted(() => {
+  initialAvailableFilters = dataAvailableFilters.value;
+
+  initialFilters.value = parseQuery();
+
+  initialFilters.value.forEach(item => {
+    item.values.forEach(it => {
+      filterSelected.value.push({
+        key: item.key,
+        value: it
+      })
     })
   })
+  filters.value = [...filters.value, ...initialFilters.value];
 })
-filters.value = [...filters.value, ...initialFilters.value];
-// console.log(route.query, parseQuery());
+
+
+
 
 
 const {

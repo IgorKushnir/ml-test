@@ -216,13 +216,16 @@ onMounted(() => {
         mount()
       }, 100)
     } else {
-      $setViewedProduct(data.value.id)
-      const viewedIds = $getViewedProduct()
-      useViewedProductIds().value = viewedIds;
+      if (data.value?.id) {
+        $setViewedProduct(data.value.id)
+        const viewedIds = $getViewedProduct()
+        useViewedProductIds().value = viewedIds;
 
-      data.value.extra.also = data.value.extra.also.filter(item => {
-        return !viewedIds.includes(item.attributes.id.toString())
-      });
+        data.value.extra.also = data.value.extra.also.filter(item => {
+          return !viewedIds.includes(item.attributes.id.toString())
+        });
+      }
+
     }
   }
   mount()
