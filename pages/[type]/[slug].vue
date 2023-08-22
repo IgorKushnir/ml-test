@@ -98,7 +98,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="js">
 import getProduct from '~/api/getProduct'
 const { $setViewedProduct, $getViewedProduct, $getLikedProducts, $toggleLikeProduct } = useNuxtApp()
 const isMobile = useIsMobile();

@@ -88,7 +88,7 @@ pages.value = previousPages ?? 1;
 let {
   data: dataAvailableFilters,
   pending: pendingFilters,
-} = await useLazyAsyncData('data_activeFilters', () => getActiveFilters({filters: filters.value, lang: 'en', type: slug, fetchFilters: fetchFilters.value}), {
+} = await useAsyncData('data_activeFilters', () => getActiveFilters({filters: filters.value, lang: 'en', type: slug, fetchFilters: fetchFilters.value}), {
   transform: (d) => {
     return d.data['products']['meta']
   },
@@ -98,7 +98,7 @@ let initialAvailableFilters = [];
 
 
 const initialFilters = ref([]);
-onMounted(() => {
+// onMounted(() => {
   initialAvailableFilters = dataAvailableFilters.value;
 
   initialFilters.value = parseQuery();
@@ -112,7 +112,7 @@ onMounted(() => {
     })
   })
   filters.value = [...filters.value, ...initialFilters.value];
-})
+// })
 
 
 const type = computed(() => typeData.value.find(e => e.slug === slug))
@@ -126,6 +126,7 @@ let {
 } = await useLazyAsyncData('data_products', () => getProducts({filters: filters.value, lang: 'en', type: slug, page: productPage.value, pages: pages.value }), {
   transform: (d) => {
     const collection = 'products';
+
     let initialPageSize = 12;
     pages.value = 1;
 
@@ -159,7 +160,7 @@ onMounted(() => {
 let currentFilters =  ref(initialFilters.value)
 
 async function filterData(e, page) {
-  console.log('-------');
+  // console.log('-------');
 
   productPage.value = page;
   // console.log('page--: ',page);
