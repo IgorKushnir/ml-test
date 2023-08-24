@@ -1,6 +1,6 @@
 <template>
   <div>
-<!--    Create route store-->
+    <!--    Create route store-->
     <Seo title="Store finder" :breadcrumbs="[
         {
           title: 'Store finder',
@@ -19,7 +19,8 @@
         </template>
         <template #end>
           <Select
-              v-if="lines && lines.length > 1" :data="lines" name="Lines" all="All lines" side="right" :index="lineIndex"
+              v-if="lines && lines.length > 1" :data="lines" name="Lines" all="All lines" side="right"
+              :index="lineIndex"
               @index="(i) => changeLine(i)"
           />
         </template>
@@ -43,13 +44,15 @@
 
 
       <transition name="fade">
-        <Container v-if="!showMap && !pending" >
+        <Container v-if="!showMap && !pending">
           <template v-if="countryIndex !== -1" v-for="store in stores">
-            <StoreItem :store="store" :class="stores.length <= 2 ? 'col-6 col-8-lg col-12-md' : 'col-4 col-6-xl col-12-md'"/>
+            <StoreItem :store="store"
+                       :class="stores.length <= 2 ? 'col-6 col-8-lg col-12-md' : 'col-4 col-6-xl col-12-md'"/>
           </template>
           <template v-if="countryIndex === -1" v-for="(country, index) in countries">
-            <NuxtLink :to="'?country='+country.slug" v-on:click="changeCountry(index)" :class="'col-4 col-6-xl col-12-md'">
-              <StoreItem :store="{country_code: country.flag, city: country.value}" country />
+            <NuxtLink :to="'?country='+country.slug" v-on:click="changeCountry(index)"
+                      :class="'col-4 col-6-xl col-12-md'">
+              <StoreItem :store="{country_code: country.flag, city: country.value}" country/>
             </NuxtLink>
           </template>
 
@@ -59,7 +62,6 @@
 
 
     </div>
-
 
 
     <Loading v-if="!countries" :pending="!countries"/>
@@ -72,7 +74,7 @@
 import {getListOfCountries} from '~/api/stores'
 import getCountryCode from '~/api/getCountryCode'
 import {getCountry} from "../api/stores";
-
+import {useSSRContext} from "vue";
 
 const router = useRouter();
 const route = useRoute();
@@ -87,47 +89,71 @@ const lineIndex = ref(-1)
 let showMap = ref(false)
 
 const countries = ref(await getListOfCountries('en'))
+
+if (process.client) {
+  const country = document.cookie.replace(
+      /(?:(?:^|.*;\s*)country\s*\=\s*([^;]*).*$)|^.*$/,
+      "$1",
+  );
+  countryCode.value = country;
+  console.log('client', country);
+}
+if (process.server) {
+  const nuxtApp = useNuxtApp()
+  const { ssrContext } = nuxtApp
+  const event = ssrContext.event
+  const country = event.context.country
+  countryCode.value = country
+  console.log('server', country);
+}
+if (!countrySlug.value) {
+  countrySlug.value = getSlugByCode(countryCode.value)
+}
+
+
 // console.log('b - ', countrySlug.value);
 
-const {data, pending, refresh, error} = await useLazyAsyncData('country', () => getCountry(countrySlug.value,'en'), {
+const {data, pending, refresh, error} = await useLazyAsyncData('country', () => getCountry(countrySlug.value, 'en'), {
   transform: (d) => {
     return d.data['storeFinder']
   }
 })
 
 
+// onMounted(async () => {
+//   await nextTick()
+//   countryCode.value = await getCountryCode();
+//
+//   // console.log(countryCode.value);
+//   if (countryCode.value) {
+//
+//     if (countries.value) {
+//       countrySlug.value = getSlugByCode(countryCode.value);
+//       setTimeout(function () {
+//         countryIndex.value = getIndexBySlug(countrySlug.value)
+//       }, 10)
+//       changeRoute()
+//     } else {
+//
+//       watch(countries, () => {
+//         countrySlug.value = getSlugByCode(countryCode.value);
+//         countryIndex.value = getIndexBySlug(countrySlug.value)
+//
+//         let inited = false;
+//         watch(pending, () => {
+//           if (!inited) {
+//             refresh()
+//             inited = true;
+//           }
+//         })
+//         changeRoute()
+//       })
+//     }
+//   }
+// })
 
 if (countrySlug.value == null) {
-  if (process.client) {
-    countryCode.value = await getCountryCode();
-
-  }
-  // console.log(countryCode.value);
-  if (countryCode.value) {
-
-    if (countries.value) {
-      countrySlug.value = getSlugByCode(countryCode.value);
-      setTimeout(function () {
-        countryIndex.value = getIndexBySlug(countrySlug.value)
-      }, 10)
-      changeRoute()
-    } else {
-
-      watch(countries, () => {
-        countrySlug.value = getSlugByCode(countryCode.value);
-        countryIndex.value = getIndexBySlug(countrySlug.value)
-
-        let inited = false;
-        watch(pending, () => {
-          if (!inited) {
-            refresh()
-            inited = true;
-          }
-        })
-        changeRoute()
-      })
-    }
-  }
+///
 } else {
   countryIndex.value = getIndexBySlug(countrySlug.value)
 }
@@ -143,6 +169,7 @@ function getStores() {
   })
   return stores
 }
+
 const stores = computed(() => {
   // return []
   let sores = getStores();
@@ -152,14 +179,12 @@ const stores = computed(() => {
   if (lineIndex.value !== -1) {
     sores = sores.filter(store => {
       return lines.value[lineIndex.value]?.value ? store.lines.data.map(line => line.attributes.title).includes(lines.value[lineIndex.value]?.value) : true;
-    } )
+    })
   }
   // Sorting premium first
   return [...sores.filter(store => store.premium), ...sores.filter(store => !store.premium)];
   // return sores;
 })
-
-
 const cities = computed(() => {
   // return []
   if (countryIndex.value === -1) return [];
@@ -172,8 +197,6 @@ const cities = computed(() => {
         return {value: c.name}
       });
 })
-
-
 const lines = computed(() => {
   // return []
   if (countryIndex.value === -1) return [];
@@ -197,7 +220,7 @@ const lines = computed(() => {
     }
   })
 
-  return  l;
+  return l;
 })
 
 watch(() => countrySlug.value, (s) => {
@@ -205,16 +228,17 @@ watch(() => countrySlug.value, (s) => {
   refresh()
 })
 
-onMounted(async () => {
-  if (countrySlug.value !== data?.value?.data?.attributes?.slug) {
-    // console.log('here', countrySlug.value);
-    refresh()
-  }
-})
+// onMounted(async () => {
+//   if (countrySlug.value !== data?.value?.data?.attributes?.slug) {
+//     // console.log('here', countrySlug.value);
+//     refresh()
+//   }
+// })
 
 
 function getSlugByCode(code) {
-  const index = countries.value.findIndex(c => c.flag === code)
+  const index = countries.value?.findIndex(c => c.flag === code)
+  if (!index) return
   return countries.value[index]?.slug
 }
 
@@ -222,10 +246,6 @@ function getIndexBySlug(slug) {
   const index = countries.value.findIndex(c => c.slug === slug)
   return index
 }
-
-
-
-
 
 
 function changeCountry(index) {

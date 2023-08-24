@@ -8,6 +8,7 @@ export default fromNodeMiddleware(async (req, res, next) => {
 
 
 
+    // !!!!!! setResponseStatus(event, 202)
 
     // if (req.url === '/dress?silhouettes=a-line') {
     //     res.writeHead(301, { Location: '/silhouette/a-line' });
