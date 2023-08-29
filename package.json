@@ -15,7 +15,6 @@
     "@gtm-support/vue-gtm": "^2.0.0",
     "@rollup/plugin-graphql": "^1.1.0",
     "axios": "^0.27.2",
-    "geoip-lite": "^1.4.7",
     "google-maps": "^4.3.3",
     "nuxt": "^3.0.0-rc.6",
     "vue-gtag-next": "^1.14.0",
