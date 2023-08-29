@@ -16,6 +16,7 @@ export default defineEventHandler((event) => {
 
         // event.context.country = "UA"
         // setCookie(event, 'country', "UA")
+        //
     }
 
 })
