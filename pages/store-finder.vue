@@ -74,7 +74,6 @@
 import {getListOfCountries} from '~/api/stores'
 import getCountryCode from '~/api/getCountryCode'
 import {getCountry} from "../api/stores";
-import {useSSRContext} from "vue";
 
 const router = useRouter();
 const route = useRoute();
@@ -89,6 +88,8 @@ const lineIndex = ref(-1)
 let showMap = ref(false)
 
 const countries = ref(await getListOfCountries('en'))
+
+
 
 if (process.client) {
   const country = document.cookie.replace(
@@ -106,12 +107,17 @@ if (process.server) {
   countryCode.value = country
   console.log('server', country);
 }
-if (!countrySlug.value) {
-  countrySlug.value = getSlugByCode(countryCode.value)
-}
+
 
 
 // console.log('b - ', countrySlug.value);
+if (!countrySlug.value) {
+  countryIndex.value = getIndexByCode(countryCode.value)
+  countrySlug.value = getSlugByCode(countryCode.value)
+} else {
+  if (countryCode.value === 'UA') countrySlug.value = 'ukraine' // For Ukraine
+  countryIndex.value = getIndexBySlug(countrySlug.value)
+}
 
 const {data, pending, refresh, error} = await useLazyAsyncData('country', () => getCountry(countrySlug.value, 'en'), {
   transform: (d) => {
@@ -120,11 +126,16 @@ const {data, pending, refresh, error} = await useLazyAsyncData('country', () => 
 })
 
 
+onMounted(async () => {
+  if (countryCode.value) {
+    changeRoute()
+  }
+})
 // onMounted(async () => {
-//   await nextTick()
-//   countryCode.value = await getCountryCode();
-//
-//   // console.log(countryCode.value);
+// //   await nextTick()
+// //   countryCode.value = await getCountryCode();
+// //
+// //   // console.log(countryCode.value);
 //   if (countryCode.value) {
 //
 //     if (countries.value) {
@@ -149,14 +160,13 @@ const {data, pending, refresh, error} = await useLazyAsyncData('country', () => 
 //         changeRoute()
 //       })
 //     }
+//
 //   }
+//
+//
 // })
 
-if (countrySlug.value == null) {
-///
-} else {
-  countryIndex.value = getIndexBySlug(countrySlug.value)
-}
+
 
 function getStores() {
   let stores = []
@@ -236,14 +246,18 @@ watch(() => countrySlug.value, (s) => {
 // })
 
 
-function getSlugByCode(code) {
+async function getSlugByCode(code) {
   const index = countries.value?.findIndex(c => c.flag === code)
-  if (!index) return
   return countries.value[index]?.slug
 }
 
 function getIndexBySlug(slug) {
   const index = countries.value.findIndex(c => c.slug === slug)
+  return index
+}
+function getIndexByCode(code) {
+  if (!countries.value) return -1
+  const index = countries.value.findIndex(c => c.flag === code)
   return index
 }
 
@@ -268,9 +282,9 @@ function changeLine(index) {
   lineIndex.value = index;
 }
 
-function changeRoute() {
+async function changeRoute() {
   router.replace({
-    query: {country: countrySlug.value},
+    query: {country: await countrySlug.value},
   })
 }
 

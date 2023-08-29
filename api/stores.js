@@ -1,11 +1,12 @@
 async function getCountry(slug, lang) {
+
     const graphql = useStrapiGraphQL()
 
     // console.log({slug});
 
     const response = graphql(`
     query storeFinder{
-     storeFinder (slug: "${slug}" locale: "${lang}") {
+     storeFinder (slug: "${await slug}" locale: "${lang}") {
             data {
               attributes {
                 country
@@ -79,7 +80,7 @@ async function getListOfCountries(lang) {
   }
 }
     `);
-    const {data, pending, refresh, error} = await useLazyAsyncData('data_list_of_countries', () => response, {
+    const {data, pending, refresh, error} = await useAsyncData('data_list_of_countries', () => response, {
         transform: (d) => {
             const countries = d.data['storeFinders'].data.map(e => {
                 return {value: e.attributes.country, flag: e.attributes.country_code, slug: e.attributes.slug}
@@ -99,6 +100,10 @@ async function getListOfCountries(lang) {
     })
 
 
+    // return (e) => {
+    //     e.call()
+    //     return data
+    // }
     return data;
 }
 
