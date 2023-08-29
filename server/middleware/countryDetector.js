@@ -11,11 +11,11 @@ export default defineEventHandler((event) => {
         setCookie(event, 'country', geo.country)
     } else {
         // null
-        // event.context.country = null
-        // setCookie(event, 'country', null)
+        event.context.country = null
+        setCookie(event, 'country', null)
 
-        event.context.country = "UA"
-        setCookie(event, 'country', "UA")
+        // event.context.country = "UA"
+        // setCookie(event, 'country', "UA")
     }
 
 })
