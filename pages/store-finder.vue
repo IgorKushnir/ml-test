@@ -105,7 +105,7 @@ if (process.server) {
   const event = ssrContext.event
   const country = event.context.country
   countryCode.value = country
-  console.log('server', country);
+  // console.log('server', country);
 }
 
 
