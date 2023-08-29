@@ -1,22 +1,25 @@
-import geoip from 'geoip-lite';
+// import geoip from 'geoip-lite';
 
 export default defineEventHandler((event) => {
     const headers = getRequestHeaders(event)
     const ip = headers['x-forwarded-for']
 
-    const geo = geoip.lookup(ip);
+    // const geo = geoip.lookup(ip);
+    //
+    // if (geo) {
+    //     event.context.country = geo.country
+    //     setCookie(event, 'country', geo.country)
+    // } else {
+    //     // null
+    //     event.context.country = null
+    //     setCookie(event, 'country', null)
+    //
+    //     // event.context.country = "UA"
+    //     // setCookie(event, 'country', "UA")
+    //     //
+    // }
 
-    if (geo) {
-        event.context.country = geo.country
-        setCookie(event, 'country', geo.country)
-    } else {
-        // null
-        event.context.country = null
-        setCookie(event, 'country', null)
-
-        // event.context.country = "UA"
-        // setCookie(event, 'country', "UA")
-        //
-    }
+    event.context.country = null
+    setCookie(event, 'country', null)
 
 })
