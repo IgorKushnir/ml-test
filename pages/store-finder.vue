@@ -12,7 +12,7 @@
       <StickyBarStickyHeaderMilla>
 
         <template #center>
-          <Select v-if="!(countryCode === 'UA' || countrySlug === 'ukraine')" :data="countries" name="Country" all="All countries" :index="countryIndex" :flag="true"
+          <Select v-if="!(countryCode === 'UA')" :data="countries" name="Country" all="All countries" :index="countryIndex" :flag="true"
                   @index="(i) => changeCountry(i)"/>
           <Select v-if="cities && cities.length > 1" :data="cities" name="City" all="All cities" :index="cityIndex"
                   @index="(i) => changeCity(i)"/>

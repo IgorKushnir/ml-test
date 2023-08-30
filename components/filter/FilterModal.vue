@@ -4,7 +4,7 @@
 
       <transition name="slide">
         <div v-show="showFilters" class="wrapper">
-          <div class="filters-container p-h-56 p-t-112 p-b-120    p-h-32-md">
+          <div class="filters-container p-h-56 p-t-112 p-b-120    p-h-32-md p-b-160-md">
             <div class="header-container p-r-0">
               <div class="btn close" v-on:click="closeFilter"><div class="icon-close-24"></div></div>
               <div class="h4 title"><strong>Filters</strong></div>
