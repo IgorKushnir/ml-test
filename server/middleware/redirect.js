@@ -47,6 +47,12 @@ export default fromNodeMiddleware(async (req, res, next) => {
     // })
 
 
+    // Redirect from '/wp-content/...' to '/'
+    if (req.url.startsWith('/wp-content')) {
+        redirect(req.url, '/', 301)
+        return
+    }
+
     // Redirect from '/' to ''
     if (req.url !== '/' && req.url.endsWith('/')) {
         redirect(req.url, req.url.slice(0, -1), 301)

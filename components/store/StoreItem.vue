@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="store-item p-v-40 p-h-40" >
+    <div class="store-item p-v-40 p-h-40 p-b-0-md p-h-0-md" >
       <div class="city-header">
         <div class="city-container">
           <Flag :code="store.country_code"/>
@@ -129,6 +129,12 @@ function encodeToBase64(string) {
   z-index: 5;
 }
 
+@include md {
+  .store-item {
+    border: unset;
+    border-top: 1px solid $border-dark;
+  }
+}
 
 @media (hover: hover) {
   .premium-badge:hover:after  {
