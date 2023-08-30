@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default defineEventHandler((event) => {
+export default defineEventHandler(async (event) => {
     const headers = getRequestHeaders(event)
     let ip = headers['x-forwarded-for']
     const config = useRuntimeConfig();
@@ -12,19 +12,18 @@ export default defineEventHandler((event) => {
     // const url = "https://ipgeolocation.abstractapi.com/v1/?api_key=3cfbdffdc28f4360988300e9663c1f00&ip_address=92.184.105.98"
 
     if (ip) {
-        axios.get(url)
-            .then(response => {
-                const geo = response.data;
-                event.context.country = geo.country_code
-                setCookie(event, 'country', geo.country_code)
-                setCookie(event, 'ip', geo.country_code)
-            })
-            .catch(error => {
-                event.context.country = null
-                setCookie(event, 'country', null)
-                setCookie(event, 'ip', null)
-                console.log('abstractapi', error.code);
-            });
+        try {
+            const {data} = await axios.get(url)
+            if (data) {
+                event.context.country = data.country_code
+                setCookie(event, 'country', data.country_code)
+            }
+        } catch (e) {
+            event.context.country = null
+            setCookie(event, 'country', null)
+            console.error('abstractapi', e);
+        }
+
     } else {
         event.context.country = null
         setCookie(event, 'country', null)
