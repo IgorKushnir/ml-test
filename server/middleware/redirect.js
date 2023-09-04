@@ -1,4 +1,6 @@
 import axios from 'axios';
+import oldRedirects from '~/api/oldRedirects'
+
 export default fromNodeMiddleware(async (req, res, next) => {
 
     const config = useRuntimeConfig();
@@ -30,13 +32,6 @@ export default fromNodeMiddleware(async (req, res, next) => {
 
 
 
-
-
-
-
-
-
-
     // console.log('New request: ' + req.url)
 
     // // Redirects from predefined list
@@ -58,6 +53,18 @@ export default fromNodeMiddleware(async (req, res, next) => {
         redirect(req.url, req.url.slice(0, -1), 301)
         return
     }
+
+
+    // Redirect from old (static) list
+    let oldRedirectsData = oldRedirects().data
+    oldRedirectsData.forEach(item => {
+        const from = item.attributes.from;
+        const to = item.attributes.to;
+        const condition = from && to;
+        if (condition) {
+            redirect(from, to, item.attributes.status)
+        }
+    })
 
 
     // Redirect from admin list
