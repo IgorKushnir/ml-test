@@ -55,7 +55,8 @@ export default defineNuxtConfig({
         GOOGLE_ANALYTICS: process.env.GOOGLE_ANALYTICS,
         STRAPI_PREVIEW_SECRET: process.env.STRAPI_PREVIEW_SECRET,
         GTM: process.env.GTM,
-        ABSTRACT_API: process.env.ABSTRACT_API
+        ABSTRACT_API: process.env.ABSTRACT_API,
+        ADMIN_URL: process.env.STRAPI_URL || 'http://localhost:1337',
         // SEARCH_URL: process.env.SEARCH_URL || 'http://167.172.227.234',
     },
 

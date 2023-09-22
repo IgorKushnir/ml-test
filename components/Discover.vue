@@ -1,18 +1,19 @@
 <template>
   <div>
-<!--      <pre>{{redirect}}</pre>-->
+<!--    <pre>{{ route.meta }}</pre>-->
+<!--    <pre>{{ currentRedirectMeta }}</pre>-->
     <Seo :data="type"
          :breadcrumbs="[
         {
-          title: redirect?.title ?? type?.title,
+          title: currentRedirectMeta?.title ?? type?.title,
         }
     ]"
-         :title="redirect?.title ?? type?.title"
-         :description="redirect?.description"
-         :blockRobots="redirect == null"
+         :title="currentRedirectMeta?.title ?? type?.title"
+         :description="currentRedirectMeta?.description"
+         :blockRobots="false"
     />
     <div v-if="dataProducts!== null">
-      <InnerHeader :title="redirect?.title ?? type.title"/>
+      <InnerHeader :title="currentRedirectMeta?.h1 ?? type.title"/>
 
       <StickyBarStickyHeaderMilla>
         <template #center>
@@ -43,6 +44,7 @@
 
       </TagContainer>
 
+
       <ProductGrid
           :products-data="dataProducts"
           :pending-products="pendingProducts"
@@ -56,6 +58,8 @@
     <PageNotFound :show="dataProducts == null && !pendingProducts"/>
 
 
+    <SeoText :html="currentRedirectMeta?.seoText"/>
+
   </div>
 </template>
 
@@ -65,12 +69,6 @@ import getProducts from '~/api/getProducts'
 import getActiveFilters from '~/api/getActiveFilters'
 import {useTypesData} from "~/composables/states";
 
-const props = defineProps({
-  redirect: {
-    type: Object,
-    required: false,
-  }
-})
 
 const {$getAbsoluteUrl} = useNuxtApp();
 
@@ -83,10 +81,10 @@ const productPage = ref(1)
 const pages = ref(1)
 const fetchFilters = ref(true)
 
-let slug = route.params.slug ?? props.redirect?.slug; // (props.redirect?.slug) redirect
+
+let slug = route.meta.slug ?? route.params.slug; //  from router.option.ts
 let filterSelected = ref([])
 let filters = ref([]);
-
 
 const previousPages = router.options.history?.pages?.[slug]
 router.options.history.pages = {}
@@ -118,7 +116,7 @@ initialAvailableFilters = dataAvailableFilters.value;
 initialFilters.value = parseQuery();
 
 // redirect
-if (props.redirect?.filter) initialFilters.value.push(props.redirect?.filter)
+// if (props.redirectData?.filter) initialFilters.value.push(props.redirectData?.filter)
 
 initialFilters.value.forEach(item => {
   item.values.forEach(it => {
@@ -210,7 +208,6 @@ async function filterData(e, page) {
       window.scroll({top: 0})
     }
   })
-
 }
 
 async function checkFiltersHandler(e) {
@@ -247,12 +244,15 @@ function setQuery(filters) {
 
   router.replace({
     query: query,
-    path: '/' + slug // +++++++++++++++ new ++++++++++++++
+    path: '/' + slug
   })
+
+  // Set redirect for dress landings
+  setTimeout(() => redirectLandings(), 1)
 }
 
 function parseQuery() {
-  const query = route.query;
+  const query = route.meta.query ?? route.query; //
   let queryKeys = Object.keys(query);
 
   // console.log(dataAvailableFilters.value.filters, '0');
@@ -310,6 +310,33 @@ function cutOneFilter(index) {
   setQuery(filters.value)
   dataProducts.value.data = []
   filterData(filters.value, 1)
+}
+
+
+
+const currentRedirectMeta = ref(route.meta)
+
+async function redirectLandings(first = false) { // Dress redirects. Check router.options.ts
+  if (!first && !route.meta.to) currentRedirectMeta.value = null;
+
+  const listRedirects = route.meta.dressRedirrects;
+  if (!listRedirects) return;
+  const currentPath = route.fullPath;
+  const index = listRedirects.findIndex(l => l.from === currentPath)
+  if (index === -1) return
+
+  currentRedirectMeta.value = listRedirects[index].meta
+
+  if (is_server()) {
+    navigateTo(listRedirects[index].to)
+  } else {
+    setTimeout(() => window.history.replaceState('', '', listRedirects[index].to), 1)
+  }
+}
+redirectLandings(true)
+
+function is_server() {
+  return !(typeof window != 'undefined' && window.document);
 }
 
 </script>

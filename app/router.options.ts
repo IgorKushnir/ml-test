@@ -1,65 +1,41 @@
 import type {RouterConfig} from '@nuxt/schema'
+import {getRedirects} from "~/dress-redirects";
+
+
+const redirects:any = await getRedirects();
+const component = import('~/components/Discover.vue').then(r => {
+    return r.default || r
+})
+
+
+// Dress redirects. Check all-routes.global.js as well
+const r = redirects.map((redirect:any) => {
+    return {
+        name: redirect.name,
+        path: redirect.to,
+        component: () => component,
+        meta: redirect.meta
+    }
+})
 
 // https://router.vuejs.org/api/interfaces/routeroptions.html
 export default <RouterConfig>{
     routes: (_routes) => {
+        // console.log('1',redirects);
+        _routes.forEach(route => {
+            if (route.name.startsWith('slug')) { // slug name means Discovery or Page
+                route.meta.dressRedirrects = redirects;
+            }
+        })
         return [
             ..._routes,
-            // // This is last -------
-            // {
-            //     name: 'dress',
-            //     path: '/dress',
-            //     component: () => import('~/components/Discover.vue').then(r => {
-            //         return r.default || r
-            //     }),
-            //     props: {
-            //         redirect:  {
-            //             slug: 'dress',
-            //             title: 'Milla Nova dress',
-            //             description: 'Desa',
-            //         }
-            //     },
-            // },
-            // {
-            //     name: 'discover',
-            //     path: '/dress/silhouettes/a-line',
-            //     // alias: '/silhouettes/a-line',
-            //     component: () => import('~/components/Discover.vue').then(r => {
-            //         return r.default || r
-            //     }),
-            //     // beforeEnter: (t,  f, next) => {
-            //     //     console.log(t.path, t.fullPath);
-            //     //     next()
-            //     //     // next('/login')
-            //     // },
-            //     props: {
-            //         redirect:  {
-            //             slug: 'dress',
-            //             title: 'A-line dress',
-            //             description: 'Desa',
-            //             filter: {
-            //                 key: 'silhouettes',
-            //                 values: ['a-line']
-            //             }
-            //         }
-            //     },
-            // },
-
-
-
-            // {
-            //     name: 'hello',
-            //     path: '/dress',
-            //     // path: '/uk/:type()/:slug()'
-            //     // alias: '/dress?silhouettes=a-line',
-            //     redirect: {
-            //         // name: 'discover',
-            //         path: '/',
-            //         query: {
-            //             'silhouettes' : 'a-line'
-            //         },
-            //     },
-            // }
+            ...r,
         ]
+
     },
+}
+
+
+function is_server() {
+    return !(typeof window != 'undefined' && window.document);
 }

@@ -51,8 +51,8 @@ const patternIndex = computed(() => {
   return index === -1 ? null : index
 })
 
-const _title = computed(() =>  props.data?.seo?.metaTitle ?? parseVariablesInBrackets(translations.value?.seo_pattern[patternIndex.value]?.title) ?? 'Milla Nova');
-const _description = computed(() =>  props.data?.seo?.metaDescription ?? parseVariablesInBrackets(translations.value?.seo_pattern[patternIndex.value]?.description) ?? '')
+const _title = computed(() => props.data?.seo?.metaTitle ?? parseVariablesInBrackets(translations.value?.seo_pattern[patternIndex.value]?.title) ?? 'Milla Nova');
+const _description = computed(() =>  props.description ?? props.data?.seo?.metaDescription ?? parseVariablesInBrackets(translations.value?.seo_pattern[patternIndex.value]?.description) ?? '')
 // const keywords = computed(() => props.data?.seo?.keywords ??parseVariablesInBrackets( translations.value?.seo_pattern[patternIndex.value]?.keywords) ?? '')
 
 const ogImageUrl = 'https://millanova.com/img/og-image.jpg'
@@ -122,9 +122,9 @@ function parseVariablesInBrackets(str) {
       if (props.data && props.data[variable]) {
 
         if (typeof props.data[variable] === 'string') {
-          text = props.data[variable]
+          text = props.title ?? props.data[variable]
         } else {
-          if (typeof props.data[variable]?.data?.attributes?.title === 'string') text = props.data[variable]?.data?.attributes?.title;
+          if (typeof props.data[variable]?.data?.attributes?.title === 'string') text = props.title ?? props.data[variable]?.data?.attributes?.title;
         }
       } else {
         if (props.title) {
