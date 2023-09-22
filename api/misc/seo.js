@@ -10,7 +10,6 @@ function seo() {
               }
             }
           }
-          keywords
           metaRobots
           structuredData
           metaViewport

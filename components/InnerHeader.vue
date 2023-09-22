@@ -3,8 +3,10 @@
     <div class="container row justify-center">
       <div class="header col-6 col-10-lg col-12-md center">
         <div :class="sub_title || sub_header ? 'wrapper m-v-40 m-v-32-md' : 'wrapper'">
-          <span class="subheader" v-if="sub_header">{{ sub_header }}</span>
-          <h1 class="title">{{ title }}</h1>
+
+          <h1 class="title">
+            <span class="subheader" v-if="sub_header" style="display: block">{{ sub_header }}<br></span>
+            {{ title }}</h1>
           <p v-if="sub_title" style="margin: 0 auto">{{ sub_title }}</p>
         </div>
       </div>

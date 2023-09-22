@@ -109,6 +109,9 @@ let slug = route.params.slug;
 let draft = route.query?.draft;
 const likeList = ref([])
 
+const { locale } = useI18n()
+
+
 let publicationState = "LIVE";
 if (draft === 'true') {
   publicationState = "PREVIEW";
@@ -116,7 +119,7 @@ if (draft === 'true') {
 
 const extrudedIds = useViewedProductIds().value;
 
-let {data, pending} = await getProduct(slug, JSON.stringify(extrudedIds), publicationState)
+let {data, pending} = await getProduct(slug, JSON.stringify(extrudedIds), publicationState, locale.value)
 
 if (process.server) {
   if (data.value) {

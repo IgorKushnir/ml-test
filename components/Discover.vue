@@ -1,12 +1,18 @@
 <template>
   <div>
-    <Seo :data="type" :breadcrumbs="[
+<!--      <pre>{{redirect}}</pre>-->
+    <Seo :data="type"
+         :breadcrumbs="[
         {
-          title: type?.title,
+          title: redirect?.title ?? type?.title,
         }
-    ]"/>
+    ]"
+         :title="redirect?.title ?? type?.title"
+         :description="redirect?.description"
+         :blockRobots="redirect == null"
+    />
     <div v-if="dataProducts!== null">
-      <InnerHeader :title="type.title"/>
+      <InnerHeader :title="redirect?.title ?? type.title"/>
 
       <StickyBarStickyHeaderMilla>
         <template #center>
@@ -32,7 +38,7 @@
             class="selected-item"
             v-on:click="cutOneFilter(index)"
         >
-          {{item.value}} <span class="icon-close-16"/>
+          {{ item.value }} <span class="icon-close-16"/>
         </div>
 
       </TagContainer>
@@ -46,7 +52,7 @@
       />
     </div>
 
-<!--    <Loading :pending="pendingProducts"/>-->
+    <!--    <Loading :pending="pendingProducts"/>-->
     <PageNotFound :show="dataProducts == null && !pendingProducts"/>
 
 
@@ -54,12 +60,17 @@
 </template>
 
 <script setup lang="js">
-
-import getCollection from '~/api/getCollection'
+// import getCollection from '~/api/getCollection'
 import getProducts from '~/api/getProducts'
 import getActiveFilters from '~/api/getActiveFilters'
 import {useTypesData} from "~/composables/states";
 
+const props = defineProps({
+  redirect: {
+    type: Object,
+    required: false,
+  }
+})
 
 const {$getAbsoluteUrl} = useNuxtApp();
 
@@ -72,7 +83,7 @@ const productPage = ref(1)
 const pages = ref(1)
 const fetchFilters = ref(true)
 
-let slug = route.params.slug;
+let slug = route.params.slug ?? props.redirect?.slug; // (props.redirect?.slug) redirect
 let filterSelected = ref([])
 let filters = ref([]);
 
@@ -88,7 +99,12 @@ pages.value = previousPages ?? 1;
 let {
   data: dataAvailableFilters,
   pending: pendingFilters,
-} = await useAsyncData('data_activeFilters', () => getActiveFilters({filters: filters.value, lang: 'en', type: slug, fetchFilters: fetchFilters.value}), {
+} = await useAsyncData('data_activeFilters', () => getActiveFilters({
+  filters: filters.value,
+  lang: 'en',
+  type: slug,
+  fetchFilters: fetchFilters.value
+}), {
   transform: (d) => {
     return d.data['products']['meta']
   },
@@ -96,34 +112,39 @@ let {
 let initialAvailableFilters = [];
 
 
-
 const initialFilters = ref([]);
-// onMounted(() => {
-  initialAvailableFilters = dataAvailableFilters.value;
+initialAvailableFilters = dataAvailableFilters.value;
 
-  initialFilters.value = parseQuery();
+initialFilters.value = parseQuery();
 
-  initialFilters.value.forEach(item => {
-    item.values.forEach(it => {
-      filterSelected.value.push({
-        key: item.key,
-        value: it
-      })
+// redirect
+if (props.redirect?.filter) initialFilters.value.push(props.redirect?.filter)
+
+initialFilters.value.forEach(item => {
+  item.values.forEach(it => {
+    filterSelected.value.push({
+      key: item.key,
+      value: it
     })
   })
-  filters.value = [...filters.value, ...initialFilters.value];
-// })
+})
+filters.value = [...filters.value, ...initialFilters.value];
 
 
 const type = computed(() => typeData.value.find(e => e.slug === slug))
-
 
 
 let initialData = ref([])
 let {
   data: dataProducts,
   pending: pendingProducts,
-} = await useLazyAsyncData('data_products', () => getProducts({filters: filters.value, lang: 'en', type: slug, page: productPage.value, pages: pages.value }), {
+} = await useLazyAsyncData('data_products', () => getProducts({
+  filters: filters.value,
+  lang: 'en',
+  type: slug,
+  page: productPage.value,
+  pages: pages.value
+}), {
   transform: (d) => {
     const collection = 'products';
 
@@ -151,13 +172,12 @@ let {
 })
 
 
-
 onMounted(() => {
   initialData.value = dataProducts.value?.data ?? []
 })
 
 
-let currentFilters =  ref(initialFilters.value)
+let currentFilters = ref(initialFilters.value)
 
 async function filterData(e, page) {
   // console.log('-------');
@@ -227,6 +247,7 @@ function setQuery(filters) {
 
   router.replace({
     query: query,
+    path: '/' + slug // +++++++++++++++ new ++++++++++++++
   })
 }
 
@@ -244,7 +265,7 @@ function parseQuery() {
   return queryKeys.map(key => {
     return {
       key: key,
-      values: query[key] === '' ? [] :query[key]?.split(',') ?? []
+      values: query[key] === '' ? [] : query[key]?.split(',') ?? []
     }
   })
 }
@@ -256,14 +277,15 @@ function handleFilter(e) {
   dataProducts.value.data = []
   filterData(e, 1)
 }
+
 function cutOneFilter(index) {
   const filterToRemove = filterSelected.value[index]
   filterSelected.value.splice(index, 1)
   // console.log({filterToRemove});
 
-  const index1 = filters.value.findIndex((f) => f.key === filterToRemove.key );
+  const index1 = filters.value.findIndex((f) => f.key === filterToRemove.key);
   if (index1 !== -1) {
-    const index2 = filters.value[index1].values.findIndex((f) => f === filterToRemove.value )
+    const index2 = filters.value[index1].values.findIndex((f) => f === filterToRemove.value)
     if (index2 !== -1) {
       filters.value[index1].values.splice(index2, 1)
       if (filters.value[index1].values.length === 0) {
@@ -302,6 +324,7 @@ function cutOneFilter(index) {
   font-size: 16px;
   line-height: 16px;
   cursor: pointer;
+
   .icon-close-16 {
     font-size: 11px;
     margin-left: 4px;

@@ -21,11 +21,11 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: false
-  }
-  // description: {
-  //   type: String,
-  //   required: false
-  // },
+  },
+  description: {
+    type: String,
+    required: false
+  },
   // image: {
   //   type: String,
   //   required: false
@@ -51,9 +51,9 @@ const patternIndex = computed(() => {
   return index === -1 ? null : index
 })
 
-const title = computed(() => props.data?.seo?.metaTitle ?? parseVariablesInBrackets(translations.value?.seo_pattern[patternIndex.value]?.title) ?? 'Milla Nova');
-const description = computed(() => props.data?.seo?.metaDescription ?? parseVariablesInBrackets(translations.value?.seo_pattern[patternIndex.value]?.description) ?? '')
-const keywords = computed(() => props.data?.seo?.keywords ??parseVariablesInBrackets( translations.value?.seo_pattern[patternIndex.value]?.keywords) ?? '')
+const title = computed(() => props.title ?? props.data?.seo?.metaTitle ?? parseVariablesInBrackets(translations.value?.seo_pattern[patternIndex.value]?.title) ?? 'Milla Nova');
+const description = computed(() => props.description ?? props.data?.seo?.metaDescription ?? parseVariablesInBrackets(translations.value?.seo_pattern[patternIndex.value]?.description) ?? '')
+// const keywords = computed(() => props.data?.seo?.keywords ??parseVariablesInBrackets( translations.value?.seo_pattern[patternIndex.value]?.keywords) ?? '')
 
 const ogImageUrl = 'https://millanova.com/img/og-image.jpg'
 
@@ -156,7 +156,7 @@ function setSeo() {
 
 
       {hid: 'description', name: 'description', content: description},
-      {hid: 'keywords', name: 'keywords', content: keywords},
+      // {hid: 'keywords', name: 'keywords', content: keywords},
 
 
       {name: 'robots', content: props.blockRobots ? "noindex, nofollow" : "index, follow"},

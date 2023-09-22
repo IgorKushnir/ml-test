@@ -10,6 +10,7 @@
 
 
 <script setup>
+
 import getInitialData from '~/api/getInitialData';
 import getAllFilters from '~/api/getAllFilters'
 

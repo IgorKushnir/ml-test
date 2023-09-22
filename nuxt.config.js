@@ -8,8 +8,19 @@ export default defineNuxtConfig({
     ],
     modules: [
         '@nuxtjs/strapi',
+        '@nuxtjs/i18n'
     ],
-
+    i18n: {
+        locales: ['en'],
+        defaultLocale: 'en',
+        // vueI18n: {
+        //     fallbackLocale: 'en'
+        // },
+        // detectBrowserLanguage: {
+        //     useCookie: true,
+        //     // cookieKey: 'i18n_redirected',
+        // },
+    },
     build: {
 
     },
@@ -29,9 +40,10 @@ export default defineNuxtConfig({
     },
 
 
-
     strapi: {
         url: process.env.STRAPI_URL || 'http://localhost:1337',
+        GTM: process.env.GTM,
+        GOOGLE_ANALYTICS: process.env.GOOGLE_ANALYTICS
         // url:  'https://millanova-backend-iwjo4.ondigitalocean.app'
     },
 

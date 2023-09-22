@@ -16,13 +16,15 @@ export default fromNodeMiddleware(async (req, res, next) => {
     //     res.writeHead(301, { Location: '/silhouette/a-line' });
     //     res.end();
     // }
-
-
+    //
+    //
     // if (req.url === '/silhouette/a-line') {
     //     try {
-    //         const page1Response = await axios.get(baseUrl + '/dress?silhouettes=a-line');
-    //         res.setHeader('Content-Type', 'text/html');
+    //         const page1Response = await axios.get(baseUrl + '/dress?silhouettes=a-line&');
+    //         // console.log(page1Response);
+    //         page1Response.url = 'hello'
     //         res.end(page1Response.data);
+    //         res.setHeader('Content-Type', 'text/html');
     //
     //     } catch (error) {
     //         next();

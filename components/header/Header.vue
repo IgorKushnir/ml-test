@@ -79,7 +79,7 @@
   </header>
 </template>
 
-<script setup lang="ts">
+<script setup lang="js">
 import { enter, leave} from '~/api/misc/transitions';
 
 

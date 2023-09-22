@@ -1,6 +1,6 @@
 import seo from './misc/seo'
 
-export default async function (slugOrId, extrudeIds = '', publicationState = "LIVE") {
+export default async function (slugOrId, extrudeIds = '', publicationState = "LIVE", lang = 'en') {
 
     if (extrudeIds) {
         extrudeIds = '(extrudeIds: ' + extrudeIds + ')'
@@ -18,6 +18,7 @@ query Product{
         eq: "${slugOrId}"
       }
     }
+    locale: "${lang}"
   ) {
     data {
       id

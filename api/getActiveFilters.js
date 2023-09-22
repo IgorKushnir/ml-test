@@ -34,7 +34,6 @@ query ProductsWithFilters{
           eq: "${type}"
         }
       }
-
   }
     pagination: {
       limit: -1

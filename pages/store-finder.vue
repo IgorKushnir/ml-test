@@ -8,7 +8,8 @@
     ]"/>
 
     <div v-if="countries">
-      <InnerHeader title="Store finder"/>
+      <InnerHeader v-if="countries[countryIndex]?.value" :title="countries[countryIndex]?.value" sub_header="Store finder"/>
+      <InnerHeader v-else title="Store finder"/>
       <StickyBarStickyHeaderMilla>
 
         <template #center>
@@ -245,6 +246,10 @@ watch(() => countrySlug.value, (s) => {
 //   }
 // })
 
+
+// async function getCountryNameByIndex(index) {
+//   if (index !== -1) return countries.value[index]
+// }
 
 async function getSlugByCode(code) {
   const index = countries.value?.findIndex(c => c.flag === code)

@@ -13,7 +13,7 @@ import VueGtag from 'vue-gtag-next'
 export default defineNuxtPlugin((nuxtApp) => {
     const config = useRuntimeConfig();
 
-    const id = config.GOOGLE_ANALYTICS;
+    const id = config.public.strapi.GOOGLE_ANALYTICS;
 
     if (!id) return
     // console.log('Google analytics: ' + id);
