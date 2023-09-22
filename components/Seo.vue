@@ -51,8 +51,8 @@ const patternIndex = computed(() => {
   return index === -1 ? null : index
 })
 
-const title = computed(() => props.title ?? props.data?.seo?.metaTitle ?? parseVariablesInBrackets(translations.value?.seo_pattern[patternIndex.value]?.title) ?? 'Milla Nova');
-const description = computed(() => props.description ?? props.data?.seo?.metaDescription ?? parseVariablesInBrackets(translations.value?.seo_pattern[patternIndex.value]?.description) ?? '')
+const _title = computed(() =>  props.data?.seo?.metaTitle ?? parseVariablesInBrackets(translations.value?.seo_pattern[patternIndex.value]?.title) ?? 'Milla Nova');
+const _description = computed(() =>  props.data?.seo?.metaDescription ?? parseVariablesInBrackets(translations.value?.seo_pattern[patternIndex.value]?.description) ?? '')
 // const keywords = computed(() => props.data?.seo?.keywords ??parseVariablesInBrackets( translations.value?.seo_pattern[patternIndex.value]?.keywords) ?? '')
 
 const ogImageUrl = 'https://millanova.com/img/og-image.jpg'
@@ -120,42 +120,46 @@ function parseVariablesInBrackets(str) {
     variables.forEach(variable => {
       let text = '['+variable+']'
       if (props.data && props.data[variable]) {
+
         if (typeof props.data[variable] === 'string') {
           text = props.data[variable]
         } else {
           if (typeof props.data[variable]?.data?.attributes?.title === 'string') text = props.data[variable]?.data?.attributes?.title;
         }
       } else {
-        if (!props.title) return null
-        text = props.title
+        if (props.title) {
+          text = props.title
+        } else {
+          str = null
+        }
       }
 
-      str = str.replace('['+variable+']', text)
-
+      if (str) str = str.replace('['+variable+']', text)
     })
   }
+
   return str;
 }
 
 function setSeo() {
   useHead({
-    title: title,
+    title: _title,
     link: [
       {rel: 'canonical', href: siteUrl}
     ],
     meta: [
       {property: 'og:locale', content: 'en_US'},
       {property: 'og:site_name', content: 'Milla Nova'},
-      {property: 'og:title', content: title},
+      {property: 'og:title', content: _title},
       {property: 'og:type', content: 'website'},
-      {property: 'og:description', content: description},
+      {property: 'og:description', content: _description},
       {property: 'og:url', content: siteUrl},
       {property: 'twitter:card', content: 'summary_large_image'},
       {property: 'og:image', content: ogImageUrl},
       {property: 'twitter:image', content: ogImageUrl},
 
 
-      {hid: 'description', name: 'description', content: description},
+      {hid: 'description', name: 'description', content: _description},
       // {hid: 'keywords', name: 'keywords', content: keywords},
 
 
@@ -178,8 +182,8 @@ setSeo()
 
 
 
-const router = useRouter();
-const route = useRoute();
+// const router = useRouter();
+// const route = useRoute();
 
 // router.beforeEach((to, from) => {
 //   if (to.fullPath === '/silhouette/a-line') {
