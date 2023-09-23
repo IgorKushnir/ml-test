@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
             if (err) return console.log(err);
             console.log('Sitemap generated');
         });
-        return 'Generated: ' + new Date().toDateString()
+        return data
     } else {
         console.log('Error Sitemap generating');
         return 'Error Sitemap generating'
