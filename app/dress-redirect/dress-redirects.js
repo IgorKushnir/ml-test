@@ -1,4 +1,4 @@
-import rowRedirects from '~/app/dress-redirect/dress-redirects.json' assert {type: 'json'};
+import rowRedirects from '~/.output/dress-redirects.json' assert {type: 'json'};
 
 function transformDressRedirectJson(response) {
     let _redirects = []
@@ -8,20 +8,22 @@ function transformDressRedirectJson(response) {
         const slug = types.attributes.slug
         // const lang = types.attributes.locale
         types.attributes.productLandingsRedirects.forEach((meta) => {
-            _redirects.push({
-                name: generateRandomID(),
-                from: meta.from,
-                to: meta.to,
-                meta: {
-                    slug: slug,
-                    title: meta.title,
-                    description: meta.description,
-                    h1: meta.h1,
-                    // query: meta.query,
-                    query: convertPathToQueryObject(meta.from),
-                    seoText: meta.seoText
-                }
-            })
+            if (meta.enable) {
+                _redirects.push({
+                    name: generateRandomID(),
+                    from: meta.from,
+                    to: meta.to,
+                    meta: {
+                        slug: slug,
+                        title: meta.title,
+                        description: meta.description,
+                        h1: meta.h1,
+                        // query: meta.query,
+                        query: convertPathToQueryObject(meta.from),
+                        seoText: meta.seoText
+                    }
+                })
+            }
         })
     })
     return _redirects
