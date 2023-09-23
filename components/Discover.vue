@@ -313,9 +313,9 @@ function cutOneFilter(index) {
 }
 
 
+// Dress redirects. Check router.options.ts
 
 const currentRedirectMeta = ref(route.meta)
-
 async function redirectLandings(first = false) { // Dress redirects. Check router.options.ts
   if (!first && !route.meta.to) currentRedirectMeta.value = null;
 
@@ -328,7 +328,9 @@ async function redirectLandings(first = false) { // Dress redirects. Check route
   currentRedirectMeta.value = listRedirects[index].meta
 
   if (is_server()) {
-    navigateTo(listRedirects[index].to)
+    navigateTo(listRedirects[index].to, {
+      redirectCode: 301
+    })
   } else {
     setTimeout(() => window.history.replaceState('', '', listRedirects[index].to), 1)
   }

@@ -1,12 +1,8 @@
 import type {RouterConfig} from '@nuxt/schema'
-// import {getRedirects} from "~/dress-redirects";
 
 
-// const redirects:any = await getRedirects();
-import rowRedirects from '~/misk/dress-redirects.json' assert {type: 'json'};
-import {transformDressRedirectJson} from "~/dress-redirects";
+import {redirects} from "~/app/dress-redirect/dress-redirects";
 
-const redirects = transformDressRedirectJson(rowRedirects)
 // console.log({redirects});
 
 const component = import('~/components/Discover.vue').then(r => {

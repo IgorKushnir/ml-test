@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build": "node generate-sitemap.js && nuxt build",
+    "build": "node generate-sitemap.js && node generate-dress-redirects.js && nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",

@@ -1,44 +1,5 @@
-import axios from "axios";
+import rowRedirects from '~/app/dress-redirect/dress-redirects.json' assert {type: 'json'};
 
-async function getRedirects() {
-    // const url = process.env.STRAPI_URL;
-    const url = 'http://localhost:1337';
-    // const url = 'https://admin.millanova.com';
-
-    // console.log(url);
-    try {
-        const response = await axios.get(url+"/api/types?populate=productLandingsRedirects&locale=all")
-        if (response.status === 200) {
-            let _redirects = []
-            response.data.data.forEach((types) => {
-                const slug = types.attributes.slug
-                // const lang = types.attributes.locale
-                types.attributes.productLandingsRedirects.forEach((meta) => {
-                    _redirects.push({
-                        name: generateRandomID(),
-                        from: meta.from,
-                        to: meta.to,
-                        meta: {
-                            slug: slug,
-                            title: meta.title,
-                            description: meta.description,
-                            h1: meta.h1,
-                            // query: meta.query,
-                            query: convertPathToQueryObject(meta.from),
-                            seoText: meta.seoText
-                        }
-                    })
-                })
-            })
-            // console.log(_redirects);
-            return _redirects
-
-        }
-    } catch (e) {
-        console.error('Error to call: /api/types?populate=productLandingsRedirects&locale=all?');
-        return []
-    }
-}
 function transformDressRedirectJson(response) {
     let _redirects = []
     if (!response) return _redirects
@@ -93,4 +54,6 @@ function generateRandomID(length = 10) {
     return result;
 }
 
-export {getRedirects, transformDressRedirectJson}
+const redirects = transformDressRedirectJson(rowRedirects)
+
+export {redirects}
