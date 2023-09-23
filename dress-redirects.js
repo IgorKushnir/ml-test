@@ -2,8 +2,8 @@ import axios from "axios";
 
 async function getRedirects() {
     // const url = process.env.STRAPI_URL;
-    // const url = 'http://localhost:1337';
-    const url = 'https://admin.millanova.com';
+    const url = 'http://localhost:1337';
+    // const url = 'https://admin.millanova.com';
 
     // console.log(url);
     try {
@@ -39,6 +39,34 @@ async function getRedirects() {
         return []
     }
 }
+function transformDressRedirectJson(response) {
+    let _redirects = []
+    if (!response) return _redirects
+
+    response.data.forEach((types) => {
+        const slug = types.attributes.slug
+        // const lang = types.attributes.locale
+        types.attributes.productLandingsRedirects.forEach((meta) => {
+            _redirects.push({
+                name: generateRandomID(),
+                from: meta.from,
+                to: meta.to,
+                meta: {
+                    slug: slug,
+                    title: meta.title,
+                    description: meta.description,
+                    h1: meta.h1,
+                    // query: meta.query,
+                    query: convertPathToQueryObject(meta.from),
+                    seoText: meta.seoText
+                }
+            })
+        })
+    })
+    return _redirects
+}
+
+
 function convertPathToQueryObject(path) {
     // Create a new URL object
     const url = new URL(path, 'http://dummy.com'); // The domain is a dummy since we only care about the path and search params
@@ -65,4 +93,4 @@ function generateRandomID(length = 10) {
     return result;
 }
 
-export {getRedirects}
+export {getRedirects, transformDressRedirectJson}

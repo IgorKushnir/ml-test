@@ -1,12 +1,17 @@
 import type {RouterConfig} from '@nuxt/schema'
-import {getRedirects} from "~/dress-redirects";
+// import {getRedirects} from "~/dress-redirects";
 
 
-const redirects:any = await getRedirects();
+// const redirects:any = await getRedirects();
+import rowRedirects from '~/misk/dress-redirects.json' assert {type: 'json'};
+import {transformDressRedirectJson} from "~/dress-redirects";
+
+const redirects = transformDressRedirectJson(rowRedirects)
+// console.log({redirects});
+
 const component = import('~/components/Discover.vue').then(r => {
     return r.default || r
 })
-
 
 // Dress redirects. Check all-routes.global.js as well
 const r = redirects.map((redirect:any) => {
