@@ -13,7 +13,13 @@ export default defineEventHandler(async (event) => {
         //     if (err) return console.log(err);
         //     console.log('Dress Redirects generated', process.cwd());
         // });
-        fs.writeFile('public/dress-redirects.json', JSON.stringify(data), function (err) {
+        let path;
+        if (process.env.NODE_ENV === 'development') {
+            path = 'public/dress-redirects.json'
+        } else {
+            path = '.output/public/dress-redirects.json'
+        }
+        fs.writeFile(path, JSON.stringify(data), function (err) {
             if (err) return console.log(err);
             console.log('Dress Redirects generated');
         });

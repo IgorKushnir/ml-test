@@ -16,12 +16,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
         if (process.env.NODE_ENV === 'development') {
             redirects = fs.readFileSync('public/dress-redirects.json','utf-8')
         } else {
-            try {
-                redirects = fs.readFileSync('.output/public/dress-redirects.json','utf-8')
-                console.log({redirects});
-            } catch (e) {
-                console.error('redirects',e);
-            }
+            redirects = fs.readFileSync('.output/public/dress-redirects.json','utf-8')
         }
         redirects = JSON.parse(redirects)
     } else {
@@ -50,7 +45,6 @@ export default defineNuxtPlugin(async (nuxtApp) => {
             }
         })
     })
-
 
 
     // fs.readFile('app/dress-redirect/dress-redirects.json', 'utf-8', function (err,data) {
