@@ -1,4 +1,5 @@
-import rowRedirects from '~/.output/dress-redirects.json' assert {type: 'json'};
+import rowRedirects from '~/app/dress-redirect/dress-redirects.json' assert {type: 'json'};
+
 
 function transformDressRedirectJson(response) {
     let _redirects = []
