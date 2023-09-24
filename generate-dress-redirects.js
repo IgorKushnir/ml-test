@@ -8,11 +8,13 @@ async function init() {
     const response = await axios.get(url + "/api/types?populate=productLandingsRedirects&locale=all")
     if (response.status === 200) {
         const data = response.data;
-        // fs.writeFile('app/dress-redirect/dress-redirects.json', JSON.stringify(data), function (err) {
-        //     if (err) return console.log(err);
-        //     console.log('Dress Redirects generated');
-        // });
-        fs.writeFile('public/dress-redirects.json', JSON.stringify(data), function (err) {
+        let path;
+        if (process.env.NODE_ENV === 'development') {
+            path = 'public/dress-redirects.json'
+        } else {
+            path = '.output/public/dress-redirects.json'
+        }
+        fs.writeFile(path, JSON.stringify(data), function (err) {
             if (err) return console.log(err);
             console.log('Dress Redirects generated');
         });

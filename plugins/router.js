@@ -8,10 +8,16 @@ const Discover = import('~/components/Discover.vue').then(r => {
     return r.default || r
 })
 export default defineNuxtPlugin(async (nuxtApp) => {
+    const config = useRuntimeConfig();
+    // console.log(config);
     let redirects
     if(is_server()) {
         // console.log(process.cwd());
-        redirects = fs.readFileSync('public/dress-redirects.json','utf-8')
+        if (process.env.NODE_ENV === 'development') {
+            redirects = fs.readFileSync('public/dress-redirects.json','utf-8')
+        } else {
+            redirects = fs.readFileSync('.output/public/dress-redirects.json','utf-8')
+        }
         redirects = JSON.parse(redirects)
     } else {
         const _redirects = await axios.get("/dress-redirects.json")
