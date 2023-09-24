@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
         }
         fs.writeFile(path, JSON.stringify(data), function (err) {
             if (err) return console.log(err);
-            console.log('Dress Redirects generated');
+            console.log('Dress Redirects generated to: ' + path + ' Mode: ' + process.env.NODE_ENV);
         });
         return data
     } else {

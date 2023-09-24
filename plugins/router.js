@@ -29,7 +29,6 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
 
     const router = useRouter()
-
     redirects.forEach(newRoute => {
         router.addRoute({
             name: newRoute.name,
