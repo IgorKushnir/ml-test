@@ -1,8 +1,8 @@
 import {usePreviousRoute} from "~/composables/states";
 
+
 export default defineNuxtRouteMiddleware((to, from, next) => {
     usePreviousRoute().value = from.name; // ???
-
 
 
 })

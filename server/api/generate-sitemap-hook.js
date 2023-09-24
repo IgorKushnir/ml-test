@@ -4,9 +4,9 @@ import fs from 'fs';
 export default  defineEventHandler(async (event) => {
     const config = useRuntimeConfig();
 
-
     // Get sitemap
     const response = await axios.get(config.public.strapi.url + "/sitemap/index.xml")
+    // console.log(response);
     if (response.status === 200) {
         const data = response.data;
         fs.writeFile('.output/public/sitemap.xml', data, function (err) {
