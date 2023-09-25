@@ -1,6 +1,6 @@
 import { defineNuxtPlugin } from '#app'
 import axios from 'axios';
-import fs from 'fs';
+import getDressRedirects from "~/api/getDressRedirects";
 
 import {transformDressRedirectJson} from "~/app/dress-redirect/dress-redirects";
 
@@ -8,28 +8,21 @@ const Discover = import('~/components/Discover.vue').then(r => {
     return r.default || r
 })
 export default defineNuxtPlugin(async (nuxtApp) => {
-    const config = useRuntimeConfig();
-    // console.log(config);
-    let redirects
-    if(is_server()) {
-        // console.log(process.cwd());
-        if (process.env.NODE_ENV === 'development') {
-            redirects = fs.readFileSync('public/dress-redirects.json','utf-8')
-        } else {
-            redirects = fs.readFileSync('.output/public/dress-redirects.json','utf-8')
-        }
-        redirects = JSON.parse(redirects)
-    } else {
-        const _redirects = await axios.get("/dress-redirects.json")
-        redirects = _redirects.data;
-    }
+    // const config = useRuntimeConfig();
+    // let redirects
 
-    redirects = transformDressRedirectJson(redirects)
+    // const response = await axios.get(config.public.strapi.url + "/api/types?populate=productLandingsRedirects&locale=all")
+
+
+    const { data, pending, refresh, error } = await getDressRedirects()
+    // console.log(data.value.data.types);
+    // const redirects = transformDressRedirectJson(data.value.data.types)
+    // const redirects = []
+
+    // console.log(data.value);
     // console.log(redirects);
-
-
     const router = useRouter()
-    redirects.forEach(newRoute => {
+    data.value.forEach(newRoute => {
         router.addRoute({
             name: newRoute.name,
             path: newRoute.to,
