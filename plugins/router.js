@@ -34,13 +34,15 @@ export default defineNuxtPlugin(async (nuxtApp) => {
                 })
             } else {
                 route.meta = setMeta(data.value[index])
-                setTimeout(() => window.history.replaceState('', '', data.value[index].to), 1)
+                // route.meta.pageTransition = false;
+                window.history.replaceState('', '', data.value[index].to)
             }
         }
     })
-
-
-
+    // console.log(router);
+    //
+    // router.meta = {}
+    // router.meta.pageTransition = false
 
 })
 function setMeta(newRoute) {

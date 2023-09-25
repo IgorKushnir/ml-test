@@ -93,6 +93,7 @@ router.options.history.pages[slug] = previousPages;
 pages.value = previousPages ?? 1;
 
 
+
 let {
   data: dataAvailableFilters,
   pending: pendingFilters,
