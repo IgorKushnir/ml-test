@@ -13,7 +13,6 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     const router = useRouter()
     let routesFrom = []
 
-    console.log('-----', data.value);
 
     data.value.forEach(newRoute => {
         routesFrom.push(newRoute.from)
