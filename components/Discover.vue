@@ -1,19 +1,18 @@
 <template>
   <div>
 <!--    <pre>{{ route.meta }}</pre>-->
-<!--    <pre>{{ currentRedirectMeta }}</pre>-->
     <Seo :data="type"
          :breadcrumbs="[
         {
-          title: currentRedirectMeta?.title ?? type?.title,
+          title: route.meta?.title ?? type?.title,
         }
     ]"
-         :title="currentRedirectMeta?.title ?? type?.title"
-         :description="currentRedirectMeta?.description"
+         :title="route.meta?.title ?? type?.title"
+         :description="route.meta?.description"
          :blockRobots="false"
     />
     <div v-if="dataProducts!== null">
-      <InnerHeader :title="currentRedirectMeta?.h1 ?? type.title"/>
+      <InnerHeader :title="route.meta?.h1 ?? type.title"/>
 
       <StickyBarStickyHeaderMilla>
         <template #center>
@@ -58,7 +57,7 @@
     <PageNotFound :show="dataProducts == null && !pendingProducts"/>
 
 
-    <SeoText :html="currentRedirectMeta?.seoText"/>
+    <SeoText :html="route.meta?.seoText"/>
 
   </div>
 </template>
@@ -247,8 +246,6 @@ function setQuery(filters) {
     path: '/' + slug
   })
 
-  // Set redirect for dress landings
-  setTimeout(() => redirectLandings(), 1)
 }
 
 function parseQuery() {
@@ -313,33 +310,6 @@ function cutOneFilter(index) {
 }
 
 
-// Dress redirects. Check router.options.ts
-
-const currentRedirectMeta = ref(route.meta)
-async function redirectLandings(first = false) { // Dress redirects. Check router.options.ts
-  if (!first && !route.meta.to) currentRedirectMeta.value = null;
-
-  const listRedirects = route.meta.dressRedirrects;
-  if (!listRedirects) return;
-  const currentPath = route.fullPath;
-  const index = listRedirects.findIndex(l => l.from === currentPath)
-  if (index === -1) return
-
-  currentRedirectMeta.value = listRedirects[index].meta
-
-  if (is_server()) {
-    navigateTo(listRedirects[index].to, {
-      redirectCode: 301
-    })
-  } else {
-    setTimeout(() => window.history.replaceState('', '', listRedirects[index].to), 1)
-  }
-}
-redirectLandings(true)
-
-function is_server() {
-  return !(typeof window != 'undefined' && window.document);
-}
 
 </script>
 

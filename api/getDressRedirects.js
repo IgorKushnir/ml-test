@@ -42,8 +42,6 @@ query Landings{
 
 
 
-
-
 function transformDressRedirectJson(response) {
     let _redirects = []
     if (!response) return _redirects
