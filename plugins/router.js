@@ -15,12 +15,8 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
 
     const { data, pending, refresh, error } = await getDressRedirects()
-    // console.log(data.value.data.types);
-    // const redirects = transformDressRedirectJson(data.value.data.types)
-    // const redirects = []
+    if (error.value) return
 
-    // console.log(data.value);
-    // console.log(redirects);
     const router = useRouter()
     data.value.forEach(newRoute => {
         router.addRoute({
@@ -37,12 +33,11 @@ export default defineNuxtPlugin(async (nuxtApp) => {
             }
         })
     })
+    router.afterEach((route) => {
+        console.log(route.fullPath);
+    })
 
 
-    // fs.readFile('app/dress-redirect/dress-redirects.json', 'utf-8', function (err,data) {
-    //     if (err) return console.log(err);
-    //     console.log(JSON.parse(data));
-    // });
 
 })
 // export default defineNuxtPlugin((nuxtApp) => {

@@ -32,7 +32,7 @@ query Landings{
 }
 `);
 
-    const { data, pending, refresh, error } = await useLazyAsyncData('data_'+collection, () => response, {
+    const { data, pending, refresh, error } = await useAsyncData('data_'+collection, () => response, {
         transform: (d) => {
             return transformDressRedirectJson(d.data.types)
         },
