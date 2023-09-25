@@ -164,16 +164,7 @@ function loadNextHook() {
 }
 
 
-//.page-enter-active,
-//.page-leave-active {
-//  //transform-origin: top;
-//  transition: all 0.5s ease;
-//}
-//
-//.page-enter-from,
-//.page-leave-to {
-//  opacity: 0;
-//}
+
 
 @include md {
   .page {

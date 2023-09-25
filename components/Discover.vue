@@ -1,6 +1,5 @@
 <template>
   <div>
-<!--    <pre>{{ route.meta }}</pre>-->
     <Seo :data="type"
          :breadcrumbs="[
         {
@@ -9,7 +8,7 @@
     ]"
          :title="route.meta?.title ?? type?.title"
          :description="route.meta?.description"
-         :blockRobots="false"
+         :blockRobots="!(Object.keys(route.query).length === 0)"
     />
     <div v-if="dataProducts!== null">
       <InnerHeader :title="route.meta?.h1 ?? type.title"/>
@@ -67,6 +66,7 @@
 import getProducts from '~/api/getProducts'
 import getActiveFilters from '~/api/getActiveFilters'
 import {useTypesData} from "~/composables/states";
+
 
 
 const {$getAbsoluteUrl} = useNuxtApp();

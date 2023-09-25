@@ -24,7 +24,9 @@ export default defineNuxtPlugin(async (nuxtApp) => {
             meta: setMeta(newRoute)
         })
     })
+
     router.afterEach((route) => {
+
         const fullPath = route.fullPath;
         if (routesFrom.includes(fullPath)) {
             const index = data.value.findIndex(d => d.from === fullPath)
@@ -43,6 +45,9 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     //
     // router.meta = {}
     // router.meta.pageTransition = false
+
+    // const app = useNuxtApp()
+    // console.log(app);
 
 })
 function setMeta(newRoute) {

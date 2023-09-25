@@ -1,10 +1,17 @@
 <template>
+
+<!--  <pre>{{route.name}}</pre>-->
   <Discover v-if="isType"/>
   <Page v-else/>
 </template>
 
 <script setup>
 import PageNotFound from "../components/PageNotFound";
+
+// definePageMeta({
+//   pageTransition: false,
+//   // layoutTransition: false
+// })
 
 const typeData = useTypesData()
 const route = useRoute()
