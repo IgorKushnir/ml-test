@@ -1,3 +1,5 @@
+import seo from './misc/seo'
+
 async function getCountry(slug, lang) {
 
     const graphql = useStrapiGraphQL()
@@ -9,6 +11,7 @@ async function getCountry(slug, lang) {
      storeFinder (slug: "${await slug}" locale: "${lang}") {
             data {
               attributes {
+              ${seo()}
                 country
                 slug
                 country_code

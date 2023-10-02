@@ -12,8 +12,10 @@ export default defineEventHandler(async (event) => {
 
 
     if (!isIPv4(ip)) {
-        event.context.country = null
-        setCookie(event, 'country', null)
+        const country_code = null
+
+        event.context.country = country_code
+        setCookie(event, 'country', country_code)
     } else {
         const url = "https://ipgeolocation.abstractapi.com/v1/?api_key="+apiKey+"&ip_address="+ip
         // const url = "https://ipgeolocation.abstractapi.com/v1/?api_key=a673704aa12d440fbd1a87c392290a47&ip_address=92.184.105.98"
@@ -26,6 +28,7 @@ export default defineEventHandler(async (event) => {
                     setCookie(event, 'country', data.country_code)
                 }
             } catch (e) {
+
                 event.context.country = null
                 setCookie(event, 'country', null)
                 console.error('abstractapi', e);

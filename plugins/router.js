@@ -13,7 +13,6 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     const router = useRouter()
     let routesFrom = []
 
-
     data.value.forEach(newRoute => {
         routesFrom.push(newRoute.from)
 
@@ -37,7 +36,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
             } else {
                 route.meta = setMeta(data.value[index])
                 // route.meta.pageTransition = false;
-                window.history.replaceState('', '', data.value[index].to)
+                window.history.replaceState(window.history.state, '', data.value[index].to)
             }
         }
     })

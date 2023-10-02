@@ -1,15 +1,5 @@
 <template>
   <div>
-    <Seo :data="type"
-         :breadcrumbs="[
-        {
-          title: route.meta?.title ?? type?.title,
-        }
-    ]"
-         :title="route.meta?.title ?? type?.title"
-         :description="route.meta?.description"
-         :blockRobots="!(Object.keys(route.query).length === 0)"
-    />
     <div v-if="dataProducts!== null">
       <InnerHeader :title="route.meta?.h1 ?? type.title"/>
 
@@ -56,7 +46,17 @@
     <PageNotFound :show="dataProducts == null && !pendingProducts"/>
 
 
-    <SeoText :html="route.meta?.seoText"/>
+    <Seo :data="type"
+         :breadcrumbs="[
+        {
+          title: route.meta?.title ?? type?.title,
+        }
+    ]"
+         :title="route.meta?.title ?? type?.title"
+         :description="route.meta?.description"
+         :blockRobots="!(Object.keys(route.query).length === 0)"
+         :seoText="route.meta?.seoText"
+    />
 
   </div>
 </template>

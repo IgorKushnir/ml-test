@@ -14,6 +14,7 @@ function seo() {
           structuredData
           metaViewport
           canonicalURL
+          seoText
         }
     `
 }

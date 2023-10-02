@@ -1,6 +1,5 @@
 <template>
 
-<!--  <pre>{{route.name}}</pre>-->
   <Discover v-if="isType"/>
   <Page v-else/>
 </template>

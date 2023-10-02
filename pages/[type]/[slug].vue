@@ -1,7 +1,5 @@
 <template>
   <div>
-    <Seo :data="data" :breadcrumbs="breadcrumbs"/>
-
     <div v-if="data != null">
 
       <StickyBarStickyHeaderMilla :title="data.title">
@@ -24,7 +22,9 @@
             <h1 class="title m-t-0">{{ data.title }}</h1>
             <LikeButton :liked="liked" @click="handleLike(data.id)"/>
           </div>
+
           <div class="sticky-content">
+            <div v-if="data.status === 'discounted'" class="badge vanilla_ice_bg p-h-16 p-v-8">Discounted</div>
             <p class="m-b-32" v-if="data.description" v-html="$handleNewLine(data.description)" />
 
 
@@ -40,6 +40,7 @@
                 </div>
               </div>
             </div>
+
 
             <div v-if="data.colors.data.length > 0" class="info m-b-32">
               <div>
@@ -61,8 +62,11 @@
               </div>
             </div>
 
+
             <NuxtLink v-if="data.storeLink" :to="data.storeLink" target="_blank" class="button m-t-16 m-t-0-md m-b-24-md target">Buy online</NuxtLink>
             <NuxtLink  to="/book-an-appointment" target="_self" class="button m-t-16 m-t-0-md m-b-24-md">Book an appointment</NuxtLink>
+
+
           </div>
         </div>
 
@@ -95,6 +99,8 @@
     </div>
     <Loading :pending="pending"/>
     <PageNotFound :show="data == null && !pending"/>
+
+    <Seo :data="data" :breadcrumbs="breadcrumbs"/>
   </div>
 </template>
 
@@ -169,11 +175,11 @@ function handleLike(id) {
 
 
 function prevHandler() {
-  router.replace('/product/' + data.value.extra.previous.slug)
+  router.push('/product/' + data.value.extra.previous.slug)
 }
 
 function nextHandler() {
-  router.replace('/product/' + data.value.extra.next.slug)
+  router.push('/product/' + data.value.extra.next.slug)
 }
 
 
@@ -286,6 +292,9 @@ onMounted(() => {
   grid-column: auto/span 1;
 }
 
+.badge {
+  display: inline-block;
+}
 
 
 @include lg {

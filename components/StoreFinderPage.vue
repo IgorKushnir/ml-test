@@ -1,19 +1,14 @@
 <template>
   <div>
-    <!--    Create route store-->
-    <Seo title="Store finder" :breadcrumbs="[
-        {
-          title: 'Store finder',
-        }
-    ]"/>
-
     <div v-if="countries">
-      <InnerHeader v-if="countries[countryIndex]?.value" :title="countries[countryIndex]?.value" sub_header="Store finder"/>
+      <InnerHeader v-if="countries[countryIndex]?.value" :title="countries[countryIndex]?.value"
+                   sub_header="Store finder"/>
       <InnerHeader v-else title="Store finder"/>
-      <StickyBarStickyHeaderMilla>
+      <StickyBarStickyHeaderMilla v-if="countryIndex !== -1">
 
         <template #center>
-          <Select v-if="!(countryCode === 'UA')" :data="countries" name="Country" all="All countries" :index="countryIndex" :flag="true"
+          <Select v-if="!(countryCode === 'UA')" :data="countries" name="Country" all="All countries"
+                  :index="countryIndex" :flag="true"
                   @index="(i) => changeCountry(i)"/>
           <Select v-if="cities && cities.length > 1" :data="cities" name="City" all="All cities" :index="cityIndex"
                   @index="(i) => changeCity(i)"/>
@@ -51,10 +46,10 @@
                        :class="stores.length <= 2 ? 'col-6 col-8-lg col-12-md' : 'col-4 col-6-xl col-12-md'"/>
           </template>
           <template v-if="countryIndex === -1" v-for="(country, index) in countries">
-            <NuxtLink :to="'?country='+country.slug" v-on:click="changeCountry(index)"
-                      :class="'col-4 col-6-xl col-12-md'">
+            <a :href="'/store-finder/'+country.slug" v-on:click="(e) => changeCountry(index, e)"
+               class="col-4 col-6-xl col-12-md">
               <StoreItem :store="{country_code: country.flag, city: country.value}" country/>
-            </NuxtLink>
+            </a>
           </template>
 
         </Container>
@@ -68,18 +63,29 @@
     <Loading v-if="!countries" :pending="!countries"/>
 
     <PageNotFound :show="!data?.data && !pending && countryIndex !== -1"/>
+
+<!--    :title="countryIndex !== -1 ? 'Wedding Dresses in ' + countries[countryIndex]?.value: 'Store finder'"-->
+
+    <Seo
+        :data="data?.data?.attributes"
+        :title="countries[countryIndex]?.value"
+        :breadcrumbs="[
+        {
+          title: countryIndex !== -1 ? 'Wedding Dresses in ' + countries[countryIndex]?.value: 'Store finder',
+        }
+    ]"/>
   </div>
 </template>
 
 <script setup>
 import {getListOfCountries} from '~/api/stores'
 import getCountryCode from '~/api/getCountryCode'
-import {getCountry} from "../api/stores";
+import {getCountry} from "~/api/stores";
 
 const router = useRouter();
 const route = useRoute();
 
-const countrySlug = ref(route.query.country);
+const countrySlug = ref(route.params.country);
 const countryCode = ref(null);
 const countryIndex = ref(-1);
 
@@ -89,7 +95,6 @@ const lineIndex = ref(-1)
 let showMap = ref(false)
 
 const countries = ref(await getListOfCountries('en'))
-
 
 
 if (process.client) {
@@ -102,13 +107,12 @@ if (process.client) {
 }
 if (process.server) {
   const nuxtApp = useNuxtApp()
-  const { ssrContext } = nuxtApp
+  const {ssrContext} = nuxtApp
   const event = ssrContext.event
   const country = event.context.country
   countryCode.value = country
   // console.log('server', country);
 }
-
 
 
 // console.log('b - ', countrySlug.value);
@@ -132,41 +136,6 @@ onMounted(async () => {
     changeRoute()
   }
 })
-// onMounted(async () => {
-// //   await nextTick()
-// //   countryCode.value = await getCountryCode();
-// //
-// //   // console.log(countryCode.value);
-//   if (countryCode.value) {
-//
-//     if (countries.value) {
-//       countrySlug.value = getSlugByCode(countryCode.value);
-//       setTimeout(function () {
-//         countryIndex.value = getIndexBySlug(countrySlug.value)
-//       }, 10)
-//       changeRoute()
-//     } else {
-//
-//       watch(countries, () => {
-//         countrySlug.value = getSlugByCode(countryCode.value);
-//         countryIndex.value = getIndexBySlug(countrySlug.value)
-//
-//         let inited = false;
-//         watch(pending, () => {
-//           if (!inited) {
-//             refresh()
-//             inited = true;
-//           }
-//         })
-//         changeRoute()
-//       })
-//     }
-//
-//   }
-//
-//
-// })
-
 
 
 function getStores() {
@@ -235,7 +204,7 @@ const lines = computed(() => {
 })
 
 watch(() => countrySlug.value, (s) => {
-  // console.log('---', countrySlug.value);
+  console.log('---', countrySlug.value);
   refresh()
 })
 
@@ -260,6 +229,7 @@ function getIndexBySlug(slug) {
   const index = countries.value.findIndex(c => c.slug === slug)
   return index
 }
+
 function getIndexByCode(code) {
   if (!countries.value) return -1
   const index = countries.value.findIndex(c => c.flag === code)
@@ -267,7 +237,8 @@ function getIndexByCode(code) {
 }
 
 
-function changeCountry(index) {
+function changeCountry(index, e) {
+  if (e) e.preventDefault()
   countryIndex.value = index
   countrySlug.value = countries.value[index]?.slug
   changeRoute()
@@ -288,14 +259,35 @@ function changeLine(index) {
 }
 
 async function changeRoute() {
-  router.replace({
-    query: {country: await countrySlug.value},
+  // history.pushState(
+  //     {},
+  //     null,
+  //     await countrySlug.value
+  // )
+  const country = await countrySlug.value
+  const path = country ? '/store-finder/' + country : '/store-finder'
+
+  window.history.pushState(window.history.state, '', path)
+  window.scroll({
+    top: 0
   })
+
 }
 
 
+// Redirect from old path
+if (route.query.country && is_server()) {
+  navigateTo('/store-finder/' + route.query.country, {
+    redirectCode: 301
+  })
+}
+
+function is_server() {
+  return !(typeof window != 'undefined' && window.document);
+}
 </script>
 
 <style scoped>
+
 
 </style>

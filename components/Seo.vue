@@ -1,5 +1,6 @@
 <template>
   <div>
+    <SeoText v-if="seoText || data?.seo?.seoText" :html="seoText || data?.seo?.seoText"/>
   </div>
 </template>
 <script setup>
@@ -23,6 +24,10 @@ const props = defineProps({
     default: false
   },
   description: {
+    type: String,
+    required: false
+  },
+  seoText: {
     type: String,
     required: false
   },
@@ -109,10 +114,12 @@ if (process.server) {
 
 
 function parseVariablesInBrackets(str) {
+
   if (!str) return null;
 
   const regexp = /\[.*?\]/g
   let variables = str.match(regexp)
+
 
   if (variables && variables.length > 0) {
     variables = variables.map(el => el.replace('[', '').replace(']', ''))
@@ -172,9 +179,9 @@ function setSeo() {
   })
 }
 
-watch(() => props.data, () => {
-  setSeo()
-})
+// watch(() => props.data, () => {
+//   setSeo()
+// })
 
 setSeo()
 

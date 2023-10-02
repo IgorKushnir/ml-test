@@ -21,8 +21,10 @@ const nuxtApp = useNuxtApp()
 const likeCounter = useFavCount()
 const { $getLikedProducts } = useNuxtApp()
 
+const { locale } = useI18n()
+
 // get Initial data (Menu, Lines, Types)
-let {data: initialData, error: initialError} = await getInitialData('en');
+let {data: initialData, error: initialError} = await getInitialData(locale.value);
 if (!initialError.value) {
   useMenuData().value = [initialData.value[0], initialData.value[1]]
   useTypesData().value = initialData.value[2];
@@ -33,7 +35,7 @@ const translations = useTranslationsData();
 
 // Get all filters
 let allFilters = useFiltersData();
-let {data, pending, refresh, error} = await getAllFilters('en');
+let {data, pending, refresh, error} = await getAllFilters(locale.value);
 if (!error.value) allFilters.value = data.value;
 
 useHead({

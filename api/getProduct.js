@@ -27,6 +27,7 @@ query Product{
       slug
       extra${extrudeIds}
         title
+        status
         description
         storeLink
         type {
