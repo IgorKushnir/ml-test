@@ -104,7 +104,7 @@ let filters = ref([{
 let {
   data: dataAvailableFilters,
   pending: pendingFilters,
-} = await useAsyncData('data_activeFilters', () => getActiveFilters({filters: filters.value, lang: 'en', type: 'dress', fetchFilters: fetchFilters.value}), {
+} = await useLazyAsyncData('data_activeFilters', () => getActiveFilters({filters: filters.value, lang: 'en', type: 'dress', fetchFilters: fetchFilters.value}), {
   transform: (d) => {
     return d.data['products']['meta']
   },
