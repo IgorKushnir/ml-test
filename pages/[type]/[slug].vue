@@ -54,7 +54,7 @@
                 <div class="subheader small">Color</div>
                 <div class="p-small">
                   <template v-for="(color, index) in data.colors.data">
-                    <NuxtLink :to="'/'+data.type.data.attributes.slug+'?colors='+color.attributes.slug" class="p-small link">{{ color.attributes.title }}</NuxtLink><span v-if="index+1 < data.colors.data.length">, </span>
+                    <NuxtLink :to="'/'+data.type.data.attributes.slug+'/colors/'+color.attributes.slug" class="p-small link">{{ color.attributes.title }}</NuxtLink><span v-if="index+1 < data.colors.data.length">, </span>
                   </template>
                 </div>
               </div>
