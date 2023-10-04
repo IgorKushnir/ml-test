@@ -1,4 +1,4 @@
-export default async function (lang) {
+ async function getDressRedirects(lang) {
     const graphql = useStrapiGraphQL()
     const collection = 'dressRedirects';
 
@@ -97,3 +97,5 @@ function generateRandomID(length = 10) {
 
     return result;
 }
+
+export {getDressRedirects, generateRandomID, convertPathToQueryObject}

@@ -29,6 +29,7 @@ query ProductsWithFilters{
 
   products (
     filters: {
+      or: [ { discontinued: { eq: null } } { discontinued: { eq: false } } ] 
       and: [ ${_filters} ]
       type: {
         slug: {

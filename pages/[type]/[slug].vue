@@ -2,7 +2,7 @@
   <div>
     <div v-if="data != null">
 
-      <StickyBarStickyHeaderMilla :title="data.title">
+      <StickyBarStickyHeaderMilla :title="data.title + (data.discontinued ? ' (discontinued)' : '')">
         <template #end>
           <StickyBarBack v-if="data.extra.previous" reverse text="Previous" @clicks="prevHandler"/>
           <StickyBarBack v-if="data.extra.next" text="Next" @click="nextHandler"/>
@@ -10,13 +10,13 @@
       </StickyBarStickyHeaderMilla>
 
 
-<!--      <div v-if="true">-->
-<!--        <div class="row justify-center">-->
-<!--          <div class="col-12 light_bg">-->
-<!--            <div class="center m-v-24 m-v-16-md p-h-16"><div>Discontinued</div></div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
+      <div v-if="data.discontinued">
+        <div class="row justify-center">
+          <div class="col-12 light_bg">
+            <div class="center m-v-24 m-v-16-md p-h-16 gray"><div>Discontinued</div></div>
+          </div>
+        </div>
+      </div>
 
       <div class="promo ratio-3x4 show-md">
         <Image :path="{data: data.gallery.data[0]}" :alt="data.title + ' ' + data?.type?.data?.attributes?.title"/>
@@ -31,8 +31,7 @@
           </div>
 
           <div class="sticky-content">
-<!--            <div v-if="data.status === 'discontinued'" class="badge vanilla_ice_bg p-h-16 p-v-8">Discontinued</div>-->
-            <div v-if="data.status === 'discontinued'" class="badge light_bg p-h-16 p-v-8">Discontinued</div>
+<!--            <div v-if="data.discontinued" class="badge light_bg p-h-16 p-v-8 gray">Discontinued</div>-->
             <p class="m-b-32" v-if="data.description" v-html="$handleNewLine(data.description)" />
 
 

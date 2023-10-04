@@ -11,8 +11,6 @@
 
 <script setup>
 
-import getInitialData from '~/api/getInitialData';
-import getAllFilters from '~/api/getAllFilters'
 
 import {useFiltersData, useMenuData, useTypesData, usePreviousRoute, useIsMobile, useTranslationsData} from "~/composables/states";
 import router from "./plugins/router";
@@ -23,20 +21,11 @@ const { $getLikedProducts } = useNuxtApp()
 
 const { locale } = useI18n()
 
-// get Initial data (Menu, Lines, Types)
-let {data: initialData, error: initialError} = await getInitialData(locale.value);
-if (!initialError.value) {
-  useMenuData().value = [initialData.value[0], initialData.value[1]]
-  useTypesData().value = initialData.value[2];
-  useTranslationsData().value = initialData.value[3];
-}
-const translations = useTranslationsData();
+
+// const translations = useTranslationsData();
 
 
-// Get all filters
-let allFilters = useFiltersData();
-let {data, pending, refresh, error} = await getAllFilters(locale.value);
-if (!error.value) allFilters.value = data.value;
+
 
 useHead({
   title: 'Milla Nova',

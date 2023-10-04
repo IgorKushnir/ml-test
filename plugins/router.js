@@ -1,17 +1,72 @@
 import { defineNuxtPlugin } from '#app'
-import getDressRedirects from "~/api/getDressRedirects";
+import {getDressRedirects, generateRandomID, convertPathToQueryObject} from "~/api/getDressRedirects";
+import {useFiltersData, useTypesData, useMenuData, useTranslationsData} from "~/composables/states";
+import getAllFilters from '~/api/getAllFilters'
+import getInitialData from '~/api/getInitialData';
 
 
 const Discover = import('~/components/Discover.vue').then(r => {
     return r.default || r
 })
+async function setInitialData() {
+    // get Initial data (Menu, Lines, Types)
+    let {data: initialData, error: initialError} = await getInitialData('en');
+    if (!initialError.value) {
+        useMenuData().value = [initialData.value[0], initialData.value[1]]
+        useTypesData().value = initialData.value[2];
+        useTranslationsData().value = initialData.value[3];
+    }
+    return initialData.value
+}
+async function setFilters() {
+    // Get all filters
+    let allFilters = useFiltersData();
+    let {data, pending, refresh, error} = await getAllFilters('en');
+    if (!error.value) allFilters.value = data.value;
+    return data.value
+}
 export default defineNuxtPlugin(async (nuxtApp) => {
+
+
+    const filters = await setFilters()
+    const initialData = await setInitialData()
+    const types = initialData[2]
 
     const { data, pending, refresh, error } = await getDressRedirects()
     if (error.value) return
 
     const router = useRouter()
     let routesFrom = []
+
+
+
+    // Adding default product redirects
+    types.forEach(productType => {
+        const type = productType.slug;
+
+        filters.forEach(filterProduct => {
+            const filter = filterProduct.uid
+            filterProduct.data.forEach(filterItem => {
+                const filterValue = filterItem.attributes.slug
+                const from = '/'+type+'?'+filter+'='+filterValue
+                const to = '/'+type+'/'+filter+'/'+filterValue
+
+
+                data.value.push({
+                    name: generateRandomID(),
+                    from,
+                    to,
+                    meta: {
+                        slug: type,
+                        query: convertPathToQueryObject(from),
+                    }
+                })
+            })
+        })
+    })
+
+    // console.log(data.value);
+    // console.log(data.value);
 
     data.value.forEach(newRoute => {
         routesFrom.push(newRoute.from)
@@ -24,8 +79,8 @@ export default defineNuxtPlugin(async (nuxtApp) => {
         })
     })
 
-    router.afterEach((route) => {
 
+    router.afterEach((route) => {
         const fullPath = route.fullPath;
         if (routesFrom.includes(fullPath)) {
             const index = data.value.findIndex(d => d.from === fullPath)
@@ -35,18 +90,10 @@ export default defineNuxtPlugin(async (nuxtApp) => {
                 })
             } else {
                 route.meta = setMeta(data.value[index])
-                // route.meta.pageTransition = false;
                 window.history.replaceState(window.history.state, '', data.value[index].to)
             }
         }
     })
-    // console.log(router);
-    //
-    // router.meta = {}
-    // router.meta.pageTransition = false
-
-    // const app = useNuxtApp()
-    // console.log(app);
 
 })
 function setMeta(newRoute) {
