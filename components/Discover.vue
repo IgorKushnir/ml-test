@@ -96,7 +96,7 @@ pages.value = previousPages ?? 1;
 let {
   data: dataAvailableFilters,
   pending: pendingFilters,
-} = await useAsyncData('data_activeFilters', () => getActiveFilters({
+} = await useLazyAsyncData('data_activeFilters', () => getActiveFilters({
   filters: filters.value,
   lang: 'en',
   type: slug,
