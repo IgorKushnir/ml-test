@@ -93,9 +93,7 @@ p {
   overflow-wrap: anywhere;
   word-break: break-word;
 }
-//.uppercase {
-//  text-transform: uppercase;
-//}
+
 
 
 @include lg {
@@ -206,6 +204,9 @@ a.button {
     cursor: not-allowed;
   }
 
+}
+.button.lowercase {
+  text-transform: lowercase;
 }
 
 .button:before {

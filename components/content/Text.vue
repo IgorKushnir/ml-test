@@ -1,5 +1,6 @@
 <template>
   <div class="text-content" v-html="data"/>
+<!--  <div>{{data}}</div>-->
 </template>
 
 <script setup>

@@ -33,6 +33,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     const types = initialData[2]
 
     const { data, pending, refresh, error } = await getDressRedirects()
+
     if (error.value) return
 
     const router = useRouter()
