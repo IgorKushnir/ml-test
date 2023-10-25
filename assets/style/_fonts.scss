@@ -207,6 +207,8 @@ a.button {
 }
 .button.lowercase {
   text-transform: lowercase;
+  letter-spacing: unset;
+
 }
 
 .button:before {

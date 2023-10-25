@@ -16,13 +16,22 @@
             <template v-for="(item, index) in data">
 
               <div class="col-4 col-6-lg col-12-sm">
-                <NuxtLink :to="item.attributes.url ?? '#'" target="_blank">
-                  <div class="ratio-4x3 m-b-24 press-logo">
-                    <Image :path="item.attributes.logo" :alt="item.attributes.title"/>
+                <NuxtLink v-if="item.attributes.cover_4x3.data" :to="item.attributes.url ?? '#'" target="_blank">
+                  <div class="ratio-4x3 m-b-24">
+                    <Image :path="item.attributes.cover_4x3" :alt="item.attributes.title"/>
                   </div>
                 </NuxtLink>
 
-                <h2 class="m-t-0 h4 gray unset-uppercase">{{ item.attributes.title }}</h2>
+                <NuxtLink v-if="item.attributes.logo.data" :to="item.attributes.url ?? '#'" target="_blank" class="press-header-container m-b-24">
+                  <div v-if="item.attributes.logo.data" class="press-logo">
+                    <div class="ratio-1x1">
+                      <Image :path="item.attributes.logo" :alt="item.attributes.title"/>
+                    </div>
+                  </div>
+
+                  <h2 class="m-t-0 m-b-0 h4 gray unset-uppercase">{{ item.attributes.title }}</h2>
+                </NuxtLink>
+
 
 
 
@@ -62,20 +71,37 @@ function getUrlTitle(url) {
 </script>
 
 <style scoped>
-.press-logo > .img-component-container :deep(.img-component.base) {
+.press-header-container {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+.press-logo {
+  width: 32px;
+  height: 32px;
+  display: block;
+  margin-right: 16px;
+  flex-shrink: 0;
+}
+h4 {
+  /*display: inline-block;*/
+}
+.press-logo > div > .img-component-container :deep(.img-component.base) {
   /*opacity: .1;*/
-  width: 80%;
-  height: 80%;
-  top: 10%;
-  left: 10%;
-  mix-blend-mode: multiply;
+  /*width: 60%;*/
+  /*height: 60%;*/
+  /*top: 20%;*/
+  /*left: 20%;*/
+  /*mix-blend-mode: multiply;*/
   background-image: none;
   object-fit: fill;
+  object-position: bottom;
 
 }
-.press-logo > .img-component-container :deep(.img-component.placeholder) {
-  opacity: .2;
-
+.press-logo > div > .img-component-container :deep(.img-component.placeholder) {
+  display: none;
+  /*opacity: .2;*/
+  /*filter: blur(120px);*/
 }
 
 .unset-uppercase {

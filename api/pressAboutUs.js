@@ -15,6 +15,15 @@ async function getPressAboutUs(lang) {
         title
         slug
         description
+        cover_4x3 {
+          data {
+            attributes {
+              url
+              formats
+              placeholder
+            }
+          }
+        }
         logo {
           data {
             attributes {
