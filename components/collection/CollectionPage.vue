@@ -104,12 +104,12 @@ let filters = ref([{
 let {
   data: dataAvailableFilters,
   pending: pendingFilters,
-} = await useLazyAsyncData('data_activeFilters', () => getActiveFilters({filters: filters.value, lang: 'en', type: 'dress', fetchFilters: fetchFilters.value}), {
+} = await useAsyncData('data_activeFilters', () => getActiveFilters({filters: filters.value, lang: 'en', type: 'dress', fetchFilters: fetchFilters.value}), {
   transform: (d) => {
     return d.data['products']['meta']
   },
 })
-let initialAvailableFilters = [];
+let initialAvailableFilters = {};
 
 
 
