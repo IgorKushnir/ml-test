@@ -93,7 +93,6 @@ import { enter, leave} from '~/api/misc/transitions';
 
 const { locale } = useI18n()
 
-
 const data = useMenuData();
 
 const isMobile = useIsMobile();
@@ -108,10 +107,10 @@ const showSearch = ref(false)
 
 
 
+// Temporary for showing PL ------------------
 
 const show_pl = ref(false)
 onMounted(() => {
-  // Temporary for showing PL
   const route = useRoute()
   if (route.query['show_pl']) {
     document.cookie = "show_pl="+route.query['show_pl'];
@@ -127,10 +126,8 @@ onMounted(() => {
     ));
     return matches ? decodeURIComponent(matches[1]) : undefined;
   }
-
-
-/// ----
 })
+/// --------------------
 
 
 

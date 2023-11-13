@@ -39,7 +39,7 @@
           <div class="subheader small m-t-32">Lines</div>
           <p  class="p-small" >{{store.lines.data.map(line => line.attributes.title).join(', ')   }}</p>
         </template>
-        <Button v-if="store.email" :path="'/book-an-appointment?q=' + encodeToBase64(JSON.stringify([route.params.country ?? store.country_code, store.city.toLowerCase(), store.title + ' (' +store.address + ')', store.email]))" class="m-t-32">Book an appointment</Button>
+        <Button v-if="store.email" :path="localePath('/book-an-appointment?q=' + encodeToBase64(JSON.stringify([route.params.country ?? store.country_code, store.city.toLowerCase(), store.title + ' (' +store.address + ')', store.email])))" class="m-t-32">Book an appointment</Button>
 
       </div>
 

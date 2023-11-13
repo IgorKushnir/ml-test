@@ -45,7 +45,7 @@
                        :class="stores.length <= 2 ? 'col-6 col-8-lg col-12-md' : 'col-4 col-6-xl col-12-md'"/>
           </template>
           <template v-if="countryIndex === -1" v-for="(country, index) in countries">
-            <a :href="'/store-finder/'+country.slug" v-on:click="(e) => changeCountry(index, e)"
+            <a :href="localePath('/store-finder/'+country.slug)" v-on:click="(e) => changeCountry(index, e)"
                class="col-4 col-6-xl col-12-md">
               <StoreItem :store="{country_code: country.flag, city: country.value}" country/>
             </a>
@@ -93,7 +93,10 @@ const lineIndex = ref(-1)
 
 let showMap = ref(false)
 
-const countries = ref(await getListOfCountries('en'))
+const { locale } = useI18n()
+const localePath = useLocalePath()
+
+const countries = ref(await getListOfCountries(locale.value))
 
 
 if (process.client) {
@@ -123,7 +126,7 @@ if (!countrySlug.value) {
   countryIndex.value = getIndexBySlug(countrySlug.value)
 }
 
-const {data, pending, refresh, error} = await useLazyAsyncData('country', () => getCountry(countrySlug.value, 'en'), {
+const {data, pending, refresh, error} = await useLazyAsyncData('country', () => getCountry(countrySlug.value, locale.value), {
   transform: (d) => {
     return d.data['storeFinder']
   }
@@ -203,7 +206,7 @@ const lines = computed(() => {
 })
 
 watch(() => countrySlug.value, (s) => {
-  console.log('---', countrySlug.value);
+  // console.log('---', countrySlug.value);
   refresh()
 })
 
@@ -264,7 +267,7 @@ async function changeRoute() {
   //     await countrySlug.value
   // )
   const country = await countrySlug.value
-  const path = country ? '/store-finder/' + country : '/store-finder'
+  const path = country ? localePath('/store-finder/' + country) : localePath('/store-finder')
 
   window.history.pushState(window.history.state, '', path)
   window.scroll({
@@ -276,7 +279,7 @@ async function changeRoute() {
 
 // Redirect from old path
 if (route.query.country && is_server()) {
-  navigateTo('/store-finder/' + route.query.country, {
+  navigateTo(localePath('/store-finder/' + route.query.country), {
     redirectCode: 301
   })
 }

@@ -5,9 +5,14 @@ export default <RouterConfig>{
     routes: (_routes) => [
         ..._routes,
         {
-            name: 'store-finder',
+            name: 'store-finder___en',
             path: '/store-finder/:country?',
             component: () => import('~/components/StoreFinderPage.vue').then(r => r.default || r),
-        }
+        },
+        {
+            name: 'store-finder___pl',
+            path: '/pl/store-finder/:country?',
+            component: () => import('~/components/StoreFinderPage.vue').then(r => r.default || r),
+        },
     ],
 }
