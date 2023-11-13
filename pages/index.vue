@@ -19,7 +19,9 @@
 <script setup lang="ts">
 import getMain from '~/api/getMain'
 
-let { data, pending, refresh, error } = await getMain('en')
+const { locale } = useI18n()
+
+let { data, pending, refresh, error } = await getMain(locale.value)
 
 
 

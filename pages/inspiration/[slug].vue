@@ -43,7 +43,9 @@ const route = useRoute()
 const slug = route.params.slug
 const {$getDate, $getMonths} = useNuxtApp()
 
-const {data, pending} = await getInspiration(slug, 'en')
+const { locale } = useI18n()
+
+const {data, pending} = await getInspiration(slug, locale.value)
 
 onMounted(() => {
   // refresh()

@@ -12,8 +12,8 @@
 
         <Container>
           <template v-for="(item, index) in data.data">
-            <InspirationItem v-if="[0, 9, 16, 25, 32].includes(index) && (!useIsMobile().value)" :title="item.attributes.title" :to="'/inspiration/'+item.attributes.slug" :cover="item.attributes.cover_3x1" col="col-8 col-6-xl col-12-md"/>
-            <InspirationItem v-else :title="item.attributes.title" :to="'/inspiration/'+item.attributes.slug" :cover="item.attributes.cover_1x1" col="col-4 col-6-xl col-12-md"/>
+            <InspirationItem v-if="[0, 9, 16, 25, 32].includes(index) && (!useIsMobile().value)" :title="item.attributes.title" :to="localePath('/inspiration/'+item.attributes.slug)" :cover="item.attributes.cover_3x1" col="col-8 col-6-xl col-12-md"/>
+            <InspirationItem v-else :title="item.attributes.title" :to="localePath('/inspiration/'+item.attributes.slug)" :cover="item.attributes.cover_1x1" col="col-4 col-6-xl col-12-md"/>
           </template>
 
         </Container>
@@ -37,7 +37,9 @@ const nuxtApp = useNuxtApp()
 const page = ref(1);
 // const data = ref()
 
-const {data, pending, refresh, error} = await useLazyAsyncData('inspirations', () => getInspirations('en', null, page.value), {
+const { locale } = useI18n()
+
+const {data, pending, refresh, error} = await useLazyAsyncData('inspirations', () => getInspirations(locale.value, null, page.value), {
   transform: (d) => {
     // if (page.value === 1) {
     //   console.log('here');

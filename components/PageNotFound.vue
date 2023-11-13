@@ -4,7 +4,7 @@
     <State
         title="Page not found"
         text="Looks like you just missed the party! The page you are looking for was moved, removed, renamed or no longer exists."
-        :button="{text: 'Home page', path: '/'}"
+        :button="{text: 'Home page', path: localePath('/')}"
         image-path="/img/decline.svg"
     />
   </transition>
