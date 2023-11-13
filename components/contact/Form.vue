@@ -4,7 +4,7 @@
       <InnerHeader :title="item.title"/>
       <StickyBarStickyHeaderMilla>
         <template #center>
-          <StickyBarStickyMenu :data="data.entry" path="?" :activeItem="index"/>
+          <StickyBarStickyMenu :data="data.entry" path="/contact?form=" :activeItem="index"/>
         </template>
       </StickyBarStickyHeaderMilla>
 

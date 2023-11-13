@@ -1,4 +1,6 @@
 import seo from './misc/seo'
+import locals from './misc/locals'
+
 
 export default async function (slugOrId, extrudeIds = '', publicationState = "LIVE", lang = 'en') {
 
@@ -24,6 +26,7 @@ query Product{
       id
       attributes {
       ${seo()}
+            ${locals()}
       slug
       extra${extrudeIds}
         title

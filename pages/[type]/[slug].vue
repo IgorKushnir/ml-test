@@ -38,7 +38,7 @@
             <div class="info m-t-40" v-if="data.collection.data">
               <div class="m-b-32 m-r-40">
                 <div class="subheader small">Collection</div>
-                <NuxtLink :to="'/collection/'+data.collection.data.attributes.slug" class="p-small link">{{ data.collection.data.attributes.title }}</NuxtLink>
+                <NuxtLink :to="localePath('/collection/'+data.collection.data.attributes.slug)" class="p-small link">{{ data.collection.data.attributes.title }}</NuxtLink>
               </div>
               <div class="m-b-32">
                 <div class="subheader small">Line</div>
@@ -54,7 +54,7 @@
                 <div class="subheader small">Color</div>
                 <div class="p-small">
                   <template v-for="(color, index) in data.colors.data">
-                    <NuxtLink :to="'/'+data.type.data.attributes.slug+'/colors/'+color.attributes.slug" class="p-small link">{{ color.attributes.title }}</NuxtLink><span v-if="index+1 < data.colors.data.length">, </span>
+                    <NuxtLink :to="localePath('/'+data.type.data.attributes.slug+'/colors/'+color.attributes.slug)" class="p-small link">{{ color.attributes.title }}</NuxtLink><span v-if="index+1 < data.colors.data.length">, </span>
                   </template>
                 </div>
               </div>
@@ -70,8 +70,8 @@
             </div>
 
 
-            <NuxtLink v-if="data.storeLink" :to="data.storeLink" target="_blank" class="button m-t-16 m-t-0-md m-b-24-md target">Buy online</NuxtLink>
-            <NuxtLink  to="/book-an-appointment" target="_self" class="button m-t-16 m-t-0-md m-b-24-md">Book an appointment</NuxtLink>
+            <NuxtLink v-if="data.storeLink" :to="localePath(data.storeLink)" target="_blank" class="button m-t-16 m-t-0-md m-b-24-md target">Buy online</NuxtLink>
+            <NuxtLink  :to="localePath('/book-an-appointment')" target="_self" class="button m-t-16 m-t-0-md m-b-24-md">Book an appointment</NuxtLink>
 
 
           </div>
@@ -107,7 +107,12 @@
     <Loading :pending="pending"/>
     <PageNotFound :show="data == null && !pending"/>
 
-    <Seo :data="data" :breadcrumbs="breadcrumbs"/>
+    <Seo
+        :data="data"
+        :breadcrumbs="breadcrumbs"
+        :pathToPage="[data?.type?.data?.attributes?.slug]"
+        :localizations="data?.localizations?.data"
+    />
   </div>
 </template>
 
@@ -123,7 +128,7 @@ let draft = route.query?.draft;
 const likeList = ref([])
 
 const { locale } = useI18n()
-
+const localePath = useLocalePath()
 
 let publicationState = "LIVE";
 if (draft === 'true') {
@@ -182,11 +187,11 @@ function handleLike(id) {
 
 
 function prevHandler() {
-  router.push('/product/' + data.value.extra.previous.slug)
+  router.push(localePath('/product/' + data.value.extra.previous.slug))
 }
 
 function nextHandler() {
-  router.push('/product/' + data.value.extra.next.slug)
+  router.push(localePath('/product/' + data.value.extra.next.slug))
 }
 
 

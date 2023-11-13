@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink to="/moodboard" class="nav-icon wish-icon hover">
+  <NuxtLink :to="localePath('/moodboard')" class="nav-icon wish-icon hover">
     <div class="icon-heart-no-24">
       <div class="wish-counter" v-if="counter > 0">{{ counter }}</div>
     </div>

@@ -4,7 +4,9 @@
         {
           title: 'Contact us',
         }
-    ]"/>
+    ]"
+         :localizations="[{locale: 'en', slug: 'contact'}, {locale: 'pl', slug: 'contact'}]"
+    />
     <transition name="fade">
       <div v-if="data != null">
         <transition name="fade">
@@ -21,15 +23,17 @@
 
 <script setup>
 import getContacts from '~/api/contact'
-const {data, pending, refresh, error} = await getContacts('en')
+const { locale } = useI18n()
+
+const {data, pending, refresh, error} = await getContacts(locale.value)
 
 const route = useRoute()
 const query = ref(route.query)
-console.log(route);
+
 watch(() => route.query, (r) => {
   query.value = route.query
 })
-const type = computed(() => Object.keys(query.value)[0])
+const type = computed(() => query.value.form)
 
 
 

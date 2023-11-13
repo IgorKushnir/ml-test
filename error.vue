@@ -32,9 +32,11 @@ import {useFiltersData, useMenuData, useTypesData, usePreviousRoute, useIsMobile
 const nuxtApp = useNuxtApp()
 const likeCounter = useFavCount()
 const { $getLikedProducts } = useNuxtApp()
+const { locale } = useI18n()
+
 
 // get Initial data (Menu, Lines, Types)
-let {data: initialData, error: initialError} = await getInitialData('en');
+let {data: initialData, error: initialError} = await getInitialData(locale.value);
 if (!initialError.value) {
   useMenuData().value = [initialData.value[0], initialData.value[1]]
   useTypesData().value = initialData.value[2];

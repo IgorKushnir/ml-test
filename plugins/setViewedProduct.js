@@ -1,10 +1,14 @@
-export default defineNuxtPlugin(() => {
+export default defineNuxtPlugin((nuxt) => {
 
     return {
         provide: {
             setViewedProduct: (id) => {
-                if (!localStorage['viewedProducts']) localStorage['viewedProducts'] = '[]';
-                let store = localStorage['viewedProducts'];
+                const locale = nuxt.$i18n.locale.value
+                let storageName = 'viewedProducts'
+                storageName = locale === 'en' ? storageName : storageName+'_'+locale
+
+                if (!localStorage[storageName]) localStorage[storageName] = '[]';
+                let store = localStorage[storageName];
 
                 if (!id) return
 
@@ -22,12 +26,16 @@ export default defineNuxtPlugin(() => {
                 // Reduce array
                 if (jsonStore.length > 20) jsonStore.pop()
 
-                localStorage['viewedProducts'] = JSON.stringify(jsonStore);
+                localStorage[storageName] = JSON.stringify(jsonStore);
 
             },
             getViewedProduct: () => {
-                if (!localStorage['viewedProducts']) localStorage['viewedProducts'] = '[]';
-                let store = localStorage['viewedProducts'];
+                const locale = nuxt.$i18n.locale.value
+                let storageName = 'viewedProducts'
+                storageName = locale === 'en' ? storageName : storageName+'_'+locale
+
+                if (!localStorage[storageName]) localStorage[storageName] = '[]';
+                let store = localStorage[storageName];
 
                 return JSON.parse(store)
             }

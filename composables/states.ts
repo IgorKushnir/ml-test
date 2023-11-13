@@ -17,6 +17,8 @@ export const usePreviousRoute = () => useState<object>('previousRoute', () => []
 
 export const useViewedProductIds = () => useState<object>('viewedProductIds', () => []);
 
+// export const useCurrentLangPages = () => useState<object>('currentLangPages', () => []);
+
 
 
 

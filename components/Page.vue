@@ -16,12 +16,14 @@
         {
           title: data?.title,
         }
-    ]"/>
+    ]"
+         :localizations="data?.localizations?.data"
+    />
   </div>
 </template>
 
-<script setup lang="ts">
-import getMenu from '~/api/getPage'
+<script setup lang="js">
+import getPage from '~/api/getPage'
 
 
 const route = useRoute();
@@ -34,16 +36,16 @@ if (draft === 'true') {
 }
 
 
-let { data, pending, refresh, error } = await getMenu(slug, 'en', publicationState)
-onMounted(() => refresh())
 
-// if (process.server) {
-//   console.log('heee', data.value, error.value);
-// }
 
-// watch(data, () => {
-//   console.log(data.value);
-// })
+const { locale } = useI18n()
+
+
+
+
+let { data, pending, refresh, error } = await getPage(slug, locale.value, publicationState)
+
+
 </script>
 
 <style scoped lang="scss">

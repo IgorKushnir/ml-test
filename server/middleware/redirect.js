@@ -3,6 +3,7 @@ import oldRedirects from '~/api/oldRedirects'
 
 export default fromNodeMiddleware(async (req, res, next) => {
 
+
     const config = useRuntimeConfig();
 
     const protocol = req.connection.encrypted ? 'https' : 'http';

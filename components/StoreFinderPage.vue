@@ -38,7 +38,6 @@
         </div>
       </Container>
 
-
       <transition name="fade">
         <Container v-if="!showMap && !pending">
           <template v-if="countryIndex !== -1" v-for="store in stores">

@@ -28,7 +28,7 @@
             <ul>
               <li v-for="collection in line.attributes.collections.data">
                 <NuxtLink
-                    :to=" '/collection/' + collection.attributes.slug"
+                    :to="localePath('/collection/' + collection.attributes.slug)"
                     @mouseover="collectionHoverHandler(collection.attributes.slug)"
                     @mouseleave="collectionHoverOutHandler"
                     class="nav-link__tertiary hover"
@@ -45,7 +45,7 @@
             <ul v-for="sub_item in sub_menu">
               <li>
                 <NuxtLink
-                    :to="sub_item.url"
+                    :to="localePath(sub_item.url)"
                     :class="sub_item.target ? 'nav-link__secondary hover target' : 'nav-link__secondary hover'"
                     :target="sub_item.target ? '_blank' : '_self'"
                 >{{ sub_item.title }}

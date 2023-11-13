@@ -1,5 +1,7 @@
 <template>
   <div>
+<!--    <pre>{{localizations}}</pre>-->
+<!--    <pre>{{route.meta.nuxtI18n}}</pre>-->
     <SeoText v-if="seoText || data?.seo?.seoText" :html="seoText || data?.seo?.seoText"/>
   </div>
 </template>
@@ -31,11 +33,68 @@ const props = defineProps({
     type: String,
     required: false
   },
-  // image: {
-  //   type: String,
-  //   required: false
-  // }
+  localizations: {
+    type: Array,
+  },
+  pathToPage: {
+    type: Array,
+    default: []
+  }
 })
+
+// *** Lang switcher ***
+const route = useRoute();
+
+const { locale, locales } = useI18n()
+
+route.meta.locales = {
+  en: {path: "/"},
+  pl: {path: "/pl"}
+}
+route.meta.locales[locale.value] = {path: route.fullPath}
+// console.log(route.path);
+
+let isSetLocals = false
+watch(() => props.localizations, () => {
+  setLocalizations()
+})
+
+function setLocalizations() {
+  if(props.localizations && !isSetLocals) {
+    // isSetLocals = true
+    props.localizations.forEach(loc => {
+      let _locale = loc.attributes
+      if (!_locale) _locale = loc
+
+      const _path = [_locale.locale === "en" ? null : '/'+_locale.locale, ...props.pathToPage, _locale.slug].join('/')
+      // console.log({_path});
+      route.meta.locales[_locale.locale] = {path: _path}
+    })
+    // console.log(props.localizations);
+  }
+}
+setLocalizations()
+
+
+// // Set translations switcher paths
+// const langPages = useCurrentLangPages()
+// langPages.value = {
+//   en: { path: '/' },
+//   pl: { path: '/pl/' }
+// }
+
+
+
+// // Set empty locale roads
+// route.meta.nuxtI18n = {}
+// locales.value.forEach(loc => {
+//   route.meta.nuxtI18n[loc] = {fullPath: '/ddd'}
+// })
+// // Set current path
+// console.log(route.path);
+// route.meta.nuxtI18n[locale.value] = route.path
+
+/// ***
 
 const translations = useTranslationsData();
 

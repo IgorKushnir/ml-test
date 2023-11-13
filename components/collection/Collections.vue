@@ -4,7 +4,10 @@
         {
           title: 'Collections',
         }
-    ]"/>
+    ]"
+         :localizations="[{locale: 'en', slug: 'collections'}, {locale: 'pl', slug: 'collections'}]"
+
+    />
     <transition name="fade">
       <div v-if="!pending && data != null">
         <InnerHeader title="Collections"/>
@@ -24,7 +27,7 @@
                   :title="collection.attributes.title"
                   :sub-header="line.title"
                   :image="collection.attributes.cover_3x4"
-                  :to="'/collection/' + collection.attributes.slug"
+                  :to="localePath('/collection/' + collection.attributes.slug)"
               />
             </div>
           </template>
@@ -44,7 +47,9 @@ import getCollections from '~/api/getCollections'
 import {useTypesData} from "../../composables/states";
 import StickyHeaderMilla from "../stickyBar/StickyHeaderMilla";
 
-let {data, pending, refresh, error} = await getCollections('en')
+const { locale } = useI18n()
+
+let {data, pending, refresh, error} = await getCollections(locale.value)
 
 const typeData = useTypesData()
 

@@ -1,5 +1,6 @@
 import content from './misc/content'
 import seo from './misc/seo'
+import locals from './misc/locals'
 
 export default async function (slug, lang, publicationState = "LIVE") {
     const graphql = useStrapiGraphQL()
@@ -19,6 +20,7 @@ query Page{
     data {
       attributes {
       ${seo()}
+      ${locals()}
         title
         text
         sub_header
@@ -62,6 +64,16 @@ query Page{
 }
 `);
 
+
+    // const currentLangPages = useCurrentLangPages();
+    // currentLangPages.value = {
+    //     // [locale]: {slug: route.slug}
+    //     en: {slug: 'company'},
+    //     pl: {slug: 'company-pl'}
+    // }
+    // console.log(currentLangPages.value);
+
+    // console.log(route);
 
     const { data, pending, refresh, error } = await useLazyAsyncData('data_'+collection, () => response, {
         transform: (d) => d.data[collection].data[0] ? d.data[collection].data[0].attributes : null,

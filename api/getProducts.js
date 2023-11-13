@@ -87,7 +87,69 @@ query ProductsWithFilters{
   }
 }
 `);
+    const req = `
+query ProductsWithFilters{
 
+  products (
+    filters: {
+      or: [ { discontinued: { eq: null } } { discontinued: { eq: false } } ] 
+      and: [ ${_filters} ]
+      type: {
+        slug: {
+          eq: "${type}"
+        }
+      }
+
+  }
+    pagination: {
+      pageSize: ${pageSize}
+      page: ${page}
+    }
+    sort: "title"
+    locale: "${lang}"
+  ) {
+  meta {
+      pagination {
+        total
+        page
+        pageSize
+        pageCount
+      }
+    }
+    
+    data {
+    id
+      attributes {
+        title
+        slug
+        type {
+          data {
+            attributes {
+              slug
+            }
+          }
+        }
+        silhouettes {
+          data {
+            attributes {
+              slug
+            }
+          }
+        }
+        cover_3x4 {
+          data {
+            attributes {
+              formats
+              url
+              placeholder
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`
 
 
     return response

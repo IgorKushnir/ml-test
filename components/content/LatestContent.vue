@@ -14,7 +14,7 @@
        :class="index > 1 ? 'hide-lg' : ''"
        v-for="(item, index) in newsData.data"
   >
-    <InspirationItem :title="item.attributes.title" :to="'/inspiration/'+item.attributes.slug" :cover="item.attributes.cover_1x1" col=""/>
+    <InspirationItem :title="item.attributes.title" :to="localePath('/inspiration/'+item.attributes.slug)" :cover="item.attributes.cover_1x1" col=""/>
 
   </div>
 
@@ -31,14 +31,15 @@ const props = defineProps({
 })
 import {getNews} from '~/api/news'
 import { getInspirations} from '~/api/inspiration'
+const { locale } = useI18n()
 
 
 const {data: newsData, pending, refresh, error} =
-    props.data.instance === 'news' ? await useLazyAsyncData('news', () => getNews('en', 1, props.data.amount), {
+    props.data.instance === 'news' ? await useLazyAsyncData('news', () => getNews(locale.value, 1, props.data.amount), {
   transform: (d) => {
     return d.data['news']
   }
-}) : props.data.instance === 'inspiration' ? await useLazyAsyncData('inspirations', () => getInspirations('en', null, 1, props.data.amount), {
+}) : props.data.instance === 'inspiration' ? await useLazyAsyncData('inspirations', () => getInspirations(locale.value, null, 1, props.data.amount), {
       transform: (d) => {
         return d.data['inspirations']
       }

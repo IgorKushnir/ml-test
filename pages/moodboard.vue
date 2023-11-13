@@ -3,8 +3,10 @@
     <Seo title="Mood board" :breadcrumbs="[
         {
           title: 'Mood board',
-        }
-    ]" blockRobots/>
+        },
+    ]"
+         :localizations="[{locale: 'en', slug: 'moodboard'}, {locale: 'pl', slug: 'moodboard'}]"
+         blockRobots/>
     <InnerHeader title="Mood board"/>
 
 
@@ -34,7 +36,6 @@
 import productsResponse from '~/api/getProductsById'
 import SnackBar from "../components/SnackBar";
 import Container from "../components/Container";
-
 const {$getViewedProduct, $getLikedProducts, $toggleLikeProduct} = useNuxtApp()
 
 const viewedProductIds = ref([]);
@@ -47,12 +48,11 @@ const products = computed(() => {
 })
 const firstLoading = ref(true)
 
-// if (process.browser) {
-//   // console.log('client');
-// }
+const { locale, locales } = useI18n()
+
 let {data, pending, refresh, error} = useLazyAsyncData('moodboard', () => productsResponse({
   products: products.value,
-  lang: "en"
+  lang: locale.value
 }), {
   transform: (d) => {
     const _products = d.data.products.data;

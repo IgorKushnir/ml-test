@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink :to="to" v-if="!shimmer">
+  <NuxtLink :to="localePath(to)" v-if="!shimmer">
     <div class="product-item">
         <div class="product-item-head">
           <span class="h3">{{title}}</span>

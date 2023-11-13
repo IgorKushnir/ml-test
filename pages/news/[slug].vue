@@ -8,7 +8,11 @@
         {
           title: data?.attributes?.title,
         }
-    ]"/>
+    ]"
+         :pathToPage="['news']"
+         :localizations="data?.attributes?.localizations?.data"
+
+    />
 
     <transition name="fade">
       <div v-if="!pending && data != null">
@@ -44,10 +48,12 @@ const route = useRoute()
 const slug = route.params.slug
 const { $getDate, $getMonths } = useNuxtApp()
 
-const {data, pending, refresh, error} = await getNewsPost(slug, 'en')
-onMounted(() => {
-  refresh()
-})
+const { locale } = useI18n()
+
+const {data, pending, refresh, error} = await getNewsPost(slug, locale.value)
+// onMounted(() => {
+//   refresh()
+// })
 
 </script>
 

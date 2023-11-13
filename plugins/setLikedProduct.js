@@ -1,10 +1,14 @@
-export default defineNuxtPlugin(() => {
+export default defineNuxtPlugin((nuxt) => {
 
     return {
         provide: {
             toggleLikeProduct: (id) => {
-                if (!localStorage['likedProducts']) localStorage['likedProducts'] = '[]';
-                let store = localStorage['likedProducts'];
+                const locale = nuxt.$i18n.locale.value
+                let storageName = 'likedProducts'
+                storageName = locale === 'en' ? storageName : storageName+'_'+locale
+
+                if (!localStorage[storageName]) localStorage[storageName] = '[]';
+                let store = localStorage[storageName];
 
                 if (!id) return
 
@@ -24,7 +28,11 @@ export default defineNuxtPlugin(() => {
                 }
 
                 function save() {
-                    localStorage['likedProducts'] = JSON.stringify(jsonStore);
+                    const locale = nuxt.$i18n.locale.value
+                    let storageName = 'likedProducts'
+                    storageName = locale === 'en' ? storageName : storageName+'_'+locale
+
+                    localStorage[storageName] = JSON.stringify(jsonStore);
 
                     // Set counter
                     const likeCounter = useFavCount()
@@ -35,8 +43,12 @@ export default defineNuxtPlugin(() => {
 
             },
             getLikedProducts: () => {
-                if (!localStorage['likedProducts']) localStorage['likedProducts'] = '[]';
-                let store = localStorage['likedProducts'];
+                const locale = nuxt.$i18n.locale.value
+                let storageName = 'likedProducts'
+                storageName = locale === 'en' ? storageName : storageName+'_'+locale
+
+                if (!localStorage[storageName]) localStorage[storageName] = '[]';
+                let store = localStorage[storageName];
 
                 return JSON.parse(store)
             }

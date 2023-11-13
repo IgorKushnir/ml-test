@@ -92,7 +92,7 @@ const swiperEl = ref()
 const next = ref()
 const prev = ref()
 const swiperScrollbar = ref()
-
+const localePath = useLocalePath()
 const brakePoints = {
   4: [4, 4, 3.5, 3.5, 2.5],
   6: [6, 5.5, 4.5, 3.5, 2.5],
@@ -156,9 +156,9 @@ function getLink(slug) {
     return slug
   }
   if (slug && slug.startsWith('/')) {
-    return slug;
+    return localePath(slug);
   }
-  return slug ? (props.path + '/' + slug) : null
+  return slug ? localePath((props.path + '/' + slug)) : null
 }
 
 

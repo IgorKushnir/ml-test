@@ -1,9 +1,8 @@
 import seo from './misc/seo'
+import locals from './misc/locals'
 
 export default async function (lang) {
-
     const graphql = useStrapiGraphQL()
-
 
     const menuAndLines = `
     menu(locale:"${lang}") {
@@ -98,6 +97,7 @@ export default async function (lang) {
             data {
               attributes {
               ${seo()}
+              ${locals()}
                 title
                 slug
               }
@@ -106,7 +106,7 @@ export default async function (lang) {
     `;
 
     const translations = `
-        transtation {
+        transtation(locale: "${lang}") {
             data {
               attributes {
                 footer_title

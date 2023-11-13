@@ -1616,6 +1616,8 @@ watch(() => sendData.value.phone.value, (phone) => {
 
 
 function send() {
+  // console.log(sendData.value);
+  // return
   const keys = Object.keys(sendData.value);
   let firstError;
   keys.forEach((key) => {

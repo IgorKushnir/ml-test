@@ -56,6 +56,7 @@
          :description="route.meta?.description"
          :blockRobots="!(Object.keys(route.query).length === 0)"
          :seoText="route.meta?.seoText"
+         :localizations="type.localizations.data"
     />
 
   </div>
@@ -75,6 +76,8 @@ const typeData = useTypesData()
 
 const route = useRoute();
 const router = useRouter();
+const { locale } = useI18n()
+const localePath = useLocalePath()
 
 const productPage = ref(1)
 const pages = ref(1)
@@ -92,13 +95,12 @@ router.options.history.pages[slug] = previousPages;
 
 pages.value = previousPages ?? 1;
 
-
 let {
   data: dataAvailableFilters,
   pending: pendingFilters,
 } = await useAsyncData('data_activeFilters', () => getActiveFilters({
   filters: filters.value,
-  lang: 'en',
+  lang: locale.value,
   type: slug,
   fetchFilters: fetchFilters.value
 }), {
@@ -130,14 +132,13 @@ filters.value = [...filters.value, ...initialFilters.value];
 
 const type = computed(() => typeData.value.find(e => e.slug === slug))
 
-
 let initialData = ref([])
 let {
   data: dataProducts,
   pending: pendingProducts,
 } = await useLazyAsyncData('data_products', () => getProducts({
   filters: filters.value,
-  lang: 'en',
+  lang: locale.value,
   type: slug,
   page: productPage.value,
   pages: pages.value
@@ -243,7 +244,8 @@ function setQuery(filters) {
 
   router.replace({
     query: query,
-    path: '/' + slug
+    path: localePath('/' + slug)
+    // path: '/' + slug
   })
 
 }

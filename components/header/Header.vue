@@ -1,17 +1,26 @@
 <template>
   <HeaderSearchModal :show="showSearch" @close="showSearch = false"/>
 
-
   <transition name="fade">
     <HeaderWishCounter v-if="$route.name !== 'moodboard'"  class="show-md"/>
   </transition>
   <header class="navigation">
-
     <div class="container" style="position: static;">
+
 
       <div class="top-nav">
         <div class="left-side">
-          <NuxtLink v-for="item in menu['primary_additional']" :to="item.url" :class="'nav-link__tertiary hover hide-md' + (item.target ? ' target' : '')" :target="item.target ? '_target' : '_self'">{{item.title}}</NuxtLink>
+          <NuxtLink v-for="item in data[0]['primary_additional']" :to="item.url" :class="'nav-link__tertiary hover hide-md' + (item.target ? ' target' : '')" :target="item.target ? '_target' : '_self'">{{item.title}}</NuxtLink>
+
+          <ClientOnly>
+<!--            <pre>{{$route.meta.locales}}</pre>-->
+            <a v-if="show_pl === 'true'" :href="$route.meta.locales?.en?.path ?? '/'" class="nav-link__tertiary hover hide-md" :class="locale === 'en' ? 'router-link-active' : ''">English</a>
+            <a v-if="show_pl === 'true'" :href="$route.meta.locales?.pl?.path ?? '/pl'" class="nav-link__tertiary hover hide-md" :class="locale === 'pl' ? 'router-link-active' : ''">Poland</a>
+<!--            <NuxtLink  v-if="true || locale !== 'en'" :to="switchLocalePath('en') === '' ? '/' : switchLocalePath('en')" class="nav-link__tertiary hover hide-md">English</NuxtLink>-->
+<!--            <NuxtLink v-if="true || locale !== 'pl'" :to="switchLocalePath('pl') === '' ? '/' : switchLocalePath('pl')" class="nav-link__tertiary hover hide-md">Poland</NuxtLink>-->
+          </ClientOnly>
+
+
           <div v-on:click="showHideMenu" class="nav-icon hover mobile-menu">
             <div v-if="!mobileMenuOpened" class="icon-menu-24"/>
             <div v-else class="icon-close-24"/>
@@ -19,10 +28,10 @@
         </div>
 
         <!-- Logo-->
-        <NuxtLink v-if="$route.path !== '/'" to="/" class="logo-container">
+        <NuxtLink v-if="$route.path !== localePath('/')" :to="localePath('/')" class="logo-container">
           <img src="@/assets/img/logo.svg" alt="Milla Nova Logo" class="logo">
         </NuxtLink>
-        <div v-else to="/" class="logo-container">
+        <div v-else class="logo-container">
           <img src="@/assets/img/logo.svg" alt="Milla Nova Logo" class="logo">
         </div>
 
@@ -36,7 +45,7 @@
 
       <div ref="menu_wrapper" class="menu_wrapper hide">
         <div class="nav">
-          <ul v-for="(item, index) in menu['primary']" class="nav-container">
+          <ul v-for="(item, index) in data[0]['primary']" class="nav-container">
             <li>
               <NuxtLink
                   ref="link"
@@ -55,7 +64,7 @@
               </Transition>
               <div class="nav-dropdown-container" v-if="hasSubMenu(item)" ref="dropdown">
                 <Transition name="slide-fade" @enter="enterAnimation" @leave="leaveAnimation">
-                  <HeaderDropdown v-show="item.show ?? false" :item="item" :lines="lines" :show="item.show ?? false"/>
+                  <HeaderDropdown v-show="item.show ?? false" :item="item" :lines="data[1]" :show="item.show ?? false"/>
                 </Transition>
               </div>
 
@@ -64,7 +73,7 @@
 
           <div class="m-v-32 show-md">
             <NuxtLink
-                v-for="item in menu['primary_additional']" :to="item.url"
+                v-for="item in data[0]['primary_additional']" :to="item.url"
                 style="display: block"
                 :class="'nav-link__tertiary hover p-v-8 m-v-4' + (item.target ? ' target' : '')"
                 :target="item.target ? '_target' : '_self'">{{item.title}}
@@ -82,10 +91,11 @@
 <script setup lang="js">
 import { enter, leave} from '~/api/misc/transitions';
 
+const { locale } = useI18n()
 
 
 const data = useMenuData();
-const {menu, lines} = {menu: data.value[0], lines: data.value[1]};
+
 const isMobile = useIsMobile();
 let activeIndex = ref(0);
 const dropdown = ref();
@@ -96,10 +106,41 @@ let mobileMenuOpened = ref(false)
 const showSearch = ref(false)
 
 
+
+
+
+const show_pl = ref(false)
+onMounted(() => {
+  // Temporary for showing PL
+  const route = useRoute()
+  if (route.query['show_pl']) {
+    document.cookie = "show_pl="+route.query['show_pl'];
+    navigateTo('/')
+  }
+
+  show_pl.value = getCookie('show_pl');
+  // console.log(show_pl.value);
+
+  function getCookie(name) {
+    let matches = document.cookie.match(new RegExp(
+        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+  }
+
+
+/// ----
+})
+
+
+
+
+
+
 // On mobile click to submenu open
 function navClickHandler(isDropdown, index) {
   if (isMobile.value && isDropdown) {
-    if (menu.primary[index].show) {
+    if (data.value[0].primary[index].show) {
       hideSubMenu();
     } else {
       showSubMenu(index)
@@ -120,7 +161,7 @@ function mouseLeaveHandler() {
 // Show submenu
 const showSubMenu = (index) => {
   hideSubMenu();
-  menu.primary[index].show = true;
+  data.value[0].primary[index].show = true;
   activeIndex.value = index;
 
   link.value[activeIndex.value].$el.parentElement.classList.add('active')
@@ -128,7 +169,7 @@ const showSubMenu = (index) => {
 }
 // Hide submenu
 const hideSubMenu = () => {
-  menu.primary[activeIndex.value].show = false;
+  data.value[0].primary[activeIndex.value].show = false;
 
   link.value[activeIndex.value].$el.parentElement.classList.remove('active')
 }

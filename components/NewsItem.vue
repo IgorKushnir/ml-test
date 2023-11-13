@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink :to="'/news/' + data.attributes.slug">
+  <NuxtLink :to="localePath('/news/' + data.attributes.slug)">
     <div class="ratio-1x1">
       <Image :path="data.attributes.cover_1x1"/>
     </div>

@@ -1,11 +1,12 @@
  async function getDressRedirects(lang) {
     const graphql = useStrapiGraphQL()
     const collection = 'dressRedirects';
+     // console.log({lang});
 
-    const response = graphql(`
+     const response = graphql(`
 query Landings{
   types (
-    locale: "all",
+    locale: "${lang}",
     pagination: {
       limit: -1
     }
@@ -13,6 +14,7 @@ query Landings{
     data {
       attributes {
         slug
+        locale
         productLandingsRedirects (
           pagination: {
             limit: -1
@@ -32,12 +34,11 @@ query Landings{
 }
 `);
 
-    const { data, pending, refresh, error } = await useLazyAsyncData('data_'+collection, () => response, {
+     return await useLazyAsyncData('data_'+collection, () => response, {
         transform: (d) => {
             return transformDressRedirectJson(d.data.types)
         },
     })
-    return { data, pending, refresh, error };
 }
 
 
@@ -48,13 +49,14 @@ function transformDressRedirectJson(response) {
 
     response.data.forEach((types) => {
         const slug = types.attributes.slug
-        // const lang = types.attributes.locale
+        const locale = types.attributes.locale
         types.attributes.productLandingsRedirects.forEach((meta) => {
             if (meta.enable) {
                 _redirects.push({
-                    name: generateRandomID(),
+                    name: meta.to,
                     from: meta.from,
                     to: meta.to,
+                    locale,
                     meta: {
                         slug: slug,
                         title: meta.title,

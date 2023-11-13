@@ -86,6 +86,7 @@ const productPage = ref(1)
 const pages = ref(1)
 
 
+const { locale } = useI18n()
 
 
 const previousPages = router.options.history?.pages?.[slug]
@@ -104,7 +105,7 @@ let filters = ref([{
 let {
   data: dataAvailableFilters,
   pending: pendingFilters,
-} = await useAsyncData('data_activeFilters', () => getActiveFilters({filters: filters.value, lang: 'en', type: 'dress', fetchFilters: fetchFilters.value}), {
+} = await useAsyncData('data_activeFilters', () => getActiveFilters({filters: filters.value, lang: locale.value, type: 'dress', fetchFilters: fetchFilters.value}), {
   transform: (d) => {
     return d.data['products']['meta']
   },
@@ -115,7 +116,7 @@ let initialAvailableFilters = {};
 
 const initialFilters = ref([]);
 // onMounted(() => {
-  initialAvailableFilters = dataAvailableFilters.value;
+  initialAvailableFilters = dataAvailableFilters.value ?? {};
 
   initialFilters.value = parseQuery();
 
@@ -137,13 +138,13 @@ const initialFilters = ref([]);
 const {
   data: dataCollection,
   pending: pendingCollection,
-} = await getCollection(slug, 'en')
+} = await getCollection(slug, locale.value)
 
 let initialData = ref([])
 let {
   data: dataProducts,
   pending: pendingProducts,
-} = await useLazyAsyncData('data_products', () => getProducts({filters: filters.value, lang: 'en', type: 'dress', page: productPage.value, pages: pages.value }), {
+} = await useLazyAsyncData('data_products', () => getProducts({filters: filters.value, lang: locale.value, type: 'dress', page: productPage.value, pages: pages.value }), {
   transform: (d) => {
     const collection = 'products';
     let initialPageSize = 12;

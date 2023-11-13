@@ -2,7 +2,7 @@
   <div>
     <NuxtLink
         v-for="(item, index) in data"
-        :to="path + item.slug"
+        :to="localePath(path + item.slug)"
         class="nav-link hover"
         :active-class="((activeItem === index) || (activeItem === null)) ? 'router-link-active' : '_'"
         :exact-active-class="((activeItem === index) || (activeItem === null)) ? 'router-link-exact-active' : '_'"

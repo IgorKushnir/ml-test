@@ -13,6 +13,9 @@ export default defineNuxtConfig({
     i18n: {
         locales: ['en', 'pl'],
         defaultLocale: 'en',
+        dynamicRouteParams: true,
+        // debug: true
+
         // vueI18n: {
         //     fallbackLocale: 'en'
         // },

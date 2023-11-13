@@ -1,10 +1,10 @@
 import content from './misc/content'
 import seo from './misc/seo'
+import locals from './misc/locals'
 
 
 function getNews(lang, page = 1, pageSize = 100) {
     const graphql = useStrapiGraphQL()
-
 
 
     const response = graphql(`
@@ -62,6 +62,7 @@ async function getNewsPost(slug, lang) {
     data {
       attributes {
       ${seo()}
+    ${locals()}
         title
         slug
         created
@@ -89,4 +90,4 @@ async function getNewsPost(slug, lang) {
     return {data, pending, refresh, error};
 }
 
-export { getNews, getNewsPost };
+export {getNews, getNewsPost};
