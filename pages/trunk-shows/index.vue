@@ -18,13 +18,13 @@
               </div>
 
               <div class="col-4 col-6-lg col-12-sm">
-                <NuxtLink :to="'/trunk-shows/'+item.attributes.slug">
+                <NuxtLink :to="localePath('/trunk-shows/'+item.attributes.slug)">
                   <div class="ratio-4x3 m-b-24">
                     <Image :path="item.attributes.cover_4x3" :alt="item.attributes.title"/>
                   </div>
                 </NuxtLink>
 
-                <NuxtLink :to="'/trunk-shows/'+item.attributes.slug">
+                <NuxtLink :to="localePath('/trunk-shows/'+item.attributes.slug)">
                   <h2 class="m-t-0">{{ item.attributes.title }}</h2>
                 </NuxtLink>
                 <span><strong>{{ $getDatesInRange(item.attributes.from, item.attributes.to, $getMonths) }}</strong></span>
@@ -35,7 +35,7 @@
                 <p v-if="item.attributes.description">{{ item.attributes.description }}</p>
 
                 <div class="m-t-16 m-t-24-sm">
-                  <NuxtLink :to="'/trunk-shows/'+item.attributes.slug"
+                  <NuxtLink :to="localePath('/trunk-shows/'+item.attributes.slug)"
                             class="button m-v-16 m-r-16 m-r-0-sm display-block-lg">Learn more
                   </NuxtLink>
 <!--                  <NuxtLink v-if="item.attributes.apply_for" :to="item.attributes.apply_for" target="_blank"-->
@@ -58,8 +58,9 @@
 
 <script setup>
 import {getTrunkShows} from '~/api/trunkShows'
+const { locale } = useI18n()
 
-let {data, pending, refresh, error} = await getTrunkShows('en')
+let {data, pending, refresh, error} = await getTrunkShows(locale.value)
 
 const {$getMonths, $getDatesInRange} = useNuxtApp()
 

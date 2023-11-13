@@ -22,7 +22,7 @@
             <div class="head center m-v-80 m-v-40-md">
               <div class="subheader gray">Trunk show</div>
               <h1 class="title">{{data.attributes.title}}</h1>
-              <NuxtLink v-if="data.attributes.apply_for" :to="data.attributes.apply_for" target="_blank" rel="nofollow" class="button primary target m-v-8">Apply for</NuxtLink>
+              <NuxtLink v-if="data.attributes.apply_for" :to="localePath(data.attributes.apply_for)" target="_blank" rel="nofollow" class="button primary target m-v-8">Apply for</NuxtLink>
             </div>
 
 
@@ -76,7 +76,7 @@
             <NuxtLink
                 v-for="item in data.attributes.offered?.products?.data"
                 class="img-hover col-3 col-4-lg col-6-md col-12-sm"
-                :to="'/product/' + item?.attributes?.slug"
+                :to="localePath('/product/' + item?.attributes?.slug)"
                 target="_self"
             >
               <div class="ratio-3x4">
@@ -109,8 +109,9 @@ const route = useRoute();
 let slug = route.params.slug;
 const { $getMonths, $getDatesInRange } = useNuxtApp()
 
+const { locale } = useI18n()
 
-let {data, pending, refresh, error} = await getTrunkShow(slug, 'en')
+let {data, pending, refresh, error} = await getTrunkShow(slug, locale.value)
 
 onMounted(() => {
   refresh()
