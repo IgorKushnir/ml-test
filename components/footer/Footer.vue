@@ -13,7 +13,7 @@
         <div class="col-6 col-8-xl col-12-lg p-v-4 menu">
           <div v-for="item in menu" class="sub-menu navigation">
             <div class="m-b-24">
-              <NuxtLink :to="item.url" :target="item.target ? '_blank' : '_self'" class="nav-link hover white"
+              <NuxtLink :to="localePath(item.url)" :target="item.target ? '_blank' : '_self'" class="nav-link hover white"
                         :class="item.target ? 'target' : ''">
                 {{ item.title }}
               </NuxtLink>
@@ -21,7 +21,7 @@
             <div :class="$divideSubMenu(item.items).length > 0 ? 'm-b-40' : ''" class="hide-md">
               <div v-for="subMenu in $divideSubMenu(item.items)" class="m-v-24">
                 <div v-for="subItem in subMenu" class="m-v-4">
-                  <NuxtLink :to="subItem.url" :target="subItem.target ? '_blank' : '_self'" class="p-small white hover"
+                  <NuxtLink :to="localePath(subItem.url)" :target="subItem.target ? '_blank' : '_self'" class="p-small white hover"
                             :class="subItem.target ? 'target' : ''">{{ subItem.title }}
                   </NuxtLink>
                 </div>

@@ -10,7 +10,7 @@
 
       <div class="top-nav">
         <div class="left-side">
-          <NuxtLink v-for="item in data[0]['primary_additional']" :to="item.url" :class="'nav-link__tertiary hover hide-md' + (item.target ? ' target' : '')" :target="item.target ? '_target' : '_self'">{{item.title}}</NuxtLink>
+          <NuxtLink v-for="item in data[0]['primary_additional']" :to="$isAbsoluteUrl(item.url) ? item.url : localePath(item.url)" :class="'nav-link__tertiary hover hide-md' + (item.target ? ' target' : '')" :target="item.target ? '_target' : '_self'">{{item.title}}</NuxtLink>
 
           <ClientOnly>
 <!--            <pre>{{$route.meta.locales}}</pre>-->
