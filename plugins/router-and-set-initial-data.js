@@ -38,18 +38,20 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
     let addedRoads = {[locale.value]: true}
 
-    // called right after a new locale has been set
-    nuxtApp.hook('i18n:localeSwitched', async ({oldLocale, newLocale})  => {
-        // console.log('onLanguageSwitched', oldLocale, newLocale)
-        await setFilters(newLocale)
-        await setInitialData(newLocale)
-
-        locale.value = newLocale;
-        if (!addedRoads[newLocale]) {
-            addedRoads[newLocale] = true
-            await setRouts()
-        }
-    })
+    await setFilters(locale.value)
+    await setInitialData(locale.value)
+    // // called right after a new locale has been set
+    // nuxtApp.hook('i18n:localeSwitched', async ({oldLocale, newLocale})  => {
+    //     // console.log('onLanguageSwitched', oldLocale, newLocale)
+    //     await setFilters(newLocale)
+    //     await setInitialData(newLocale)
+    //
+    //     locale.value = newLocale;
+    //     if (!addedRoads[newLocale]) {
+    //         addedRoads[newLocale] = true
+    //         await setRouts()
+    //     }
+    // })
 
 
     const filters = await setFilters(locale.value)
@@ -63,74 +65,75 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
 
 
-    await setRouts()
+
+    const {data, error} = await getDressRedirects(locale.value)
+    if (error.value) return
+    // console.log(data.value);
+    // Adding default product redirects
+    types.forEach(productType => {
+        const type = productType.slug;
+
+        filters.forEach(filterProduct => {
+            const filter = filterProduct.uid
+            filterProduct.data.forEach(filterItem => {
+                const filterValue = filterItem.attributes.slug
+                let from = '/' + type + '?' + filter + '=' + filterValue
+                let to = '/' + type + '/' + filter + '/' + filterValue
+
+                if (locale.value !== 'en') {
+                    from = '/' + locale.value  + from
+                    to = '/' + locale.value  + to
+                }
 
 
-    async function setRouts() {
-
-        const {data, error} = await getDressRedirects(locale.value)
-        if (error.value) return
-        // console.log(data.value);
-        // Adding default product redirects
-        types.forEach(productType => {
-            const type = productType.slug;
-
-            filters.forEach(filterProduct => {
-                const filter = filterProduct.uid
-                filterProduct.data.forEach(filterItem => {
-                    const filterValue = filterItem.attributes.slug
-                    let from = '/' + type + '?' + filter + '=' + filterValue
-                    let to = '/' + type + '/' + filter + '/' + filterValue
-
-                    if (locale.value !== 'en') {
-                        from = '/' + locale.value  + from
-                        to = '/' + locale.value  + to
+                data.value.push({
+                    name: to + '___' + locale.value,
+                    from,
+                    to,
+                    locale: locale.value,
+                    meta: {
+                        slug: type,
+                        query: convertPathToQueryObject(from),
                     }
-
-
-                    data.value.push({
-                        name: to,
-                        from,
-                        to,
-                        locale: locale.value,
-                        meta: {
-                            slug: type,
-                            query: convertPathToQueryObject(from),
-                        }
-                    })
                 })
             })
         })
+    })
 
 
-        data.value.forEach(newRoute => {
-            routesFrom.push(newRoute.from)
+    data.value.forEach(newRoute => {
+        routesFrom.push(newRoute.from)
 
-            router.addRoute({
-                name: newRoute.name + '___' + newRoute.locale,
-                path: newRoute.to,
-                component: () => Discover,
-                meta: setMeta(newRoute)
-            })
+        router.addRoute({
+            name: newRoute.name + '___' + newRoute.locale,
+            path: newRoute.to,
+            component: () => Discover,
+            meta: setMeta(newRoute)
         })
+    })
 
 
-        router.afterEach((route) => {
-            // console.log({route});
-            const fullPath = route.fullPath;
-            if (routesFrom.includes(fullPath)) {
-                const index = data.value.findIndex(d => d.from === fullPath)
-                if (is_server()) {
-                    navigateTo(data.value[index].to, {
-                        redirectCode: 301
-                    })
-                } else {
-                    route.meta = setMeta(data.value[index])
-                    window.history.replaceState(window.history.state, '', data.value[index].to)
-                }
+    router.afterEach((route) => {
+        // console.log({route});
+        const fullPath = route.fullPath;
+        if (routesFrom.includes(fullPath)) {
+            const index = data.value.findIndex(d => d.from === fullPath)
+            if (is_server()) {
+                navigateTo(data.value[index].to, {
+                    redirectCode: 301
+                })
+            } else {
+                route.meta = setMeta(data.value[index])
+                window.history.replaceState(window.history.state, '', data.value[index].to)
             }
-        })
-    }
+        }
+    })
+    // await setRouts()
+    //
+    //
+    // async function setRouts() {
+    //
+    // }
 
 
 
