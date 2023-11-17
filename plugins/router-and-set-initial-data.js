@@ -28,7 +28,7 @@ async function setInitialData(lang) {
 async function setFilters(lang) {
     // Get all filters
     let allFilters = useFiltersData();
-    let {data, pending, refresh, error} = await getAllFilters(lang);
+    let {data, error} = await getAllFilters(lang);
     if (!error.value) allFilters.value = data.value;
     return data.value
 }
