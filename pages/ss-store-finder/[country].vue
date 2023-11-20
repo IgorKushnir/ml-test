@@ -1,12 +1,13 @@
 <template>
   <div>
     <!--    Create route store-->
-    {{route.params}}
+<!--    {{route.params}}-->
     <Seo title="Store finder" :breadcrumbs="[
         {
           title: 'Store finder',
         }
-    ]"/>
+    ]"
+    />
 
     <div v-if="countries">
       <InnerHeader v-if="countries[countryIndex]?.value" :title="countries[countryIndex]?.value" sub_header="Store finder"/>

@@ -10,6 +10,8 @@ const Discover = import('~/components/Discover.vue').then(r => {
 })
 
 async function setInitialData(lang) {
+
+
     // get Initial data (Menu, Lines, Types)
     let {data: initialData, error: initialError} = await getInitialData(lang);
     if (!initialError.value) {
@@ -38,8 +40,9 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
     let addedRoads = {[locale.value]: true}
 
-    await setFilters(locale.value)
-    await setInitialData(locale.value)
+    // await setFilters(locale.value)
+    // await setInitialData(locale.value)
+
     // // called right after a new locale has been set
     // nuxtApp.hook('i18n:localeSwitched', async ({oldLocale, newLocale})  => {
     //     // console.log('onLanguageSwitched', oldLocale, newLocale)
@@ -54,16 +57,14 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     // })
 
 
+
+    // nuxtApp.hook('app:created', async ({oldLocale, newLocale})  => {
+    //
+    // })
+    //
     const filters = await setFilters(locale.value)
     const initialData = await setInitialData(locale.value)
     const types = initialData[2]
-
-
-
-    const router = useRouter()
-    let routesFrom = []
-
-
 
 
     const {data, error} = await getDressRedirects(locale.value)
@@ -81,8 +82,8 @@ export default defineNuxtPlugin(async (nuxtApp) => {
                 let to = '/' + type + '/' + filter + '/' + filterValue
 
                 if (locale.value !== 'en') {
-                    from = '/' + locale.value  + from
-                    to = '/' + locale.value  + to
+                    from = '/' + locale.value + from
+                    to = '/' + locale.value + to
                 }
 
 
@@ -101,11 +102,15 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     })
 
 
+    const router = useRouter()
+    let routesFrom = []
+
+
     data.value.forEach(newRoute => {
         routesFrom.push(newRoute.from)
 
         router.addRoute({
-            name: newRoute.name + '___' + newRoute.locale,
+            name: newRoute.name + '___' + newRoute.locale, // + '___' + newRoute.locale,
             path: newRoute.to,
             component: () => Discover,
             meta: setMeta(newRoute)
@@ -128,14 +133,13 @@ export default defineNuxtPlugin(async (nuxtApp) => {
             }
         }
     })
+
     // await setRouts()
     //
     //
     // async function setRouts() {
     //
     // }
-
-
 
 
 })

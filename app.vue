@@ -17,6 +17,8 @@
 // https://vueschool.io/articles/vuejs-tutorials/nuxt-ssr-optimizing-tips/
 // ****
 
+// const router = useRouter()
+// console.log(router.options.routes);
 
 import {useIsMobile} from "~/composables/states";
 

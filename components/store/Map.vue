@@ -8,9 +8,10 @@
 </template>
 
 <script setup lang="ts">
-import {Loader, LoaderOptions} from "google-maps";
-import {useMethod} from "h3";
-import items from "ajv/lib/vocabularies/applicator/items";
+// import {Loader, LoaderOptions} from "google-maps";
+
+// import {useMethod} from "h3";
+// import items from "ajv/lib/vocabularies/applicator/items";
 // Google map
 
 
@@ -112,195 +113,195 @@ function removeMarkers() {
 
 
 onMounted(async () => {
-  if (window.google == null) {
-    const options: LoaderOptions = {};
-    const loader = new Loader('AIzaSyBGuPFxDk76OYyebHe7qPAZEhvWRqukoig', options);
-     await loader.load();
-
-  }
-  myMap = new google.maps.Map(map.value, {
-    mapTypeControl: false,
-    streetViewControl: false,
-    minZoom: 3,
-    styles: [
-      {
-        "featureType": "all",
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            // "saturation": 36
-          },
-          {
-            "color": "#D0CAC2"
-          },
-          {
-            // "lightness": 30
-          }
-        ]
-      },
-      {
-        "featureType": "all",
-        "elementType": "labels.text.stroke",
-        "stylers": [
-          {
-            "visibility": "on"
-          },
-          {
-            "color": "#051C2C"
-          },
-          {
-            "lightness": 6
-          }
-        ]
-      },
-      {
-        "featureType": "all",
-        "elementType": "labels.icon",
-        "stylers": [
-          {
-            "visibility": "off"
-          }
-        ]
-      },
-      {
-        "featureType": "administrative",
-        "elementType": "geometry.fill",
-        "stylers": [
-          {
-            "color": "#1A303F"
-          },
-          {
-            "lightness": 10
-          }
-        ]
-      },
-      {
-        "featureType": "administrative",
-        "elementType": "geometry.stroke",
-        "stylers": [
-          {
-            "color": "#1A303F"
-          },
-          {
-            "lightness": 7
-          },
-          {
-            "weight": 1.2
-          }
-        ]
-      },
-      {
-        "featureType": "landscape",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#1A303F"
-          },
-          // {
-          //   "lightness": 20
-          // }
-        ]
-      },
-      {
-        "featureType": "poi",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#1A303F"
-          },
-          {
-            "lightness": 10
-          },
-          {
-            // "saturation": -50
-          }
-        ]
-      },
-      {
-        "featureType": "road.highway",
-        "elementType": "geometry.fill",
-        "stylers": [
-          {
-            "color": "#1A303F"
-          },
-          {
-            "lightness": 7
-          }
-        ]
-      },
-      {
-        "featureType": "road.highway",
-        "elementType": "geometry.stroke",
-        "stylers": [
-          {
-            "color": "#1A303F"
-          },
-          {
-            "lightness": 19
-          },
-          {
-            "weight": 0.2
-          }
-        ]
-      },
-      {
-        "featureType": "road.arterial",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#1A303F"
-          },
-          {
-            "lightness": 8
-          }
-        ]
-      },
-      {
-        "featureType": "road.local",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#1A303F"
-          },
-          {
-            "lightness": 6
-          }
-        ]
-      },
-      {
-        "featureType": "transit",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#1A303F"
-          },
-          {
-            "lightness": 9
-          }
-        ]
-      },
-      {
-        "featureType": "water",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#051C2C"
-          },
-          {
-            "lightness": 0
-          }
-        ]
-      }
-    ],
-  });
-
-  google.maps.event.addListener(myMap, 'zoom_changed', function() {
-    infowindows.forEach(infoW => {
-      infoW.close()
-    })
-  })
-
-  setMarkers();
+  // if (window.google == null) {
+  //   const options: LoaderOptions = {};
+  //   const loader = new Loader('AIzaSyBGuPFxDk76OYyebHe7qPAZEhvWRqukoig', options);
+  //    await loader.load();
+  //
+  // }
+  // myMap = new google.maps.Map(map.value, {
+  //   mapTypeControl: false,
+  //   streetViewControl: false,
+  //   minZoom: 3,
+  //   styles: [
+  //     {
+  //       "featureType": "all",
+  //       "elementType": "labels.text.fill",
+  //       "stylers": [
+  //         {
+  //           // "saturation": 36
+  //         },
+  //         {
+  //           "color": "#D0CAC2"
+  //         },
+  //         {
+  //           // "lightness": 30
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       "featureType": "all",
+  //       "elementType": "labels.text.stroke",
+  //       "stylers": [
+  //         {
+  //           "visibility": "on"
+  //         },
+  //         {
+  //           "color": "#051C2C"
+  //         },
+  //         {
+  //           "lightness": 6
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       "featureType": "all",
+  //       "elementType": "labels.icon",
+  //       "stylers": [
+  //         {
+  //           "visibility": "off"
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       "featureType": "administrative",
+  //       "elementType": "geometry.fill",
+  //       "stylers": [
+  //         {
+  //           "color": "#1A303F"
+  //         },
+  //         {
+  //           "lightness": 10
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       "featureType": "administrative",
+  //       "elementType": "geometry.stroke",
+  //       "stylers": [
+  //         {
+  //           "color": "#1A303F"
+  //         },
+  //         {
+  //           "lightness": 7
+  //         },
+  //         {
+  //           "weight": 1.2
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       "featureType": "landscape",
+  //       "elementType": "geometry",
+  //       "stylers": [
+  //         {
+  //           "color": "#1A303F"
+  //         },
+  //         // {
+  //         //   "lightness": 20
+  //         // }
+  //       ]
+  //     },
+  //     {
+  //       "featureType": "poi",
+  //       "elementType": "geometry",
+  //       "stylers": [
+  //         {
+  //           "color": "#1A303F"
+  //         },
+  //         {
+  //           "lightness": 10
+  //         },
+  //         {
+  //           // "saturation": -50
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       "featureType": "road.highway",
+  //       "elementType": "geometry.fill",
+  //       "stylers": [
+  //         {
+  //           "color": "#1A303F"
+  //         },
+  //         {
+  //           "lightness": 7
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       "featureType": "road.highway",
+  //       "elementType": "geometry.stroke",
+  //       "stylers": [
+  //         {
+  //           "color": "#1A303F"
+  //         },
+  //         {
+  //           "lightness": 19
+  //         },
+  //         {
+  //           "weight": 0.2
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       "featureType": "road.arterial",
+  //       "elementType": "geometry",
+  //       "stylers": [
+  //         {
+  //           "color": "#1A303F"
+  //         },
+  //         {
+  //           "lightness": 8
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       "featureType": "road.local",
+  //       "elementType": "geometry",
+  //       "stylers": [
+  //         {
+  //           "color": "#1A303F"
+  //         },
+  //         {
+  //           "lightness": 6
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       "featureType": "transit",
+  //       "elementType": "geometry",
+  //       "stylers": [
+  //         {
+  //           "color": "#1A303F"
+  //         },
+  //         {
+  //           "lightness": 9
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       "featureType": "water",
+  //       "elementType": "geometry",
+  //       "stylers": [
+  //         {
+  //           "color": "#051C2C"
+  //         },
+  //         {
+  //           "lightness": 0
+  //         }
+  //       ]
+  //     }
+  //   ],
+  // });
+  //
+  // google.maps.event.addListener(myMap, 'zoom_changed', function() {
+  //   infowindows.forEach(infoW => {
+  //     infoW.close()
+  //   })
+  // })
+  //
+  // setMarkers();
 })
 </script>
 

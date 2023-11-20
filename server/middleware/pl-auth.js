@@ -1,5 +1,6 @@
 export default defineEventHandler(async (event) => {
 
+
     const cookies = parseCookies(event)
     const show_pl = cookies?.show_pl
     if (show_pl !== 'true') {

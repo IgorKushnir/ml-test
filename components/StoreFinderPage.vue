@@ -1,4 +1,11 @@
 <template>
+<!--  <div>-->
+<!--    <div>-->
+<!--      Store-->
+<!--      {{$route.params}}-->
+<!--    </div>-->
+<!--  </div>-->
+
   <div>
     <div v-if="countries">
       <InnerHeader v-if="countries[countryIndex]?.value" :title="countries[countryIndex]?.value"
@@ -24,13 +31,13 @@
 
       </StickyBarStickyHeaderMilla>
 
-      <!-- Toggle-->
-      <transition name="fade">
-        <TagContainer v-if="countryIndex !== -1" class="hide-md">
-          <span class="p-small" style="margin: -3px 16px 0"><strong>Show on map</strong></span>
-          <Toggle @show="e => showMap = e"/>
-        </TagContainer>
-      </transition>
+<!--      &lt;!&ndash; Toggle&ndash;&gt;-->
+<!--      <transition name="fade">-->
+<!--        <TagContainer v-if="countryIndex !== -1" class="hide-md">-->
+<!--          <span class="p-small" style="margin: -3px 16px 0"><strong>Show on map</strong></span>-->
+<!--          <Toggle @show="e => showMap = e"/>-->
+<!--        </TagContainer>-->
+<!--      </transition>-->
 
       <Container v-if="showMap">
         <div class="col-12">
@@ -72,7 +79,9 @@
         {
           title: countryIndex !== -1 ? 'Wedding Dresses in ' + countries[countryIndex]?.value: 'Store finder',
         }
-    ]"/>
+    ]"
+        :localizations="[{locale: 'en', slug: 'store-finder'}, {locale: 'pl', slug: 'store-finder'}]"
+    />
   </div>
 </template>
 
