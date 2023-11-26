@@ -1,5 +1,5 @@
 <template>
-  <img :src="'../img/flags/'+ code?.toLowerCase() +'.webp'" class="flag"/>
+  <img :src="'/img/flags/'+ code?.toLowerCase() +'.webp'" class="flag"/>
 
 </template>
 
