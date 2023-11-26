@@ -19,7 +19,7 @@
         <ListIcon v-if="store.address" :to="'https://www.google.com/maps/place/'+store.address"  target="_blank"  icon="location-16" class="m-v-16">
           {{ store.address }}
           <div class="display-block m-t-8">
-            <div class="p-small link" style="display: inline-block">Show on map</div>
+            <div class="p-small link" style="display: inline-block">{{ $t('storefinder_show_on_map') }}</div>
           </div>
         </ListIcon>
 
@@ -39,7 +39,8 @@
           <div class="subheader small m-t-32">Lines</div>
           <p  class="p-small" >{{store.lines.data.map(line => line.attributes.title).join(', ')   }}</p>
         </template>
-        <Button v-if="store.email" :path="localePath('/book-an-appointment?q=' + encodeToBase64(JSON.stringify([route.params.country ?? store.country_code, store.city.toLowerCase(), store.title + ' (' +store.address + ')', store.email])))" class="m-t-32">Book an appointment</Button>
+        <Button v-if="store.email" :path="localePath('/book-an-appointment?q=' + encodeToBase64(JSON.stringify([route.params.country ?? store.country_code, store.city.toLowerCase(), store.title + ' (' +store.address + ')', store.email])))" class="m-t-32">
+          {{ $t('book_an_appointment') }}</Button>
 
       </div>
 

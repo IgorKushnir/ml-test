@@ -1,13 +1,13 @@
 <template>
   <div>
-    <Seo title="Mood board" :breadcrumbs="[
+    <Seo :title="$t('moodboard_title')" :breadcrumbs="[
         {
-          title: 'Mood board',
+          title: $t('moodboard_title'),
         },
     ]"
          :localizations="[{locale: 'en', slug: 'moodboard'}, {locale: 'pl', slug: 'moodboard'}]"
          blockRobots/>
-    <InnerHeader title="Mood board"/>
+    <InnerHeader :title="$t('moodboard_title')"/>
 
 
     <transition name="fade">
@@ -21,7 +21,7 @@
 
 
         <Carusel v-if="data?.viewed.length > 0" :data="data?.viewed" class="m-v-80">
-          <h2 class="m-t-0 m-b-40 m-b-24-md">You recently viewed</h2>
+          <h2 class="m-t-0 m-b-40 m-b-24-md">{{ $t('moodboard_you_recently_viewed') }}</h2>
         </Carusel>
       </div>
     </transition>

@@ -2,10 +2,13 @@
   <div>
     <Seo title="Book an appointment" :breadcrumbs="[
         {
-          title: 'Book an appointment',
+          title: $t('book_title'),
         }
-    ]"/>
-    <InnerHeader title="Book an appointment" sub_title="You are one step away from an unforgettable experience of discovering our gowns. Please fill out the form below so a retailer manager can contact you and confirm your booking."/>
+    ]"
+         :localizations="[{locale: 'en', slug: 'book-an-appointment'}, {locale: 'pl', slug: 'book-an-appointment'}]"
+    />
+
+    <InnerHeader :title="$t('book_title')" :sub_title="$t('book_sub_title')"/>
 
     <div v-if="queryData.store">
       <div class="row justify-center">
@@ -19,11 +22,11 @@
       <Container  v-if="!sent" justify="justify-center">
         <form class="col-6 col-8-xl col-10-lg col-12-md form" @submit.prevent="send">
           <div class="input-block c-4">
-            <div class="subheader small m-b-8 m-t-32">Your contact information</div>
+            <div class="subheader small m-b-8 m-t-32">{{ $t('book_your_contact_information') }}</div>
           </div>
 
           <div class="input-block c-2" :class="sendData['name'].error !== null ? 'error' : ''">
-            <label class="p-small required" for="name">First name</label>
+            <label class="p-small required" for="name">{{ $t('book_first_name') }}</label>
             <input
                 autofocus
                 class="input m-t-8"
@@ -31,71 +34,71 @@
                 name="name"
                 id="name"
                 v-model="sendData['name'].value"
-                placeholder="Enter your first name"
+                :placeholder="$t('book_enter_your_first_name')"
             />
             <label for="name" class="error-message">{{ sendData['name'].error }}</label>
           </div>
 
           <div class="input-block c-2" :class="sendData['surname'].error !== null ? 'error' : ''">
-            <label class="p-small required" for="surname">Last name</label>
+            <label class="p-small required" for="surname">{{ $t('book_last_name') }}</label>
             <input
                 class="input m-t-8"
                 type="text"
                 name="surname"
                 id="surname"
                 v-model="sendData['surname'].value"
-                placeholder="Enter your last name"
+                :placeholder="$t('book_enter_your_last_name')"
             />
             <label for="surname" class="error-message">{{ sendData['surname'].error }}</label>
           </div>
 
           <div class="input-block c-2" :class="sendData['email'].error ? 'error' : ''">
-            <label class="p-small required" for="email">Email</label>
+            <label class="p-small required" for="email">{{ $t('book_email') }}</label>
             <input
                 class="input m-t-8"
                 type="email"
                 name="email"
                 id="email"
                 v-model="sendData['email'].value"
-                placeholder="Enter your email"
+                :placeholder="$t('book_enter_your_email')"
             />
             <label for="surname" class="error-message">{{ sendData['email'].error }}</label>
           </div>
 
           <div class="input-block c-2" :class="sendData['phone'].error ? 'error' : ''">
-            <label class="p-small required" for="phone">Phone number</label>
+            <label class="p-small required" for="phone">{{ $t('book_phone_number') }}</label>
             <input
                 class="input m-t-8"
                 type="tel"
                 name="phone"
                 id="phone"
                 v-model="sendData['phone'].value"
-                placeholder="Enter your phone number"
+                :placeholder="$t('book_enter_your_phone_number')"
             />
             <label for="surname" class="error-message">{{ sendData['phone'].error }}</label>
           </div>
 
           <template v-if="!queryData.available">
             <div class="input-block c-4">
-              <div class="subheader small m-b-8 m-t-32">Your preferred store</div>
+              <div class="subheader small m-b-8 m-t-32">{{ $t('book_your_preferred_store') }}</div>
             </div>
 
             <div class="input-block c-2" :class="sendData['country'].error ? 'error' : ''">
-              <label class="p-small required" for="country">Country</label>
+              <label class="p-small required" for="country">{{ $t('book_country') }}</label>
               <select
                   class="input m-t-8"
                   name="country"
                   id="country"
                   v-model="sendData['country'].value"
               >
-                <option :value="undefined" :selected="sendData['country'].value === undefined">- Choose country -</option>
+                <option :value="undefined" :selected="sendData['country'].value === undefined">- {{ $t('book_choose_country') }} -</option>
                 <option v-for="country in countries" :value="country.slug" :selected="country.slug === sendData['country'].value">{{ country.value }}</option>
               </select>
               <label for="surname" class="error-message">{{ sendData['country'].error }}</label>
             </div>
 
             <div class="input-block c-2" :class="sendData['city'].error ? 'error' : ''">
-              <label class="p-small required" for="city">City</label>
+              <label class="p-small required" for="city">{{ $t('book_city') }}</label>
               <transition mode="out-in" name="fade">
                 <div v-if="!pendingCountry">
                   <select
@@ -105,7 +108,7 @@
                       v-model="sendData['city'].value"
                       :disabled="sendData['country'].value === undefined"
                   >
-                    <option :value="undefined" :selected="sendData['city'] === undefined"><strong>- Choose city -</strong></option>
+                    <option :value="undefined" :selected="sendData['city'] === undefined"><strong>- {{ $t('book_choose_city') }} -</strong></option>
                     <option v-for="city in cities" :value="city.name.toLowerCase()">{{ city.name }}</option>
                   </select>
                   <label for="surname" class="error-message">{{ sendData['city'].error }}</label>
@@ -115,7 +118,7 @@
             </div>
 
             <div class="input-block c-4" :class="sendData['store'].error ? 'error' : ''">
-              <label class="p-small required" for="store">Store</label>
+              <label class="p-small required" for="store">{{ $t('book_store') }}</label>
               <transition mode="out-in" name="fade">
                 <div v-if="!pendingCountry">
                   <select
@@ -125,7 +128,7 @@
                       v-model="sendData['store'].index"
                       :disabled="sendData['city'].value === undefined"
                   >
-                    <option :value="-1" :selected="sendData['store'].value === -1">- Choose store -</option>
+                    <option :value="-1" :selected="sendData['store'].value === -1">- {{ $t('book_choose_store') }} -</option>
                     <option
                         v-for="(store, index) in stores?.store"
                         :value="index"
@@ -139,11 +142,11 @@
           </template>
 
           <div class="input-block c-4">
-            <div class="subheader small m-b-8 m-t-32">Your timing</div>
+            <div class="subheader small m-b-8 m-t-32">{{ $t('book_your_timing') }}</div>
           </div>
 
           <div class="input-block c-2" :class="sendData['celebrated_date'].error ? 'error' : ''">
-            <label class="p-small required" for="celebrated_date">Celebrated date</label>
+            <label class="p-small required" for="celebrated_date">{{ $t('book_celebrated_date') }}</label>
             <input
                 class="input m-t-8"
                 type="date"
@@ -155,7 +158,7 @@
           </div>
 
           <div class="input-block c-2" :class="sendData['appointment_date'].error ? 'error' : ''">
-            <label class="p-small required" for="appointment_date">Preferable appointment date</label>
+            <label class="p-small required" for="appointment_date">{{ $t('book_preferable_appointment_date') }}</label>
             <input
                 class="input m-t-8"
                 type="date"
@@ -170,7 +173,7 @@
             <CheckBox
                 :value="sendData['subscribe'].value"
                 v-on:click="sendData['subscribe'].value = !sendData['subscribe'].value"
-                label="I don’t mind receiving invitations to exclusive events and staying updated on brands' promos and news."
+                :label="$t('book_confirm')"
                 available
             />
           </div>
@@ -180,7 +183,7 @@
           <div class="c-4 m-v-24 center">
             <div class="button primary" :class="loading ? 'loading' : ''" v-on:click="send">
               <transition name="fade" mode="out-in">
-                <span v-if="!loading">Send</span>
+                <span v-if="!loading">{{ $t('book_send') }}</span>
                 <Spinner v-else white/>
               </transition>
             </div>
@@ -188,7 +191,7 @@
 
         </form>
       </Container>
-      <State v-else small title="Thank you!" text="Your request has been processed. A manager from a selected retailer will contact you shortly to confirm the reservation and clarify the details if needed. Please be informed that this is not the final confirmation of the appointment. The boutique will contact you within 24 hours after receiving your request to finalize the date of your appointment." :button="{text: 'Home page', path: '/'}" />
+      <State v-else small :title="$t('book_thank_you')" :text="$t('book_has_been_processed')" :button="{text: $t('book_home_page'), path: '/'}" />
     </transition>
   </div>
 </template>
@@ -196,12 +199,12 @@
 <script setup>
 import CheckBox from "../components/filter/CheckBox";
 
-import {getListOfCountries} from '~/api/stores'
+import {getListOfCountries, getCountry} from '~/api/stores'
 import getCountryCode from '~/api/getCountryCode'
-import {getCountry} from "~/api/stores";
 
 const config = useRuntimeConfig();
 const apiUrl = config.public.strapi.url;
+const { locale, t } = useI18n()
 
 
 const router = useRouter();
@@ -239,7 +242,7 @@ function decodeFromBase64(string) {
 
 // Todo: do it on client side or refresh
 let countryCode = "US";
-const countries = ref(await getListOfCountries('en'));
+const countries = ref(await getListOfCountries(locale.value));
 let countrySlug;
 if (countries.value) {
   countrySlug = getSlugByCode(countryCode);
@@ -1558,6 +1561,7 @@ setCountryCode();
 const cities = computed(() => {
   sendData.value.city.value = undefined
   let cities = countryData?.value?.data?.attributes?.city
+  if (!cities) return  []
 
   // Exclude the stores with only 'milla-evening' line slug
   // Exclude the stores without store email
@@ -1582,7 +1586,7 @@ const stores = computed(() => {
 
 
 
-const {data: countryData, pending: pendingCountry, refresh: refreshCountry, error: errorCountry} = await useLazyAsyncData('country', () => getCountry(sendData.value.country.value,'en'), {
+const {data: countryData, pending: pendingCountry, refresh: refreshCountry, error: errorCountry} = await useLazyAsyncData('country', () => getCountry(sendData.value.country.value, locale.value), {
   transform: (d) => {
     return d.data['storeFinder']
   }
@@ -1658,18 +1662,18 @@ function checkField(key) {
   const item = sendData.value[key];
   if (item.required) {
     if (!item.value || item.value.length === 0) {
-      item.error = 'The field must not be empty';
+      item.error = t('book_error_empty_field');
       return false
     }
     if (key === 'email' && !validateEmail(item.value)) {
-      item.error = 'Email is not valid';
+      item.error = t('book_error_email');
       return false
     }
     if (key === 'phone') {
       // item.value = '+380993283756'
 
       if (!validatePhone(item.value)) {
-        item.error = 'Phone number is not valid';
+        item.error = t('book_error_phone');
         return false
       }
     }

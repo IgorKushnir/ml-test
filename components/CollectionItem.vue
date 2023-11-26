@@ -23,7 +23,7 @@
           <p v-if="text">{{ text }}</p>
 
           <div class="p-v-16" v-show="button">
-            <div class="button white">{{ button_text }}</div>
+            <div class="button white">{{ button_text ?? $t('explore') }}</div>
           </div>
         </div>
 
@@ -36,6 +36,7 @@
 </template>
 
 <script setup>
+
 const props = defineProps({
   title: {
     type: String,
@@ -64,8 +65,7 @@ const props = defineProps({
   },
   button_text: {
     type: String,
-    required: false,
-    default: 'Explore'
+    required: false
   },
   poster: {
     type: Boolean,

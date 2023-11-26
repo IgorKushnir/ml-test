@@ -32,6 +32,9 @@ watch(locale, () => {
   likeCounter.value = $getLikedProducts().length
 })
 
+
+
+
 useHead({
   title: 'Milla Nova',
 

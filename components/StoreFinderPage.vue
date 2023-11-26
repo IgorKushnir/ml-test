@@ -1,16 +1,9 @@
 <template>
-<!--  <div>-->
-<!--    <div>-->
-<!--      Store-->
-<!--      {{$route.params}}-->
-<!--    </div>-->
-<!--  </div>-->
-
   <div>
     <div v-if="countries">
       <InnerHeader v-if="countries[countryIndex]?.value" :title="countries[countryIndex]?.value"
-                   sub_header="Store finder"/>
-      <InnerHeader v-else title="Store finder"/>
+                   :sub_header="$t('storefinder_title')"/>
+      <InnerHeader v-else :title="$t('storefinder_title')"/>
       <StickyBarStickyHeaderMilla v-if="countryIndex !== -1">
 
         <template #center>
@@ -31,13 +24,13 @@
 
       </StickyBarStickyHeaderMilla>
 
-<!--      &lt;!&ndash; Toggle&ndash;&gt;-->
-<!--      <transition name="fade">-->
-<!--        <TagContainer v-if="countryIndex !== -1" class="hide-md">-->
-<!--          <span class="p-small" style="margin: -3px 16px 0"><strong>Show on map</strong></span>-->
-<!--          <Toggle @show="e => showMap = e"/>-->
-<!--        </TagContainer>-->
-<!--      </transition>-->
+      <!-- Toggle-->
+      <transition name="fade">
+        <TagContainer v-if="countryIndex !== -1" class="hide-md">
+          <span class="p-small" style="margin: -3px 16px 0"><strong>Show on map</strong></span>
+          <Toggle @show="e => showMap = e"/>
+        </TagContainer>
+      </transition>
 
       <Container v-if="showMap">
         <div class="col-12">

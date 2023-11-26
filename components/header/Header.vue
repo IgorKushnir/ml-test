@@ -15,7 +15,7 @@
           <ClientOnly>
 <!--            <pre>{{$route.meta.locales}}</pre>-->
             <a v-if="show_pl === 'true'" :href="$route.meta.locales?.en?.path ?? '/'" class="nav-link__tertiary hover hide-md" :class="locale === 'en' ? 'router-link-active' : ''">English</a>
-            <a v-if="show_pl === 'true'" :href="$route.meta.locales?.pl?.path ?? '/pl'" class="nav-link__tertiary hover hide-md" :class="locale === 'pl' ? 'router-link-active' : ''">Poland</a>
+            <a v-if="show_pl === 'true'" :href="$route.meta.locales?.pl?.path ?? '/pl'" class="nav-link__tertiary hover hide-md" :class="locale === 'pl' ? 'router-link-active' : ''">Polska</a>
 <!--            <NuxtLink  v-if="true || locale !== 'en'" :to="switchLocalePath('en') === '' ? '/' : switchLocalePath('en')" class="nav-link__tertiary hover hide-md">English</NuxtLink>-->
 <!--            <NuxtLink v-if="true || locale !== 'pl'" :to="switchLocalePath('pl') === '' ? '/' : switchLocalePath('pl')" class="nav-link__tertiary hover hide-md">Poland</NuxtLink>-->
           </ClientOnly>

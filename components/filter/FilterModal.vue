@@ -7,10 +7,10 @@
           <div class="filters-container p-h-56 p-t-112 p-b-120    p-h-32-md p-b-160-md">
             <div class="header-container p-r-0">
               <div class="btn close" v-on:click="closeFilter"><div class="icon-close-24"></div></div>
-              <div class="h4 title"><strong>Filters</strong></div>
+              <div class="h4 title"><strong>{{ $t('filters_filters') }}</strong></div>
 
               <transition name="fade">
-                <div v-if="isSelectedFilters" v-on:click="resetHandler" class="btn reset p-small"><strong>Reset all</strong></div>
+                <div v-if="isSelectedFilters" v-on:click="resetHandler" class="btn reset p-small"><strong>{{ $t('filters_reset_all') }}</strong></div>
               </transition>
             </div>
 
@@ -34,13 +34,13 @@
             <transition name="shift">
               <div v-if="!showFilterButton && !pendingInitial" class="button-container p-v-16 p-h-56  p-h-32-md">
                 <div class="button primary" v-on:click="handleFilterButton">
-                  <span v-if="!pending">Show {{ productsCount }}</span>
+                  <span v-if="!pending">{{ $t('filters_show') }} {{ productsCount }}</span>
                   <span v-else>...</span>
                 </div>
               </div>
               <div v-else class="button-container p-v-16 p-h-56  p-h-32-md">
                 <div class="button primary close" v-on:click="closeFilter">
-                  <span>Dismiss</span>
+                  <span>{{ $t('filters_dismiss') }}</span>
                 </div>
               </div>
             </transition>
@@ -63,6 +63,8 @@
 </template>
 
 <script setup>
+const { locale, t } = useI18n()
+
 const emits = defineEmits(["close", "filters", "checkFilters"])
 
 const props = defineProps({
@@ -98,17 +100,17 @@ const props = defineProps({
 
 function getName(uid) {
   const names = {
-    silhouettes: "Silhouette",
-    colors: "Color",
-    lines: "Line",
-    styles: "Style",
-    necklines: "Neckline",
-    decorations: "Decor",
-    others: "Other",
-    budgets: "Budget",
-    backnecklines: "Back Necklines",
-    accessoires: "Accessories",
-    shoes: "Shoes",
+    silhouettes: t('filters_silhouette'),
+    colors: t('filters_color'),
+    lines: t('filters_line'),
+    styles: t('filters_style'),
+    necklines: t('filters_neckline'),
+    decorations: t('filters_decor'),
+    others: t('filters_other'),
+    budgets: t('filters_budget'),
+    backnecklines: t('filters_back_neckline'),
+    accessoires: t('filters_accessories'),
+    shoes: t('filters_shoes'),
   }
   return names[uid] ?? uid
 
