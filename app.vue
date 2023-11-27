@@ -17,10 +17,9 @@
 // https://vueschool.io/articles/vuejs-tutorials/nuxt-ssr-optimizing-tips/
 // ****
 
-// const router = useRouter()
-// console.log(router.options.routes);
 
 import {useIsMobile} from "~/composables/states";
+
 
 const nuxtApp = useNuxtApp()
 const likeCounter = useFavCount()
@@ -31,6 +30,28 @@ watch(locale, () => {
   //Like list counter
   likeCounter.value = $getLikedProducts().length
 })
+
+
+
+import getAllFilters from '~/api/getAllFilters'
+import getInitialData from '~/api/getInitialData';
+
+import {useFiltersData, useTypesData, useMenuData, useTranslationsData} from "~/composables/states";
+
+// get Initial data (Menu, Lines, Types)
+let {data: initialData, error: initialError} = await getInitialData(locale.value);
+if (!initialError.value) {
+  useMenuData().value = [initialData.value[0], initialData.value[1]]
+  useTypesData().value = initialData.value[2];
+  useTranslationsData().value = initialData.value[3];
+
+}
+// Get all filters
+let {data, error} = await getAllFilters(locale.value);
+let allFilters = useFiltersData();
+if (!error.value) allFilters.value = data.value;
+
+
 
 
 
