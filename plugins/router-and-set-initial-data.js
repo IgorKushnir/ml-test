@@ -10,8 +10,6 @@ const Discover = import('~/components/Discover.vue').then(r => {
 })
 
 async function setInitialData(lang) {
-
-
     // get Initial data (Menu, Lines, Types)
     let {data: initialData, error: initialError} = await getInitialData(lang);
     if (!initialError.value) {
@@ -88,7 +86,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
 
                 data.value.push({
-                    name: to + '___' + locale.value,
+                    name: (to + '___' + locale.value).replaceAll('/', '_'),
                     from,
                     to,
                     locale: locale.value,
@@ -110,7 +108,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
         routesFrom.push(newRoute.from)
 
         router.addRoute({
-            name: newRoute.name + '___' + newRoute.locale, // + '___' + newRoute.locale,
+            name: (newRoute.name + '___' + newRoute.locale).replaceAll('/', '_'), // + '___' + newRoute.locale,
             path: newRoute.to,
             component: () => Discover,
             meta: setMeta(newRoute)
