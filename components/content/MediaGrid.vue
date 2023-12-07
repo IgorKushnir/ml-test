@@ -9,7 +9,7 @@
           <Image
               :path="{data: item}"
               :alt="alt"
-              :mime="item.attributes.mime"
+              :zoom="zoom"
           />
         </div>
       </div>
@@ -43,7 +43,11 @@ const props = defineProps({
   alt: {
     type: String,
     required: false
-  }
+  },
+  zoom: {
+    type: Boolean,
+    required: false
+  },
 })
 
 function isLandscape(width, height) {

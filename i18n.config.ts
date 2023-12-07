@@ -3,7 +3,7 @@ export default defineI18nConfig(() => ({
     locale: 'en',
     messages: {
         en: {
-            book_title: 'Book an appointment',
+            book_title: 'Request an appointment',
             book_sub_title: 'You are one step away from an unforgettable experience of discovering our gowns. Please fill out the form below so a retailer manager can contact you and confirm your booking.',
             book_your_contact_information: 'Your contact information',
             book_first_name: 'First name',
@@ -57,8 +57,16 @@ export default defineI18nConfig(() => ({
             moodboard_you_recently_viewed: 'You recently viewed',
 
             collections: 'Collections',
+            collection: 'Collection',
+            color: 'Color',
+            line: 'Line',
             explore: 'Explore',
-            book_an_appointment: 'Book an appointment',
+            book_an_appointment: 'Request an appointment',
+            discontinued: 'Discontinued',
+            next: 'Next',
+            previous: 'Previous',
+            complete_your_look: 'Complete your look',
+            you_may_also_like: 'You may also like',
         },
         pl: {
             book_title: 'Zarezerwuj wizytę',
@@ -103,7 +111,7 @@ export default defineI18nConfig(() => ({
             filters_accessories: 'Akcesoria',
             filters_back_neckline: 'Dekolt z tyłu',
             filters_shoes: 'Shoes',
-            filters_line: 'Line',
+            filters_line: 'Linia',
             filters_reset_all: 'Zresetować wszystko',
             filters_dismiss: 'Odrzucać',
             filters_show: 'Pokazywać',
@@ -115,9 +123,16 @@ export default defineI18nConfig(() => ({
             moodboard_you_recently_viewed: 'Ostatnio oglądane',
 
             collections: 'Kolekcje',
+            collection: 'Kolekcja',
+            color: 'Kolor',
+            line: 'Linia',
             explore: 'Poznaj',
-
             book_an_appointment: 'Zarezerwuj wizytę',
+            discontinued: 'Przerwane',
+            next: 'Następny',
+            previous: 'Poprzedni',
+            complete_your_look: 'Dokończ swój wygląd',
+            you_may_also_like: 'Może Ci się spodobać',
         }
     }
 }))

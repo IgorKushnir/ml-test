@@ -1,6 +1,5 @@
 <template>
-  <div class="img-component-container">
-
+  <div class="img-component-container" :class="(zoom && !path.data?.attributes?.mime?.startsWith('video/')) ? 'zoom' : ''" v-on:click="() => showZoomImage(path)">
     <img :src="placeholder" :alt="alt" class="img-component placeholder">
 
     <img
@@ -21,10 +20,13 @@
         aria-hidden="true"
         :type="path.data.attributes.mime"
     />
+
   </div>
 </template>
 
 <script setup>
+import {useIsMobile, useZoomImage} from "../composables/states";
+
 const { $getAbsoluteUrl,  $getImage} = useNuxtApp();
 
 let props = defineProps({
@@ -41,6 +43,10 @@ let props = defineProps({
     type: String,
     required: false,
     default: 'medium'
+  },
+  zoom: {
+    type: Boolean,
+    required: false
   }
 })
 
@@ -52,6 +58,14 @@ const placeholder = computed(() => {
 
 const isNotSvg = computed(() => props.path.data?.attributes?.url.endsWith('.jpg') || props.path.data?.attributes?.url.endsWith('.jpeg') || props.path.data?.attributes?.url.endsWith('.png') || props.path.data?.attributes?.url.endsWith('.JPG') || props.path.data?.attributes?.url.endsWith('.JPEG') || props.path.data?.attributes?.url.endsWith('.PNG'))
 
+const zoomImage = useZoomImage();
+const isMobile = useIsMobile();
+
+function showZoomImage(path) {
+  if (props.zoom && !props.path.data?.attributes?.mime?.startsWith('video/')) {
+    zoomImage.value = path;
+  }
+}
 
 // function loaded() {
 //   console.log('done');
@@ -85,5 +99,17 @@ video {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+//.zoom-icon {
+//  position: absolute;
+//  right: 8px;
+//  top: 8px;
+//  width: 40px;
+//  height: 40px;
+//  //background-color: #000000;
+//}
+.img-component-container.zoom {
+  cursor: zoom-in;
 }
 </style>

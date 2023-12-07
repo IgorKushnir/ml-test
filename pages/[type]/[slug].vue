@@ -4,8 +4,8 @@
 
       <StickyBarStickyHeaderMilla :title="data.title + (data.discontinued ? ' (discontinued)' : '')">
         <template #end>
-          <StickyBarBack v-if="data.extra.previous" reverse text="Previous" @clicks="prevHandler"/>
-          <StickyBarBack v-if="data.extra.next" text="Next" @click="nextHandler"/>
+          <StickyBarBack v-if="data.extra.previous" reverse :text="$t('previous')" @clicks="prevHandler"/>
+          <StickyBarBack v-if="data.extra.next" :text="$t('next')" @click="nextHandler"/>
         </template>
       </StickyBarStickyHeaderMilla>
 
@@ -13,7 +13,7 @@
       <div v-if="data.discontinued">
         <div class="row justify-center">
           <div class="col-12 light_bg">
-            <div class="center m-v-24 m-v-16-md p-h-16 gray"><div>Discontinued</div></div>
+            <div class="center m-v-24 m-v-16-md p-h-16 gray"><div>{{ $t('discontinued') }}</div></div>
           </div>
         </div>
       </div>
@@ -37,11 +37,11 @@
 
             <div class="info m-t-40" v-if="data.collection.data">
               <div class="m-b-32 m-r-40">
-                <div class="subheader small">Collection</div>
+                <div class="subheader small">{{ $t('collection') }}</div>
                 <NuxtLink :to="localePath('/collection/'+data.collection.data.attributes.slug)" class="p-small link">{{ data.collection.data.attributes.title }}</NuxtLink>
               </div>
               <div class="m-b-32">
-                <div class="subheader small">Line</div>
+                <div class="subheader small">{{ $t('line') }}</div>
                 <div class="p-small dark-blue">
                   {{ data.collection.data.attributes.line.data.attributes.title }}
                 </div>
@@ -51,7 +51,7 @@
 
             <div v-if="data.colors.data.length > 0" class="info m-b-32">
               <div>
-                <div class="subheader small">Color</div>
+                <div class="subheader small">{{ $t('color') }}</div>
                 <div class="p-small">
                   <template v-for="(color, index) in data.colors.data">
                     <NuxtLink :to="localePath('/'+data.type.data.attributes.slug+'/colors/'+color.attributes.slug)" class="p-small link">{{ color.attributes.title }}</NuxtLink><span v-if="index+1 < data.colors.data.length">, </span>
@@ -70,15 +70,20 @@
             </div>
 
 
-            <NuxtLink v-if="data.storeLink" :to="localePath(data.storeLink)" target="_blank" class="button m-t-16 m-t-0-md m-b-24-md target">Buy online</NuxtLink>
-            <NuxtLink  :to="localePath('/book-an-appointment')" target="_self" class="button m-t-16 m-t-0-md m-b-24-md">Book an appointment</NuxtLink>
+            <NuxtLink v-if="data.storeLink" :to="localePath(data.storeLink)" target="_blank" class="button m-t-16 m-t-0-md m-b-24-md m-r-16 target">Buy online</NuxtLink>
+            <NuxtLink  :to="localePath('/book-an-appointment')" target="_self" class="button m-t-16 m-t-0-md m-b-24-md">
+              {{ $t('book_an_appointment') }}</NuxtLink>
 
 
           </div>
         </div>
 
 
-        <ContentMediaGrid :data="data.gallery.data" :alt="data.title + ' ' + data?.type?.data?.attributes?.title" :hide-first="isMobile" classes="col-8 col-7-lg col-12-md m-t-0" columns="product">
+        <ContentMediaGrid
+            :data="data.gallery.data" :alt="data.title + ' ' + data?.type?.data?.attributes?.title"
+            :hide-first="isMobile"
+            :zoom="true"
+            classes="col-8 col-7-lg col-12-md m-t-0" columns="product">
           <template #end >
             <div v-if="data.fact !== null" :class="data.fact.ratio">
               <div :class="data.fact.ratio === 'horizontal' ? 'new-ratio-3x2' : 'new-ratio-3x4'">
@@ -94,10 +99,10 @@
 
 
       <Carusel v-if="data.recommended !== null" :data="data.recommended?.products.data" :column="4" class="m-v-80">
-        <h2 class="m-t-0 m-b-40 m-b-24-md">Complete your look</h2>
+        <h2 class="m-t-0 m-b-40 m-b-24-md">{{ $t('complete_your_look') }}</h2>
       </Carusel>
       <Carusel v-if="data.extra !== null && data.extra.also.length > 0" :data="data.extra?.also"  class="m-v-80">
-        <h2 class="m-t-0 m-b-40 m-b-24-md">You may also like</h2>
+        <h2 class="m-t-0 m-b-40 m-b-24-md">{{ $t('you_may_also_like') }}</h2>
       </Carusel>
 
 
