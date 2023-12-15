@@ -132,7 +132,7 @@ function send() {
           body: {
             "data": {
               "emails": item.value.emails,
-              "subject": item.value.title,
+              "subject": item.value.title + ' - Milla Nova',
               "data": sendData.value
             }
           }
