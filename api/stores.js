@@ -22,6 +22,7 @@ async function getCountry(slug, lang) {
                   sort: "name"
                 ) {
                   name
+                  state
                   store (
                       pagination: {
                         limit: -1

@@ -10,6 +10,8 @@
           <Select v-if="!(countryCode === 'UA')" :data="countries" name="Country" all="All countries"
                   :index="countryIndex" :flag="true"
                   @index="(i) => changeCountry(i)"/>
+          <Select v-if="states && states.length > 0" :data="states" name="State" all="All states" :index="stateIndex"
+                  @index="(i) => changeState(i)"/>
           <Select v-if="cities && cities.length > 1" :data="cities" name="City" all="All cities" :index="cityIndex"
                   @index="(i) => changeCity(i)"/>
         </template>
@@ -90,6 +92,7 @@ const countrySlug = ref(route.params.country);
 const countryCode = ref(null);
 const countryIndex = ref(-1);
 
+const stateIndex = ref(-1)
 const cityIndex = ref(-1)
 const lineIndex = ref(-1)
 
@@ -107,7 +110,7 @@ if (process.client) {
       "$1",
   );
   countryCode.value = country;
-  console.log('client', country);
+  // console.log('client', country);
 }
 if (process.server) {
   const nuxtApp = useNuxtApp()
@@ -148,6 +151,7 @@ function getStores() {
     city.store.forEach(store => {
       store.country_code = data.value.data.attributes.country_code
       store.city = city.name
+      store.state = city.state
       stores.push(store)
     })
   })
@@ -157,6 +161,9 @@ function getStores() {
 const stores = computed(() => {
   // return []
   let sores = getStores();
+  if (stateIndex.value !== -1) {
+    sores = sores.filter(store => store.state === states.value[stateIndex.value]?.value)
+  }
   if (cityIndex.value !== -1) {
     sores = sores.filter(store => store.city === cities.value[cityIndex.value]?.value)
   }
@@ -169,17 +176,41 @@ const stores = computed(() => {
   return [...sores.filter(store => store.premium), ...sores.filter(store => !store.premium)];
   // return sores;
 })
+const states = computed(() => {
+  if (countryIndex.value === -1) return [];
+  let _states = data.value?.data?.attributes?.city
+      .filter(city => {
+        return city.state !== null && city.state !== ''
+      }).map(c => c.state);
+
+  // remove dublicates
+  _states = _states.filter(function(item, pos) {
+    return _states.indexOf(item) == pos;
+  }).map(c => {
+    return {value: c}
+  })
+
+  return _states
+})
 const cities = computed(() => {
   // return []
   if (countryIndex.value === -1) return [];
 
-  return data.value?.data?.attributes?.city
+  let _cities =  data.value?.data?.attributes?.city
       .filter(city => {
         return city.store.length > 0
       })
-      .map(c => {
-        return {value: c.name}
-      });
+
+  if (stateIndex.value !== -1) {
+    _cities = _cities.filter(city => {
+      return city.state === states.value[stateIndex.value].value
+    })
+  }
+  // console.log(_cities);
+
+  return _cities.map(c => {
+    return {value: c.name}
+  });
 })
 const lines = computed(() => {
   // return []
@@ -246,6 +277,7 @@ function changeCountry(index, e) {
   countryIndex.value = index
   countrySlug.value = countries.value[index]?.slug
   changeRoute()
+  stateIndex.value = -1;
   cityIndex.value = -1;
   lineIndex.value = -1;
   if (index === -1) {
@@ -253,6 +285,11 @@ function changeCountry(index, e) {
   }
 }
 
+function changeState(index) {
+  stateIndex.value = index;
+  cityIndex.value = -1;
+  lineIndex.value = -1;
+}
 function changeCity(index) {
   cityIndex.value = index;
   lineIndex.value = -1;

@@ -85,7 +85,7 @@ watch(() => props.index, (i) => {
 })
 
 function emitIndex(index) {
-  console.log({index});
+  // console.log({index});
   emits("index", index);
 }
 

@@ -2,7 +2,7 @@
   <div class="button-container">
     <NuxtLink
         :to="path"
-        :class="(type === 'primary' ? 'button primary' : 'button') + (target ? ' target' : '')"
+        :class="(type === 'primary' ? 'button primary' : 'button') + (target ? ' target' : '') + (fullWidth ? ' block' : '')"
         :target="target ? target : '_self'">
       <slot/>
     </NuxtLink>
@@ -23,7 +23,11 @@ defineProps({
   target: {
     type: Boolean,
     required: false
-  }
+  },
+  fullWidth: {
+    type: Boolean,
+    required: false
+  },
 })
 
 
@@ -34,6 +38,9 @@ defineProps({
 
 .button-container {
   cursor: pointer;
+}
+.block {
+  display: block;
 }
 
 </style>

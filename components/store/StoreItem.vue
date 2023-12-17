@@ -1,48 +1,71 @@
 <template>
   <div>
     <div class="store-item p-v-40 p-h-40 p-b-0-md p-h-0-md" >
-      <div class="city-header">
-        <div class="city-container">
-          <Flag :code="store.country_code"/>
-          <strong v-if="!country">{{store.city}}</strong>
-          <h3 v-if="country" style="text-transform: unset">{{store.city}}</h3>
-        </div>
-      </div>
-
-      <h3 v-if="store.title" class="store-title">{{store.title}}</h3>
-      <div v-if="!country && store.premium" class="premium-badge">
-        <img src="@/assets/img/premium-star.svg" width="24" height="24" alt="Premium client">
-      </div>
-      <p v-if="store.description" class="p-small">{{store.description}}</p>
-
-      <div v-if="store.address || store.phone || store.website || store?.lines?.data.length > 0" class="contacts m-t-32">
-        <ListIcon v-if="store.address" :to="'https://www.google.com/maps/place/'+store.address"  target="_blank"  icon="location-16" class="m-v-16">
-          {{ store.address }}
-          <div class="display-block m-t-8">
-            <div class="p-small link" style="display: inline-block">{{ $t('storefinder_show_on_map') }}</div>
+      <div>
+        <div class="city-header">
+          <div class="city-container">
+            <Flag :code="store.country_code"/>
+<!--            <span v-if="!country">{{store.city}}{{store.state ? (', ' + store.state : '')}}</span>-->
+            <span v-if="!country" v-html="store.city + (store.state ? ', ' + store.state : '')"/>
+            <h3 v-if="country"  style="text-transform: unset">{{store.city}}</h3>
           </div>
-        </ListIcon>
+        </div>
 
-        <ListIcon v-if="store.phone" :to="'tel: '+store.phone" icon="phone-16" class="m-v-16">
-          <div class="p-small link">{{store.phone}}</div>
-        </ListIcon>
+        <h3 v-if="store.title" class="store-title m-t-8">{{store.title}}</h3>
+        <div v-if="!country && store.premium" class="premium-badge">
+          <img src="@/assets/img/premium-star.svg" width="24" height="24" alt="Premium client">
+        </div>
+        <p v-if="store.description" class="p-small">{{store.description}}</p>
 
-        <ListIcon v-if="store.website" :to="store.website" target="_blank" :text="store.website" icon="globe-16" class="m-v-16">
-          <div class="p-small link">{{store.website}}</div>
-        </ListIcon>
+        <div v-if="store.address || store.phone || store.website || store?.lines?.data.length > 0" class="contacts m-t-32 m-t-16-md">
 
-        <ListIcon v-if="store.instagram" :to="store.instagram" target="_blank" :text="store.website" icon="instagram-16" class="m-v-16">
-          <div class="p-small link">{{store.instagram}}</div>
-        </ListIcon>
+          <a :href="'https://www.google.com/maps/place/'+store.address" target="_blank" class="link p-small normal">{{ store.address }}</a>
+          <br v-if="store.phone">
+          <a v-if="store.phone" :href="'tel: '+store.phone" target="_blank" class="link p-small normal">{{ store.phone }}</a>
+          <br v-if="store.website">
+          <a v-if="store.website" :href="store.website" target="_blank" class="link p-small normal">{{ store.website }}</a>
+          <br v-if="store.instagram">
+          <span class="icon-instagram-16" v-if="store.instagram"/>
+          <a v-if="store.instagram" :href="store.instagram" target="_blank" class="link p-small normal">
+            {{getInstagramName(store.instagram)}}
+          </a>
 
-        <template v-if="store?.lines?.data.length > 0">
-          <div class="subheader small m-t-32">Lines</div>
-          <p  class="p-small" >{{store.lines.data.map(line => line.attributes.title).join(', ')   }}</p>
-        </template>
-        <Button v-if="store.email" :path="localePath('/request-an-appointment?q=' + encodeToBase64(JSON.stringify([route.params.country ?? store.country_code, store.city.toLowerCase(), store.title + ' (' +store.address + ')', store.email])))" class="m-t-32">
+
+
+
+          <!--        <ListIcon v-if="store.address" :to="'https://www.google.com/maps/place/'+store.address"  target="_blank"  icon="location-16" class="m-v-16">-->
+          <!--          {{ store.address }}-->
+          <!--          <div class="display-block m-t-8">-->
+          <!--            <div class="p-small link" style="display: inline-block">{{ $t('storefinder_show_on_map') }}</div>-->
+          <!--          </div>-->
+          <!--        </ListIcon>-->
+
+          <!--        <ListIcon v-if="store.phone" :to="'tel: '+store.phone" icon="phone-16" class="m-v-16">-->
+          <!--          <div class="p-small link">{{store.phone}}</div>-->
+          <!--        </ListIcon>-->
+
+          <!--        <ListIcon v-if="store.website" :to="store.website" target="_blank" :text="store.website" icon="globe-16" class="m-v-16">-->
+          <!--          <div class="p-small link">{{store.website}}</div>-->
+          <!--        </ListIcon>-->
+
+          <!--        <ListIcon v-if="store.instagram" :to="store.instagram" target="_blank" :text="store.website" icon="instagram-16" class="m-v-16">-->
+          <!--          <div class="p-small link">{{store.instagram}}</div>-->
+          <!--        </ListIcon>-->
+
+          <template v-if="store?.lines?.data.length > 0">
+            <div class="subheader small m-t-32  m-t-16-md m-b-8 gray">Lines:</div>
+            <div  class="p-small gray" v-for="line in store.lines.data">{{ line.attributes.title  }}</div>
+            <!--          <p  class="p-small" >{{store.lines.data.map(line => line.attributes.title).join(', ')   }}</p>-->
+          </template>
+      </div>
+      </div>
+
+      <Button v-if="store.email" :path="localePath('/request-an-appointment?q=' + encodeToBase64(JSON.stringify([route.params.country ?? store.country_code, store.city.toLowerCase(), store.title + ' (' +store.address + ')', store.email])))"
+              class="m-t-32  m-t-16-md"
+              fullWidth
+      >
           {{ $t('book_an_appointment') }}</Button>
 
-      </div>
 
     </div>
   </div>
@@ -82,6 +105,10 @@ function encodeToBase64(string) {
     return Buffer.from(string, 'utf-8').toString('base64');
   }
 }
+function getInstagramName(link) {
+  const ar = link.split('/').filter(a => a !== '')
+  return '@' + (ar[ar.length-1] ?? '')
+}
 
 </script>
 
@@ -91,6 +118,10 @@ function encodeToBase64(string) {
 .store-item {
   border: 1px solid $border-dark;
   height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .store-item > *:first-child {
   margin-top: 0;
@@ -131,7 +162,10 @@ function encodeToBase64(string) {
   position: relative;
   z-index: 5;
 }
-
+.icon-instagram-16 {
+  font-size: 14px;
+  margin-right: 8px;
+}
 @include md {
   .store-item {
     border: unset;
