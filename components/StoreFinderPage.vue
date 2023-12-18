@@ -178,17 +178,22 @@ const stores = computed(() => {
 })
 const states = computed(() => {
   if (countryIndex.value === -1) return [];
-  let _states = data.value?.data?.attributes?.city
+  let _states = (data.value?.data?.attributes?.city ?? [])
       .filter(city => {
         return city.state !== null && city.state !== ''
-      }).map(c => c.state);
+      })
 
   // remove dublicates
-  _states = _states.filter(function(item, pos) {
-    return _states.indexOf(item) == pos;
-  }).map(c => {
-    return {value: c}
-  })
+  if (_states.length > 0) {
+    _states = _states.map(c => c.state);
+    _states = _states.filter(function(item, pos) {
+      return _states.indexOf(item) == pos;
+    })
+    _states = _states.map(c => {
+      return {value: c}
+    })
+  }
+
 
   return _states
 })
@@ -208,9 +213,9 @@ const cities = computed(() => {
   }
   // console.log(_cities);
 
-  return _cities.map(c => {
+  return _cities?.map(c => {
     return {value: c.name}
-  });
+  }) ?? [];
 })
 const lines = computed(() => {
   // return []

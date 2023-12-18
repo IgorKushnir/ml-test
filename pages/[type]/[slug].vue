@@ -71,7 +71,7 @@
 
 
             <NuxtLink v-if="data.storeLink" :to="localePath(data.storeLink)" target="_blank" class="button m-t-16 m-t-0-md m-b-24-md m-r-16 target">Buy online</NuxtLink>
-            <NuxtLink  :to="localePath('/book-an-appointment')" target="_self" class="button m-t-16 m-t-0-md m-b-24-md">
+            <NuxtLink  :to="localePath('/request-an-appointment')" target="_self" class="button m-t-16 m-t-0-md m-b-24-md">
               {{ $t('book_an_appointment') }}</NuxtLink>
 
 
