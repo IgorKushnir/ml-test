@@ -150,17 +150,23 @@ p {
   position: relative;
   transition: .3s;
   cursor: pointer;
+
+  width: calc(100%);
+  background-image: linear-gradient(transparent calc(100% - 1px), rgba($dark-blue, .4) 1px);
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  //transition: background-size 1s;
 }
-.link:after {
-  transition: .3s;
-  content: '';
-  position: absolute;
-  top: calc(100% - 1px);
-  left: 0;
-  width: 0;
-  height: 1px;
-  background-color: rgba($dark-blue, .4);
-}
+//.link:after {
+//  transition: .3s;
+//  content: '';
+//  position: absolute;
+//  top: calc(100% - 1px);
+//  left: 0;
+//  width: 0;
+//  height: 1px;
+//  background-color: rgba($dark-blue, .4);
+//}
 
 
 
@@ -241,10 +247,11 @@ a.button {
 @media (hover: hover) {
   .link:hover {
     color: $dark-blue;
+    background-size: 100% 100%;
   }
-  .link:hover:after {
-    width: 100%;
-  }
+  //.link:hover:after {
+  //  width: 100%;
+  //}
 
 
   .button:hover, .button-hover {

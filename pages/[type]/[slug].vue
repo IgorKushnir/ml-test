@@ -49,7 +49,7 @@
             </div>
 
 
-            <div v-if="data.colors.data.length > 0" class="info m-b-32">
+            <div v-if="data.colors.data.length > 0" class="info m-b-32  m-b-16-md">
               <div>
                 <div class="subheader small">{{ $t('color') }}</div>
                 <div class="p-small">
@@ -60,9 +60,13 @@
               </div>
             </div>
 
-            <div v-if="data.properties.length > 0" class="info">
-              <div v-for="property in data.properties" class="m-b-32 m-r-16">
+            <div v-if="data.properties.length > 0" class="info extra">
+              <div v-for="property in data.properties" class="m-b-32 m-b-16-md">
                 <div class="subheader small">{{ property.title }}</div>
+                <div v-if="property.level" class="p-small dark-blue m-b-4 starts">
+                  {{ getStars(property.level) }}
+
+                </div>
                 <div v-if="property.description" class="p-small dark-blue">
                   {{ property.description }}
                 </div>
@@ -229,7 +233,21 @@ const breadcrumbs = computed(() => {
   return res;
 })
 
+function getStars(level) {
+  if (level.startsWith('l')) {
+    const amount = level.substring(1);
+    let string = ''
+    for (let i = 0; i < 5; i++) {
+      if (amount > i) {
+        string += '★'
+      } else {
+        string += '☆'
+      }
+    }
+    return string
+  }
 
+}
 onMounted(() => {
   getLikeList()
 
@@ -286,10 +304,16 @@ onMounted(() => {
     height: 48px;
   }
 }
+.starts {
+  letter-spacing: .2em;
+}
 .info > * {
   display: inline-block;
 }
 
+.info.extra > * {
+  display: block;
+}
 
 
 .info .subheader.small {

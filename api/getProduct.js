@@ -88,6 +88,7 @@ query Product{
         }
         properties {
           title
+          level
           description
         }
         recommended {
