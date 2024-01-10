@@ -236,6 +236,7 @@ function setSeo() {
       {prefix: "og: http://ogp.me/ns#"}
     ]
   })
+
 }
 
 // watch(() => props.data, () => {
@@ -243,6 +244,7 @@ function setSeo() {
 // })
 
 setSeo()
+
 
 
 

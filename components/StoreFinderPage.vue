@@ -85,8 +85,14 @@ import {getListOfCountries} from '~/api/stores'
 import getCountryCode from '~/api/getCountryCode'
 import {getCountry} from "~/api/stores";
 
+
 const router = useRouter();
 const route = useRoute();
+
+// No transition for page
+route.meta.pageTransition = {
+  name: 'null'
+}
 
 const countrySlug = ref(route.params.country);
 const countryCode = ref(null);
@@ -189,6 +195,7 @@ const states = computed(() => {
     _states = _states.filter(function(item, pos) {
       return _states.indexOf(item) == pos;
     })
+    _states = _states.sort((a, b) => a.localeCompare(b)) // sort alphabetic
     _states = _states.map(c => {
       return {value: c}
     })
@@ -313,10 +320,11 @@ async function changeRoute() {
   const country = await countrySlug.value
   const path = country ? localePath('/store-finder/' + country) : localePath('/store-finder')
 
-  window.history.pushState(window.history.state, '', path)
-  window.scroll({
-    top: 0
-  })
+  navigateTo(path)
+  // window.history.pushState(window.history.state, '', path)
+  // window.scroll({
+  //   top: 0
+  // })
 
 }
 
@@ -334,6 +342,8 @@ function is_server() {
 </script>
 
 <style scoped>
+.fd {
 
+}
 
 </style>
