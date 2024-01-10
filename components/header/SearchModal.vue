@@ -35,22 +35,21 @@
 
 
         <transition name="fade">
-          <div v-if="result !== null && show && (result.nbHits > 0 || result.estimatedTotalHits > 0)" class="result">
-            <pre>
-        </pre>
+          <div v-if="result !== null && show && (result?.hits?.length > 0)" class="result">
+
             <div class="container">
 <!--              <div v-if="result.nbHits === 0">No results</div>-->
               <div class="search-grid m-v-40">
                 <NuxtLink
                     v-for="item in result.hits"
-                    :to="'/' + (item?.type?.slug ?? 'product') + '/' + item.slug"
+                    :to="localePath('/' + (item?.type?.slug ?? 'product') + '/' + item.slug)"
                     v-on:click="close" class="col-2">
                   <div class="ratio-3x4">
                     <Image :path="{data: {attributes: item.cover_3x4}}" size="small" :alt="item.title"/>
                   </div>
                   <div class="m-t-8 brake-word" v-html="highlight(item.title, search)"/>
                   <div class="collection-label gray m-t-4">{{ item.collection?.title }}</div>
-                  <div class="collection-label gray m-t-4">{{ item.type?.locale }}</div>
+<!--                  <div class="collection-label gray m-t-4">{{ item.type?.locale }}</div>-->
                 </NuxtLink>
               </div>
             </div>
@@ -140,7 +139,10 @@ async function getResult() {
     // Filter by locale
     // todo: needs to fix fol poland
     data.hits = data.hits.filter(d => d.type?.locale === locale.value)
-    if (data.hits.length === 0) data.estimatedTotalHits = 0
+    // if (data.hits.length === 0) {
+    //   data.estimatedTotalHits = 0
+    //   data.nbHits = 0
+    // }
 
 
     result.value = data;

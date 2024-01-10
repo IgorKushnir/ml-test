@@ -53,14 +53,13 @@ export default defineNuxtConfig({
     runtimeConfig: {
         MODE: process.env.MODE,
         STRAPI_URL: process.env.STRAPI_URL,
-        SEARCH_URL: process.env.SEARCH_URL || 'http://localhost:7700',
+        SEARCH_URL: process.env.SEARCH_URL,
         MEILISEARCH_API_KEY: process.env.MEILISEARCH_API_KEY,
         GOOGLE_ANALYTICS: process.env.GOOGLE_ANALYTICS,
         STRAPI_PREVIEW_SECRET: process.env.STRAPI_PREVIEW_SECRET,
         GTM: process.env.GTM,
         ABSTRACT_API: process.env.ABSTRACT_API,
         ADMIN_URL: process.env.STRAPI_URL || 'http://127.0.0.1:1337',
-        // SEARCH_URL: process.env.SEARCH_URL || 'http://167.172.227.234',
     },
 
     image: {
