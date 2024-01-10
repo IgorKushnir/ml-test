@@ -33,19 +33,24 @@
           </div>
         </transition>
 
+
         <transition name="fade">
           <div v-if="result !== null && show && (result.nbHits > 0 || result.estimatedTotalHits > 0)" class="result">
+            <pre>
+        </pre>
             <div class="container">
 <!--              <div v-if="result.nbHits === 0">No results</div>-->
               <div class="search-grid m-v-40">
                 <NuxtLink
-                    v-for="item in result.hits" :to="'/' + (item?.type?.slug ?? 'product') + '/' + item.slug"
+                    v-for="item in result.hits"
+                    :to="'/' + (item?.type?.slug ?? 'product') + '/' + item.slug"
                     v-on:click="close" class="col-2">
                   <div class="ratio-3x4">
                     <Image :path="{data: {attributes: item.cover_3x4}}" size="small" :alt="item.title"/>
                   </div>
                   <div class="m-t-8 brake-word" v-html="highlight(item.title, search)"/>
                   <div class="collection-label gray m-t-4">{{ item.collection?.title }}</div>
+                  <div class="collection-label gray m-t-4">{{ item.type?.locale }}</div>
                 </NuxtLink>
               </div>
             </div>
@@ -64,6 +69,8 @@
 </template>
 
 <script setup>
+const { locale } = useI18n()
+
 const props = defineProps({
   show: {
     type: Boolean,
@@ -129,6 +136,13 @@ async function getResult() {
     const data = await $fetch(`/api/search?q=${search.value}`, {
       method: 'GET'
     });
+
+    // Filter by locale
+    // todo: needs to fix fol poland
+    data.hits = data.hits.filter(d => d.type?.locale === locale.value)
+    if (data.hits.length === 0) data.estimatedTotalHits = 0
+
+
     result.value = data;
   }
   pending.value = false;
