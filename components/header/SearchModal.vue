@@ -139,10 +139,10 @@ async function getResult() {
     // Filter by locale
     // todo: needs to fix fol poland
     data.hits = data.hits.filter(d => d.type?.locale === locale.value)
-    // if (data.hits.length === 0) {
-    //   data.estimatedTotalHits = 0
-    //   data.nbHits = 0
-    // }
+    if (data.hits.length === 0) {
+      data.estimatedTotalHits = 0
+      data.nbHits = 0
+    }
 
 
     result.value = data;

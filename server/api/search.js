@@ -20,5 +20,24 @@ export default  defineEventHandler(async (event) => {
         return 'Search error'
     }
 
+    // try {
+    //     return await $fetch(`keys`, {
+    //         baseURL: config.SEARCH_URL,
+    //         method: 'GET',
+    //         headers: {
+    //             Authorization:
+    //                 // 'Bearer ' + config.MEILISEARCH_API_KEY,
+    //                 'Bearer ' + "aSampleMasterKey",
+    //         },
+    //         // body: {
+    //         //     "q": q.get('q'),
+    //         // }
+    //     });
+    // } catch (e) {
+    //     console.log(e);
+    //     return 'error'
+    // }
+
+
 
 })
