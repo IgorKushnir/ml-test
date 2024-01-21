@@ -66,6 +66,7 @@ export default defineI18nConfig(() => ({
             next: 'Next',
             previous: 'Previous',
             complete_your_look: 'Complete your look',
+            find_alternatives: 'Find alternatives',
             you_may_also_like: 'You may also like',
         },
         pl: {
@@ -132,6 +133,7 @@ export default defineI18nConfig(() => ({
             next: 'Następny',
             previous: 'Poprzedni',
             complete_your_look: 'Dokończ swój wygląd',
+            find_alternatives: 'Znajdź alternatywy',
             you_may_also_like: 'Może Ci się spodobać',
         }
     }

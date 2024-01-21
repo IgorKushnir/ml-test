@@ -2,7 +2,7 @@
   <div>
     <div v-if="data != null">
 
-      <StickyBarStickyHeaderMilla :title="data.title + (data.discontinued ? ' (discontinued)' : '')">
+      <StickyBarStickyHeaderMilla :title="data.title">
         <template #end>
           <StickyBarBack v-if="data.extra.previous" reverse :text="$t('previous')" @clicks="prevHandler"/>
           <StickyBarBack v-if="data.extra.next" :text="$t('next')" @click="nextHandler"/>
@@ -10,28 +10,28 @@
       </StickyBarStickyHeaderMilla>
 
 
-      <div v-if="data.discontinued">
-        <div class="row justify-center">
-          <div class="col-12 light_bg">
-            <div class="center m-v-24 m-v-16-md p-h-16 gray"><div>{{ $t('discontinued') }}</div></div>
-          </div>
-        </div>
-      </div>
-
       <div class="promo ratio-3x4 show-md">
-        <Image :path="{data: data.gallery.data[0]}" :alt="data.title + ' ' + data?.type?.data?.attributes?.title"/>
+        <Image
+            :path="{data: data.gallery.data[0]}"
+            :alt="data.title + ' ' + data?.type?.data?.attributes?.title"
+            :class="discontinued ? 'discontinued' : ''"
+        />
         <div class="white-overlay"></div>
       </div>
+
       <Container>
 
         <div class="col-4 col-5-lg col-12-md">
           <div class="title-container">
             <h1 class="title m-t-0">{{ data.title }}</h1>
-            <LikeButton :liked="liked" @click="handleLike(data.id)"/>
+            <LikeButton v-if="!discontinued" :liked="liked" @click="handleLike(data.id)"/>
           </div>
 
+          <div v-if="discontinued" class="p-h-12 p-v-8 light_bg inline">{{ $t('discontinued') }}</div>
+
+
           <div class="sticky-content">
-<!--            <div v-if="data.discontinued" class="badge light_bg p-h-16 p-v-8 gray">Discontinued</div>-->
+<!--            <div v-if="discontinued" class="badge light_bg p-h-16 p-v-8 gray">Discontinued</div>-->
             <p class="m-b-32" v-if="data.description" v-html="$handleNewLine(data.description)" />
 
 
@@ -75,7 +75,7 @@
 
 
             <NuxtLink v-if="data.storeLink" :to="localePath(data.storeLink)" target="_blank" class="button m-t-16 m-t-0-md m-b-24-md m-r-16 target">Buy online</NuxtLink>
-            <NuxtLink  :to="localePath('/request-an-appointment')" target="_self" class="button m-t-16 m-t-0-md m-b-24-md">
+            <NuxtLink v-if="!discontinued"  :to="localePath('/request-an-appointment')" target="_self" class="button m-t-16 m-t-0-md m-b-24-md">
               {{ $t('book_an_appointment') }}</NuxtLink>
 
 
@@ -87,7 +87,9 @@
             :data="data.gallery.data" :alt="data.title + ' ' + data?.type?.data?.attributes?.title"
             :hide-first="isMobile"
             :zoom="true"
-            classes="col-8 col-7-lg col-12-md m-t-0" columns="product">
+            classes="col-8 col-7-lg col-12-md m-t-0"
+            :discontinued="discontinued"
+            columns="product">
           <template #end >
             <div v-if="data.fact !== null" :class="data.fact.ratio">
               <div :class="data.fact.ratio === 'horizontal' ? 'new-ratio-3x2' : 'new-ratio-3x4'">
@@ -101,11 +103,11 @@
 
       </Container>
 
-
-      <Carusel v-if="data.recommended !== null" :data="data.recommended?.products.data" :column="4" class="m-v-80">
-        <h2 class="m-t-0 m-b-40 m-b-24-md">{{ $t('complete_your_look') }}</h2>
+      <Carusel v-if="data.recommended !== null" :data="data.recommended?.products.data" :column="discontinued ? 6 : 4" class="m-v-80">
+        <h2 v-if="!discontinued" class="m-t-0 m-b-40 m-b-24-md">{{ $t('complete_your_look') }}</h2>
+        <h2 v-if="discontinued" class="m-t-0 m-b-40 m-b-24-md">{{ $t('find_alternatives') }}</h2>
       </Carusel>
-      <Carusel v-if="data.extra !== null && data.extra.also.length > 0" :data="data.extra?.also"  class="m-v-80">
+      <Carusel v-if="data.extra !== null && data.extra.also.length > 0 && !discontinued" :data="data.extra?.also"  class="m-v-80">
         <h2 class="m-t-0 m-b-40 m-b-24-md">{{ $t('you_may_also_like') }}</h2>
       </Carusel>
 
@@ -139,6 +141,7 @@ const likeList = ref([])
 const { locale } = useI18n()
 const localePath = useLocalePath()
 
+
 let publicationState = "LIVE";
 if (draft === 'true') {
   publicationState = "PREVIEW";
@@ -147,6 +150,9 @@ if (draft === 'true') {
 const extrudedIds = useViewedProductIds().value;
 
 let {data, pending} = await getProduct(slug, JSON.stringify(extrudedIds), publicationState, locale.value)
+
+const discontinued = computed(() => data.value.discontinued)
+
 
 if (process.server) {
   if (data.value) {

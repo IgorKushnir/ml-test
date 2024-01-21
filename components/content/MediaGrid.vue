@@ -10,6 +10,7 @@
               :path="{data: item}"
               :alt="alt"
               :zoom="zoom"
+              :class="discontinued ? 'discontinued' : ''"
           />
         </div>
       </div>
@@ -48,6 +49,11 @@ const props = defineProps({
     type: Boolean,
     required: false
   },
+  discontinued: {
+    type: Boolean,
+    required: false
+  },
+
 })
 
 function isLandscape(width, height) {
@@ -88,6 +94,8 @@ function isLandscape(width, height) {
 .vertical {
   grid-column: auto/span 1;
 }
+
+
 @include xl {
   .gallery {
     grid-gap: 16px;
