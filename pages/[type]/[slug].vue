@@ -103,7 +103,7 @@
 
       </Container>
 
-      <Carusel v-if="data.recommended !== null" :data="data.recommended?.products.data" :column="discontinued ? 6 : 4" class="m-v-80">
+      <Carusel v-if="data.recommended !== null && data.recommended?.products?.data?.length > 0" :data="data.recommended?.products.data" :column="discontinued ? 6 : 4" class="m-v-80">
         <h2 v-if="!discontinued" class="m-t-0 m-b-40 m-b-24-md">{{ $t('complete_your_look') }}</h2>
         <h2 v-if="discontinued" class="m-t-0 m-b-40 m-b-24-md">{{ $t('find_alternatives') }}</h2>
       </Carusel>
