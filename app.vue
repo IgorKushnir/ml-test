@@ -71,7 +71,7 @@ useHead({
     {name: 'copyright', content: 'Milla Nova'},
     {name: 'revisit-after', content: '2 days'},
 
-    {name: 'facebook-domain-verification', content: 'wtdd4fzvg43jhi2tx4lpd4xumrtjln'}, // temporary to verify domain.
+    // {name: 'facebook-domain-verification', content: 'wtdd4fzvg43jhi2tx4lpd4xumrtjln'}, // temporary to verify domain.
   ],
   link: [
     {rel: 'icon', type: 'image/x-icon', href: '/img/favicon.ico'},
@@ -89,7 +89,7 @@ useHead({
                   t.src=v;s=b.getElementsByTagName(e)[0];
                   s.parentNode.insertBefore(t,s)}(window, document,'script',
                   'https://connect.facebook.net/en_US/fbevents.js');
-                  fbq('init', '1040268723752792');
+                  fbq('init', '406315495262476');
                   fbq('track', 'PageView');
                   `
     },
