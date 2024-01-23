@@ -70,12 +70,36 @@ useHead({
     {name: 'author', content: 'Milla Nova'},
     {name: 'copyright', content: 'Milla Nova'},
     {name: 'revisit-after', content: '2 days'},
+
+    {name: 'facebook-domain-verification', content: 'wtdd4fzvg43jhi2tx4lpd4xumrtjln'}, // temporary to verify domain.
   ],
   link: [
     {rel: 'icon', type: 'image/x-icon', href: '/img/favicon.ico'},
     {rel: "shortcut icon", type: "image/x-icon", href: '/img/32.png'},
     {rel: "apple-touch-icon", type: "image/x-icon", href: '/img/256.png'},
-  ]
+  ],
+
+  script: [
+    {
+      innerHTML: `!function(f,b,e,v,n,t,s)
+                  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                  n.queue=[];t=b.createElement(e);t.async=!0;
+                  t.src=v;s=b.getElementsByTagName(e)[0];
+                  s.parentNode.insertBefore(t,s)}(window, document,'script',
+                  'https://connect.facebook.net/en_US/fbevents.js');
+                  fbq('init', '1040268723752792');
+                  fbq('track', 'PageView');
+                  `
+    },
+  ],
+  noscript: [
+    {
+      innerHTML: `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1040268723752792&ev=PageView&noscript=1" />`
+      // tagPosition: 'bodyOpen'
+    }
+  ],
 })
 
 
