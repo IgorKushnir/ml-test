@@ -92,7 +92,7 @@ query Product{
           description
         }
         recommended {
-          products {
+          products(filters: {or: [{discontinued: {eq: null }} {discontinued: {eq: false }} ]}) {
             data {
               attributes {
                 title
@@ -119,18 +119,19 @@ query Product{
 
     const {data, pending, refresh, error} = await useLazyAsyncData('p_data_' + collection, () => response, {
         transform: (d) => {
+            let product;
             if (isNaN(slugOrId)) {
                 if (d.data[collection].data[0]) {
                     d.data[collection].data[0].attributes.id = d.data[collection].data[0].id
-                    return d.data[collection].data[0].attributes
+                    product = d.data[collection].data[0].attributes
                 }
             } else {
                 if (d.data[collection].data !== null) {
                     d.data[collection].data.attributes.id = d.data[collection].data.id
-                    return d.data[collection].data.attributes
+                    product = d.data[collection].data.attributes
                 }
             }
-            return null
+            return product
         },
     })
     // console.log(data, error);
