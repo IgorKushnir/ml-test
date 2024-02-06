@@ -197,7 +197,7 @@
 </template>
 
 <script setup>
-import CheckBox from "../components/filter/CheckBox";
+import CheckBox from "../../components/filter/CheckBox";
 
 import {getListOfCountries, getCountry} from '~/api/stores'
 import getCountryCode from '~/api/getCountryCode'
