@@ -1,8 +1,23 @@
 <template>
   <div>
-    <InnerHeader title="Book an appointment" sub_title="We're excited to invite you to our showroom and assist in discovering the main gown of your life! To find your dream dress for the big day, please select your appointment."/>
+    <div class="errors">
+      <div v-for="error in consoleErrors"><pre>{{error}}</pre></div>
+    </div>
+<!--    Choose a service-->
+<!--    Select session date and time-->
+    <InnerHeader v-if="step !== 0" title="Book an appointment"
+                 :steps="steps"
+                 @step="(index) => goStep(index)"
+                 :currentStep="step" sub_title="We're excited to invite you to our showroom and assist in discovering the main gown of your life! To find your dream dress for the big day, please select your appointment."/>
 
-    <Container v-if="!selectedDate  && !sent" justify="justify-center">
+    <FlagshipStepOne
+        v-if="step === 0"
+        @serviceId="(id) => goStep(1,id)"
+        title="Book an appointment"
+       text="We're excited to invite you to our showroom and assist in discovering the main gown of your life! To find your dream dress for the big day, please select your appointment."
+       :services="bookingServices"/>
+
+    <Container v-if="step === 1" justify="justify-center">
       <div class="col-4">
         <div v-for="(month, index) in bookingDates">
           {{$getMonths[index][0]}}
@@ -26,7 +41,7 @@
 
         <div v-if="bookingHours?.length === 0">No available appointments on this day</div>
         <div class="hour-container m-b-8" v-for="hour in bookingHours">
-          <div class="button hour-button" v-on:click="() => selectedDate = hour.datetime">{{hour.time}}</div>
+          <div class="button hour-button" v-on:click="() => goStep(2, hour)">{{hour.time}} {{hour.seance_length/60/60}} {{hour.staff_id}}</div>
         </div>
 
       </div>
@@ -34,9 +49,9 @@
     </Container>
 
 
-    <Container v-if="selectedDate && !sent">
-      <div class="button" v-on:click="() => selectedDate = 0">Back</div>
-      {{selectedDate}}
+    <Container v-if="step === 2" justify="justify-center">
+<!--      <div class="button" v-on:click="() => selectedDate = 0">Back</div>-->
+<!--      {{selectedDate}}-->
 
       <form @submit.prevent="postRecord" class="col-6 form">
         <div class="input-block c-2">
@@ -134,10 +149,10 @@
         </div>
 
       </form>
-      {{userData}}
+<!--      {{userData}}-->
     </Container>
 
-    <State v-if="sent" small title="THANK YOU!" text="Your request has been processed. Our manager will reach out to you shortly to confirm your reservation and address any further details if necessary." :button="{text: $t('book_home_page'), path: '/'}" />
+    <State v-if="step === 3" small title="THANK YOU!" text="Your request has been processed. Our manager will reach out to you shortly to confirm your reservation and address any further details if necessary." :button="{text: $t('book_home_page'), path: '/'}" />
 
   </div>
 </template>
@@ -146,12 +161,15 @@
 const { $getMonths } = useNuxtApp();
 
 const sendingRequest = ref(false)
+const step = ref(0)
 
+const bookingServices = ref()
+const bookingStaff = ref()
 const bookingDates = ref()
 const bookingHours = ref()
+const selectedServiceId = ref()
 const selectedDay = ref()
 const selectedDate = ref()
-const sent = ref(false)
 const userData = ref({
   name: "",
   surname: "",
@@ -162,20 +180,81 @@ const userData = ref({
   consent: false,
 })
 
+const steps = ref([
+  {
+    name: "Service",
+    active: false
+  },
+  {
+    name: "Date",
+    active: false
+  },
+  {
+    name: "Contacts",
+    active: false
+  },
+])
+
+const consoleErrors = ref([])
 
 if (process.client) {
-  getDays()
+  // getDays()
+  getServices()
 }
 
+function goStep(_step, payload) {
+  step.value = _step
+  if (_step === 1) {
+    if (payload) {
+      selectedServiceId.value = payload
+    }
+    getDays()
+  }
+  if (_step === 2) {
+    if (payload) {
+      selectedDate.value = payload.datetime
+      bookingStaff.value = payload.staff_id
+    }
+
+  }
+}
+async function getServices() {
+  try {
+    const d = await $fetch('/api/alteg', {
+      method: "POST",
+      body: {
+        type: "services",
+      }
+    })
+    if (!d.success) throw d.meta
+
+
+    bookingServices.value = d.data.filter(services => services.is_online);
+    const staff = []
+    bookingServices.value.forEach(service => {
+      service.staff.forEach(st => staff.push(st.id))
+    })
+
+    // leave unique staff id
+    bookingStaff.value = staff.filter(function(item, pos) {
+      return staff.indexOf(item) == pos;
+    })
+
+  } catch (e) {
+    console.error(e);
+    consoleErrors.value.push(e)
+  }
+}
 async function getDays() {
   try {
     const d = await $fetch('/api/alteg', {
       method: "POST",
       body: {
-        type: "days"
+        type: "days",
+        service_id: selectedServiceId.value
       }
     })
-    if (!d.success) return
+    if (!d.success) throw d.meta
 
     let bb = {}
      d.data.booking_dates.forEach(d => {
@@ -197,6 +276,7 @@ async function getDays() {
     bookingDates.value = bb
   } catch (e) {
     console.error(e);
+    consoleErrors.value.push(e)
   }
 }
 async function getHours(date) {
@@ -207,18 +287,19 @@ async function getHours(date) {
       method: "POST",
       body: {
         type: "hours",
-        date: date
+        date: date,
+        staff_ids: bookingStaff.value,
       }
     })
-    if (d.success) {
-      bookingHours.value = d.data
-    }
+    if (!d.success) d.meta
+
+    bookingHours.value = d.data
 
   } catch (e) {
     console.error(e);
+    consoleErrors.value.push(e)
   }
 }
-
 async function postRecord() {
   sendingRequest.value = true
   try {
@@ -227,19 +308,22 @@ async function postRecord() {
       body: {
         type: "appointment",
         date: selectedDate.value,
+        staff_id: bookingStaff.value,
+        services_id: selectedServiceId.value,
         phone: userData.value.phone,
         fullName: userData.value.name + ' ' + userData.value.surname,
         email: userData.value.email,
         comment: ("Number of people joining with " + userData.value.name + ": " + userData.value.people + ". ") + (userData.value.weddingDate ? ("Wedding Date: " + userData.value.weddingDate): "")
       }
     })
-    if (d.success){
-      sent.value = true
-      console.log('booked');
-    }
+    if (!d.success) throw d.meta
+
+    goStep(3)
+
 
   } catch (e) {
     console.error(e);
+    consoleErrors.value.push(e)
   }
 
   sendingRequest.value = false
@@ -262,6 +346,8 @@ function _getDaysInMonth(month, year) {
   }
   return days;
 }
+
+
 
 </script>
 
@@ -316,5 +402,13 @@ function _getDaysInMonth(month, year) {
 .hour-button {
   display: block;
   width: 100%;
+}
+
+
+.errors {
+  position: fixed;
+  z-index: 100;
+  font-size: 10px;
+  background-color: #ffeaea;
 }
 </style>

@@ -82,6 +82,7 @@ select.input {
 
 @media (hover: hover) {
   .input:hover {
-    border: 1px solid $gray;
+    //border: 1px solid $gray;
+    box-shadow: 0px 0px 0px 1px $dark-blue inset;
   }
 }
