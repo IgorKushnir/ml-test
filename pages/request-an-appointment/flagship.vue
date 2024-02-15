@@ -5,57 +5,38 @@
     </div>
 <!--    Choose a service-->
 <!--    Select session date and time-->
-    <InnerHeader v-if="step !== 0" title="Book an appointment"
+    <InnerHeader v-if="step !== 0"
+                 sub_header="Flashstore"
+                 title="Book an appointment"
                  :steps="steps"
                  @step="(index) => goStep(index)"
-                 :currentStep="step" sub_title="We're excited to invite you to our showroom and assist in discovering the main gown of your life! To find your dream dress for the big day, please select your appointment."/>
+                 :currentStep="step"
+    />
 
     <FlagshipStepOne
         v-if="step === 0"
         @serviceId="(id) => goStep(1,id)"
+        sub_header="Flashstore"
         title="Book an appointment"
        text="We're excited to invite you to our showroom and assist in discovering the main gown of your life! To find your dream dress for the big day, please select your appointment."
        :services="bookingServices"/>
 
-    <Container v-if="step === 1" justify="justify-center">
-      <div class="col-4">
-        <div v-for="(month, index) in bookingDates">
-          {{$getMonths[index][0]}}
-          <div class="month">
-            <div v-for="day in month"
-                 class="day"
-                 :class="(day.available ? 'available' : '') + ((selectedDay && day.date === selectedDay) ? ' active' : '')"
-                 :style="`grid-column-start: ${day.dayOfWeek}`"
-                 v-on:click="() => getHours(day.date)"
-            >
-              <div class="day-container">
-                {{day.day}}
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <div class="col-4">
-        {{selectedDay}}
-
-        <div v-if="bookingHours?.length === 0">No available appointments on this day</div>
-        <div class="hour-container m-b-8" v-for="hour in bookingHours">
-          <div class="button hour-button" v-on:click="() => goStep(2, hour)">{{hour.time}} {{hour.seance_length/60/60}} {{hour.staff_id}}</div>
-        </div>
-
-      </div>
-
-    </Container>
+    <FlagshipDayHour v-if="step === 1"
+                     :bookingDates="bookingDates"
+                     :bookingHours="bookingHours"
+                     @getHours="((day) => getHours(day))"
+                     @goStep="(payload) => goStep(2, payload)"
+                     :selectedDay="selectedDay"
+    />
 
 
     <Container v-if="step === 2" justify="justify-center">
 <!--      <div class="button" v-on:click="() => selectedDate = 0">Back</div>-->
 <!--      {{selectedDate}}-->
 
-      <form @submit.prevent="postRecord" class="col-6 form">
+      <form @submit.prevent="postRecord" class="col-6 col-8-xl col-12-md form">
         <div class="input-block c-2">
-          <label class="p-small required" for="name">Name</label>
+          <label class="p-small required" for="name">{{ $t('book_first_name') }}</label>
           <input
               autofocus
               required
@@ -67,7 +48,7 @@
           />
         </div>
         <div class="input-block c-2">
-          <label class="p-small required" for="surname">Surname</label>
+          <label class="p-small required" for="surname">{{ $t('book_last_name') }}</label>
           <input
               required
               v-model="userData.surname"
@@ -79,7 +60,7 @@
         </div>
 
         <div class="input-block c-4">
-          <label class="p-small required" for="email">Email</label>
+          <label class="p-small required" for="email">{{ $t('book_email') }}</label>
           <input
               required
               v-model="userData.email"
@@ -91,7 +72,7 @@
         </div>
 
         <div class="input-block c-4">
-          <label class="p-small required" for="phone">Phone number</label>
+          <label class="p-small required" for="phone">{{ $t('book_phone_number') }}</label>
           <input
               required
               v-model="userData.phone"
@@ -103,7 +84,7 @@
         </div>
 
         <div class="input-block c-4">
-          <label class="p-small" for="wedding_date">Wedding date</label>
+          <label class="p-small" for="wedding_date">{{ $t('book_celebrated_date') }}</label>
           <input
               v-model="userData.weddingDate"
               class="input m-t-8"
@@ -115,7 +96,7 @@
         </div>
 
         <div class="input-block c-4">
-          <label class="p-small" for="wedding_date">Number of people joining you</label>
+          <label class="p-small" for="wedding_date">{{ $t("book_number_of_people") }}</label>
           <select
               class="input m-t-8"
               name="wedding_date"
@@ -130,11 +111,30 @@
         </div>
 
         <div class="input-block c-4">
+          <label class="p-small" for="find_out">{{ $t("book_find_out") }}</label>
+          <select
+              class="input m-t-8"
+              name="find_out"
+              id="find_out"
+              v-model="userData.find_out"
+          >
+            <option :value="null" selected>- {{$t('choose_an_option')}} -</option>
+            <option value="Instagram">Instagram</option>
+            <option value="Tik Tok">Tik Tok</option>
+            <option value="Pinterest">Pinterest</option>
+            <option value="Google">Google</option>
+            <option value="Ad">Ad</option>
+            <option value="Trunk Show">Trunk Show</option>
+            <option value="Word of mouth ">Word of mouth </option>
+          </select>
+        </div>
+
+        <div class="input-block c-4">
 
           <FilterCheckBox
               :value="userData.consent"
               v-on:click="() => userData.consent = !userData.consent"
-              label="Clicking this implies your consent to receive text messages regarding upcoming appointments, confirmations, and relevant information. MN values your privacy and ensures that your information won't be shared."
+              :label="$t('book_consent')"
               available
           />
         </div>
@@ -158,7 +158,7 @@
 </template>
 
 <script setup>
-const { $getMonths } = useNuxtApp();
+const { t } = useI18n()
 
 const sendingRequest = ref(false)
 const step = ref(0)
@@ -167,9 +167,11 @@ const bookingServices = ref()
 const bookingStaff = ref()
 const bookingDates = ref()
 const bookingHours = ref()
+const selectedStaffId = ref()
 const selectedServiceId = ref()
 const selectedDay = ref()
 const selectedDate = ref()
+
 const userData = ref({
   name: "",
   surname: "",
@@ -177,20 +179,21 @@ const userData = ref({
   phone: "",
   weddingDate: "",
   people: 0,
+  find_out: null,
   consent: false,
 })
 
 const steps = ref([
   {
-    name: "Service",
+    name: t('book_step_1'),
     active: false
   },
   {
-    name: "Date",
+    name: t('book_step_2'),
     active: false
   },
   {
-    name: "Contacts",
+    name: t('book_step_3'),
     active: false
   },
 ])
@@ -198,7 +201,7 @@ const steps = ref([
 const consoleErrors = ref([])
 
 if (process.client) {
-  // getDays()
+  // getDaysAndHours()
   getServices()
 }
 
@@ -208,15 +211,20 @@ function goStep(_step, payload) {
     if (payload) {
       selectedServiceId.value = payload
     }
-    getDays()
+    getDaysAndHours()
   }
   if (_step === 2) {
     if (payload) {
       selectedDate.value = payload.datetime
-      bookingStaff.value = payload.staff_id
+      selectedStaffId.value = payload.staff_id
     }
 
   }
+
+  window.scroll({
+    top: 0,
+    behavior: "smooth"
+  })
 }
 async function getServices() {
   try {
@@ -245,7 +253,9 @@ async function getServices() {
     consoleErrors.value.push(e)
   }
 }
-async function getDays() {
+async function getDaysAndHours() {
+  bookingDates.value = null
+  bookingHours.value = null
   try {
     const d = await $fetch('/api/alteg', {
       method: "POST",
@@ -271,7 +281,12 @@ async function getDays() {
          month: month,
          date: d
        }
-    })
+       if (!selectedDay.value) {
+         selectedDay.value = d
+       }
+     })
+
+    getHours(selectedDay.value)
 
     bookingDates.value = bb
   } catch (e) {
@@ -289,6 +304,7 @@ async function getHours(date) {
         type: "hours",
         date: date,
         staff_ids: bookingStaff.value,
+        service_id: selectedServiceId.value,
       }
     })
     if (!d.success) d.meta
@@ -308,12 +324,12 @@ async function postRecord() {
       body: {
         type: "appointment",
         date: selectedDate.value,
-        staff_id: bookingStaff.value,
+        staff_id: selectedStaffId.value,
         services_id: selectedServiceId.value,
         phone: userData.value.phone,
         fullName: userData.value.name + ' ' + userData.value.surname,
         email: userData.value.email,
-        comment: ("Number of people joining with " + userData.value.name + ": " + userData.value.people + ". ") + (userData.value.weddingDate ? ("Wedding Date: " + userData.value.weddingDate): "")
+        comment: ("Number of people joining with " + userData.value.name + ": " + userData.value.people + ". ") + (userData.value.weddingDate ? ("Wedding Date: " + userData.value.weddingDate): "") + (userData.value.find_out ? ('. Found out: '+userData.value.find_out) : '')
       }
     })
     if (!d.success) throw d.meta
@@ -352,57 +368,7 @@ function _getDaysInMonth(month, year) {
 </script>
 
 <style scoped lang="scss">
-.month {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-}
-.day {
-  //background-color: $light-gray;
-  /*border: 1px solid #4D4E56;*/
-  //height: 48px;
-  padding: 8px 0;
-  //margin: .25px;
-  //color: $gray;
-  //opacity: .3;
 
-}
-.day.available {
-  cursor: pointer;
-}
-.day > .day-container {
-  border-radius: 50%;
-  height: 72px;
-  aspect-ratio: 1;
-  margin-right: 0;
-  margin-left: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-}
-.day.available > .day-container {
-  background-color: rgba(122, 165, 186, 0.2);
-  font-weight: bold;
-
-}
-.day.available:hover > .day-container {
-  background-color: $blue;
-  color: $white;
-}
-
-.day.active > .day-container {
-  background-color: $dark-blue;
-  color: $white;
-  font-weight: bold;
-
-}
-
-
-.hour-button {
-  display: block;
-  width: 100%;
-}
 
 
 .errors {

@@ -79,6 +79,9 @@ export default defineNuxtPlugin(() => {
             validateEmail: (email) => {
                 const re = /\S+@\S+\.\S+/;
                 return re.test(email);
+            },
+            isUrl: (string) => {
+                return (string.startsWith('http://') || string.startsWith('https://') || string.startsWith('www.'))
             }
         }
     }

@@ -38,9 +38,9 @@ export default  defineEventHandler(async (event) => {
         try {
             const date = body.date
             const staff_ids = body.staff_ids
-
+            const service_id = body.service_id
             const promises = staff_ids.map(async staff_id => {
-                const res =  await fetch(`${url}/book_times/${company_id}/${staff_id}/${date}`, {
+                const res =  await fetch(`${url}/book_times/${company_id}/${staff_id}/${date}?service_ids=${service_id}`, {
                     method: "GET",
                     headers
                 })
@@ -59,17 +59,26 @@ export default  defineEventHandler(async (event) => {
             })
 
             // Remove dublicated hours
-            const ids = allData.map((d) => d.time + d.seance_length);
-            allData = allData.filter(function(item, index) {
-                return !ids.includes(item, index + 1)
+            const ids = [];
+            let _allData = [];
+            allData.forEach(item => {
+                // // all slots
+                // _allData.push(item)
+
+                // filtered slots by dublicated time
+                const id = item.time
+                if (!ids.includes(id)) {
+                    ids.push(id)
+                    _allData.push(item)
+                }
             })
 
             // Sort by time
-            allData = allData.sort((a, b) => {
+            _allData = _allData.sort((a, b) => {
                 return new Date(a.datetime) - new Date(b.datetime)
             })
 
-            return {success: true, data: allData}
+            return {success: true, data: _allData}
 
             // allData
 

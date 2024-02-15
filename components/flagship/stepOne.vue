@@ -3,17 +3,18 @@
   <Container>
     <div class="col-6 hide-lg">
       <div class="ratio-1x1">
-        <img src="/img/flagship.jpg" :alt="title">
+        <img src="@/img/flagship.jpg" :alt="title">
 <!--        <Image :path="data.cover_1x1" :alt="title"/>-->
       </div>
     </div>
     <div class="col-6 col-12-lg">
       <div class="new-ratio-1x1">
         <div class="contact">
+          <span class="subheader m-b-0">{{ sub_header }}</span>
           <h1 class="title">{{ title }}</h1>
           <p class="m-t-0">{{text}}</p>
           <div v-if="services?.length > 0" class="navs m-v-8 m-v-0-lg">
-            <div class="h4 m-b-24">Choose a service</div>
+            <div class="h4 m-b-24">{{ $t('choose_a_service') }}</div>
             <div class="nav-button" v-for="service in services" v-on:click="() => select(service.id)">
               <span class="nav-link">{{ service.title }}</span>
               <span class="icon-arrow-16"/>
@@ -30,12 +31,19 @@ const emits = defineEmits(['serviceId'])
 defineProps({
   services: {
     type: Array,
+    // required: true
+  },
+  sub_header: {
+    type: String,
+    required: true
   },
   title: {
     type: String,
+    required: true
   },
   text: {
     type: String,
+    required: true
   }
 })
 

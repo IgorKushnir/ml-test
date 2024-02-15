@@ -12,12 +12,27 @@
       </div>
     </div>
 
+
+    <div class="container steps row justify-center m-b-32" v-if="steps">
+      <div class="col-4 col-8-xl col-10-lg col-12-md steps-container">
+        <template v-for="(step, index) in steps">
+          <div
+              v-on:click="() => goStep(index)"
+              class="step-item" :class="(currentStep === index ? 'active' : '') + (currentStep < index ? ' disable' : '')"><div class="step-point m-b-8">{{index + 1}}</div><div class="p-small center">
+            {{ step.name }}</div></div>
+          <div v-if="index < steps?.length-1" class="icon-drop-down-16 divider"/>
+        </template>
+
+      </div>
+    </div>
+
   </div>
 
 
 </template>
 
-<script setup lang="ts">
+<script setup lang="js">
+const emits = defineEmits(['step'])
 const props = defineProps({
   title: {
     type: String,
@@ -31,7 +46,27 @@ const props = defineProps({
     type: String,
     required: false
   },
+  steps: {
+    type: Object,
+    required: false
+  },
+  currentStep: {
+      type: Number,
+      default: 0
+    },
+
 })
+
+function goStep(index) {
+  if (props.currentStep > index) {
+    props.steps.forEach(step => {
+      step.active = false
+    })
+    props.steps[index].active = true
+    emits('step', index)
+  }
+
+}
 
 </script>
 
@@ -47,6 +82,10 @@ const props = defineProps({
   border-bottom: 1px solid $border-dark;
   .container {
     min-height: 152px;
+
+  }
+  .steps {
+    min-height: 0;
   }
 }
 .wrapper > *:first-child{
@@ -54,6 +93,60 @@ const props = defineProps({
 }
 .wrapper > *:last-child{
   margin-bottom: 0;
+}
+
+.steps-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.step-point {
+  width: 56px;
+  height: 56px;
+  background-color: $white;
+  border: 1px solid $border-dark;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+
+.step-item {
+  cursor: pointer;
+  width: 80px;
+  line-break: auto;
+  text-align: center;
+}
+.step-item:hover {
+  .step-point {
+    background-color: $light-gray;
+    border-color: $gray;
+  }
+
+}
+.step-item.active {
+  font-weight: bold;
+  .step-point {
+    background-color: $dark-blue;
+    color: $white;
+    border: unset;
+  }
+}
+.step-item.disable {
+  color: rgba($gray, 0.3);
+  cursor: unset;
+  .step-point {
+    background-color: $light-gray;
+    color: rgba($gray, 0.3);
+    border: unset;
+  }
+}
+.divider {
+  align-self: center;
+  margin-bottom: 16px;
+  transform: rotate(-90deg);
+  color: $border-dark;
 }
 
 @include md {

@@ -68,6 +68,19 @@ export default defineI18nConfig(() => ({
             complete_your_look: 'Complete your look',
             find_alternatives: 'Find alternatives',
             you_may_also_like: 'You may also like',
+
+            choose_a_service: 'Choose a service',
+            choose_a_day: 'Choose a day',
+            choose_a_timeslot: 'Choose a time-slot',
+            choose_an_option: 'Choose an option',
+
+            book_step_1: "Service",
+            book_step_2: "Date",
+            book_step_3: "Contact Information",
+
+            book_number_of_people: "Number of people joining you",
+            book_find_out: "How did you find out about Milla Nova?",
+            book_consent: "Clicking this implies your consent to receive text messages regarding upcoming appointments, confirmations, and relevant information. MN values your privacy and ensures that your information won't be shared.",
         },
         pl: {
             book_title: 'Zarezerwuj wizytę',
@@ -135,6 +148,42 @@ export default defineI18nConfig(() => ({
             complete_your_look: 'Dokończ swój wygląd',
             find_alternatives: 'Znajdź alternatywy',
             you_may_also_like: 'Może Ci się spodobać',
+
+            choose_a_service: 'Wybierz usługę',
+            choose_a_day: 'Wybierz dzień',
+            choose_a_timeslot: 'Wybierz przedział czasowy',
+            choose_an_option: 'Wybierz opcję',
+
+            book_step_1: "Usługa",
+            book_step_2: "Data",
+            book_step_3: "Informacje kontaktowe",
+
+            book_number_of_people: "Liczba dołączających osób",
+            book_find_out: "Jak dowiedziałeś się o Milla Nova?",
+            book_consent: "Kliknięcie tej opcji oznacza zgodę na otrzymywanie wiadomości tekstowych dotyczących nadchodzących spotkań, potwierdzeń i istotnych informacji. MN ceni Twoją prywatność i zapewnia, że Twoje dane nie będą udostępniane.",
+
+
+
+            January: 'Styczeń',
+            February: 'Luty',
+            March: 'Marzec',
+            April: 'Kwiecień',
+            May: 'Maj',
+            June: 'Czerwiec',
+            July: 'Lipiec',
+            August: 'Sierpień',
+            September: 'Wrzesień',
+            October: 'Październik',
+            November: 'Listopad',
+            December: 'Grudzień',
+
+            Mon: 'Pon',
+            Tue: 'Wto',
+            Wen: 'Śro',
+            Thu: 'Czw',
+            Fri: 'Pią',
+            Sat: 'Sob',
+            Sun: 'Sło',
         }
     }
 }))
