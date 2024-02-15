@@ -3,7 +3,7 @@
   <Container>
     <div class="col-6 hide-lg">
       <div class="ratio-1x1">
-        <img src="@/img/flagship.jpg" :alt="title">
+        <img src="/img/flagship.jpg" :alt="title">
 <!--        <Image :path="data.cover_1x1" :alt="title"/>-->
       </div>
     </div>
