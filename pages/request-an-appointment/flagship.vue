@@ -1,6 +1,6 @@
 <template>
   <div>
-<!--    <pre>{{data.cover_4x3}}</pre>-->
+    <pre>{{// data.servises}}</pre>
     <div class="errors">
       <div v-for="error in consoleErrors"><pre>{{error}}</pre></div>
     </div>
@@ -9,7 +9,7 @@
     <InnerHeader v-if="step !== 0"
                  sub_header="Flashstore"
                  title="Book an appointment"
-                 :steps="steps"
+                 :steps="step !== 3 ? steps : null"
                  @step="(index) => goStep(index)"
                  :currentStep="step"
     />
@@ -154,15 +154,22 @@
 <!--      {{userData}}-->
     </Container>
 
-    <State v-if="step === 3" small title="THANK YOU!" text="Your request has been processed. Our manager will reach out to you shortly to confirm your reservation and address any further details if necessary." :button="{text: $t('book_home_page'), path: '/'}" />
-
     <Container>
       <div class="col-12">
         <Fact :data="{background_color: 'light', logo: true, layout: 'wide'}">
+          <div v-if="step===3" v-html="data.success" class="m-b-56"/>
           <div v-if="data.contact_title" class="subheader">{{ data.contact_title }}</div>
-          <div v-if="data.contact_address">{{ data.contact_address }}</div>
-          <div v-if="data.contact_phone">{{ data.contact_phone }}</div>
-          <div v-for="social in data.social">{{social}}</div>
+          <div v-if="data.contact_address" class="m-b-8">
+            <span class="icon-location-16"/>
+            <a :href="'http://maps.google.com/?q='+data.contact_address" target="_blank" class="link normal m-l-8">{{ data.contact_address }}</a>
+          </div>
+          <div v-if="data.contact_phone" class="m-b-32">
+            <span class="icon-phone-16"/>
+            <a :href="'tel: '+data.contact_phone.replaceAll(' ', '').replaceAll('-', '').replaceAll(')', '').replaceAll('(', '')" target="_blank" class="link normal  m-l-8">{{ data.contact_phone }}</a>
+          </div>
+
+          <NuxtLink v-for="item in data.social" :class="'icon-'+item.icon" :to="item.url" target="_blank"
+                    class="social hover m-r-16 m-h-8-md m-b-16"/>
         </Fact>
       </div>
     </Container>

@@ -10,6 +10,7 @@
         </div>
         <div class="brake-word" :class="['h1 h3-md', 'h2 h3-md', 'h3'][layoutIndex] + ' ' + data.text_color" v-if="data.title" v-html="$handleNewLine(data.title)"/>
         <div :class="['p p-small-md', 'p p-small-md', 'p-small'][layoutIndex] + ' ' + data.text_color" v-if="data.text" v-html="$handleNewLine(data.text)"/>
+        <slot/>
       </div>
 
     </div>
