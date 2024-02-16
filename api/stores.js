@@ -57,11 +57,70 @@ async function getCountry(slug, lang) {
               }
             }
           }
+          
         }
     `);
 
 
     return response
+}
+async function getBanner(lang) {
+
+    const graphql = useStrapiGraphQL()
+
+    // console.log({slug});
+
+    const response = graphql(`
+    query flagship{
+
+  flagship(locale: "${lang}") {
+    data {
+      attributes {
+        storefinder_banner {
+          title
+              text
+              button_text
+              button_link
+              button
+              cover_4x3 {
+                data {
+                  attributes {
+                    mime
+                    formats
+                    url
+                    placeholder
+                    width
+                    height
+                  }
+                }
+              }
+              cover_3x4 {
+                data {
+                  attributes {
+                    mime
+                    formats
+                    url
+                    placeholder
+                    width
+                    height
+                  }
+                }
+              }
+        }
+      }
+    }
+}
+        }
+    `);
+
+
+    const {data, pending, refresh, error} = await useAsyncData('data_storefinder_banner', () => response, {
+        transform: (d) => {
+            return d.data.flagship.data ? d.data.flagship.data.attributes.storefinder_banner : null
+        }
+    })
+
+    return data;
 }
 async function getListOfCountries(lang) {
     const graphql = useStrapiGraphQL()
@@ -111,4 +170,4 @@ async function getListOfCountries(lang) {
     return data;
 }
 
-export {getCountry, getListOfCountries}
+export {getCountry, getListOfCountries, getBanner}

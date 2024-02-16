@@ -1,5 +1,6 @@
 <template>
-  <div class="ratio-3x4" :class="poster ? 'ratio-4x3 ratio-3x4-md' : ''">
+<!--  <div class="ratio-3x4" :class="poster ? 'ratio-4x3 ratio-3x4-md' : ''">-->
+  <div :class="((!poster && !wide) ? 'ratio-3x4' : '') + (poster ? 'ratio-4x3 ratio-3x4-md' : '') + (wide ? 'ratio-25x9 ratio-3x4-md' : '')">
 
     <NuxtLink :to="button ? to : null"
               v-on:mouseenter="hover(true, $el)" v-on:mouseleave="hover(false, $el)"
@@ -17,10 +18,10 @@
 
 
       <div class="collection-item-head" :class="poster ? 'gradient' : ''">
-        <div class="collection-content p-v-56 p-h-56 p-v-32-md p-h-16-md">
+        <div class="collection-content p-v-56 p-h-56 p-v-32-xl p-h-16-md">
           <p class="subheader">{{subHeader}}</p>
           <h2>{{title}}</h2>
-          <p v-if="text">{{ text }}</p>
+          <p class="text" v-if="text">{{ text }}</p>
 
           <div class="p-v-16" v-show="button">
             <div class="button white">{{ button_text ?? $t('explore') }}</div>
@@ -72,6 +73,11 @@ const props = defineProps({
     required: false,
     default: false
   },
+  wide: {
+    type: Boolean,
+    required: false,
+    default: false
+  },
   image_4x3: {
     type: Object,
     required: false
@@ -119,7 +125,11 @@ function hover(hover, el) {
 .poster {
   //max-height: 500px;
 }
-
+.text {
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
 //@media (hover: hover) {
 //  .btn-ctn {
 //    transition: .3s;

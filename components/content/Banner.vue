@@ -1,22 +1,15 @@
 <template>
-  <div v-if="data" class="banner" :class=" type === 'content' ? 'ratio-16x9  ratio-3x4-md' : 'ratio-main-screen'">
+  <div v-if="data" class="banner" :class=" type === 'content' ? 'ratio-16x9  ratio-3x4-md' : type === 'banner' ? 'ratio-banner' : 'ratio-main-screen'">
+
     <Image class="hide-md" size="large" :path="data.cover_4x3" :alt="(!data.title || data.title === '') ? title : data.title"/>
     <Image class="show-md" :path="data.cover_3x4.data ? data.cover_3x4 : data.cover_4x3" :alt="(!data.title || data.title === '') ? title : data.title"/>
     <div class="overlay"/>
     <div class="wrapper" :class="type">
+      <Container :justify="(type === 'main' || type === 'banner') ? '' : 'justify-center'">
 
-<!--      <div v-if="h1" style="position: absolute; top: 0; width: 100%">-->
-<!--        <div class="container m-t-40">-->
-<!--          <div class="col-12">-->
-<!--            <h1 class="subheader white">{{ h1 }}</h1>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-      <Container :justify="type === 'main' ? '' : 'justify-center'">
-
-        <div  :class="type === 'main' ? 'col-4 col-6-lg col-12-md p-v-0' : 'col-6 col-10-lg col-12-md p-v-0 center'">
-          <div class="h1 white" :class="type === 'main' ? '' : type === 'content' ? 'h2' : 'title'">{{(!data.title || data.title === '') ? title : data.title}}</div>
-          <p class="white">{{(!data.text || data.text === '') ? text : data.text}}</p>
+        <div  :class="(type === 'main' || type === 'banner') ? 'col-4 col-6-lg col-12-md p-v-0' : 'col-6 col-10-lg col-12-md p-v-0 center'">
+          <div class="h1 white" :class="type === 'main' ? '' : (type === 'content' || type === 'banner') ? 'h2' : 'title'">{{(!data.title || data.title === '') ? title : data.title}}</div>
+          <p v-if="data.text" class="white">{{(!data.text || data.text === '') ? text : data.text}}</p>
 
           <NuxtLink v-if="data.button" :to="data.button_link" class="button white m-v-32">{{ data.button_text }}</NuxtLink>
           <div v-if="!data.button && type === 'inner'" class="arrow-down icon-arrow-16 white m-t-56 m-t-32-md m-b-32"/>
@@ -85,5 +78,20 @@ const props = defineProps({
   transform: rotate(90deg);
 }
 
-
+.ratio-banner {
+  height: 0;
+  padding-bottom: 420px;
+  position: relative;
+  & > * {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+}
+@include md {
+  .ratio-banner {
+    padding-bottom: 100%;
+  }
+}
 </style>

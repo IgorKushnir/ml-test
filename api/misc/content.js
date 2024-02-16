@@ -31,7 +31,7 @@ function content(extra) {
               button_text
               button_link
               button
-            
+              wide
               cover_3x4 {
                 data {
                   attributes {

@@ -165,7 +165,7 @@
         <div class="col-12">
           <Fact :data="{background_color: 'light', logo: true, layout: 'wide'}">
             <div v-if="step===3" v-html="data.success" class="m-b-56"/>
-            <div v-if="data.contact_title" class="subheader">{{ data.contact_title }}</div>
+            <div v-if="data.contact_title" class="subheader m-b-16">{{ data.contact_title }}</div>
             <div v-if="data.contact_address" class="m-b-8">
               <span class="icon-location-16"/>
               <a :href="'http://maps.google.com/?q='+data.contact_address" target="_blank" class="link normal m-l-8">{{ data.contact_address }}</a>
@@ -175,8 +175,8 @@
               <a :href="'tel: '+data.contact_phone.replaceAll(' ', '').replaceAll('-', '').replaceAll(')', '').replaceAll('(', '')" target="_blank" class="link normal  m-l-8">{{ data.contact_phone }}</a>
             </div>
 
-            <NuxtLink v-for="item in data.social" :class="'icon-'+item.icon" :to="item.url" target="_blank"
-                      class="social hover m-r-16 m-h-8-md m-b-16"/>
+            <NuxtLink v-for="(item, index) in data.social" :class="'icon-'+item.icon + (data.social.length > index+1 ? ' m-r-16' : '')" :to="item.url" target="_blank"
+                      class="social hover m-h-8-md m-b-16"/>
           </Fact>
         </div>
       </Container>
@@ -439,5 +439,23 @@ function _getDaysInMonth(month, year) {
   z-index: 100;
   font-size: 10px;
   background-color: #ffeaea;
+}
+
+
+.social {
+  font-size: 20px;
+  height: 24px;
+  display: inline-block;
+  width: 24px;
+  padding: 2px;
+}
+@include md {
+  .social {
+    font-size: 22px;
+    height: auto;
+    width: auto;
+    padding: 12px;
+    border: 1px solid $border-dark;
+  }
 }
 </style>

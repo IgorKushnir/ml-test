@@ -1,5 +1,7 @@
 <template>
   <div>
+    <ContentBanner :data="banner" type="banner"/>
+<!--    <pre>{{banner}}</pre>-->
     <div v-if="countries">
       <InnerHeader v-if="countries[countryIndex]?.value" :title="countries[countryIndex]?.value"
                    :sub_header="$t('storefinder_title')"/>
@@ -81,9 +83,8 @@
 </template>
 
 <script setup>
-import {getListOfCountries} from '~/api/stores'
-import getCountryCode from '~/api/getCountryCode'
-import {getCountry} from "~/api/stores";
+import {getListOfCountries, getCountry, getBanner} from '~/api/stores'
+// import getCountryCode from '~/api/getCountryCode'
 
 
 const router = useRouter();
@@ -108,6 +109,7 @@ const { locale } = useI18n()
 const localePath = useLocalePath()
 
 const countries = ref(await getListOfCountries(locale.value))
+const banner = ref(await getBanner(locale.value))
 
 
 if (process.client) {
