@@ -1,10 +1,9 @@
 <template>
 
   <Container>
-    <div class="col-6 hide-lg">
+    <div class="col-6 col-12-lg">
       <div class="ratio-1x1">
-        <img src="/img/flagship.jpg" :alt="title">
-<!--        <Image :path="data.cover_1x1" :alt="title"/>-->
+        <Image :path="cover" :alt="title"/>
       </div>
     </div>
     <div class="col-6 col-12-lg">
@@ -44,6 +43,9 @@ defineProps({
   text: {
     type: String,
     required: true
+  },
+  cover: {
+    type: Object
   }
 })
 

@@ -1,5 +1,6 @@
 <template>
   <div>
+<!--    <pre>{{data.cover_4x3}}</pre>-->
     <div class="errors">
       <div v-for="error in consoleErrors"><pre>{{error}}</pre></div>
     </div>
@@ -15,10 +16,11 @@
 
     <FlagshipStepOne
         v-if="step === 0"
-        @serviceId="(id) => goStep(1,id)"
-        sub_header="Flashstore"
-        title="Book an appointment"
-       text="We're excited to invite you to our showroom and assist in discovering the main gown of your life! To find your dream dress for the big day, please select your appointment."
+        @serviceId="(id) => goStep(1, id)"
+        :sub_header="data.sub_header"
+        :title="data.title"
+        :cover="data.cover_4x3"
+       :text="data.description"
        :services="bookingServices"/>
 
     <FlagshipDayHour v-if="step === 1"
@@ -154,11 +156,23 @@
 
     <State v-if="step === 3" small title="THANK YOU!" text="Your request has been processed. Our manager will reach out to you shortly to confirm your reservation and address any further details if necessary." :button="{text: $t('book_home_page'), path: '/'}" />
 
+    <Container>
+      <div class="col-12">
+        <Fact :data="{background_color: 'light', logo: true, layout: 'wide'}">
+          <div v-if="data.contact_title" class="subheader">{{ data.contact_title }}</div>
+          <div v-if="data.contact_address">{{ data.contact_address }}</div>
+          <div v-if="data.contact_phone">{{ data.contact_phone }}</div>
+          <div v-for="social in data.social">{{social}}</div>
+        </Fact>
+      </div>
+    </Container>
   </div>
 </template>
 
 <script setup>
-const { t } = useI18n()
+import getFlagship from '~/api/getFlagship'
+
+const { t,locale } = useI18n()
 
 const sendingRequest = ref(false)
 const step = ref(0)
@@ -199,6 +213,8 @@ const steps = ref([
 ])
 
 const consoleErrors = ref([])
+
+let { data, pending, refresh, error } = await getFlagship(locale.value)
 
 if (process.client) {
   // getDaysAndHours()
