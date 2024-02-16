@@ -37,79 +37,84 @@
         <!--      {{selectedDate}}-->
 
         <form @submit.prevent="postRecord" class="col-6 col-8-xl col-12-md form">
-          <div class="input-block c-2">
+          <div class="input-block c-2" :class="userData.name.error ? 'error' : ''">
             <label class="p-small required" for="name">{{ $t('book_first_name') }}</label>
             <input
                 autofocus
                 required
-                v-model="userData.name"
+                v-model="userData.name.value"
                 class="input m-t-8"
                 type="text"
                 name="name"
                 id="name"
             />
+            <label v-if="true" for="name" class="error-message">{{ $t('book_error_empty_field') }}</label>
           </div>
-          <div class="input-block c-2">
+          <div class="input-block c-2"  :class="userData.surname.error ? 'error' : ''">
             <label class="p-small required" for="surname">{{ $t('book_last_name') }}</label>
             <input
                 required
-                v-model="userData.surname"
+                v-model="userData.surname.value"
                 class="input m-t-8"
                 type="text"
                 name="surname"
                 id="surname"
             />
+            <label v-if="true" for="surname" class="error-message">{{ $t('book_error_empty_field') }}</label>
           </div>
 
-          <div class="input-block c-4">
+          <div class="input-block c-4" :class="userData.email.error ? 'error' : ''">
             <label class="p-small required" for="email">{{ $t('book_email') }}</label>
             <input
                 required
-                v-model="userData.email"
+                v-model="userData.email.value"
                 class="input m-t-8"
                 type="email"
                 name="email"
                 id="email"
             />
+            <label v-if="true" for="email" class="error-message">{{ $t('book_error_empty_field') }}</label>
           </div>
 
-          <div class="input-block c-4">
+          <div class="input-block c-4" :class="userData.phone.error ? 'error' : ''">
             <label class="p-small required" for="phone">{{ $t('book_phone_number') }}</label>
             <input
                 required
-                v-model="userData.phone"
+                v-model="userData.phone.value"
                 class="input m-t-8"
                 type="tel"
                 name="phone"
                 id="phone"
             />
+            <label v-if="true" for="phone" class="error-message">{{ $t('book_error_empty_field') }}</label>
           </div>
 
           <div class="input-block c-4">
             <label class="p-small" for="wedding_date">{{ $t('book_celebrated_date') }}</label>
             <input
-                v-model="userData.weddingDate"
+                v-model="userData.weddingDate.value"
                 class="input m-t-8"
                 type="date"
                 name="wedding_date"
                 id="wedding_date"
             />
-
+            <label v-if="true" for="wedding_date" class="error-message">{{ $t('book_error_empty_field') }}</label>
           </div>
 
           <div class="input-block c-4">
-            <label class="p-small" for="wedding_date">{{ $t("book_number_of_people") }}</label>
+            <label class="p-small" for="people">{{ $t("book_number_of_people") }}</label>
             <select
                 class="input m-t-8"
-                name="wedding_date"
-                id="wedding_date"
-                v-model="userData.people"
+                name="people"
+                id="people"
+                v-model="userData.people.value"
             >
               <option :value="0" selected>0</option>
               <option :value="1">1</option>
               <option :value="2">2</option>
               <option :value="3">3</option>
             </select>
+            <label v-if="true" for="people" class="error-message">{{ $t('book_error_empty_field') }}</label>
           </div>
 
           <div class="input-block c-4">
@@ -118,7 +123,7 @@
                 class="input m-t-8"
                 name="find_out"
                 id="find_out"
-                v-model="userData.find_out"
+                v-model="userData.find_out.value"
             >
               <option :value="null" selected>- {{$t('choose_an_option')}} -</option>
               <option value="Instagram">Instagram</option>
@@ -129,16 +134,18 @@
               <option value="Trunk Show">Trunk Show</option>
               <option value="Word of mouth ">Word of mouth </option>
             </select>
+            <label v-if="true" for="find_out" class="error-message">{{ $t('book_error_empty_field') }}</label>
           </div>
 
-          <div class="input-block c-4">
+          <div class="input-block c-4"  :class="userData.consent.error ? 'error' : ''">
 
             <FilterCheckBox
-                :value="userData.consent"
-                v-on:click="() => userData.consent = !userData.consent"
+                :value="userData.consent.value"
+                v-on:click="() => userData.consent.value = !userData.consent.value"
                 :label="$t('book_consent')"
                 available
             />
+            <label v-if="true" for="consent" class="error-message">{{ $t('book_error_empty_field') }}</label>
           </div>
 
           <div class="c-4 m-v-24 center">
@@ -196,14 +203,14 @@ const selectedDay = ref()
 const selectedDate = ref()
 
 const userData = ref({
-  name: "",
-  surname: "",
-  email: "",
-  phone: "",
-  weddingDate: "",
-  people: 0,
-  find_out: null,
-  consent: false,
+  name: {value: "", error: false, required: true},
+  surname: {value: "", error: false, required: true},
+  email: {value: "", error: false, required: true},
+  phone: {value: "", error: false, required: true},
+  weddingDate: {value: "", error: false},
+  people: {value: 0, error: false},
+  find_out: {value: null, error: false},
+  consent: {value: false, error: false, required: true},
 })
 
 const steps = ref([
@@ -227,7 +234,7 @@ let { data, pending, refresh, error } = await getFlagship(locale.value)
 
 const services = computed(() => {
   if (!bookingServices.value) return
-  console.log(bookingServices.value);
+  // console.log(bookingServices.value);
   const ids = bookingServices.value.map(b => b.id);
   return data.value.servises.filter(s => ids.includes(s.service_id) && s.publish)
 })
@@ -349,6 +356,30 @@ async function getHours(date) {
   }
 }
 async function postRecord() {
+  const fields = Object.keys(userData.value)
+  const errors = []
+  fields.forEach(field => {
+    console.log(userData.value[field].required === true);
+    if (userData.value[field].required) {
+      if (field === 'consent') {
+        userData.value[field].value === false ? (userData.value[field].error = true, errors.push(true)) : userData.value[field].error = false
+      } else {
+        userData.value[field].value === '' ? (userData.value[field].error = true, errors.push(true)) : userData.value[field].error = false
+      }
+
+    }
+  })
+  console.log(fields, errors);
+
+  if (errors.length > 0) {
+    window.scroll({
+      top: 140,
+      behavior: "smooth"
+    })
+    return
+  }
+
+
   sendingRequest.value = true
   try {
     const d = await $fetch('/api/alteg', {
@@ -358,10 +389,10 @@ async function postRecord() {
         date: selectedDate.value,
         staff_id: selectedStaffId.value,
         services_id: selectedServiceId.value,
-        phone: userData.value.phone,
-        fullName: userData.value.name + ' ' + userData.value.surname,
-        email: userData.value.email,
-        comment: ("Number of people joining with " + userData.value.name + ": " + userData.value.people + ". ") + (userData.value.weddingDate ? ("Wedding Date: " + userData.value.weddingDate): "") + (userData.value.find_out ? ('. Found out: '+userData.value.find_out) : '')
+        phone: userData.value.phone.value,
+        fullName: userData.value.name.value + ' ' + userData.value.surname.value,
+        email: userData.value.email.value,
+        comment: ("Number of people joining with " + userData.value.name.value + ": " + userData.value.people.value + ". ") + (userData.value.weddingDate.value ? ("Wedding Date: " + userData.value.weddingDate.value): "") + (userData.value.find_out.value ? ('. Found out: '+userData.value.find_out.value) : '')
       }
     })
     if (!d.success) throw d.meta
