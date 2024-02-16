@@ -1,6 +1,6 @@
 <template>
   <div>
-    <pre>{{// data.servises}}</pre>
+<!--    <pre>{{data.servises}}</pre>-->
     <div class="errors">
       <div v-for="error in consoleErrors"><pre>{{error}}</pre></div>
     </div>
