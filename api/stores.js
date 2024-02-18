@@ -44,6 +44,21 @@ async function getCountry(slug, lang) {
                     premium
                     instagram
                     email
+                    alternative_appointment_button_url
+                    alternative_appointment_button_text
+                    badge
+                    cover_1x1 {
+                        data {
+                          attributes {
+                            mime
+                            formats
+                            url
+                            placeholder
+                            width
+                            height
+                          }
+                        }
+                      }
                     lines {
                     data {
                       attributes {

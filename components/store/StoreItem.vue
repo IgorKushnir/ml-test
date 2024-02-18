@@ -1,80 +1,73 @@
 <template>
   <div>
     <div class="store-item p-v-40 p-h-40 p-b-0-md p-h-0-md" >
-      <div>
-        <div class="city-header">
-          <div class="city-container">
-            <Flag :code="store.country_code"/>
-<!--            <span v-if="!country">{{store.city}}{{store.state ? (', ' + store.state : '')}}</span>-->
-            <span v-if="!country" v-html="store.city + (store.state ? ', ' + store.state : '')"/>
-            <h3 v-if="country"  style="text-transform: unset">{{store.city}}</h3>
+      <div class="store-item-wrapper" :class="store.cover_1x1.data ? 'half' : ''">
+        <div>
+          <div class="city-header">
+            <div class="city-container">
+              <Flag :code="store.country_code"/>
+              <!--            <span v-if="!country">{{store.city}}{{store.state ? (', ' + store.state : '')}}</span>-->
+              <span v-if="!country" v-html="store.city + (store.state ? ', ' + store.state : '')"/>
+              <h3 v-if="country"  style="text-transform: unset">{{store.city}}</h3>
+            </div>
+            <div class="badge subheader light_bg p-v-8 p-h-8 m-b-0" v-if="store.badge">{{store.badge}}</div>
           </div>
+
+          <h3 v-if="store.title" class="store-title m-t-8">{{store.title}}</h3>
+          <div v-if="!country && store.premium" class="premium-badge">
+            <img src="@/assets/img/premium-star.svg" width="24" height="24" alt="Premium client">
+          </div>
+          <p v-if="store.description" class="p-small">{{store.description}}</p>
+
+          <div v-if="store.address || store.phone || store.website || store?.lines?.data.length > 0" class="contacts m-t-32 m-t-16-md">
+
+            <div class="m-b-8">
+              <a :href="'http://maps.google.com/?q='+store.city+', '+store.address" target="_blank" class="link normal">{{ store.address }}</a>
+            </div>
+            <!--          <br v-if="store.phone">-->
+            <div v-if="store.phone" class="m-b-8">
+              <a :href="'tel: '+store.phone" target="_blank" class="link normal">{{ store.phone }}</a>
+            </div>
+            <div v-if="store.website" class="m-b-8">
+              <a :href="store.website" target="_blank" class="link normal">{{ store.website }}</a>
+            </div>
+            <div v-if="store.instagram">
+              <span class="icon-instagram-16"/>
+              <a v-if="store.instagram" :href="store.instagram" target="_blank" class="link normal">
+                {{getInstagramName(store.instagram)}}
+              </a>
+            </div>
+
+
+
+
+            <template v-if="store?.lines?.data.length > 0">
+              <div class="subheader small m-t-32  m-t-16-md m-b-8 gray">Lines:</div>
+              <div  class="p-small gray" v-for="line in store.lines.data">{{ line.attributes.title  }}</div>
+              <!--          <p  class="p-small" >{{store.lines.data.map(line => line.attributes.title).join(', ')   }}</p>-->
+            </template>
+          </div>
+
+
         </div>
 
-        <h3 v-if="store.title" class="store-title m-t-8">{{store.title}}</h3>
-        <div v-if="!country && store.premium" class="premium-badge">
-          <img src="@/assets/img/premium-star.svg" width="24" height="24" alt="Premium client">
-        </div>
-        <p v-if="store.description" class="p-small">{{store.description}}</p>
+        <Button v-if="store.email"
+                :path="(store.alternative_appointment_button_url && store.alternative_appointment_button_url !== '') ? store.alternative_appointment_button_url : localePath('/request-an-appointment?q=' + encodeToBase64(JSON.stringify([route.params.country ?? store.country_code, store.city.toLowerCase(), store.title + ' (' +store.address + ')', store.email])))"
+                class="m-t-32  m-t-16-md"
+                fullWidth
+        >
+          {{ (store.alternative_appointment_button_text && store.alternative_appointment_button_text !== '') ? store.alternative_appointment_button_text : $t('book_an_appointment') }}
+        </Button>
 
-        <div v-if="store.address || store.phone || store.website || store?.lines?.data.length > 0" class="contacts m-t-32 m-t-16-md">
-
-          <div class="m-b-8">
-            <a :href="'http://maps.google.com/?q='+store.city+', '+store.address" target="_blank" class="link normal">{{ store.address }}</a>
-          </div>
-<!--          <br v-if="store.phone">-->
-          <div v-if="store.phone" class="m-b-8">
-            <a :href="'tel: '+store.phone" target="_blank" class="link normal">{{ store.phone }}</a>
-          </div>
-          <div v-if="store.website" class="m-b-8">
-            <a :href="store.website" target="_blank" class="link normal">{{ store.website }}</a>
-          </div>
-          <div v-if="store.instagram">
-            <span class="icon-instagram-16"/>
-            <a v-if="store.instagram" :href="store.instagram" target="_blank" class="link normal">
-              {{getInstagramName(store.instagram)}}
-            </a>
-          </div>
-
-
-
-
-
-          <!--        <ListIcon v-if="store.address" :to="'https://www.google.com/maps/place/'+store.address"  target="_blank"  icon="location-16" class="m-v-16">-->
-          <!--          {{ store.address }}-->
-          <!--          <div class="display-block m-t-8">-->
-          <!--            <div class="p-small link" style="display: inline-block">{{ $t('storefinder_show_on_map') }}</div>-->
-          <!--          </div>-->
-          <!--        </ListIcon>-->
-
-          <!--        <ListIcon v-if="store.phone" :to="'tel: '+store.phone" icon="phone-16" class="m-v-16">-->
-          <!--          <div class="p-small link">{{store.phone}}</div>-->
-          <!--        </ListIcon>-->
-
-          <!--        <ListIcon v-if="store.website" :to="store.website" target="_blank" :text="store.website" icon="globe-16" class="m-v-16">-->
-          <!--          <div class="p-small link">{{store.website}}</div>-->
-          <!--        </ListIcon>-->
-
-          <!--        <ListIcon v-if="store.instagram" :to="store.instagram" target="_blank" :text="store.website" icon="instagram-16" class="m-v-16">-->
-          <!--          <div class="p-small link">{{store.instagram}}</div>-->
-          <!--        </ListIcon>-->
-
-          <template v-if="store?.lines?.data.length > 0">
-            <div class="subheader small m-t-32  m-t-16-md m-b-8 gray">Lines:</div>
-            <div  class="p-small gray" v-for="line in store.lines.data">{{ line.attributes.title  }}</div>
-            <!--          <p  class="p-small" >{{store.lines.data.map(line => line.attributes.title).join(', ')   }}</p>-->
-          </template>
-      </div>
       </div>
 
-      <Button v-if="store.email" :path="localePath('/request-an-appointment?q=' + encodeToBase64(JSON.stringify([route.params.country ?? store.country_code, store.city.toLowerCase(), store.title + ' (' +store.address + ')', store.email])))"
-              class="m-t-32  m-t-16-md"
-              fullWidth
-      >
-          {{ $t('book_an_appointment') }}</Button>
+      <div v-if="store.cover_1x1.data" class="cover">
+                    <Image :path="store.cover_1x1" :alt="store.title"/>
+      </div>
 
 
     </div>
+
   </div>
 
 </template>
@@ -120,20 +113,42 @@ function getInstagramName(link) {
 </script>
 
 <style scoped lang="scss">
-
-
-.store-item {
-  border: 1px solid $border-dark;
-  height: 100%;
-
+.badge {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.store-item-wrapper {
+  //display: flex;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: 100%;
+  width: 100%;
 }
-.store-item > *:first-child {
+.store-item-wrapper.half {
+  width: 50%;
+}
+.cover {
+  width: 50%;
+  height: 100%;
+  background-color: #0047e1;
+  overflow: hidden;
+  position: relative;
+}
+
+.store-item {
+  display: flex;
+  border: 1px solid $border-dark;
+  height: 100%;
+  gap: 40px
+
+
+}
+.store-item-wrapper > *:first-child {
   margin-top: 0;
 }
-.store-item > *:last-child {
+.store-item-wrapper > *:last-child {
   margin-bottom: 0;
 }
 
@@ -146,6 +161,7 @@ function getInstagramName(link) {
   }
 }
 .city-header {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -202,7 +218,19 @@ function getInstagramName(link) {
   }
 }
 
-
+@include md {
+  .store-item {
+    flex-direction: column-reverse;
+    .store-item-wrapper.half {
+      width: 100%;
+      height: auto;
+    }
+    .cover {
+      aspect-ratio: 1;
+      width: 100%;
+    }
+  }
+}
 
 
 

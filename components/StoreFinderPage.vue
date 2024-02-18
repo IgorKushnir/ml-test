@@ -46,7 +46,7 @@
         <Container v-if="!showMap && !pending">
           <template v-if="countryIndex !== -1" v-for="store in stores">
             <StoreItem :store="store"
-                       :class="stores.length <= 2 ? 'col-6 col-8-lg col-12-md' : 'col-4 col-6-xl col-12-md'"/>
+                       :class="store.cover_1x1.data ? 'col-8 col-12-xl' : (stores.length <= 2) ? 'col-6 col-8-lg col-12-md' : 'col-4 col-6-xl col-12-md'"/>
           </template>
           <template v-if="countryIndex === -1" v-for="(country, index) in countries">
             <a :href="localePath('/store-finder/'+country.slug)" v-on:click="(e) => changeCountry(index, e)"
