@@ -6,7 +6,7 @@
       <div class="shine" v-if="!bookingDates"/>
       <div class="calendar-nav">
         <div ref="prev" class="prev"><div class="icon-arrow-16 back"/></div>
-        <div  v-if="bookingDates" class="calendar-date">{{ $t($getMonths[currentMonthIndex][0]) }} {{new Date(bookingDates[currentMonthIndex][0].date).getFullYear()}}</div>
+        <div  v-if="bookingDates" class="calendar-date">{{ $t($getMonths[currentMonthIndex][0]) }} {{bookingDates[currentMonthIndex][0].year}}</div>
         <div  v-else class="calendar-date"/>
         <div ref="next" class="next"><div class="icon-arrow-16"/></div>
       </div>
