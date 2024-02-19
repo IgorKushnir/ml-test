@@ -22,7 +22,7 @@
             <div class="head center m-v-80 m-v-40-md">
               <div class="subheader gray">Trunk show</div>
               <h1 class="title">{{data.attributes.title}}</h1>
-              <NuxtLink v-if="data.attributes.apply_for" :to="localePath(data.attributes.apply_for)" target="_blank" rel="nofollow" class="button primary target m-v-8">Apply for</NuxtLink>
+              <NuxtLink v-if="data.attributes.apply_for" :to="$isUrl(data.attributes.apply_for) ? data.attributes.apply_for : localePath(data.attributes.apply_for)" :target="$isUrl(data.attributes.apply_for) ? '_blank' : '_self'" rel="nofollow" class="button primary m-v-8" :class="$isUrl(data.attributes.apply_for) ? 'target' : ''">Apply for</NuxtLink>
             </div>
 
 
@@ -107,7 +107,7 @@ import {getTrunkShow} from '~/api/trunkShows'
 import Container from "../../components/Container";
 const route = useRoute();
 let slug = route.params.slug;
-const { $getMonths, $getDatesInRange } = useNuxtApp()
+const { $getMonths, $getDatesInRange, $isUrl } = useNuxtApp()
 
 const { locale } = useI18n()
 
