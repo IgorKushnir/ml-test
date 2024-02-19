@@ -190,6 +190,8 @@ import getFlagship from '~/api/getFlagship'
 
 const { t,locale } = useI18n()
 
+const { $validateEmail } = useNuxtApp();
+
 const sendingRequest = ref(false)
 const step = ref(0)
 
@@ -359,7 +361,6 @@ async function postRecord() {
   const fields = Object.keys(userData.value)
   const errors = []
   fields.forEach(field => {
-    console.log(userData.value[field].required === true);
     if (userData.value[field].required) {
       if (field === 'consent') {
         userData.value[field].value === false ? (userData.value[field].error = true, errors.push(true)) : userData.value[field].error = false
@@ -369,7 +370,7 @@ async function postRecord() {
 
     }
   })
-  console.log(fields, errors);
+  // console.log(fields, errors);
 
   if (errors.length > 0) {
     window.scroll({

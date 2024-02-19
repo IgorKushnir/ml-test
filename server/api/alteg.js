@@ -70,8 +70,31 @@ export default  defineEventHandler(async (event) => {
                 if (!ids.includes(id)) {
                     ids.push(id)
                     _allData.push(item)
+                    // console.log('not', id, item.staff_id);
+
+                } else {
+                    // Add dublicated times into Array
+                    let t = []
+                    const index = _allData.findIndex(it => it.time === item.time)
+                    if (index!== -1) {
+                        Array.isArray(_allData[index]) ? t = _allData[index] : t = [_allData[index]]
+
+                        _allData[index] = [...t, item]
+                        // console.log('dublicated', id, item.staff_id);
+                    }
+
                 }
             })
+
+            // Randomize by staff_id
+            for (let i = 0; i < _allData.length; i++) {
+                if (Array.isArray(_allData[i])) {
+                    const ind = getRandomInt(0, _allData[i].length - 1)
+                    _allData[i] = _allData[i][ind]
+                    // console.log(allData[i][ind-1]);
+                }
+            }
+
 
             // Sort by time
             _allData = _allData.sort((a, b) => {
@@ -128,3 +151,10 @@ export default  defineEventHandler(async (event) => {
     }
 
 })
+
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
