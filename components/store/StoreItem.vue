@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="store-item p-v-40 p-h-40 p-b-0-md p-h-0-md" >
-      <div class="store-item-wrapper" :class="store.cover_1x1.data ? 'half' : ''">
+      <div class="store-item-wrapper" :class="store.cover_1x1?.data ? 'half' : ''">
         <div>
           <div class="city-header">
             <div class="city-container">
@@ -51,7 +51,7 @@
 
         </div>
 
-        <Button v-if="store.email"
+        <Button v-if="store.email || (store.alternative_appointment_button_url && store.alternative_appointment_button_url !== '')"
                 :path="(store.alternative_appointment_button_url && store.alternative_appointment_button_url !== '') ? store.alternative_appointment_button_url : localePath('/request-an-appointment?q=' + encodeToBase64(JSON.stringify([route.params.country ?? store.country_code, store.city.toLowerCase(), store.title + ' (' +store.address + ')', store.email])))"
                 class="m-t-32  m-t-16-md"
                 fullWidth
@@ -61,7 +61,7 @@
 
       </div>
 
-      <div v-if="store.cover_1x1.data" class="cover">
+      <div v-if="store.cover_1x1?.data" class="cover">
                     <Image :path="store.cover_1x1" :alt="store.title"/>
       </div>
 

@@ -3,12 +3,15 @@ export default defineEventHandler(async (event) => {
 
     const cookies = parseCookies(event)
     const show_pl = cookies?.show_pl
+
+
     if (show_pl !== 'true') {
         const path = getRequestPath(event);
-
-        if (path.startsWith('/pl')) {
-            console.log('yes', path);
-            sendRedirect(event, '/dress', 301)
+        if (path !== "/pl/request-an-appointment/flagship") {
+            if (path.startsWith('/pl')) {
+                console.log('yes', path);
+                sendRedirect(event, '/dress', 301)
+            }
         }
     }
 

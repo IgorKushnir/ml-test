@@ -168,7 +168,7 @@
             <div v-if="data.contact_title" class="subheader m-b-16">{{ data.contact_title }}</div>
             <div v-if="data.contact_address" class="m-b-8">
               <span class="icon-location-16"/>
-              <a :href="'http://maps.google.com/?q='+data.contact_address" target="_blank" class="link normal m-l-8">{{ data.contact_address }}</a>
+              <a :href="(data.contact_address_url === null || data.contact_address_url === '') ? 'http://maps.google.com/?q='+data.contact_address : data.contact_address_url" target="_blank" class="link normal m-l-8">{{ data.contact_address }}</a>
             </div>
             <div v-if="data.contact_phone" class="m-b-32">
               <span class="icon-phone-16"/>
@@ -181,6 +181,17 @@
         </div>
       </Container>
     </div>
+
+    <Seo
+        :data="data"
+        :title="data.title"
+        :breadcrumbs="[
+        {
+          title: data.title,
+        }
+    ]"
+        :localizations="[{locale: 'en', slug: 'request-an-appointment/flagship'}, {locale: 'pl', slug: 'request-an-appointment/flagship'}]"
+    />
 
   </div>
 </template>

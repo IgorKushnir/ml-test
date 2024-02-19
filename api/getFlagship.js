@@ -30,6 +30,7 @@ export default async function (lang, publicationState = "LIVE") {
         success
         contact_title
         contact_address
+        contact_address_url
         contact_phone
         social {
           title
