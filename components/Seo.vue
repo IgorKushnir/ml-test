@@ -209,21 +209,35 @@ function parseVariablesInBrackets(str) {
 
 function setSeo() {
   const links = []
+
+  // console.log(props.localizations);
   if (props.localizations && props.localizations.length > 0) {
     props.localizations.forEach(loc => {
       if (!loc.slug && loc.attributes) loc = loc.attributes
 
+
+
       if (loc.locale === 'en') {
-        links.push({rel: 'alternate', href: site + '/' + loc.slug, hrefLang: 'en'})
-        links.push({rel: 'alternate', href: site + '/' + loc.slug, hrefLang: 'x-default'})
+        let _path = [  ...props.pathToPage, loc.slug].join('/')
+        if (_path.endsWith('/')) _path = _path.slice(0, -1);
+        (_path !== null && _path !== '') ? _path = [site, _path].join('/') : _path = site;
+
+        links.push({rel: 'alternate', href: _path, hrefLang: 'en'})
+        links.push({rel: 'alternate', href: _path, hrefLang: 'x-default'})
       } else {
-        links.push({rel: 'alternate', href: site + '/' +loc.locale + "/" + loc.slug, hrefLang: loc.locale})
+        let _path = ['/'+loc.locale, ...props.pathToPage, loc.slug].join('/')
+        if (_path.endsWith('/')) _path = _path.slice(0, -1)
+
+        links.push({rel: 'alternate', href: site + _path, hrefLang: loc.locale})
       }
     })
     if (!(props.localizations && props.localizations.length > 0 && props.localizations.findIndex(loc => loc.locale === locale.value) !== -1)) {
-      links.push({rel: 'alternate', href: siteUrl, hrefLang: locale.value})
+      let _siteUrl = siteUrl
+      if (_siteUrl.endsWith('/')) _siteUrl = _siteUrl.slice(0, -1)
+
+      links.push({rel: 'alternate', href: _siteUrl, hrefLang: locale.value})
       if (locale.value === 'en') {
-        links.push({rel: 'alternate', href: siteUrl, hrefLang: 'x-default'})
+        links.push({rel: 'alternate', href: _siteUrl, hrefLang: 'x-default'})
       }
     }
   }
