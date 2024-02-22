@@ -7,12 +7,17 @@ export default defineEventHandler(async (event) => {
 
     if (show_pl !== 'true') {
         const path = getRequestPath(event);
-        if (path !== "/pl/request-an-appointment/flagship") {
-            if (path.startsWith('/pl')) {
-                console.log('yes', path);
+        if (path.startsWith('/pl')) {
+            console.log(path);
+            if (!(path.startsWith('/pl/request-an-appointment/flagship')) ) {
                 sendRedirect(event, '/dress', 301)
+                // console.log('yes');
+            } else {
+                // console.log('false');
             }
         }
+
+
     }
 
 })
