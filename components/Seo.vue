@@ -217,11 +217,14 @@ function setSeo() {
         links.push({rel: 'alternate', href: site + '/' + loc.slug, hrefLang: 'en'})
         links.push({rel: 'alternate', href: site + '/' + loc.slug, hrefLang: 'x-default'})
       } else {
-        links.push({rel: 'alternate', href: site + '/' +locale.value + "/" + loc.slug, hrefLang: loc.locale})
+        links.push({rel: 'alternate', href: site + '/' +loc.locale + "/" + loc.slug, hrefLang: loc.locale})
       }
     })
     if (!(props.localizations && props.localizations.length > 0 && props.localizations.findIndex(loc => loc.locale === locale.value) !== -1)) {
       links.push({rel: 'alternate', href: siteUrl, hrefLang: locale.value})
+      if (locale.value === 'en') {
+        links.push({rel: 'alternate', href: siteUrl, hrefLang: 'x-default'})
+      }
     }
   }
   useHead({
