@@ -208,10 +208,27 @@ function parseVariablesInBrackets(str) {
 }
 
 function setSeo() {
+  const links = []
+  if (props.localizations && props.localizations.length > 0) {
+    props.localizations.forEach(loc => {
+      if (!loc.slug && loc.attributes) loc = loc.attributes
+
+      if (loc.locale === 'en') {
+        links.push({rel: 'alternate', href: site + '/' + loc.slug, hrefLang: 'en'})
+        links.push({rel: 'alternate', href: site + '/' + loc.slug, hrefLang: 'x-default'})
+      } else {
+        links.push({rel: 'alternate', href: site + '/' +locale.value + "/" + loc.slug, hrefLang: loc.locale})
+      }
+    })
+    if (!(props.localizations && props.localizations.length > 0 && props.localizations.findIndex(loc => loc.locale === locale.value) !== -1)) {
+      links.push({rel: 'alternate', href: siteUrl, hrefLang: locale.value})
+    }
+  }
   useHead({
     title: _title,
     link: [
-      {rel: 'canonical', href: siteUrl}
+      {rel: 'canonical', href: siteUrl},
+        ...links
     ],
     meta: [
       {property: 'og:locale', content: 'en_US'},

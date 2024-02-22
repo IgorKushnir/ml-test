@@ -12,7 +12,7 @@
     <PageNotFound :show="!pending && data === null"/>
     <Loading :pending="pending"/>
 
-    <Seo :data="data?.attributes"/>
+    <Seo :data="data?.attributes" :localizations="[{locale: 'en', slug: ''}, {locale: 'pl', slug: ''}]"/>
   </div>
 </template>
 
