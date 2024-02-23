@@ -74,7 +74,7 @@
                 <div class="subheader small">{{ $t('fabric') }}</div>
                 <div class="p-small">
                   <template v-for="(fabric, index) in data.fabrics.data">
-                    <NuxtLink :to="localePath('/'+data.type.data.attributes.slug+'/fabrics/'+fabric.attributes.slug+'/0').slice(0,-1)" class="p-small link">{{ fabric.attributes.title }}</NuxtLink><span v-if="index+1 < data.silhouettes.data.length">, </span>
+                    <NuxtLink :to="localePath('/'+data.type.data.attributes.slug+'/fabrics/'+fabric.attributes.slug+'/0').replace('/0','')" class="p-small link">{{ fabric.attributes.title }}</NuxtLink><span v-if="index+1 < data.fabrics.data.length">, </span>
                   </template>
                 </div>
               </div>
@@ -129,6 +129,7 @@
         <h2 v-if="!discontinued" class="m-t-0 m-b-40 m-b-24-md">{{ $t('complete_your_look') }}</h2>
         <h2 v-if="discontinued" class="m-t-0 m-b-40 m-b-24-md">{{ $t('find_alternatives') }}</h2>
       </Carusel>
+
       <Carusel v-if="data.extra !== null && data.extra.also.length > 0 && !discontinued" :data="data.extra?.also"  class="m-v-80">
         <h2 class="m-t-0 m-b-40 m-b-24-md">{{ $t('you_may_also_like') }}</h2>
       </Carusel>
@@ -154,6 +155,7 @@
 <script setup lang="js">
 import getProduct from '~/api/getProduct'
 const { $setViewedProduct, $getViewedProduct, $getLikedProducts, $toggleLikeProduct } = useNuxtApp()
+import {useTypesData} from "~/composables/states";
 const isMobile = useIsMobile();
 
 const route = useRoute();
@@ -176,6 +178,25 @@ const extrudedIds = useViewedProductIds().value;
 let {data, pending} = await getProduct(slug, JSON.stringify(extrudedIds), publicationState, locale.value)
 
 const discontinued = computed(() => data.value.discontinued)
+
+// Redirect from not TYPE path
+if (process.server) {
+  const types = useTypesData()
+
+  const fullPath = route.fullPath;
+  const path = fullPath.replaceAll('/', '').replace(slug, '')
+  const index = types.value.findIndex(t => t.slug === path)
+  if (index === -1) {
+    // localePath()
+    //
+    console.log(data.value?.type?.data?.attributes?.slug);
+
+    if (data.value?.type?.data?.attributes?.slug) {
+      const redirectLink = ['',data.value?.type?.data?.attributes?.slug, slug].join('/')
+      navigateTo(localePath(redirectLink), { redirectCode: 301 })
+    }
+  }
+}
 
 
 if (process.server) {

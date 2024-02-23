@@ -28,6 +28,13 @@ query Product{
       ${seo()}
             ${locals('product')}
       slug
+      type {
+            data {
+                attributes {
+                slug
+                }
+            }
+        }
       extra${extrudeIds}
         title
         discontinued
@@ -113,6 +120,13 @@ query Product{
               attributes {
                 title
                 slug
+                type {
+                  data {
+                    attributes {
+                      slug
+                    }
+                  }
+                }
                 cover_3x4 {
                   data {
                     attributes {

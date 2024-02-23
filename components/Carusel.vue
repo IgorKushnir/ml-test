@@ -1,4 +1,5 @@
 <template>
+
   <transition name="fade">
     <div v-show="show" class="overflow" :class="navCompact ? 'compact' : 'full'">
 
@@ -28,7 +29,7 @@
                 <NuxtLink
                     v-for="item in data"
                     class="swiper-slide"
-                    :to="getLink(item?.attributes?.slug)"
+                    :to="getLink(item?.attributes?.slug, item?.attributes?.type?.slug ?? item?.attributes?.type?.data?.attributes?.slug)"
                     :target="$isAbsoluteUrl(item?.attributes?.slug) ? '_blank' : '_self'"
                 >
                   <div class="ratio-3x4">
@@ -151,14 +152,14 @@ onMounted(() => {
   });
 })
 
-function getLink(slug) {
+function getLink(slug, path) {
   if ($isAbsoluteUrl(slug)) {
     return slug
   }
   if (slug && slug.startsWith('/')) {
     return localePath(slug);
   }
-  return slug ? localePath((props.path + '/' + slug)) : null
+  return slug ? localePath(((path ? '/'+path : props.path) + '/' + slug)) : null
 }
 
 
