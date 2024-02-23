@@ -37,8 +37,8 @@ const props = defineProps({
     type: Array,
   },
   pathToPage: {
-    type: Array,
-    default: []
+    type: Object,
+    default: {}
   }
 })
 
@@ -66,9 +66,26 @@ function setLocalizations() {
       let _locale = loc.attributes
       if (!_locale) _locale = loc
 
-      const _path = [_locale.locale === "en" ? null : '/'+_locale.locale, ...props.pathToPage, _locale.slug].join('/')
+      let type;
+      if (_locale.type) type = _locale.type.data.attributes.slug
+
+      const p = _locale.locale === "en" ? [] : [_locale.locale]
+      // console.log({p});
+      if (props.pathToPage[_locale.locale]) p.push(props.pathToPage[_locale.locale])
+      if (type) p.push(type)
+      p.push(_locale.slug)
+      // console.log({p});
+
+      // const _path = (_locale.locale === "en" ? [] : p).join('/');
+      const _path = '/'+p.join('/');
+
       // console.log({_path});
+      // const _path = [_locale.locale === "en" ? null : '/'+_locale.locale, props.pathToPage[_locale.locale], _locale.slug].join('/')
+
       route.meta.locales[_locale.locale] = {path: _path}
+
+
+
     })
     // console.log(props.localizations);
   }
@@ -215,17 +232,29 @@ function setSeo() {
     props.localizations.forEach(loc => {
       if (!loc.slug && loc.attributes) loc = loc.attributes
 
+      let type;
+      if (loc.type) type = loc.type.data.attributes.slug
 
 
       if (loc.locale === 'en') {
-        let _path = [  ...props.pathToPage, loc.slug].join('/')
+        let _path = []
+        if (props.pathToPage[loc.locale]) _path.push(props.pathToPage[loc.locale])
+        if (type) _path.push(type)
+        _path.push(loc.slug)
+        _path = _path.join('/')
+
         if (_path.endsWith('/')) _path = _path.slice(0, -1);
         (_path !== null && _path !== '') ? _path = [site, _path].join('/') : _path = site;
 
         links.push({rel: 'alternate', href: _path, hrefLang: 'en'})
         links.push({rel: 'alternate', href: _path, hrefLang: 'x-default'})
       } else {
-        let _path = ['/'+loc.locale, ...props.pathToPage, loc.slug].join('/')
+        let _path = ['/'+loc.locale]
+        if (props.pathToPage[loc.locale]) _path.push(props.pathToPage[loc.locale])
+        if (type) _path.push(type)
+        _path.push(loc.slug)
+        _path = _path.join('/')
+
         if (_path.endsWith('/')) _path = _path.slice(0, -1)
 
         links.push({rel: 'alternate', href: site + _path, hrefLang: loc.locale})

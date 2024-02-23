@@ -118,10 +118,13 @@
     <Loading :pending="pending"/>
     <PageNotFound :show="data == null && !pending"/>
 
+<!--    {{data?.type?.data?.attributes?.slug}}-->
+<!--    :pathToPage="[data?.type?.data?.attributes?.slug]"-->
+
+    <pre>{{data?.localizations?.data}}</pre>
     <Seo
         :data="data"
         :breadcrumbs="breadcrumbs"
-        :pathToPage="[data?.type?.data?.attributes?.slug]"
         :localizations="data?.localizations?.data"
     />
   </div>

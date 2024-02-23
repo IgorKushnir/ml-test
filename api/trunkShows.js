@@ -1,4 +1,5 @@
 import seo from './misc/seo'
+import locals from './misc/locals'
 
 async function getTrunkShows(lang) {
     const graphql = useStrapiGraphQL()
@@ -58,6 +59,7 @@ async function getTrunkShow(slug, lang) {
     data {
       attributes {
       ${seo()}
+      ${locals()}
         slug
         title
         description

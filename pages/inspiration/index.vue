@@ -4,7 +4,9 @@
         {
           title: 'Inspiration',
         }
-    ]"/>
+    ]"
+         :localizations="[{locale: 'en', slug: 'inspiration'}, {locale: 'pl', slug: 'inspiration'}]"
+    />
 
     <transition name="fade">
       <div v-if="data != null">

@@ -26,7 +26,7 @@ query Product{
       id
       attributes {
       ${seo()}
-            ${locals()}
+            ${locals('product')}
       slug
       extra${extrudeIds}
         title

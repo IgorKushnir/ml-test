@@ -1,5 +1,7 @@
 import content from './misc/content'
 import seo from './misc/seo'
+import locals from './misc/locals'
+
 
 async function getCategories(lang) {
     const graphql = useStrapiGraphQL()
@@ -118,6 +120,7 @@ async function getInspiration(slug, lang) {
   ){
     data {
       attributes {
+      ${locals()}
       ${seo()}
         title
         slug
@@ -147,7 +150,7 @@ async function getInspiration(slug, lang) {
 }
     `);
 
-    console.log('data_' + collection);
+    // console.log('data_' + collection);
     const {data, pending} = await useLazyAsyncData('data_' + collection, () => response, {
         transform: (d) => d.data[collection].data
     })

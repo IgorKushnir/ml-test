@@ -9,7 +9,7 @@
           title: data?.attributes?.title,
         }
     ]"
-         :pathToPage="['news']"
+         :pathToPage="{en: 'news', pl: 'news'}"
          :localizations="data?.attributes?.localizations?.data"
 
     />

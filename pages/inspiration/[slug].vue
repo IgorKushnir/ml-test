@@ -8,7 +8,10 @@
         {
           title: '' + data?.attributes?.title
         }
-    ]"/>
+    ]"
+         :pathToPage="{en: 'inspiration', pl: 'inspiration'}"
+         :localizations="data?.attributes?.localizations?.data"
+    />
     <transition name="fade">
       <div v-if="!pending && data != null">
         <Container justify="justify-center">
