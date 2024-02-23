@@ -8,7 +8,10 @@
         {
           title: dataCollection?.title
         }
-    ]"/>
+    ]"
+         :pathToPage="{en: 'collections', pl: 'collections'}"
+         :localizations="dataCollection?.localizations?.data"
+    />
     <transition name="fade">
 
       <div v-if="!pendingCollection && dataCollection != null">
