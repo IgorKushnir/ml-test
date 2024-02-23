@@ -143,7 +143,6 @@
 <!--    {{data?.type?.data?.attributes?.slug}}-->
 <!--    :pathToPage="[data?.type?.data?.attributes?.slug]"-->
 
-    <pre>{{data?.localizations?.data}}</pre>
     <Seo
         :data="data"
         :breadcrumbs="breadcrumbs"
