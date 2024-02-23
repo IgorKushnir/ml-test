@@ -61,6 +61,22 @@ query Product{
             }
           }
         }
+        silhouettes {
+          data {
+            attributes {
+              title
+              slug
+            }
+          }
+        }
+        fabrics {
+          data {
+            attributes {
+              title
+              slug
+            }
+          }
+        }
         collection {
           data {
             attributes {

@@ -60,6 +60,28 @@
               </div>
             </div>
 
+            <div v-if="data.silhouettes.data" class="info m-b-32  m-b-16-md">
+              <div>
+                <div class="subheader small">{{ $t('silhouette') }}</div>
+                <div class="p-small">
+                  <NuxtLink :to="localePath('/'+data.type.data.attributes.slug+'/silhouettes/'+data.silhouettes.data.attributes.slug)" class="p-small link">{{ data.silhouettes.data.attributes.title }}</NuxtLink>
+                </div>
+              </div>
+            </div>
+
+            <div v-if="data.fabrics.data.length > 0" class="info m-b-32  m-b-16-md">
+              <div>
+                <div class="subheader small">{{ $t('fabric') }}</div>
+                <div class="p-small">
+                  <template v-for="(fabric, index) in data.fabrics.data">
+                    <NuxtLink :to="localePath('/'+data.type.data.attributes.slug+'/fabrics/'+fabric.attributes.slug+'/0').slice(0,-1)" class="p-small link">{{ fabric.attributes.title }}</NuxtLink><span v-if="index+1 < data.silhouettes.data.length">, </span>
+                  </template>
+                </div>
+              </div>
+            </div>
+
+
+
             <div v-if="data.properties.length > 0" class="info extra">
               <div v-for="property in data.properties" class="m-b-32 m-b-16-md">
                 <div class="subheader small">{{ property.title }}</div>
