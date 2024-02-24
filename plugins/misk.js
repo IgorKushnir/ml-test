@@ -19,27 +19,27 @@ export default defineNuxtPlugin(() => {
             getDatesInRange: (from, to, months, showYear) => {
                 const _from = new Date(from);
                 const _to = new Date(to);
-                const compareDate = (_from.getMonth() + _from.getFullYear()) === (_to.getMonth() + _to.getFullYear())
+                const compareDate = (_from.getUTCMonth() + _from.getUTCFullYear()) === (_to.getUTCMonth() + _to.getUTCFullYear())
 
                 let _fromYear = '';
                 let _toYear = '';
                 if (showYear) {
-                    _fromYear = ', ' + _from.getFullYear()
-                    _toYear = ', ' + _to.getFullYear()
+                    _fromYear = ', ' + _from.getUTCFullYear()
+                    _toYear = ', ' + _to.getUTCFullYear()
                 }
 
-                const mFrom = months[_from.getMonth()][1]
-                const mTo = months[_to.getMonth()][1]
+                const mFrom = months[_from.getUTCMonth()][1]
+                const mTo = months[_to.getUTCMonth()][1]
                 if (compareDate) {
-                    return mFrom + ' ' + _from.getDate() + '-' + _to.getDate() + _fromYear;
+                    return mFrom + ' ' + _from.getUTCDate() + '-' + _to.getUTCDate() + _fromYear;
                 }
-                return mFrom + ' ' + _from.getDate() + _fromYear + ' - ' + mTo + ' ' +  _to.getDate() + _toYear;
+                return mFrom + ' ' + _from.getUTCDate() + _fromYear + ' - ' + mTo + ' ' +  _to.getUTCDate() + _toYear;
             },
             getDate: (date, months) => {
                 const _date = new Date(date);
-                const m = months[_date.getMonth()][0]
+                const m = months[_date.getUTCMonth()][0]
 
-                return m + ' ' +  _date.getDate() + ', ' + _date.getFullYear()
+                return m + ' ' +  _date.getUTCDate() + ', ' + _date.getUTCFullYear()
             },
 
             handleNewLine: (string) => {

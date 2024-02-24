@@ -70,7 +70,7 @@ const {$getMonths, $getDatesInRange} = useNuxtApp()
 const getMonthSection = computed(() => {
   let d = data.value.map(e => {
     const date = new Date(e.attributes.from)
-    return [date.getMonth(), date.getFullYear()]
+    return [date.getUTCMonth(), date.getUTCFullYear()]
   })
   let prev;
   d.forEach((e, i) => {
