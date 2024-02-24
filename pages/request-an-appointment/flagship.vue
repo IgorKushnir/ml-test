@@ -14,6 +14,8 @@
                    :currentStep="step"
       />
 
+      <Error :text="altegError"/>
+
       <FlagshipStepOne
           v-if="step === 0"
           @serviceId="(id) => goStep(1, id)"
@@ -137,7 +139,7 @@
             <label v-if="true" for="find_out" class="error-message">{{ $t('book_error_empty_field') }}</label>
           </div>
 
-          <div class="input-block c-4"  :class="userData.consent.error ? 'error' : ''">
+          <div class="input-block c-4" id="consent"  :class="userData.consent.error ? 'error' : ''">
 
             <FilterCheckBox
                 :value="userData.consent.value"
@@ -280,6 +282,8 @@ function goStep(_step, payload) {
   })
 }
 async function getServices() {
+  altegError.value = null
+
   try {
     const d = await $fetch('/api/alteg', {
       method: "POST",
@@ -300,15 +304,23 @@ async function getServices() {
     bookingStaff.value = staff.filter(function(item, pos) {
       return staff.indexOf(item) == pos;
     })
+    if (!bookingStaff.value || bookingStaff.value.length === 0) {
+      throw 'staff ids not found'
+    }
 
   } catch (e) {
     console.error(e);
     consoleErrors.value.push(e)
+
+    altegError.value = t("service_unavailable")
+    bookingServices.value = []
   }
 }
 async function getDaysAndHours() {
   bookingDates.value = null
   bookingHours.value = null
+  altegError.value = null
+
   try {
     const d = await $fetch('/api/alteg', {
       method: "POST",
@@ -345,11 +357,14 @@ async function getDaysAndHours() {
   } catch (e) {
     console.error(e);
     consoleErrors.value.push(e)
+
+    altegError.value = t("service_unavailable")
   }
 }
 async function getHours(date) {
   selectedDay.value = date
   bookingHours.value = null
+  altegError.value = null
   try {
     const d = await $fetch('/api/alteg', {
       method: "POST",
@@ -360,24 +375,28 @@ async function getHours(date) {
         service_id: selectedServiceId.value,
       }
     })
-    if (!d.success) d.meta
+    if (!d.success) throw d.meta
 
     bookingHours.value = d.data
 
   } catch (e) {
     console.error(e);
     consoleErrors.value.push(e)
+
+    altegError.value = t("service_unavailable")
   }
 }
 async function postRecord() {
+  altegError.value = null
+
   const fields = Object.keys(userData.value)
   const errors = []
   fields.forEach(field => {
     if (userData.value[field].required) {
       if (field === 'consent') {
-        userData.value[field].value === false ? (userData.value[field].error = true, errors.push(true)) : userData.value[field].error = false
+        userData.value[field].value === false ? (userData.value[field].error = true, errors.push(field)) : userData.value[field].error = false
       } else {
-        userData.value[field].value === '' ? (userData.value[field].error = true, errors.push(true)) : userData.value[field].error = false
+        userData.value[field].value === '' ? (userData.value[field].error = true, errors.push(field)) : userData.value[field].error = false
       }
 
     }
@@ -385,10 +404,11 @@ async function postRecord() {
   // console.log(fields, errors);
 
   if (errors.length > 0) {
-    window.scroll({
-      top: 140,
-      behavior: "smooth"
-    })
+    const yOffset = -40;
+    const element = document.getElementById(errors[0]);
+    const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
+    window.scrollTo({top: y, behavior: 'smooth'});
+
     return
   }
 
@@ -416,6 +436,12 @@ async function postRecord() {
   } catch (e) {
     console.error(e);
     consoleErrors.value.push(e)
+
+    if (e.message) {
+      altegError.value = e.message
+    } else {
+      altegError.value = t("service_unavailable")
+    }
   }
 
   sendingRequest.value = false

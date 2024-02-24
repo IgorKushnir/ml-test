@@ -1,5 +1,4 @@
 <template>
-
   <Container>
     <div class="col-6 col-12-lg">
       <div class="ratio-1x1">
