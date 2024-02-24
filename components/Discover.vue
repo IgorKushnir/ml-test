@@ -46,7 +46,7 @@
     <PageNotFound :show="dataProducts == null && !pendingProducts"/>
 
 
-    <Seo :data="type"
+    <Seo :data="route.meta?.title ? null : type"
          :breadcrumbs="[
         {
           title: route.meta?.title ?? type?.title,

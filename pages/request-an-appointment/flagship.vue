@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="errors">
-      <div v-for="error in consoleErrors"><pre>{{error}}</pre></div>
-    </div>
+<!--    <div class="errors">-->
+<!--      <div v-for="error in consoleErrors"><pre>{{error}}</pre></div>-->
+<!--    </div>-->
     <div v-if="!pending">
       <!--    Choose a service-->
       <!--    Select session date and time-->
@@ -242,6 +242,7 @@ const steps = ref([
 ])
 
 const consoleErrors = ref([])
+const altegError = ref(null)
 
 let { data, pending, refresh, error } = await getFlagship(locale.value)
 

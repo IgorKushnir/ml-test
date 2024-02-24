@@ -1,5 +1,6 @@
 <template>
   <div>
+<!--    <pre>{{data}}</pre>-->
 <!--    <pre>{{localizations}}</pre>-->
 <!--    <pre>{{route.meta.nuxtI18n}}</pre>-->
     <SeoText v-if="seoText || data?.seo?.seoText" :html="seoText || data?.seo?.seoText"/>
@@ -133,11 +134,11 @@ const patternIndex = computed(() => {
 })
 
 // props.title ??
-console.log('metaTitle',props.data?.seo?.metaTitle);
-console.log('parseVariablesInBrackets',parseVariablesInBrackets(translations.value?.seo_pattern[patternIndex.value]?.title));
+// console.log(props.data);
+// console.log('metaTitle',props.data?.seo?.metaTitle);
+// console.log('parseVariablesInBrackets',parseVariablesInBrackets(translations.value?.seo_pattern[patternIndex.value]?.title));
 const _title = computed(() => props.data?.seo?.metaTitle ?? parseVariablesInBrackets(translations.value?.seo_pattern[patternIndex.value]?.title) ?? 'Milla Nova');
 const _description = computed(() =>  props.description ?? props.data?.seo?.metaDescription ?? parseVariablesInBrackets(translations.value?.seo_pattern[patternIndex.value]?.description) ?? '')
-// const keywords = computed(() => props.data?.seo?.keywords ??parseVariablesInBrackets( translations.value?.seo_pattern[patternIndex.value]?.keywords) ?? '')
 
 const ogImageUrl = 'https://millanova.com/img/og-image.jpg'
 
