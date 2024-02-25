@@ -5,7 +5,7 @@ async function init() {
     // Get sitemap
 
     try {
-        const response = await axios.get( "https://admin.millanova.com/sitemap/index.xml")
+        const response = await axios.get( "https://admin.millanova.com/api/sitemap/index.xml")
         if (response.status === 200) {
             const data = response.data;
             fs.writeFile('public/sitemap.xml', data, function (err) {

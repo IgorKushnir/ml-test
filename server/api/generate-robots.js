@@ -11,14 +11,22 @@ export default  defineEventHandler(async (event) => {
 
     if (body) {
         try {
-            if (fs.existsSync('.output/public/')) await fs.writeFileSync('.output/public/robots.txt', body);
-            if (fs.existsSync('public/')) await fs.writeFileSync('public/robots.txt', body);
+            const folders = []
+            if (fs.existsSync('.output/public/')) {
+                await fs.writeFileSync('.output/public/robots.txt', body);
+                folders.push('.output/public/robots.txt')
+            }
+            if (fs.existsSync('public/')) {
+                await fs.writeFileSync('public/robots.txt', body);
+                folders.push('public/')
+            }
 
 
             setResponseStatus(event, 200)
             return  {
                 status: "success",
-                message: 'Robots updated: ' + new Date().toDateString()
+                message: 'Robots updated: ' + new Date().toDateString(),
+                folders
             }
         } catch (e) {
             setResponseStatus(event, 500)
