@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
         try {
             const response = await axios.get( url + "/robot-txt/robots")
             if (response.status === 200) {
-                const data = response.data;
+                const data = response.data.body;
                 return '<pre>' + data + '</pre>'
             } else {
                 throw 'response.status: '+ response.status
