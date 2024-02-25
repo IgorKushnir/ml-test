@@ -27,7 +27,24 @@ export default defineEventHandler(async (event) => {
             if (response.status === 200) {
                 const data = response.data;
                 // return '<pre>' + data + '</pre>'
-                send(event, data, 'xml')
+                send(event, data, 'xsl')
+                // return data
+            } else {
+                throw 'response.status: '+ response.status
+            }
+        } catch (e) {
+            console.error('Error sitemap');
+            console.error(e);
+            return ''
+        }
+    }
+    if (path.startsWith('/xsl')) {
+        try {
+            const response = await axios.get( "https://admin.millanova.com/api/sitemap"+path)
+            if (response.status === 200) {
+                const data = response.data;
+                // return '<pre>' + data + '</pre>'
+                send(event, data, 'xsl')
                 // return data
             } else {
                 throw 'response.status: '+ response.status
