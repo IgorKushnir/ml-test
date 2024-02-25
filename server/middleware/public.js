@@ -3,10 +3,11 @@ import fs from "fs";
 
 export default defineEventHandler(async (event) => {
     const path = getRequestPath(event);
+    const url = process.env.STRAPI_URL
 
     if (path === "/robots.txt") {
         try {
-            const response = await axios.get( "https://admin.millanova.com/robot-txt/robots")
+            const response = await axios.get( process.env.STRAPI_URL + "/robot-txt/robots")
             if (response.status === 200) {
                 const data = response.data;
                 return '<pre>' + data + '</pre>'
@@ -23,7 +24,7 @@ export default defineEventHandler(async (event) => {
 
     if (path === "/sitemap.xml") {
         try {
-            const response = await axios.get( "https://admin.millanova.com/api/sitemap/index.xml")
+            const response = await axios.get( process.env.STRAPI_URL + "/api/sitemap/index.xml")
             if (response.status === 200) {
                 const data = response.data;
                 // return '<pre>' + data + '</pre>'
