@@ -16,10 +16,10 @@ export default  defineEventHandler(async (event) => {
                 await fs.writeFileSync('.output/public/robots.txt', body);
                 folders.push('.output/public/robots.txt')
             }
-            if (fs.existsSync('public/')) {
-                await fs.writeFileSync('public/robots.txt', body);
-                folders.push('public/')
-            }
+            // if (fs.existsSync('public/')) {
+            //     await fs.writeFileSync('public/robots.txt', body);
+            //     folders.push('public/')
+            // }
 
 
             setResponseStatus(event, 200)
