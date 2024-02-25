@@ -27,7 +27,8 @@ export default defineEventHandler(async (event) => {
             if (response.status === 200) {
                 const data = response.data;
                 // return '<pre>' + data + '</pre>'
-                return data
+                send(event, data, 'xml')
+                // return data
             } else {
                 throw 'response.status: '+ response.status
             }
