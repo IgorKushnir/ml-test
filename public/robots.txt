@@ -1,0 +1,13 @@
+User-agent: *
+Disallow: /moodboard
+Disallow: /book-an-appointment?q=*
+Disallow: /request-an-appointment?q=*
+
+Disallow: /pl
+Disallow: /pl/*
+Disallow: /search
+Disallow: /request-an-appointment/flagship
+
+Sitemap: https://millanova.com/sitemap.xml
+
+1111222
