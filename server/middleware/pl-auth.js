@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
     //
     //
     // if (show_pl !== 'true') {
-    //     const path = getRequestPath(event);
+        const path = getRequestPath(event);
         if (path.startsWith('/pl')) {
             console.log({path});
             // if (!(path.startsWith('/pl/request-an-appointment/flagship')) ) {
