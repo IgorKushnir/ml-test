@@ -80,40 +80,65 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     data.value.forEach(newRoute => {
         routesFrom.push(newRoute.from)
 
+        // Replace to poland translation slug
+        let to = newRoute.to
+        if (locale.value === 'pl') {
+            to = replacePathToPlLang(to)
+        }
         router.addRoute({
             name: (newRoute.name + '___' + newRoute.locale).replaceAll('/', '_'), // + '___' + newRoute.locale,
-            path: newRoute.to,
+            path: to,
             component: () => Discover,
             meta: setMeta(newRoute)
         })
     })
 
 
+
     router.afterEach((route) => {
-        // console.log({route});
         const fullPath = route.fullPath;
         if (routesFrom.includes(fullPath)) {
             const index = data.value.findIndex(d => d.from === fullPath)
+
+            let to = data.value[index].to
+
+            // Replace to poland translation slug
+            if (locale.value === 'pl') {
+                to = replacePathToPlLang(to)
+            }
+
             if (is_server()) {
-                navigateTo(data.value[index].to, {
+                navigateTo(to, {
                     redirectCode: 301
                 })
             } else {
                 route.meta = setMeta(data.value[index])
-                window.history.replaceState(window.history.state, '', data.value[index].to)
+                window.history.replaceState(window.history.state, '', to)
             }
         }
     })
 
-    // await setRouts()
-    //
-    //
-    // async function setRouts() {
-    //
-    // }
-
-
 })
+const polandSlugTranslations = {
+    silhouettes: "silhouette",
+    colors: "kolor",
+    lines: "linia",
+    styles: "styl",
+    necklines: "dekolt",
+    decorations: "dekor",
+    others: "inni",
+    budgets: "budzet",
+    backnecklines: "dekolt-z-tylu",
+    accessoires: "akcesoria",
+    shoes: "shoes",
+}
+function replacePathToPlLang(path) {
+    let to = path
+    Object.keys(polandSlugTranslations).forEach(key => {
+        to = to.replaceAll(key, polandSlugTranslations[key])
+    })
+    return to;
+}
 
 function setMeta(newRoute) {
     return {
