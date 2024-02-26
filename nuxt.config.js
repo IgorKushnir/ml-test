@@ -29,6 +29,11 @@ export default defineNuxtConfig({
                 pl: '/wyszukiwarka-sklepow/[country]'
             },
 
+        },
+        detectBrowserLanguage: {
+            useCookie: true,
+            cookieKey: 'i18n_redirected',
+            redirectOn: 'root' // recommended
         }
         // debug: true
 
