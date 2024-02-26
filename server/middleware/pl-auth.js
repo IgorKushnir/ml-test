@@ -7,15 +7,15 @@ export default defineEventHandler(async (event) => {
     //
     // if (show_pl !== 'true') {
     //     const path = getRequestPath(event);
-    //     if (path.startsWith('/pl')) {
-    //         console.log(path);
-    //         if (!(path.startsWith('/pl/request-an-appointment/flagship')) ) {
-    //             sendRedirect(event, '/dress', 301)
-    //             // console.log('yes');
-    //         } else {
-    //             // console.log('false');
-    //         }
-    //     }
+        if (path.startsWith('/pl')) {
+            console.log({path});
+            // if (!(path.startsWith('/pl/request-an-appointment/flagship')) ) {
+            //     sendRedirect(event, '/dress', 301)
+            //     // console.log('yes');
+            // } else {
+            //     // console.log('false');
+            // }
+        }
     //
     //
     // }

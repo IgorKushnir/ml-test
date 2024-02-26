@@ -9,10 +9,10 @@
                       class="social white hover m-r-16 m-h-8-md m-b-16"/>
           </div>
 
-          <ClientOnly>
-            <a :href="$route.meta.locales?.en?.path ?? '/'" class="p-small nav-link__tertiary white hover m-r-24" style="position: relative" :class="locale === 'en' ? 'router-link-active' : ''">English</a>
-            <a :href="$route.meta.locales?.pl?.path ?? '/pl'" class="p-small nav-link__tertiary white hover" style="position: relative"  :class="locale === 'pl' ? 'router-link-active' : ''">Polska</a>
-          </ClientOnly>
+<!--          <ClientOnly>-->
+<!--            <a :href="$route.meta.locales?.en?.path ?? '/'" class="p-small nav-link__tertiary white hover m-r-24" style="position: relative" :class="locale === 'en' ? 'router-link-active' : ''">English</a>-->
+<!--            <a :href="$route.meta.locales?.pl?.path ?? '/pl'" class="p-small nav-link__tertiary white hover" style="position: relative"  :class="locale === 'pl' ? 'router-link-active' : ''">Polska</a>-->
+<!--          </ClientOnly>-->
         </div>
 
         <div class="col-6 col-8-xl col-12-lg p-v-4 menu">
