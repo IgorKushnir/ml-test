@@ -12,13 +12,13 @@
         <div class="left-side">
           <NuxtLink v-for="item in data[0]['primary_additional']" :to="$isAbsoluteUrl(item.url) ? item.url : localePath(item.url)" :class="'nav-link__tertiary hover hide-md' + (item.target ? ' target' : '')" :target="item.target ? '_target' : '_self'">{{item.title}}</NuxtLink>
 
-          <ClientOnly>
-<!--            <pre>{{$route.meta.locales}}</pre>-->
-            <a v-if="show_pl === 'true'" :href="$route.meta.locales?.en?.path ?? '/'" class="nav-link__tertiary hover hide-md" :class="locale === 'en' ? 'router-link-active' : ''">English</a>
-            <a v-if="show_pl === 'true'" :href="$route.meta.locales?.pl?.path ?? '/pl'" class="nav-link__tertiary hover hide-md" :class="locale === 'pl' ? 'router-link-active' : ''">Polska</a>
-<!--            <NuxtLink  v-if="true || locale !== 'en'" :to="switchLocalePath('en') === '' ? '/' : switchLocalePath('en')" class="nav-link__tertiary hover hide-md">English</NuxtLink>-->
-<!--            <NuxtLink v-if="true || locale !== 'pl'" :to="switchLocalePath('pl') === '' ? '/' : switchLocalePath('pl')" class="nav-link__tertiary hover hide-md">Poland</NuxtLink>-->
-          </ClientOnly>
+<!--          <ClientOnly>-->
+<!--&lt;!&ndash;            <pre>{{$route.meta.locales}}</pre>&ndash;&gt;-->
+<!--            <a v-if="show_pl === 'true'" :href="$route.meta.locales?.en?.path ?? '/'" class="nav-link__tertiary hover hide-md" :class="locale === 'en' ? 'router-link-active' : ''">English</a>-->
+<!--            <a v-if="show_pl === 'true'" :href="$route.meta.locales?.pl?.path ?? '/pl'" class="nav-link__tertiary hover hide-md" :class="locale === 'pl' ? 'router-link-active' : ''">Polska</a>-->
+<!--&lt;!&ndash;            <NuxtLink  v-if="true || locale !== 'en'" :to="switchLocalePath('en') === '' ? '/' : switchLocalePath('en')" class="nav-link__tertiary hover hide-md">English</NuxtLink>&ndash;&gt;-->
+<!--&lt;!&ndash;            <NuxtLink v-if="true || locale !== 'pl'" :to="switchLocalePath('pl') === '' ? '/' : switchLocalePath('pl')" class="nav-link__tertiary hover hide-md">Poland</NuxtLink>&ndash;&gt;-->
+<!--          </ClientOnly>-->
 
 
           <div v-on:click="showHideMenu" class="nav-icon hover mobile-menu">
@@ -107,27 +107,27 @@ const showSearch = ref(false)
 
 
 
-// Temporary for showing PL ------------------
-
-const show_pl = ref(false)
-onMounted(() => {
-  const route = useRoute()
-  if (route.query['show_pl']) {
-    document.cookie = "show_pl="+route.query['show_pl'];
-    navigateTo('/')
-  }
-
-  show_pl.value = getCookie('show_pl');
-  // console.log(show_pl.value);
-
-  function getCookie(name) {
-    let matches = document.cookie.match(new RegExp(
-        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-    ));
-    return matches ? decodeURIComponent(matches[1]) : undefined;
-  }
-})
-/// --------------------
+// // Temporary for showing PL ------------------
+//
+// const show_pl = ref(false)
+// onMounted(() => {
+//   const route = useRoute()
+//   if (route.query['show_pl']) {
+//     document.cookie = "show_pl="+route.query['show_pl'];
+//     navigateTo('/')
+//   }
+//
+//   show_pl.value = getCookie('show_pl');
+//   // console.log(show_pl.value);
+//
+//   function getCookie(name) {
+//     let matches = document.cookie.match(new RegExp(
+//         "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+//     ));
+//     return matches ? decodeURIComponent(matches[1]) : undefined;
+//   }
+// })
+// /// --------------------
 
 
 
