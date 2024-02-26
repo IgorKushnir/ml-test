@@ -57,7 +57,7 @@ export default async function (lang) {
                 }
             }
         }
-        lines (sort: "order") {
+        lines (sort: "order" locale:"${lang}") {
             data {
                 attributes {
                     title
