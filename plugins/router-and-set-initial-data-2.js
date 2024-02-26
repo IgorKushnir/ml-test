@@ -131,6 +131,7 @@ const polandSlugTranslations = {
     backnecklines: "dekolt-z-tylu",
     accessoires: "akcesoria",
     shoes: "shoes",
+    fabrics: "tkanina",
 }
 function replacePathToPlLang(path) {
     let to = path

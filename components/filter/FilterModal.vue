@@ -111,6 +111,7 @@ function getName(uid) {
     backnecklines: t('filters_back_neckline'),
     accessoires: t('filters_accessories'),
     shoes: t('filters_shoes'),
+    fabrics: t('filters_fabric'),
   }
   return names[uid] ?? uid
 

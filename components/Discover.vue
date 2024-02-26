@@ -1,6 +1,5 @@
 <template>
   <div>
-<!--    <pre>{{dataAvailableFilters}}</pre>-->
     <div v-if="dataProducts!== null">
       <InnerHeader :title="route.meta?.h1 ?? type.title"/>
 
