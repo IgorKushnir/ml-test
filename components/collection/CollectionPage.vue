@@ -9,7 +9,7 @@
           title: dataCollection?.title
         }
     ]"
-         :pathToPage="{en: 'collections', pl: 'collections'}"
+         :pathToPage="{en: 'collections', pl: 'kolekcja'}"
          :localizations="dataCollection?.localizations?.data"
     />
     <transition name="fade">

@@ -5,7 +5,7 @@
           title: 'Collections',
         }
     ]"
-         :localizations="[{locale: 'en', slug: 'collections'}, {locale: 'pl', slug: 'collections'}]"
+         :localizations="[{locale: 'en', slug: 'collections'}, {locale: 'pl', slug: 'kolekcje'}]"
 
     />
     <transition name="fade">

@@ -77,7 +77,7 @@
           title: countryIndex !== -1 ? 'Wedding Dresses in ' + countries[countryIndex]?.value: 'Store finder',
         }
     ]"
-        :localizations="[{locale: 'en', slug: 'store-finder'}, {locale: 'pl', slug: 'store-finder'}]"
+        :localizations="[{locale: 'en', slug: 'store-finder'}, {locale: 'pl', slug: 'wyszukiwarka-sklepow'}]"
     />
   </div>
 </template>

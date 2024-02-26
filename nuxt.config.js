@@ -14,6 +14,22 @@ export default defineNuxtConfig({
         locales: ['en', 'pl'],
         defaultLocale: 'en',
         dynamicRouteParams: true,
+        customRoutes: 'config', // disable custom route with page components
+        pages: {
+            'collections/index': {
+                pl: '/kolekcje'
+            },
+            'collection/[slug]': {
+                pl: '/kolekcja/[slug]'
+            },
+            'store-finder/index': {
+                pl: '/wyszukiwarka-sklepow'
+            },
+            'store-finder/[country]': {
+                pl: '/wyszukiwarka-sklepow/[country]'
+            },
+
+        }
         // debug: true
 
         // vueI18n: {
