@@ -23,6 +23,14 @@ export default async function ({filters, type, lang, fetchFilters}) {
 
 
     // console.log(_filters);
+    let typeFilter = ''
+    if (type) {
+        typeFilter = `type: {
+        slug: {
+            eq: "${type}"
+        }
+    }`
+    }
 
     const response = graphql(`
 query ProductsWithFilters{
@@ -30,11 +38,7 @@ query ProductsWithFilters{
   products (
     filters: {
       and: [ ${_filters} ]
-      type: {
-        slug: {
-          eq: "${type}"
-        }
-      }
+      ${typeFilter}
   }
     pagination: {
       limit: -1

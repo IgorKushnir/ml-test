@@ -100,15 +100,21 @@ router.options.history.pages[slug] = previousPages;
 pages.value = previousPages ?? 1;
 
 
+
+const {
+  data: dataCollection,
+  pending: pendingCollection,
+} = await getCollection(slug, locale.value)
+
+
 let filters = ref([{
   key: 'collection',
   values: [slug]
 }])
-
 let {
   data: dataAvailableFilters,
   pending: pendingFilters,
-} = await useAsyncData('data_activeFilters', () => getActiveFilters({filters: filters.value, lang: locale.value, type: 'dress', fetchFilters: fetchFilters.value}), {
+} = await useAsyncData('data_activeFilters', () => getActiveFilters({filters: filters.value, lang: locale.value, type: null, fetchFilters: fetchFilters.value}), {
   transform: (d) => {
     return d.data['products']['meta']
   },
@@ -138,16 +144,12 @@ const initialFilters = ref([]);
 
 
 
-const {
-  data: dataCollection,
-  pending: pendingCollection,
-} = await getCollection(slug, locale.value)
 
 let initialData = ref([])
 let {
   data: dataProducts,
   pending: pendingProducts,
-} = await useLazyAsyncData('data_products', () => getProducts({filters: filters.value, lang: locale.value, type: 'dress', page: productPage.value, pages: pages.value }), {
+} = await useLazyAsyncData('data_products', () => getProducts({filters: filters.value, lang: locale.value, type: null, page: productPage.value, pages: pages.value }), {
   transform: (d) => {
     const collection = 'products';
     let initialPageSize = 12;

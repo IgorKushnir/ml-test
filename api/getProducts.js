@@ -24,6 +24,15 @@ export default async function ({filters, type, lang, page, pages = null}) {
     }).join(' ');
     // console.log(_filters);
 
+    let typeFilter = ''
+    if (type) {
+        typeFilter = `type: {
+        slug: {
+            eq: "${type}"
+        }
+    }`
+    }
+
     const response = graphql(`
 query ProductsWithFilters{
 
@@ -31,11 +40,7 @@ query ProductsWithFilters{
     filters: {
       or: [ { discontinued: { eq: null } } { discontinued: { eq: false } } ] 
       and: [ ${_filters} ]
-      type: {
-        slug: {
-          eq: "${type}"
-        }
-      }
+      ${typeFilter}
 
   }
     pagination: {
