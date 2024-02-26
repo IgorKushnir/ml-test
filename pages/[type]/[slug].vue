@@ -184,14 +184,20 @@ if (process.server) {
   const types = useTypesData()
 
   const fullPath = route.fullPath;
-  const path = fullPath.replaceAll('/', '').replace(slug, '')
+  // const path = fullPath.replaceAll('/', '').replace(slug, '')
+  let path = fullPath.split('/')
+  path = path.filter(p => p !== '' && p !== locale.value)
+  path = path[0]
+
   const index = types.value.findIndex(t => t.slug === path)
   if (index === -1) {
     // localePath()
     //
-    console.log(data.value?.type?.data?.attributes?.slug);
+    // console.log(data.value?.type?.data?.attributes?.slug, path);
 
     if (data.value?.type?.data?.attributes?.slug) {
+      // console.log('redirext');
+
       const redirectLink = ['',data.value?.type?.data?.attributes?.slug, slug].join('/')
       navigateTo(localePath(redirectLink), { redirectCode: 301 })
     }

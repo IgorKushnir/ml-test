@@ -1,24 +1,24 @@
 export default defineEventHandler(async (event) => {
 
 
-    // const cookies = parseCookies(event)
-    // const show_pl = cookies?.show_pl
-    //
-    //
-    // if (show_pl !== 'true') {
+    const cookies = parseCookies(event)
+    const show_pl = cookies?.show_pl
+
+
+    if (show_pl !== 'true') {
         const path = getRequestPath(event);
         if (path.startsWith('/pl')) {
-            console.log({path});
-            // if (!(path.startsWith('/pl/request-an-appointment/flagship')) ) {
-            //     sendRedirect(event, '/dress', 301)
-            //     // console.log('yes');
-            // } else {
-            //     // console.log('false');
-            // }
+            console.log(path);
+            if (!(path.startsWith('/pl/request-an-appointment/flagship')) ) {
+                sendRedirect(event, '/dress', 301)
+                // console.log('yes');
+            } else {
+                // console.log('false');
+            }
         }
-    //
-    //
-    // }
+
+
+    }
 
 })
 
