@@ -56,7 +56,7 @@
                 class="m-t-32  m-t-16-md"
                 fullWidth
         >
-          {{ (store.alternative_appointment_button_text && store.alternative_appointment_button_text !== '') ? store.alternative_appointment_button_text : $t('book_an_appointment') }}
+          {{ (store.alternative_appointment_button_text && store.alternative_appointment_button_text !== '') ? store.alternative_appointment_button_text : $t('request_an_appointment') }}
         </Button>
 
       </div>

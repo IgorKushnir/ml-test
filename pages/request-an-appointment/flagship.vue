@@ -186,10 +186,10 @@
 
     <Seo
         :data="data"
-        :title="data.title"
+        :title="data?.title"
         :breadcrumbs="[
         {
-          title: data.title,
+          title: data?.title,
         }
     ]"
         :localizations="[{locale: 'en', slug: 'request-an-appointment/flagship'}, {locale: 'pl', slug: 'request-an-appointment/flagship'}]"
