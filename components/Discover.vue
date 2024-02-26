@@ -1,5 +1,6 @@
 <template>
   <div>
+<!--    <pre>{{dataAvailableFilters}}</pre>-->
     <div v-if="dataProducts!== null">
       <InnerHeader :title="route.meta?.h1 ?? type.title"/>
 
@@ -233,6 +234,7 @@ async function checkFiltersHandler(e) {
 function setQuery(filters) {
   const query = {}
   let allowQuery = Object.keys(initialAvailableFilters.filters ?? {});
+  // console.log({allowQuery});
   filters.forEach(q => {
     if (allowQuery.includes(q.key)) { // Filter query by list of allows
       query[q.key] = q.values.join(',');

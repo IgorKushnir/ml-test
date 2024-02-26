@@ -1,6 +1,5 @@
 
 export default async function ({filters, type, lang, fetchFilters}) {
-
     // console.log( filters);
     const graphql = useStrapiGraphQL()
     const collection = 'activeFilters';
@@ -37,6 +36,7 @@ query ProductsWithFilters{
 
   products (
     filters: {
+      or: [ { discontinued: { eq: null } } { discontinued: { eq: false } } ] 
       and: [ ${_filters} ]
       ${typeFilter}
   }
