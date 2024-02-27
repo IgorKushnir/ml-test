@@ -1,16 +1,16 @@
 <template>
   <div>
-    <Seo title="Trunk shows" :breadcrumbs="[
+    <Seo :title="$t('trunk_shows')" :breadcrumbs="[
         {
-          title: 'Trunk shows',
+          title: $t('trunk_shows'),
         },
     ]"
-         :localizations="[{locale: 'en', slug: 'trunk-shows'}, {locale: 'pl', slug: 'trunk-shows'}]"
+         :localizations="[{locale: 'en', slug: 'trunk-shows'}, {locale: 'pl', slug: 'pokazy'}]"
     />
 
     <transition name="fade">
       <div v-if="!pending && data != null">
-        <InnerHeader title="Trunk shows"/>
+        <InnerHeader :title="$t('trunk_shows')"/>
 
         <Container justify="justify-center">
           <div class="row gap-S">

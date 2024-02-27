@@ -2,16 +2,16 @@
   <div>
     <Seo title="News" :breadcrumbs="[
         {
-          title: 'News',
+          title: $t('news'),
         }
     ]"
-         :localizations="[{locale: 'en', slug: 'news'},{locale: 'pl', slug: 'news'}]"
+         :localizations="[{locale: 'en', slug: 'news'},{locale: 'pl', slug: 'aktualnosci'}]"
 
     />
 
     <transition name="fade">
       <div v-if="newsData != null">
-        <InnerHeader title="News"/>
+        <InnerHeader :title="$t('news')"/>
         <div class="container">
           <div class="row justify-center">
             <div class="col-8 col-10-xl col-12-lg">

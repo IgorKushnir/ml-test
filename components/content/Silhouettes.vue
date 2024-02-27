@@ -21,7 +21,7 @@
 
         <div ref="swiperEl" class="swiper">
           <div class="swiper-wrapper">
-            <NuxtLink v-for="dress in [...data.silhouettes.data]" :to="localePath('/dress/silhouettes/' + dress.attributes.slug)" :key="dress.attributes.slug" class="swiper-slide">
+            <NuxtLink v-for="dress in [...data.silhouettes.data]" :to="(locale === 'en' ? '/dress/silhouettes/' : '/pl/suknie/silhouette/') + dress.attributes.slug" :key="dress.attributes.slug" class="swiper-slide">
               <div class="new-ratio-1x1">
                 <img class="silhouette" :src="`/img/silhouette/${dress.attributes.slug}.png`" :alt="dress.attributes.title"/>
               </div>
@@ -31,7 +31,7 @@
           <div ref="swiperScrollbar" class="swiper-scrollbar white m-t-40 m-t-56-md show-md"></div>
         </div>
       </div>
-      <NuxtLink to="/dress" class="button white m-t-40 show-md">All dresses</NuxtLink>
+      <NuxtLink :to="locale === 'en' ?  '/dress' : '/pl/suknie'" class="button white m-t-40 show-md">{{ $t('all_dress') }}</NuxtLink>
     </Container>
 
   </div>
@@ -51,6 +51,9 @@ const show = ref(false);
 const next = ref()
 const prev = ref()
 const swiperScrollbar = ref()
+
+const { locale } = useI18n()
+
 
 onMounted(() => {
   new Swiper(swiperEl.value, {

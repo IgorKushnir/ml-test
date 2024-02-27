@@ -2,14 +2,16 @@
   <div>
     <Seo title="Press about us" :breadcrumbs="[
         {
-          title: 'Press about us',
+          title: $t('press_about_us'),
         }
-    ]"/>
+    ]"
+         :localizations="[{locale: 'en', slug: 'press-about-us'},{locale: 'pl', slug: 'prasa'}]"
+    />
 
 
     <transition name="fade">
       <div v-if="!pending && data != null">
-        <InnerHeader title="Press about us"/>
+        <InnerHeader :title="$t('press_about_us')"/>
 
         <Container justify="justify-center">
           <div class="row gap-S">

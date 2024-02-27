@@ -7,8 +7,8 @@
       <!--    Choose a service-->
       <!--    Select session date and time-->
       <InnerHeader v-if="step !== 0"
-                   sub_header="Flashstore"
-                   title="Book an appointment"
+                   :sub_header="data.sub_header"
+                   :title="data.title"
                    :steps="step !== 3 ? steps : null"
                    @step="(index) => goStep(index)"
                    :currentStep="step"
@@ -192,7 +192,7 @@
           title: data?.title,
         }
     ]"
-        :localizations="[{locale: 'en', slug: 'request-an-appointment/flagship'}, {locale: 'pl', slug: 'request-an-appointment/flagship'}]"
+        :localizations="[{locale: 'en', slug: 'warsaw'}, {locale: 'pl', slug: 'warszawa'}]"
     />
 
   </div>

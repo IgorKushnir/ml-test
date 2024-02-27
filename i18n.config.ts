@@ -33,6 +33,9 @@ export default defineI18nConfig(() => ({
             book_error_email: 'Email is not valid',
             book_error_phone: 'Phone number is not valid',
 
+            all_dress: "All dresses",
+            news: "News",
+
             filters_filters: 'Filters',
             filters_silhouette: 'Silhouette',
             filters_fabric: 'Fabric',
@@ -55,6 +58,8 @@ export default defineI18nConfig(() => ({
 
             moodboard_title: 'Mood board',
             moodboard_you_recently_viewed: 'You recently viewed',
+            press_about_us: 'Press about us',
+            trunk_shows: 'Trunk shows',
 
             collections: 'Collections',
             collection: 'Collection',
@@ -110,12 +115,18 @@ export default defineI18nConfig(() => ({
             book_preferable_appointment_date: 'Preferowana data wizyty',
             book_confirm: 'Nie mam nic przeciwko otrzymywaniu zaproszeń na ekskluzywne wydarzenia i byciu na bieżąco z promocjami i nowościami marek.',
             book_send: 'Wysłać',
-            book_home_page: 'Home page',
-            book_thank_you: 'Thank you!',
-            book_has_been_processed: 'Your request has been processed. A manager from a selected retailer will contact you shortly to confirm the reservation and clarify the details if needed. Please be informed that this is not the final confirmation of the appointment. The boutique will contact you within 24 hours after receiving your request to finalize the date of your appointment.',
-            book_error_empty_field: 'The field must not be empty',
-            book_error_email: 'Email is not valid',
-            book_error_phone: 'Phone number is not valid',
+            book_home_page: 'Strona główna',
+            book_thank_you: 'Dziękuję!',
+            book_has_been_processed: 'Twoje zgłoszenie zostało przetworzone. Menedżer wybranego sprzedawcy wkrótce skontaktuje się z Tobą, aby potwierdzić rezerwację i w razie potrzeby wyjaśnić szczegóły. Informujemy, że nie jest to ostateczne potwierdzenie terminu spotkania. Butik skontaktuje się z Tobą w ciągu 24 godzin od otrzymania Twojego zgłoszenia w celu sfinalizowania daty spotkania.',
+            book_error_empty_field: 'Pole nie może być puste',
+            book_error_email: 'Adres e-mail jest nieprawidłowy',
+            book_error_phone: 'Numer telefonu jest nieprawidłowy',
+
+            all_dress: "Wszystkie sukienki",
+            news: "Aktualnosci",
+            press_about_us: 'Prasa',
+            trunk_shows: 'Pokazy',
+
 
             filters_filters: 'Filtr',
             filters_silhouette: 'Silhouette',

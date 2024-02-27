@@ -29,6 +29,34 @@ export default defineNuxtConfig({
                 pl: '/wyszukiwarka-sklepow/[country]'
             },
 
+
+            'news/index': {
+                pl: '/aktualnosci'
+            },
+            'news/[slug]': {
+                pl: '/aktualnosci/[slug]'
+            },
+
+            'contact/index': {
+                pl: '/kontakt'
+            },
+
+            'press-about-us/index': {
+                pl: '/prasa'
+            },
+
+            'warsaw': {
+                pl: '/warszawa'
+            },
+
+
+            'trunk-shows/index': {
+                pl: '/pokazy'
+            },
+            'trunk-shows/[slug]': {
+                pl: '/pokazy/[slug]'
+            },
+
         },
         detectBrowserLanguage: {
             useCookie: true,

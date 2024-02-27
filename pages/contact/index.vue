@@ -5,7 +5,7 @@
           title: 'Contact us',
         }
     ]"
-         :localizations="[{locale: 'en', slug: 'contact'}, {locale: 'pl', slug: 'contact'}]"
+         :localizations="[{locale: 'en', slug: 'contact'}, {locale: 'pl', slug: 'kontakt'}]"
     />
     <transition name="fade">
       <div v-if="data != null">
