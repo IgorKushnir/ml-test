@@ -36,9 +36,9 @@
     <div v-if="productsData && !pendingProducts && productsData.data.length === 0">
       <State v-if="!moodboard" title="No products" class="half"></State>
       <State v-if="moodboard"
-             title="Your Moodboard is empty"
-             text="Discover products and add it to your list."
-             :button="{text: 'Discover', path: '/dress'}"
+             :title="$t('moodboard_empty_title')"
+             :text="$t('moodboard_empty_description')"
+             :button="{text: $t('discover'), path: localePath(locale === 'en' ? '/dress' : '/suknie')}"
              class="half"
              image-path="/img/moodboard-empty.svg"
       ></State>
@@ -56,8 +56,10 @@
 
 <script setup>
 import ProductItem from "./ProductItem";
+const localePath = useLocalePath()
 
 const snackBar = ref(null);
+const { locale } = useI18n()
 
 const emits = defineEmits(['load'])
 const props = defineProps({

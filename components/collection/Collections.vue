@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Seo :data="data" title="Collections" :breadcrumbs="[
+    <Seo :data="data" :title="$t('collections')" :breadcrumbs="[
         {
           title: $t('collections'),
         }

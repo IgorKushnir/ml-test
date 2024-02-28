@@ -58,6 +58,8 @@ export default defineI18nConfig(() => ({
 
             moodboard_title: 'Mood board',
             moodboard_you_recently_viewed: 'You recently viewed',
+            moodboard_empty_title: 'Your Moodboard is empty',
+            moodboard_empty_description: 'Discover products and add it to your list.',
             press_about_us: 'Press about us',
             trunk_shows: 'Trunk shows',
 
@@ -92,7 +94,9 @@ export default defineI18nConfig(() => ({
             service_unavailable: "The service is currently unavailable",
 
             search_product_name: "Product name",
-            search_clear: "Clear"
+            search_clear: "Clear",
+
+            discover: "Discover"
         },
         pl: {
             book_title: 'Zarezerwuj wizytę',
@@ -153,6 +157,8 @@ export default defineI18nConfig(() => ({
 
             moodboard_title: 'Tablica inspiracji',
             moodboard_you_recently_viewed: 'Ostatnio oglądane',
+            moodboard_empty_title: 'Twój Tablica inspiracji jest pusty',
+            moodboard_empty_description: 'Odkryj produkty i dodaj je do swojej listy.',
 
             collections: 'Kolekcje',
             collection: 'Kolekcja',
@@ -207,7 +213,9 @@ export default defineI18nConfig(() => ({
             Sun: 'Sło',
 
             search_product_name: "Nazwa produktu",
-            search_clear: "Wyczyść"
+            search_clear: "Wyczyść",
+
+            discover: "Odkryj"
         }
     }
 }))
