@@ -14,6 +14,7 @@ export default  defineEventHandler(async (event) => {
             },
             body: {
                 "q": q.get('q'),
+                "filter": "locale = "+(q.get('locale') ?? 'en')
             }
         });
     } else {
@@ -23,7 +24,8 @@ export default  defineEventHandler(async (event) => {
     // try {
     //     return await $fetch(`keys`, {
     //         baseURL: config.SEARCH_URL,
-    //         method: 'GET',
+    ////         method: 'GET',
+    //         method: 'PATCH',
     //         headers: {
     //             Authorization:
     //                 // 'Bearer ' + config.MEILISEARCH_API_KEY,

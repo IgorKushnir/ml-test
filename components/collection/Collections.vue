@@ -2,7 +2,7 @@
   <div>
     <Seo :data="data" title="Collections" :breadcrumbs="[
         {
-          title: 'Collections',
+          title: $t('collections'),
         }
     ]"
          :localizations="[{locale: 'en', slug: 'collections'}, {locale: 'pl', slug: 'kolekcje'}]"
@@ -10,7 +10,7 @@
     />
     <transition name="fade">
       <div v-if="!pending && data != null">
-        <InnerHeader title="Collections"/>
+        <InnerHeader :title="$t('collections')"/>
         <StickyBarStickyHeaderMilla>
           <!--        // Data types to global data-->
           <template #center>

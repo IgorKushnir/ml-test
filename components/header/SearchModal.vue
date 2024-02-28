@@ -96,6 +96,7 @@ async function settings() {
   //       "type",
   //       "collection",
   //     ],
+  //      "filterableAttributes": ["locale", "language"]
   //     "searchableAttributes": [
   //       "title",
   //     ]
@@ -132,17 +133,17 @@ async function getResult() {
     //   }
     // });
 
-    const data = await $fetch(`/api/search?q=${search.value}`, {
+    const data = await $fetch(`/api/search?q=${search.value}&locale=${locale.value}`, {
       method: 'GET'
     });
 
-    // Filter by locale
-    // todo: needs to fix fol poland
-    data.hits = data.hits.filter(d => d.type?.locale === locale.value)
-    if (data.hits.length === 0) {
-      data.estimatedTotalHits = 0
-      data.nbHits = 0
-    }
+    // // Filter by locale
+    // // todo: needs to fix fol poland
+    // data.hits = data.hits.filter(d => d.type?.locale === locale.value)
+    // if (data.hits.length === 0) {
+    //   data.estimatedTotalHits = 0
+    //   data.nbHits = 0
+    // }
 
 
     result.value = data;
