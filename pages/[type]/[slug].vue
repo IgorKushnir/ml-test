@@ -74,7 +74,7 @@
                 <div class="subheader small">{{ $t('fabric') }}</div>
                 <div class="p-small">
                   <template v-for="(fabric, index) in data.fabrics.data">
-                    <NuxtLink :to="localePath('/'+data.type.data.attributes.slug+'/'+(locale === 'en' ? 'fabrics' : 'tkanina')+'/'+fabric.attributes.slug+'/0').replace('/0','')" class="p-small link">{{ fabric.attributes.title }}</NuxtLink><span v-if="index+1 < data.fabrics.data.length">, </span>
+                    <NuxtLink :to="localePath('/'+data.type.data.attributes.slug+'/'+(locale === 'en' ? 'fabrics' : 'tkanina')+'/'+fabric.attributes.slug)" class="p-small link">{{ fabric.attributes.title }}</NuxtLink><span v-if="index+1 < data.fabrics.data.length">, </span>
                   </template>
                 </div>
               </div>
