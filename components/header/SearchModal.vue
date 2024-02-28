@@ -11,7 +11,7 @@
                   <Logo class="logo" color="dark_gray"/>
                 </div>
                 <div class="col-8 col-10-lg col-12-md p-v-0 input-container">
-                  <input ref="input" v-model="search" alt="Search" placeholder="Product name" autocomplete="off" autofocus class="input">
+                  <input ref="input" v-model="search" alt="Search" :placeholder="$t('search_product_name')" autocomplete="off" autofocus class="input">
                   <div class="icon-search-24"/>
                   <div class="actions p-r-24">
                     <transition name="fade">
@@ -19,7 +19,7 @@
                     </transition>
                     <transition name="fade">
                       <strong v-if="search.length > 0" v-on:click="search = ''" class="p-small m-l-16"
-                              style="cursor: pointer">Clear</strong>
+                              style="cursor: pointer">{{ $t('search_clear') }}</strong>
                     </transition>
                   </div>
                 </div>
@@ -96,7 +96,7 @@ async function settings() {
   //       "type",
   //       "collection",
   //     ],
-  //      "filterableAttributes": ["locale", "language"]
+  //      "filterableAttributes": ["locale"],
   //     "searchableAttributes": [
   //       "title",
   //     ]

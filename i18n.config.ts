@@ -90,6 +90,9 @@ export default defineI18nConfig(() => ({
             book_find_out: "How did you find out about Milla Nova?",
             book_consent: "Clicking this implies your consent to receive text messages regarding upcoming appointments, confirmations, and relevant information. MN values your privacy and ensures that your information won't be shared.",
             service_unavailable: "The service is currently unavailable",
+
+            search_product_name: "Product name",
+            search_clear: "Clear"
         },
         pl: {
             book_title: 'Zarezerwuj wizytę',
@@ -202,6 +205,9 @@ export default defineI18nConfig(() => ({
             Fri: 'Pią',
             Sat: 'Sob',
             Sun: 'Sło',
+
+            search_product_name: "Nazwa produktu",
+            search_clear: "Wyczyść"
         }
     }
 }))
