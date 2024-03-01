@@ -77,10 +77,13 @@ function setLocalizations() {
       p.push(_locale.slug)
       // console.log({p});
 
-      // const _path = (_locale.locale === "en" ? [] : p).join('/');
-      const _path = '/'+p.join('/');
 
-      // console.log({_path});
+      // Remove last /
+      let _path = '/'+p.join('/');
+
+      if (_path.length > 1 && _path[_path.length-1] === '/') {
+        _path = _path.slice(0, -1);
+      }
       // const _path = [_locale.locale === "en" ? null : '/'+_locale.locale, props.pathToPage[_locale.locale], _locale.slug].join('/')
 
       route.meta.locales[_locale.locale] = {path: _path}
