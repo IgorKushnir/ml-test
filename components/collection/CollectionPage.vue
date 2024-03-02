@@ -1,8 +1,9 @@
 <template>
   <div>
+
     <Seo :data="dataCollection" :breadcrumbs="[
         {
-          title: 'Collections',
+          title: $t('collections'),
           path: '/collections'
         },
         {
@@ -11,6 +12,7 @@
     ]"
          :pathToPage="{en: 'collections', pl: 'kolekcja'}"
          :localizations="dataCollection?.localizations?.data"
+         :blockRobots="filterSelected.length > 0"
     />
     <transition name="fade">
 
@@ -20,7 +22,7 @@
         <InnerHeader :title="dataCollection.title" :sub_header="dataCollection.line.data.attributes.title"
                      :sub_title="dataCollection.description"/>
         <StickyBarStickyHeaderMilla
-            :back="router.options?.history?.state?.back === '/collections'"
+            :back="(router.options?.history?.state?.back === '/collections' || router.options?.history?.state?.back === '/kolekcje')"
             :title="dataCollection.title"
         >
           <template #end>
