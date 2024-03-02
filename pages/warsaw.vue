@@ -24,7 +24,6 @@
           :cover="data.cover_4x3"
           :text="data.description"
           :services="services"
-          :id="`warsaw-${locale}-step-1`"
       />
 
       <FlagshipDayHour v-if="step === 1"
@@ -33,11 +32,10 @@
                        @getHours="((day) => getHours(day))"
                        @goStep="(payload) => goStep(2, payload)"
                        :selectedDay="selectedDay"
-                       :id="`warsaw-${locale}-step-2`"
       />
 
 
-      <Container v-if="step === 2" justify="justify-center" :id="`warsaw-${locale}-step-3`">
+      <Container v-if="step === 2" justify="justify-center">
         <!--      <div class="button" v-on:click="() => selectedDate = 0">Back</div>-->
         <!--      {{selectedDate}}-->
 
@@ -169,7 +167,7 @@
       <Container>
         <div class="col-12">
           <Fact :data="{background_color: 'light', logo: true, layout: 'wide'}">
-            <div v-if="step===3" v-html="data.success" class="m-b-56" :id="`warsaw-${locale}-step-success`"/>
+            <div v-if="step===3" v-html="data.success" class="m-b-56"/>
             <div v-if="data.contact_title" class="subheader m-b-16">{{ data.contact_title }}</div>
             <div v-if="data.contact_address" class="m-b-8">
               <span class="icon-location-16"/>
