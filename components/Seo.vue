@@ -1,6 +1,7 @@
 <template>
   <div>
-<!--    <pre>{{data}}</pre>-->
+<!--    <pre>{{patternIndex}}</pre>-->
+<!--    <pre>{{translations}}</pre>-->
 <!--    <pre>{{localizations}}</pre>-->
 <!--    <pre>{{route.meta.nuxtI18n}}</pre>-->
     <SeoText v-if="seoText || data?.seo?.seoText" :html="seoText || data?.seo?.seoText"/>
@@ -53,7 +54,6 @@ route.meta.locales = {
   pl: {path: "/pl"}
 }
 route.meta.locales[locale.value] = {path: route.fullPath}
-// console.log(route.path);
 
 let isSetLocals = false
 watch(() => props.localizations, () => {
@@ -97,25 +97,6 @@ function setLocalizations() {
 setLocalizations()
 
 
-// // Set translations switcher paths
-// const langPages = useCurrentLangPages()
-// langPages.value = {
-//   en: { path: '/' },
-//   pl: { path: '/pl/' }
-// }
-
-
-
-// // Set empty locale roads
-// route.meta.nuxtI18n = {}
-// locales.value.forEach(loc => {
-//   route.meta.nuxtI18n[loc] = {fullPath: '/ddd'}
-// })
-// // Set current path
-// console.log(route.path);
-// route.meta.nuxtI18n[locale.value] = route.path
-
-/// ***
 
 const translations = useTranslationsData();
 
@@ -127,6 +108,9 @@ const siteUrl = site + fullPath
 const patternIndex = computed(() => {
   let index = translations.value.seo_pattern.map((item) => {
     const listOfItems = item.name.split(',').map(el => el.replace(/^\s+|\s+$/gm, ''));
+    if (item.pathStartsWith && item.pathStartsWith !== '') {
+      return listOfItems.includes(name) && fullPath.startsWith(item.pathStartsWith)
+    }
     return listOfItems.includes(name)
   }).findIndex(e => e)
 
@@ -197,6 +181,7 @@ if (process.server) {
 
 
 function parseVariablesInBrackets(str) {
+  // fullPath
 
   if (!str) return null;
 

@@ -113,6 +113,7 @@ export default async function (lang) {
                 footer_copyright
                 seo_pattern {
                   name
+                  pathStartsWith
                   title
                   description
                   keywords
@@ -138,6 +139,13 @@ export default async function (lang) {
             }
 
             let translations = d.data.transtation.data.attributes
+            translations.seo_pattern = translations.seo_pattern.sort((a, b) => {
+                    if ((a.pathStartsWith && a.pathStartsWith !== '')) {
+                        return -1
+                    } else {
+                        return 1
+                    }
+                })
 
             return [menu, lines, types, translations]
         },
