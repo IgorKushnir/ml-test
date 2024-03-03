@@ -111,6 +111,7 @@ addRouteMiddleware(async (to, from) => {
   grid-column-start: 1;
   margin-right: auto;
 
+  //gap: 16px;
   h3 {
     text-overflow: ellipsis;
     overflow: hidden;

@@ -1,6 +1,6 @@
 <template>
   <div>
-<!--    <pre>{{patternIndex}}</pre>-->
+<!--    <pre>{{data}}</pre>-->
 <!--    <pre>{{translations}}</pre>-->
 <!--    <pre>{{localizations}}</pre>-->
 <!--    <pre>{{route.meta.nuxtI18n}}</pre>-->
