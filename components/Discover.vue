@@ -2,9 +2,9 @@
   <div>
 <!--    main: {{route.path === '/dress' && filterSelected.length === 0}} <br>-->
 <!--    redirrects page: {{(route.path !== '/dress' && route.meta.title != null)}} <br>-->
-<!--    query page: {{(route.path === '/dress' && filterSelected.length > 0) || (route.path !== '/dress' && route.meta.title == null)}} <br>-->
+<!--    query page: {{(route.path === '/'+type.slug && filterSelected.length > 0) || (route.path !== '/'+type.slug && route.meta.title == null)}} <br>-->
 
-<!--    hide robots: {{(route.path === '/dress' && filterSelected.length > 0) || (route.path !== '/dress' && route.meta.title == null)}} <br>-->
+<!--    hide robots: {{(route.path === '/'+type.slug && filterSelected.length > 0) || (route.path !== '/'+type.slug && route.meta.title == null)}} <br>-->
     <div v-if="dataProducts!== null">
       <InnerHeader :title="route.meta?.h1 ?? type.title"/>
 
@@ -59,7 +59,7 @@
     ]"
          :title="route.meta?.title ?? type?.title"
          :description="route.meta?.description"
-         :blockRobots="((route.path === '/dress' && filterSelected.length > 0) || (route.path !== '/dress' && route.meta.title == null))"
+         :blockRobots="((route.path === '/'+type.slug && filterSelected.length > 0) || (route.path !== '/'+type.slug && route.meta.title == null))"
          :seoText="route.meta?.seoText"
          :localizations="type.localizations.data"
     />
