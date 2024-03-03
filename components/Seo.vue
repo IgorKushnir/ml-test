@@ -86,8 +86,9 @@ function setLocalizations() {
       }
       // const _path = [_locale.locale === "en" ? null : '/'+_locale.locale, props.pathToPage[_locale.locale], _locale.slug].join('/')
 
+      if (!route.meta.locales) route.meta.locales = {}
       route.meta.locales[_locale.locale] = {path: _path}
-
+      // console.log(route.meta.locales);
 
 
     })

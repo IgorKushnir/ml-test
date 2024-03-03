@@ -34,8 +34,6 @@
 
 <script setup>
 import productsResponse from '~/api/getProductsById'
-import SnackBar from "../components/SnackBar";
-import Container from "../components/Container";
 const {$getViewedProduct, $getLikedProducts, $toggleLikeProduct} = useNuxtApp()
 
 const viewedProductIds = ref([]);

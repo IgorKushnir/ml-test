@@ -27,6 +27,7 @@ query Landings{
           description
           enable
           seoText
+          locales(locale: "${lang}")
         }
       }
     }
@@ -52,6 +53,14 @@ function transformDressRedirectJson(response) {
         const locale = types.attributes.locale
         types.attributes.productLandingsRedirects.forEach((meta) => {
             if (meta.enable) {
+                let locales = meta.locales.map(locale => {
+                    if (locale.slug !== null && locale.slug.startsWith('/')) locale.slug = locale.slug.replace('/', '')
+                    if (locale.slug !== null && locale.slug.startsWith(locale.locale+'/')) locale.slug = locale.slug.replace(locale.locale+'/', '')
+                    // return {attributes: locale}
+                    return locale
+                })
+                if (locales.length === 0) locales = null
+
                 _redirects.push({
                     name: meta.to,
                     from: meta.from,
@@ -64,7 +73,8 @@ function transformDressRedirectJson(response) {
                         h1: meta.h1,
                         // query: meta.query,
                         query: convertPathToQueryObject(meta.from),
-                        seoText: meta.seoText
+                        seoText: meta.seoText,
+                        locales
                     }
                 })
             }

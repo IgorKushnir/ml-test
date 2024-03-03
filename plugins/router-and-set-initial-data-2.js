@@ -142,13 +142,15 @@ function replacePathToPlLang(path) {
 }
 
 function setMeta(newRoute) {
+    // console.log({newRoute});
     return {
         slug: newRoute.meta.slug,
         title: newRoute.meta.title,
         description: newRoute.meta.description,
         h1: newRoute.meta.h1,
         query: newRoute.meta.query,
-        seoText: newRoute.meta.seoText
+        seoText: newRoute.meta.seoText,
+        localizations: newRoute.meta.locales
     }
 }
 
