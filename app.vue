@@ -112,11 +112,12 @@ useHead({
 
 
 onMounted(async () => {
+  gtag('config', 'AW-16455473849'); // Google Ads - Addon to Gtag
+
   reportWindowSize()
   window.addEventListener('resize', reportWindowSize, {passive: true});
 
   loadNextHook()
-
 
   //Like list counter
   likeCounter.value = $getLikedProducts().length

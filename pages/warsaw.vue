@@ -276,6 +276,10 @@ function goStep(_step, payload) {
     }
 
   }
+  if (_step === 3) {
+    gtag('event', 'success_form', {'send_to': 'AW-16455473849/E3k4COnnw5cZELm1yqY9'});
+    console.log('event-sent');
+  }
 
   window.scroll({
     top: 0,
