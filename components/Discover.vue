@@ -55,7 +55,7 @@
     ]"
          :title="route.meta?.title ?? type?.title"
          :description="route.meta?.description"
-         :blockRobots="((route.path === '/'+type.slug && filterSelected.length > 0) || (route.path !== '/'+type.slug && route.meta.title == null))"
+         :blockRobots="((route.path === localePath('/'+type.slug) && filterSelected.length > 0) || (route.path !== localePath('/'+type.slug) && route.meta.title == null))"
          :seoText="route.meta?.seoText"
          :localizations="route.meta.localizations ?? type.localizations.data"
     />
