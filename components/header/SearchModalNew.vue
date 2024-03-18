@@ -1,0 +1,442 @@
+<template>
+  <ClientOnly>
+    <teleport to="body">
+      <div class="wrapper">
+        <transition name="slide">
+          <div v-if="show" class="search">
+            <div class="container">
+              <div class="head row gap-S m-v-0">
+                <div class="col-2 p-v-0 hide-lg">
+                  <Logo class="logo" color="dark_gray"/>
+                </div>
+                <div class="col-8 col-10-lg col-12-md p-v-0 input-container">
+                  <input ref="input" v-model="search" alt="Search" :placeholder="$t('search_product_name_or_image')" autocomplete="off" autofocus class="input" :class="errorUrl ? 'error-url' : ''">
+                  <div class="icon-search-24"/>
+                  <div class="actions p-r-24">
+                    <transition name="fade">
+                      <Spinner class="loader" v-if="pending"/>
+                    </transition>
+<!--                    <transition name="fade" mode="in-out" >-->
+                      <div v-if="search.length === 0 && !fileAdded" v-on:click="() => inputUpload.click()">
+                        <span class="gray">{{ $t('or') }}</span>
+                        <strong class="p-small m-l-4"
+                                style="cursor: pointer">{{ $t('upload_image') }}</strong>
+                        <input ref="inputUpload" accept="image/png, image/jpeg" v-on:change="uploadImage" type='file' hidden/>
+                      </div>
+<!--                    </transition>-->
+<!--                    <transition name="fade" mode="out-in" >-->
+                      <strong v-if="search.length > 0" v-on:click="search = ''" class="p-small m-l-16"
+                              style="cursor: pointer">{{ $t('search_clear') }}</strong>
+<!--                    </transition>-->
+                  </div>
+                </div>
+                <div class="col-2 p-v-0 hide-md">
+                  <div class="icon-close-24" v-on:click="close"/>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </transition>
+
+
+        <transition name="fade">
+          <div v-if="result !== null && show && (result?.hits?.length > 0)" class="result">
+
+            <div class="container">
+<!--              <pre>{{result}}</pre>-->
+
+              <!--              <div v-if="result.nbHits === 0">No results</div>-->
+              <div class="search-grid m-v-40">
+                <NuxtLink
+                    v-for="item in result.hits"
+                    :to="localePath('/' + (item?.type?.slug ?? 'product') + '/' + item.slug)"
+                    v-on:click="close" class="col-2">
+
+
+                  <div class="ratio-3x4">
+                    <Image :path="{data: {attributes: item.cover_3x4}}" size="small" :alt="item.title"/>
+                  </div>
+                  <div class="m-t-8 brake-word" v-html="highlight(item.title, search)"/>
+                  <div class="collection-label gray m-t-4">{{ item.collection?.title }}  {{item.score}}</div>
+<!--                  <div class="collection-label gray m-t-4">{{ item.type?.locale }}</div>-->
+                </NuxtLink>
+              </div>
+            </div>
+          </div>
+        </transition>
+
+      </div>
+
+
+      <transition name="fade">
+        <div v-if="show" v-on:click="close" class="overlay"/>
+      </transition>
+    </teleport>
+  </ClientOnly>
+
+</template>
+
+<script setup>
+const { locale } = useI18n()
+const {$isUrl} = useNuxtApp()
+
+const props = defineProps({
+  show: {
+    type: Boolean,
+    required: false
+  }
+})
+const emits = defineEmits(["close"])
+let search = ref('')
+const inputUpload = ref()
+const fileAdded = ref(false)
+const input = ref()
+const config = useRuntimeConfig();
+const result = ref({});
+const pending = ref(false);
+const errorUrl = ref(false);
+
+async function settings() {
+  const data = await $fetch(`indexes/product/settings`, {
+    baseURL: 'http://127.0.0.1:7700',
+    method: 'PATCH',
+    headers: {
+      'Authorization': 'Bearer '
+    },
+    body: {
+      "displayedAttributes": [
+        "title",
+        "id",
+        "slug",
+        "cover_3x4",
+        "type",
+        "collection",
+      ],
+       "filterableAttributes": ["locale"],
+      "searchableAttributes": [
+        "title",
+      ]
+    }
+  });
+  // console.log(data);
+
+
+  // const data = await $fetch(`keys`, {
+  //   baseURL: config.SEARCH_URL,
+  //   method: 'GET',
+  //   headers: {
+  //     Authorization:
+  //         'Bearer ' + config.MEILISEARCH_API_KEY,
+  //   }
+  // });
+  // console.log(data);
+}
+
+async function getResult() {
+  pending.value = true;
+  errorUrl.value = false
+  if (search.value.length === 0) {
+    result.value = [];
+  } else {
+    // const data = await $fetch(`indexes/product/search`, {
+    //   baseURL: config.SEARCH_URL,
+    //   method: 'POST',
+    //   headers: {
+    //     Authorization:
+    //         'Bearer ' + config.MEILISEARCH_API_KEY,
+    //   },
+    //   body: {
+    //     "q": search.value,
+    //   }
+    // });
+
+    const data = await $fetch(`/api/search?q=${search.value}&locale=${locale.value}`, {
+      method: 'GET'
+    });
+
+    // // Filter by locale
+    // // todo: needs to fix fol poland
+    // data.hits = data.hits.filter(d => d.type?.locale === locale.value)
+    // if (data.hits.length === 0) {
+    //   data.estimatedTotalHits = 0
+    //   data.nbHits = 0
+    // }
+
+
+    result.value = data;
+  }
+  pending.value = false;
+}
+
+watch(search, () => {
+  // settings()
+  if ($isUrl(search.value)) {
+    console.log('url'); // title, id, type, slug, cover_3x4
+    searchByImage(search.value)
+  } else {
+    // console.log('not url');
+    getResult()
+  }
+})
+watch(() => input.value, () => {
+  if (input.value) {
+    input.value.focus();
+    document.body.classList.add('no-scroll');
+  } else {
+    document.body.classList.remove('no-scroll');
+  }
+})
+
+function close() {
+  emits('close')
+}
+
+function highlight(text, search) {
+  var innerHTML = text;
+  var index = innerHTML.toLowerCase().indexOf(search.toLowerCase());
+
+  if (index >= 0) {
+    innerHTML = innerHTML.substring(0, index) + "<strong>" + innerHTML.substring(index, index + search.length) + "</strong>" + innerHTML.substring(index + search.length);
+    return innerHTML;
+  }
+  return text;
+
+}
+
+async function searchByImage(url) {
+  result.value = []
+  pending.value = true
+  errorUrl.value = false
+  try {
+    const res = $fetch('/api/image-search', {
+      method: "POST",
+      body: {
+        // text: query.value
+        url: url,
+        locale: locale.value
+      }
+    })
+    // https://millanova.nyc3.cdn.digitaloceanspaces.com/medium_N9_A5224_24d501e9fb.jpg1
+    let images = await res
+    if (images) {
+      images = images.map(im => {
+        const r = {score: im.score, ...im.metadata}
+        try {
+          r.cover_3x4 = JSON.parse(r.cover_3x4)
+        } catch (e) {}
+        return r
+      })
+      result.value = {hits: images}
+    } else {
+      console.error('error image url');
+      errorUrl.value = true
+    }
+
+  } catch (e) {
+    console.log(e);
+  }
+  pending.value = false
+  fileAdded.value = false;
+
+  // search.value = ''
+}
+
+async function uploadImage(file) {
+  fileAdded.value = true;
+  const base64 = await convertBase64(file);
+  await searchByImage(base64)
+  // console.log(base64);
+}
+
+
+
+const convertBase64 = (file) => {
+  file = file.target.files[0];
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+
+    fileReader.onload = () => {
+      resolve(fileReader.result);
+    };
+
+    fileReader.onerror = (error) => {
+      reject(error);
+    };
+  });
+};
+
+
+</script>
+
+<style scoped lang="scss">
+
+
+.search {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 99;
+  background-color: $white;
+}
+
+.head {
+  display: flex;
+  height: 152px;
+  align-items: center;
+}
+
+.overlay {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: $overlay;
+  z-index: 98;
+}
+.search-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 40px;
+  * {
+    width: 100%;
+  }
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+}
+
+.icon-close-24 {
+  font-size: 24px;
+  cursor: pointer;
+  margin-left: auto;
+  width: 24px;
+}
+
+.icon-search-24 {
+  font-size: 24px;
+  position: absolute;
+  left: 36px;
+  top: 16px;
+}
+
+.input-container {
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  height: 56px;
+  background-color: $light-gray;
+  border: none;
+  font-size: 20px;
+  padding-left: 56px;
+}
+.input.error-url {
+  text-decoration: wavy;
+  text-decoration-color: red;
+  text-decoration-line: underline;
+}
+
+.input:focus {
+  outline: none;
+}
+::placeholder {
+  color: $dark-blue;
+  opacity: .3;
+}
+.collection-label {
+  font-size: 12px;
+}
+
+.actions {
+  position: absolute;
+  right: 20px;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+//.actions > * {
+//  position: absolute;
+//  right: inherit;
+//}
+//.loader {
+//  position: relative!important;
+//}
+
+
+.result {
+  position: fixed;
+  background: $white;
+  border-top: 1px solid $border-dark;
+  top: 152px;
+  width: 100%;
+  height: calc(100vh - 152px);
+  z-index: 99;
+  overflow-y: auto;
+}
+
+
+@include lg {
+  .search-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@include md {
+  .search {
+    background-color: $dark-blue;
+    top: 56px;
+    .container {
+      padding: 0 16px;
+    }
+  }
+  .head {
+    height: 56px;
+  }
+  .overlay {
+    top: 56px
+  }
+  .input {
+    height: 40px;
+    font-size: 16px;
+    padding-left: 56px;
+  }
+
+  .icon-search-24 {
+    top: 8px;
+    left: 32px;
+  }
+  .actions {
+    right: 8px;
+  }
+  .result {
+    top: 112px;
+    border-top: none;
+    height: calc(100vh - 112px);
+  }
+  .search-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+  }
+}
+
+
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.3s ease-out;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  transform: translate(0, -152px);
+}
+</style>

@@ -94,6 +94,9 @@ export default defineI18nConfig(() => ({
             service_unavailable: "The service is currently unavailable",
 
             search_product_name: "Product name",
+            search_product_name_or_image: "Product name or image url",
+            or: "or",
+            upload_image: "Upload image",
             search_clear: "Clear",
 
             discover: "Discover"
@@ -213,6 +216,9 @@ export default defineI18nConfig(() => ({
             Sun: 'Sło',
 
             search_product_name: "Nazwa produktu",
+            search_product_name_or_image: "Nazwa produktu lub adres url obrazu",
+            or: "lub",
+            upload_image: "Prześlij obraz",
             search_clear: "Wyczyść",
 
             discover: "Odkryj"

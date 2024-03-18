@@ -81,7 +81,15 @@ export default defineNuxtPlugin(() => {
                 return re.test(email);
             },
             isUrl: (string) => {
-                return (string.startsWith('http://') || string.startsWith('https://') || string.startsWith('www.'))
+                if (!(string.startsWith('http://') || string.startsWith('https://') || string.startsWith('www.'))) return false
+
+                try {
+                    if (!(string.startsWith('http://') || string.startsWith('https://'))) string = 'https://'+string
+                    new URL(string);
+                    return true;
+                } catch (_) {
+                    return false;
+                }
             }
         }
     }

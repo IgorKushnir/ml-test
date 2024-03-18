@@ -95,7 +95,8 @@ export default defineNuxtConfig({
     strapi: {
         url: process.env.STRAPI_URL || 'http://127.0.0.1:1337',
         GTM: process.env.GTM,
-        GOOGLE_ANALYTICS: process.env.GOOGLE_ANALYTICS
+        GOOGLE_ANALYTICS: process.env.GOOGLE_ANALYTICS,
+        SEARCH_URL: process.env.SEARCH_URL,
         // url:  'https://millanova-backend-iwjo4.ondigitalocean.app'
     },
 
@@ -109,6 +110,7 @@ export default defineNuxtConfig({
         GTM: process.env.GTM,
         ABSTRACT_API: process.env.ABSTRACT_API,
         ADMIN_URL: process.env.STRAPI_URL || 'http://127.0.0.1:1337',
+        PINECONE_KEY: process.env.PINECONE_KEY
     },
 
     image: {
