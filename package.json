@@ -13,16 +13,16 @@
     "sass": "^1.54.0"
   },
   "dependencies": {
-    "@coddicat/vue-pinch-scroll-zoom": "^4.3.5",
-    "@gtm-support/vue-gtm": "^2.1.0",
-    "@pinecone-database/pinecone": "^2.1.0",
-    "@rollup/plugin-graphql": "^1.1.0",
-    "axios": "^0.27.2",
-    "google-maps": "^4.3.3",
-    "is-ip": "^5.0.1",
+    "@coddicat/vue-pinch-scroll-zoom": "4.3.5",
+    "@gtm-support/vue-gtm": "2.1.0",
+    "@pinecone-database/pinecone": "2.1.0",
+    "@rollup/plugin-graphql": "1.1.0",
+    "axios": "0.27.2",
+    "google-maps": "4.3.3",
+    "is-ip": "5.0.1",
     "nuxt": "^3.0.0-rc.6",
-    "vue-gtag-next": "^1.14.0",
-    "vue3-circle-progress": "^1.0.7"
+    "vue-gtag-next": "1.14.0",
+    "vue3-circle-progress": "1.0.7"
   },
   "engines": {
     "node": "18.18.0"
