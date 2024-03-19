@@ -51,7 +51,7 @@
               <div class="search-grid m-v-40">
                 <NuxtLink
                     v-for="item in result.hits"
-                    :to="localePath('/' + (item?.type?.slug ?? 'product') + '/' + item.slug)"
+                    :to="localePath('/' + (item?.type?.slug ?? item?.type ?? 'product') + '/' + item.slug)"
                     v-on:click="close" class="col-2">
 
 

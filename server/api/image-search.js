@@ -6,14 +6,23 @@ export default  defineEventHandler(async (event) => {
     const apiKey = config.PINECONE_KEY;
     let mode = config.MODE // locale or production
 
+
+
     try {
         let _body = await readBody(event)
         if (typeof _body === 'string') _body = JSON.parse(_body)
 
+        if (_body.mode) mode = _body.mode
+
+
         const pc = new Pinecone({ apiKey });
         // console.log(await pc.describeIndex('millanova')); // Get index info
+        // return await pc.describeIndex('millanova1')
         const index = pc.index("millanova1").namespace(_body.locale+'-'+mode);
+        // return index
 
+        // const results = await index.listPaginated();
+        // return  results
 
         // Create/update (Payload from admin. To create vectors)
         if (_body.id) {
@@ -38,7 +47,7 @@ export default  defineEventHandler(async (event) => {
                 const product = allProductsEn[i]
                 // console.log(im);
                 try {
-                    await managingImagesFromAdminPayload(index, product, _body.mode ?? mode)
+                    await managingImagesFromAdminPayload(index, product, mode)
                     console.log(i,'/', allProductsEn.length, 'Updated product id: '+product.id)
                 } catch (e) {
                     console.error('Not: '+product.id)
