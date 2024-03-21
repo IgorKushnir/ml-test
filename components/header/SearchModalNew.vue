@@ -67,6 +67,7 @@
           </div>
         </transition>
 
+        <canvas ref="resizedImageCanvas" width="300" style="display: none" class="resized-image" />
       </div>
 
 
@@ -97,6 +98,7 @@ const config = useRuntimeConfig();
 const result = ref({});
 const pending = ref(false);
 const errorUrl = ref(false);
+const resizedImageCanvas = ref();
 
 async function settings() {
   const data = await $fetch(`indexes/product/settings`, {
@@ -209,7 +211,14 @@ async function searchByImage(url) {
   result.value = []
   pending.value = true
   errorUrl.value = false
+
+
   try {
+    // Resize
+    url = resizeUploadedImage(url)
+
+    // console.log({url});
+    // Search
     const res = $fetch('/api/image-search', {
       method: "POST",
       body: {
@@ -245,15 +254,45 @@ async function searchByImage(url) {
 
 async function uploadImage(file) {
   fileAdded.value = true;
-  const base64 = await convertBase64(file);
+  const base64 = await convertBase64(file.target.files[0]);
   await searchByImage(base64)
-  // console.log(base64);
+
+
+}
+function resizeUploadedImage(imgUrl) {
+  var canvas = resizedImageCanvas.value;
+  var ctx = canvas.getContext("2d");
+  var img = new Image();
+
+  img.onload = function () {
+
+    // set size proportional to image
+    canvas.height = canvas.width * (img.height / img.width);
+
+    // step 1 - resize to 50%
+    var oc = document.createElement('canvas'),
+        octx = oc.getContext('2d');
+
+    oc.width = img.width * 0.5;
+    oc.height = img.height * 0.5;
+    octx.drawImage(img, 0, 0, oc.width, oc.height);
+
+    // step 2
+    octx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5);
+
+    // step 3, resize to final size
+    ctx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5,
+        0, 0, canvas.width, canvas.height);
+  }
+
+  img.src = imgUrl
+
+  return canvas.toDataURL("image/jpeg")
 }
 
 
 
 const convertBase64 = (file) => {
-  file = file.target.files[0];
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
@@ -272,7 +311,12 @@ const convertBase64 = (file) => {
 </script>
 
 <style scoped lang="scss">
-
+.resized-image {
+  position: absolute;
+  width: 1024px;
+  top: 0;
+  z-index: 99;
+}
 
 .search {
   position: fixed;

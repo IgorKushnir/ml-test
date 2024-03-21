@@ -1,5 +1,6 @@
 import {Pinecone} from '@pinecone-database/pinecone'
 
+// https://docs.bentoml.com/en/latest/use-cases/embeddings/clip-embeddings.html
 export default  defineEventHandler(async (event) => {
     if (getMethod(event) !== 'POST') return
     const config = useRuntimeConfig();
@@ -75,8 +76,8 @@ async function getVector(body) {
     const query = []
     if (body.url) {
         if (body.url.startsWith('data:image')) {
-            const b = body.url.split(',')
-            query.push({ "img_blob": b[1] })
+            const b = body.url.split(';base64,')[1]
+            query.push({ "img_blob": b })
         } else {
             query.push({ "img_uri": body.url })
         }
