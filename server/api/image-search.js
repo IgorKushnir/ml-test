@@ -14,7 +14,7 @@ export default  defineEventHandler(async (event) => {
         if (typeof _body === 'string') _body = JSON.parse(_body)
 
         if (_body.mode) mode = _body.mode
-
+        mode = 'production'
 
         const pc = new Pinecone({ apiKey });
         // console.log(await pc.describeIndex('millanova')); // Get index info

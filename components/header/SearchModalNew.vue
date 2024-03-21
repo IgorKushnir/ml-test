@@ -67,7 +67,7 @@
           </div>
         </transition>
 
-        <canvas ref="resizedImageCanvas" width="300" style="display: none" class="resized-image" />
+        <canvas ref="resizedImageCanvas" width="512" style="display: none" class="resized-image" />
       </div>
 
 
@@ -215,7 +215,7 @@ async function searchByImage(url) {
 
   try {
     // Resize
-    url = resizeUploadedImage(url)
+    url = await resizeUploadedImage(url)
 
     // console.log({url});
     // Search
@@ -263,31 +263,38 @@ function resizeUploadedImage(imgUrl) {
   var canvas = resizedImageCanvas.value;
   var ctx = canvas.getContext("2d");
   var img = new Image();
+  // console.log({imgUrl});
 
-  img.onload = function () {
+  return new Promise(resolve => {
+    img.onload = function () {
 
-    // set size proportional to image
-    canvas.height = canvas.width * (img.height / img.width);
+      // set size proportional to image
+      canvas.height = canvas.width * (img.height / img.width);
 
-    // step 1 - resize to 50%
-    var oc = document.createElement('canvas'),
-        octx = oc.getContext('2d');
+      // step 1 - resize to 50%
+      var oc = document.createElement('canvas'),
+          octx = oc.getContext('2d');
 
-    oc.width = img.width * 0.5;
-    oc.height = img.height * 0.5;
-    octx.drawImage(img, 0, 0, oc.width, oc.height);
+      oc.width = img.width * 0.5;
+      oc.height = img.height * 0.5;
+      octx.drawImage(img, 0, 0, oc.width, oc.height);
 
-    // step 2
-    octx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5);
+      // step 2
+      octx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5);
 
-    // step 3, resize to final size
-    ctx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5,
-        0, 0, canvas.width, canvas.height);
-  }
+      // step 3, resize to final size
+      ctx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5,
+          0, 0, canvas.width, canvas.height);
 
-  img.src = imgUrl
+      // console.log(canvas, 'loaded');
+      resolve(canvas.toDataURL("image/jpeg"))
+    }
 
-  return canvas.toDataURL("image/jpeg")
+    img.crossOrigin="anonymous"
+    img.src = imgUrl
+
+  })
+
 }
 
 
@@ -313,7 +320,7 @@ const convertBase64 = (file) => {
 <style scoped lang="scss">
 .resized-image {
   position: absolute;
-  width: 1024px;
+  width: 200px;
   top: 0;
   z-index: 99;
 }
