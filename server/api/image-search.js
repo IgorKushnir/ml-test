@@ -177,7 +177,7 @@ async function managingImagesFromAdminPayload(index, body, mode) {
 
         const dataToUpsert = imagesWithVectors.map(res => {
             // Leave just medium size
-            res.formats = {medium: res.formats.medium ?? res.formats.small ?? res.formats.large}
+            res.formats = {medium: res.formats.small ?? res.formats.medium  ?? res.formats.large}
 
             const metadata = {
                 productId,
