@@ -307,8 +307,7 @@ async function resizeUploadedImage(imgUrl) {
       }
     };
 
-    // img.crossOrigin="Anonymous"
-    // img.crossOrigin="anonymous"
+    img.crossOrigin="anonymous"
     img.src = imgUrl
 
   })
