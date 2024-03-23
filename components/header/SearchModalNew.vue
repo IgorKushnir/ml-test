@@ -67,7 +67,7 @@
           </div>
         </transition>
 
-        <canvas ref="resizedImageCanvas" width="512" style="display: block" class="resized-image" />
+        <canvas ref="resizedImageCanvas" width="512" style="display: none" class="resized-image" />
       </div>
 
 
@@ -299,11 +299,14 @@ async function resizeUploadedImage(imgUrl) {
     img.onerror = async function(e) {
       if (imgUrl.indexOf('pinterest.com') && !fetchedMeta) {
         const image = await getImageUrlFromPageMeta(imgUrl)
+        imgUrl = image
         img.src = image;
         fetchedMeta = true;
       } else {
-        console.error('The Url is a not valid image', e);
-        reject()
+        // console.error('The Url is a not valid image', e);
+        console.error('Can not resize the image');
+        resolve(imgUrl)
+        // reject()
       }
     };
 
