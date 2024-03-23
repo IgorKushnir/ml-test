@@ -51,7 +51,7 @@
               <div class="search-grid m-v-40">
                 <NuxtLink
                     v-for="item in result.hits"
-                    :to="localePath('/' + (item?.type?.slug ?? item?.type ?? 'product') + '/' + item.slug)"
+                    :to="localePath('/' + (item?.type?.slug ?? 'product') + '/' + item.slug)"
                     v-on:click="close" class="col-2">
 
 
@@ -59,7 +59,7 @@
                     <Image :path="{data: {attributes: item.cover_3x4}}" size="small" :alt="item.title"/>
                   </div>
                   <div class="m-t-8 brake-word" v-html="highlight(item.title, search)"/>
-                  <div class="collection-label gray m-t-4">{{ item.collection?.title }}  {{item.score}}</div>
+                  <div class="collection-label gray m-t-4">{{ item.collection?.title }}</div>
 <!--                  <div class="collection-label gray m-t-4">{{ item.type?.locale }}</div>-->
                 </NuxtLink>
               </div>
@@ -67,7 +67,7 @@
           </div>
         </transition>
 
-        <canvas ref="resizedImageCanvas" width="512" style="display: none" class="resized-image" />
+        <canvas ref="resizedImageCanvas" width="512" style="display: block" class="resized-image" />
       </div>
 
 
@@ -234,6 +234,8 @@ async function searchByImage(url) {
         const r = {score: im.score, ...im.metadata}
         try {
           r.cover_3x4 = JSON.parse(r.cover_3x4)
+          r.type = JSON.parse(r.type)
+          if (r.collection) r.collection = JSON.parse(r.collection)
         } catch (e) {}
         return r
       })
@@ -254,18 +256,23 @@ async function searchByImage(url) {
 
 async function uploadImage(file) {
   fileAdded.value = true;
-  const base64 = await convertBase64(file.target.files[0]);
+  const base64 = await convertFileToBase64(file.target.files[0]);
   await searchByImage(base64)
 
 
 }
-function resizeUploadedImage(imgUrl) {
+async function resizeUploadedImage(imgUrl) {
   var canvas = resizedImageCanvas.value;
   var ctx = canvas.getContext("2d");
   var img = new Image();
+
+  // const base = await convertUrlToBase64(imgUrl)
+  // console.log({base});
+
   // console.log({imgUrl});
 
-  return new Promise(resolve => {
+  let fetchedMeta = false;
+  return new Promise((resolve, reject) => {
     img.onload = function () {
 
       // set size proportional to image
@@ -289,17 +296,42 @@ function resizeUploadedImage(imgUrl) {
       // console.log(canvas, 'loaded');
       resolve(canvas.toDataURL("image/jpeg"))
     }
+    img.onerror = async function(e) {
+      if (imgUrl.indexOf('pinterest.com') && !fetchedMeta) {
+        const image = await getImageUrlFromPageMeta(imgUrl)
+        img.src = image;
+        fetchedMeta = true;
+      } else {
+        console.error('The Url is a not valid image', e);
+        reject()
+      }
+    };
 
-    img.crossOrigin="anonymous"
+    // img.crossOrigin="Anonymous"
+    // img.crossOrigin="anonymous"
     img.src = imgUrl
 
   })
 
 }
 
+async function getImageUrlFromPageMeta(url) {
+  const endpoint = 'https://squid-app-qko7x.ondigitalocean.app/metascraper/?url='
+  try {
+    const data = await $fetch(endpoint + url)
+    // console.log({data});
+    console.log(data.image);
+    return data.image
+
+  } catch (e) {
+    console.error(e);
+    throw e
+  }
+}
 
 
-const convertBase64 = (file) => {
+
+const convertFileToBase64 = (file) => {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
@@ -313,6 +345,34 @@ const convertBase64 = (file) => {
     };
   });
 };
+
+// function convertUrlToBase64(url, callback) {
+//   return new Promise((resolve, reject) => {
+//     var xhr = new XMLHttpRequest();
+//     xhr.onload = function() {
+//       var reader = new FileReader();
+//       reader.onloadend = function() {
+//         resolve(reader.result);
+//       }
+//       reader.readAsDataURL(xhr.response);
+//     };
+//     xhr.open('GET', url);
+//     xhr.responseType = 'blob';
+//     xhr.send();
+//   })
+//
+// }
+
+// const convertUrlToBase64 = url => fetch(url)
+//     .then(response => response.blob())
+//     .then(blob => new Promise((resolve, reject) => {
+//       const reader = new FileReader()
+//       reader.onloadend = () => resolve(reader.result)
+//       reader.onerror = reject
+//       reader.readAsDataURL(blob)
+//     }))
+//     .catch(e => console.error(e))
+
 
 
 </script>
@@ -388,6 +448,11 @@ const convertBase64 = (file) => {
   border: none;
   font-size: 20px;
   padding-left: 56px;
+
+  padding-right: 120px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .input.error-url {
   text-decoration: wavy;
@@ -459,6 +524,7 @@ const convertBase64 = (file) => {
     height: 40px;
     font-size: 16px;
     padding-left: 56px;
+    padding-right: 72px;
   }
 
   .icon-search-24 {

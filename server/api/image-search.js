@@ -2,7 +2,9 @@ import {Pinecone} from '@pinecone-database/pinecone'
 
 // https://docs.bentoml.com/en/latest/use-cases/embeddings/clip-embeddings.html
 export default  defineEventHandler(async (event) => {
-    if (getMethod(event) !== 'POST') return
+    if (getMethod(event) !== 'POST') {
+        return {status: 'ok'}
+    }
     const config = useRuntimeConfig();
     const apiKey = config.PINECONE_KEY;
     let mode = config.MODE // locale or production
@@ -14,7 +16,7 @@ export default  defineEventHandler(async (event) => {
         if (typeof _body === 'string') _body = JSON.parse(_body)
 
         if (_body.mode) mode = _body.mode
-        mode = 'production'
+        // mode = 'production'
 
         const pc = new Pinecone({ apiKey });
         // console.log(await pc.describeIndex('millanova')); // Get index info
@@ -103,13 +105,17 @@ async function getVector(body) {
 }
 async function searchProduct(index, vector) {
     try {
-        const queryResponse = await index.query({
+        let queryResponse = await index.query({
             topK: 10,
             vector: vector,
             includeValues: false,
             includeMetadata: true
         });
 
+        // filter dublicated products
+        queryResponse.matches = queryResponse.matches.filter(function(item, pos) {
+            return queryResponse.matches.findIndex((product) => product.metadata.productId === item.metadata.productId) == pos;
+        })
         return queryResponse
     } catch (e) {
         throw e
@@ -126,6 +132,7 @@ async function managingImagesFromAdminPayload(index, body, mode) {
     const images = body.images
     const slug = body.slug
     const type = body.type
+    const collection = body.collection
     const title = body.title
     const locale = body.locale
 
@@ -151,6 +158,7 @@ async function managingImagesFromAdminPayload(index, body, mode) {
     }
 
 
+
     try {
         // Find ids to delete
         let idsListToRemove = await index.listPaginated({ prefix: productId.toString() });
@@ -165,24 +173,40 @@ async function managingImagesFromAdminPayload(index, body, mode) {
         const imagesWithVectors = await Promise.all(promises)
 
         // Upsert
+
+
         const dataToUpsert = imagesWithVectors.map(res => {
+            // Leave just medium size
+            res.formats = {medium: res.formats.medium ?? res.formats.small ?? res.formats.large}
+
+            const metadata = {
+                productId,
+                imageId: res.id,
+                locale,
+                title,
+                slug,
+                type: JSON.stringify({
+                    slug: type.slug,
+                    title: type.title,
+                }),
+                cover_3x4: JSON.stringify({
+                    id: res.id,
+                    formats: res.formats
+                })
+            }
+            if (collection) metadata.collection = JSON.stringify({
+                slug: collection.slug,
+                title: collection.title,
+            })
+            // console.log(metadata);
+
             return {
                 id: productId + '-' + res.id,
                 values: res.vector,
-                metadata: {
-                    productId,
-                    imageId: res.id,
-                    locale,
-                    title,
-                    slug,
-                    type,
-                    cover_3x4: JSON.stringify({
-                        id: res.id,
-                        formats: res.formats
-                    })
-                }
+                metadata
             };
         })
+
 
         if (dataToUpsert.length > 0) await index.upsert(dataToUpsert)
         console.log(`Upsert ${dataToUpsert.length} items`);
