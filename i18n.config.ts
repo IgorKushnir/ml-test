@@ -98,6 +98,7 @@ export default defineI18nConfig(() => ({
             or: "or",
             upload_image: "Upload image",
             search_clear: "Clear",
+            error_image_upload: "Invalid image URL. Please check and try again.",
 
             discover: "Discover"
         },
@@ -220,6 +221,8 @@ export default defineI18nConfig(() => ({
             or: "lub",
             upload_image: "Prześlij obraz",
             search_clear: "Wyczyść",
+            error_image_upload: "Nieprawidłowy adres URL obrazu. Sprawdź i spróbuj ponownie.",
+
 
             discover: "Odkryj"
         }

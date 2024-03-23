@@ -9,27 +9,33 @@
                 <div class="col-2 p-v-0 hide-lg">
                   <Logo class="logo" color="dark_gray"/>
                 </div>
-                <div class="col-8 col-10-lg col-12-md p-v-0 input-container">
-                  <input ref="input" v-model="search" alt="Search" :placeholder="$t('search_product_name_or_image')" autocomplete="off" autofocus class="input" :class="errorUrl ? 'error-url' : ''">
-                  <div class="icon-search-24"/>
-                  <div class="actions p-r-24">
-                    <transition name="fade">
-                      <Spinner class="loader" v-if="pending"/>
-                    </transition>
-<!--                    <transition name="fade" mode="in-out" >-->
+                <div class="col-8 col-10-lg col-12-md p-v-0">
+                  <div class="input-container">
+                    <input ref="input" v-model="search" alt="Search" :placeholder="$t('search_product_name_or_image')" autocomplete="off" autofocus class="input" :class="errorUrl ? 'error-url' : ''">
+
+                    <div class="icon-search-24"/>
+                    <div class="actions p-r-24">
+                      <transition name="fade">
+                        <Spinner class="loader" v-if="pending"/>
+                      </transition>
+                      <!--                    <transition name="fade" mode="in-out" >-->
                       <div v-if="search.length === 0 && !fileAdded" v-on:click="() => inputUpload.click()">
                         <span class="gray">{{ $t('or') }}</span>
                         <strong class="p-small m-l-4"
                                 style="cursor: pointer">{{ $t('upload_image') }}</strong>
                         <input ref="inputUpload" accept="image/png, image/jpeg" v-on:change="uploadImage" type='file' hidden/>
                       </div>
-<!--                    </transition>-->
-<!--                    <transition name="fade" mode="out-in" >-->
+                      <!--                    </transition>-->
+                      <!--                    <transition name="fade" mode="out-in" >-->
                       <strong v-if="search.length > 0" v-on:click="search = ''" class="p-small m-l-16"
                               style="cursor: pointer">{{ $t('search_clear') }}</strong>
-<!--                    </transition>-->
+                      <!--                    </transition>-->
+                    </div>
                   </div>
+                  <div v-if="errorUrl" class="error"><div class="error-message">{{$t('error_image_upload')}}</div></div>
                 </div>
+
+
                 <div class="col-2 p-v-0 hide-md">
                   <div class="icon-close-24" v-on:click="close"/>
                 </div>
@@ -80,6 +86,7 @@
 </template>
 
 <script setup>
+// Todo: 1. Dragndrop; 2. Error toast
 const { locale } = useI18n()
 const {$isUrl} = useNuxtApp()
 
@@ -216,8 +223,9 @@ async function searchByImage(url) {
   try {
     // Resize
     url = await resizeUploadedImage(url)
+    if (!url) throw 'error'
 
-    // console.log({url});
+    console.log({url});
     // Search
     const res = $fetch('/api/image-search', {
       method: "POST",
@@ -243,10 +251,13 @@ async function searchByImage(url) {
     } else {
       console.error('error image url');
       errorUrl.value = true
+      pending.value = false
     }
 
   } catch (e) {
-    console.log(e);
+    console.error(e);
+    errorUrl.value = true
+    pending.value = false
   }
   pending.value = false
   fileAdded.value = false;
@@ -297,7 +308,7 @@ async function resizeUploadedImage(imgUrl) {
       resolve(canvas.toDataURL("image/jpeg"))
     }
     img.onerror = async function(e) {
-      if (imgUrl.indexOf('pinterest.com') && !fetchedMeta) {
+      if (imgUrl?.indexOf('pinterest.com') && !fetchedMeta) {
         const image = await getImageUrlFromPageMeta(imgUrl)
         imgUrl = image
         img.src = image;
@@ -435,7 +446,7 @@ const convertFileToBase64 = (file) => {
 .icon-search-24 {
   font-size: 24px;
   position: absolute;
-  left: 36px;
+  left: 16px;
   top: 16px;
 }
 
@@ -456,11 +467,23 @@ const convertFileToBase64 = (file) => {
   white-space: nowrap;
   overflow: hidden;
 }
+//.input.error-url {
+//  text-decoration: wavy;
+//  text-decoration-color: red;
+//  text-decoration-line: underline;
+//}
 .input.error-url {
-  text-decoration: wavy;
-  text-decoration-color: red;
-  text-decoration-line: underline;
+  box-shadow: 0px 0px 0px 1px $red inset;
 }
+.error {
+  position: absolute;
+}
+//.error-message {
+//  width: 100%;
+//  background-color: $dark-blue;
+//  display: block!important;
+//  width: 100%!important;
+//}
 
 .input:focus {
   outline: none;
@@ -475,7 +498,7 @@ const convertFileToBase64 = (file) => {
 
 .actions {
   position: absolute;
-  right: 20px;
+  right: 0;
   top: 0;
   height: 100%;
   display: flex;
@@ -525,16 +548,16 @@ const convertFileToBase64 = (file) => {
   .input {
     height: 40px;
     font-size: 16px;
-    padding-left: 56px;
+    padding-left: 40px;
     padding-right: 72px;
   }
 
   .icon-search-24 {
     top: 8px;
-    left: 32px;
+    left: 8px;
   }
   .actions {
-    right: 8px;
+    right: -8px;
   }
   .result {
     top: 112px;
@@ -544,6 +567,9 @@ const convertFileToBase64 = (file) => {
   .search-grid {
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 20px;
+  }
+  .error-message {
+    background-color: $dark-blue;
   }
 }
 
