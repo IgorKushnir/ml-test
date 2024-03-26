@@ -20,8 +20,8 @@ export default  defineEventHandler(async (event) => {
 
         const pc = new Pinecone({ apiKey });
         // console.log(await pc.describeIndex('millanova')); // Get index info
-        // return await pc.describeIndex('millanova1')
-        const index = pc.index("millanova1").namespace(_body.locale+'-'+mode);
+        // return await pc.describeIndex('millanova')
+        const index = pc.index("millanova").namespace(_body.locale+'-'+mode);
         // return index
 
         // const results = await index.listPaginated();
