@@ -1,6 +1,7 @@
 <template>
-  <HeaderSearchModalNew v-if="$route.query.imagesearch" :show="showSearch" @close="showSearch = false"/>
-  <HeaderSearchModal v-else :show="showSearch" @close="showSearch = false"/>
+  <HeaderSearchModalNew :show="showSearch" @close="showSearch = false"/>
+<!--  <HeaderSearchModalNew v-if="$route.query.imagesearch" :show="showSearch" @close="showSearch = false"/>-->
+<!--  <HeaderSearchModal v-else :show="showSearch" @close="showSearch = false"/>-->
 
   <transition name="fade">
     <HeaderWishCounter v-if="$route.name !== 'moodboard'"  class="show-md"/>
