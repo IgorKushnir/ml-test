@@ -182,7 +182,7 @@ async function getResult() {
 watch(search, () => {
   // settings()
   if ($isUrl(search.value)) {
-    console.log('url'); // title, id, type, slug, cover_3x4
+    // console.log('url'); // title, id, type, slug, cover_3x4
     searchByImage(search.value)
   } else {
     // console.log('not url');
@@ -225,7 +225,7 @@ async function searchByImage(url) {
     url = await resizeUploadedImage(url)
     if (!url) throw 'error'
 
-    console.log({url});
+    // console.log({url});
     // Search
     const res = $fetch('/api/image-search', {
       method: "POST",
@@ -333,7 +333,7 @@ async function getImageUrlFromPageMeta(url) {
   try {
     const data = await $fetch(endpoint + url)
     // console.log({data});
-    console.log(data.image);
+    // console.log(data.image);
     return data.image
 
   } catch (e) {
