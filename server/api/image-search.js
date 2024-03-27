@@ -230,7 +230,7 @@ async function managingImagesFromAdminPayload(index, body, mode) {
 
 async function getAllProducts(locale = 'en', limit = -1) {
     try {
-        const res = await fetch('https://admin.millanova.com/api/products?locale='+locale+'&[pagination][limit]='+limit+'&populate[cover_3x4][fields][0]=formats&populate[gallery][fields][0]=formats&populate[type][fields]')
+        const res = await fetch('https://admin.millanova.com/api/products?locale='+locale+'&[pagination][limit]='+limit+'&populate[cover_3x4][fields][0]=formats&populate[gallery][fields][0]=formats&populate[type][fields]&populate[collection][fields]')
         const data = await res.json()
         // return data
         return data.data.map(d => {
