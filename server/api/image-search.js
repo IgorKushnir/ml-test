@@ -16,7 +16,7 @@ export default  defineEventHandler(async (event) => {
         if (typeof _body === 'string') _body = JSON.parse(_body)
 
         if (_body.mode) mode = _body.mode
-        mode = 'production'
+        // mode = 'production'
 
         const pc = new Pinecone({ apiKey });
         // console.log(await pc.describeIndex('millanova')); // Get index info
@@ -132,7 +132,7 @@ async function managingImagesFromAdminPayload(index, body, mode) {
     const images = body.images
     const slug = body.slug
     const type = body.type
-    const collection = body.collection
+    const collection = (body.collection?.slug && body.collection?.title) ? body.collection : null
     const title = body.title
     const locale = body.locale
 
@@ -250,7 +250,14 @@ async function getAllProducts(locale = 'en', limit = -1) {
                 locale: d.attributes?.locale,
                 title: d.attributes?.title,
                 slug: d.attributes?.slug,
-                type: d.attributes?.type?.data?.attributes?.slug,
+                type: {
+                    title: d.attributes?.type?.data?.attributes?.title,
+                    slug: d.attributes?.type?.data?.attributes?.slug,
+                },
+                collection: {
+                    title: d.attributes?.collection?.data?.attributes?.title,
+                    slug: d.attributes?.collection?.data?.attributes?.slug,
+                },
                 publishedAt: d.attributes?.publishedAt,
                 images,
 
