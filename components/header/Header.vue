@@ -1,15 +1,12 @@
 <template>
-  <HeaderSearchModalNew :show="showSearch" @close="showSearch = false"/>
-<!--  <HeaderSearchModalNew v-if="$route.query.imagesearch" :show="showSearch" @close="showSearch = false"/>-->
-<!--  <HeaderSearchModal v-else :show="showSearch" @close="showSearch = false"/>-->
+  <HeaderSearchModalNew  :show="showSearch" @close="showSearch = false"/>
 
   <transition name="fade">
     <HeaderWishCounter v-if="$route.name !== 'moodboard'"  class="show-md"/>
   </transition>
   <header class="navigation">
+
     <div class="container" style="position: static;">
-
-
       <div class="top-nav">
         <div class="left-side">
           <NuxtLink v-for="item in data[0]['primary_additional']" :to="$isAbsoluteUrl(item.url) ? item.url : localePath(item.url)" :class="'nav-link__tertiary hover hide-md' + (item.target ? ' target' : '')" :target="item.target ? '_target' : '_self'">{{item.title}}</NuxtLink>

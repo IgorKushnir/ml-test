@@ -20,7 +20,7 @@
     "axios": "^0.27.2",
     "google-maps": "^4.3.3",
     "is-ip": "^5.0.1",
-    "nuxt": "^3.0.0-rc.6",
+    "nuxt": "^3.11.1",
     "vue-gtag-next": "^1.14.0",
     "vue3-circle-progress": "^1.0.7"
   },
