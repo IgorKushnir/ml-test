@@ -2,6 +2,10 @@ import axios from 'axios';
 import {isIPv4} from 'is-ip';
 
 export default defineEventHandler(async (event) => {
+    // if (process.server) {
+    //     // console.log('----------', getRequestIP(event));
+    //     console.log(getResponseHeaders(event));
+    // }
     const headers = getRequestHeaders(event)
     let ip = headers['x-forwarded-for']
     const config = useRuntimeConfig();
@@ -10,6 +14,8 @@ export default defineEventHandler(async (event) => {
     ip = ip.split(',')
     ip = ip[0] ?? null
 
+    // console.log({ip});
+    // console.log(isIPv4(ip));
     // event.context.country = "US"
     // setCookie(event, 'country', "US")
     // return
@@ -35,7 +41,8 @@ export default defineEventHandler(async (event) => {
 
                 event.context.country = null
                 setCookie(event, 'country', null)
-                console.error('abstractapi', e);
+                console.error('---abstractapi error---', url);
+                // console.error('---abstractapi---', e);
             }
 
         } else {
