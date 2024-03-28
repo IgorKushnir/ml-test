@@ -130,7 +130,7 @@ export default async function (lang) {
             const menu = d.data.menu.data.attributes;
 
             // Check if line is empty (collection inside)
-            let lines = d.data.lines.data;
+            let lines = d.data?.lines?.data
             lines = lines.filter(l => l.attributes.collections.data.length > 0)
 
             let types = d.data.types.data
@@ -147,7 +147,8 @@ export default async function (lang) {
                     }
                 })
 
-            return [menu, lines, types, translations]
+            // return [menu, lines, types, translations]
+            return {menu, lines, types, translations}
         },
     })
 }

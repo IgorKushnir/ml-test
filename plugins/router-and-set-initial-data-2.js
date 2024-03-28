@@ -30,12 +30,13 @@ async function setFilters(lang) {
 }
 
 export default defineNuxtPlugin(async (nuxtApp) => {
-    const locale = ref(nuxtApp.$i18n.locale?.effect?.fn());
 
+    const locale = ref(nuxtApp.$i18n.locale?.effect?.fn());
 
     const filters = await setFilters(locale.value)
     const initialData = await setInitialData(locale.value)
-    const types = initialData[2]
+
+    const types = initialData.types
 
 
     const {data, error} = await getDressRedirects(locale.value)
