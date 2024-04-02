@@ -3,10 +3,10 @@
   <div :class="((!poster && !wide) ? 'ratio-3x4' : '') + (poster ? 'ratio-4x3 ratio-3x4-md' : '') + (wide ? 'ratio-25x9 ratio-3x4-md' : '')">
 
     <NuxtLink :to="button ? to : null"
-              v-on:mouseenter="hover(true, $el)" v-on:mouseleave="hover(false, $el)"
+              v-on:mouseenter="(el) => hover(true, el)" v-on:mouseleave="(el) => hover(false, el)"
               class="collection-item"
     >
-      <template v-if="!(poster && image_4x3)">
+      <template v-if="(!wide && !(poster && image_4x3))">
         <Image :path="image" :alt="title"  size="medium"/>
       </template>
 
@@ -85,7 +85,7 @@ const props = defineProps({
 })
 
 function hover(hover, el) {
-  const button = el.getElementsByClassName('button')[0]
+  const button = el.target.getElementsByClassName('button')[0]
   if (hover) {
     button.classList.add('button-hover')
   } else {

@@ -27,9 +27,9 @@ if (process.server && props.show) {
   // throw createError({ statusCode: 404, statusMessage: 'Page Not Found' })
 
 
-  // if (nuxtApp.ssrContext) {
-  //   nuxtApp.ssrContext.nuxt.error = createError({ statusCode: 404 });
-  // }
+  if (nuxtApp.ssrContext) {
+    nuxtApp.ssrContext.nuxt.error = createError({ statusCode: 404 });
+  }
 
 }
 </script>
