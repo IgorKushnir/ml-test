@@ -1674,6 +1674,7 @@ function send() {
         }
     ).then(res => {
       sent.value = true;
+      fbq('track', 'Lead'); // Pixel??
     }).catch(error => console.log('error', error))
   }
 }
