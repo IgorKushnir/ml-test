@@ -1559,7 +1559,7 @@ setCountryCode();
 
 
 const cities = computed(() => {
-  sendData.value.city.value = undefined
+  // sendData.value.city.value = undefined
   let cities = countryData?.value?.data?.attributes?.city
   if (!cities) return  []
 
@@ -1573,16 +1573,31 @@ const cities = computed(() => {
   })
   return cities
 })
-const stores = computed(() => {
+
+
+const stores = ref()
+function getStores() {
   sendData.value.store.index = -1
   sendData.value.store.value = ''
   const index = cities?.value?.findIndex((c) => c.name.toLowerCase() === sendData.value.city.value);
+  // console.log(index, cities?.value[index]);
   if (index !== null && index !== -1) {
     const s = cities?.value[index]
-    return s
+    stores.value = s
+  } else {
+    stores.value = undefined
   }
-  return undefined
-})
+}
+// const stores = computed(() => {
+//   sendData.value.store.index = -1
+//   sendData.value.store.value = ''
+//   const index = cities?.value?.findIndex((c) => c.name.toLowerCase() === sendData.value.city.value);
+//   if (index !== null && index !== -1) {
+//     const s = cities?.value[index]
+//     return s
+//   }
+//   return undefined
+// })
 
 
 
@@ -1598,6 +1613,11 @@ watch(() => sendData.value.country.value, () => {
     return
   }
   refreshCountry()
+})
+
+watch(() => sendData.value.city.value, () => {
+  console.log('getStores');
+  getStores()
 })
 watch(() => sendData.value.store.index, (store) => {
   const index = sendData.value.store.index;

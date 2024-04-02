@@ -1,5 +1,6 @@
 import {Pinecone} from '@pinecone-database/pinecone'
 
+// https://github.com/bentoml/CLIP-API-service/tree/main
 // https://docs.bentoml.com/en/latest/use-cases/embeddings/clip-embeddings.html
 export default  defineEventHandler(async (event) => {
     if (getMethod(event) !== 'POST') {
