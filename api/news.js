@@ -55,7 +55,6 @@ async function getNewsPost(slug, lang, publicationState = "LIVE") {
     const response = graphql(`
     query NewsPost{
   newspost (
-    publicationState: ${publicationState}
     locale: "${lang}"
     slug: "${slug}"
     
