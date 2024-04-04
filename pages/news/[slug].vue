@@ -48,9 +48,16 @@ const route = useRoute()
 const slug = route.params.slug
 const { $getDate, $getMonths } = useNuxtApp()
 
+let draft = route.query?.draft;
+
+let publicationState = "LIVE";
+if (draft === 'true') {
+  publicationState = "PREVIEW";
+}
+
 const { locale } = useI18n()
 
-const {data, pending, refresh, error} = await getNewsPost(slug, locale.value)
+const {data, pending, refresh, error} = await getNewsPost(slug, locale.value, publicationState)
 // onMounted(() => {
 //   refresh()
 // })

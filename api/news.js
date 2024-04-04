@@ -49,12 +49,13 @@ function getNews(lang, page = 1, pageSize = 100) {
     return response
 }
 
-async function getNewsPost(slug, lang) {
+async function getNewsPost(slug, lang, publicationState = "LIVE") {
     const graphql = useStrapiGraphQL()
 
     const response = graphql(`
     query NewsPost{
   newspost (
+    publicationState: ${publicationState}
     locale: "${lang}"
     slug: "${slug}"
     
