@@ -218,6 +218,10 @@ const queryData = ref({
   store_email: null,
 });
 
+const source = ref('Direct')
+if (route.query.source) {
+  source.value = route.query.source;
+}
 if (route.query.q) {
   try {
     let qString = decodeFromBase64(route.query.q);
@@ -1666,6 +1670,10 @@ function send() {
     keys.forEach((key) => {
       finalData[key] = sendData.value[key].value ?? null
     })
+
+    if (source.value) {
+      finalData.source = source.value
+    }
 
     $fetch(apiUrl + '/email-provider/sendAppointment',
         {
