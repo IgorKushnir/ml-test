@@ -1672,7 +1672,10 @@ function send() {
     })
 
     if (source.value) {
-      finalData.source = source.value
+      finalData.source = {
+        ...finalData.source,
+        source: source.value
+      }
     }
 
     $fetch(apiUrl + '/email-provider/sendAppointment',
