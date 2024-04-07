@@ -1672,8 +1672,8 @@ function send() {
     })
 
     if (source.value) {
-      finalData.source = {
-        ...finalData.source,
+      finalData = {
+        ...finalData,
         source: source.value
       }
     }
