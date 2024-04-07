@@ -96,7 +96,7 @@
             </div>
 
 
-            <NuxtLink v-if="data.storeLink" :to="localePath(data.storeLink)" target="_blank" class="button m-t-16 m-t-0-md m-b-24-md m-r-16 target">Buy online</NuxtLink>
+            <NuxtLink v-if="data.storeLink" :to="localePath(data.storeLink)" target="_blank" class="button m-t-16 m-t-0-md m-b-24-md m-r-16 target">{{$t('buy_online')}}</NuxtLink>
             <NuxtLink v-if="!discontinued"  :to="locale === 'pl' ? localePath('/warsaw') : (localePath('/request-an-appointment')+'?source='+(data?.collection?.data?.attributes?.slug ?? 'null'))" target="_self" class="button m-t-16 m-t-0-md m-b-24-md">
               {{ locale === 'pl' ? $t('book_an_appointment') : $t('request_an_appointment') }}</NuxtLink>
 
