@@ -54,7 +54,7 @@
                 <div class="subheader small">{{ $t('color') }}</div>
                 <div class="p-small">
                   <template v-for="(color, index) in data.colors.data">
-                    <NuxtLink :to="localePath('/'+data.type.data.attributes.slug+'/'+(locale === 'en' ? 'colors' : 'kolor')+'/'+color.attributes.slug)" class="p-small link">{{ color.attributes.title }}</NuxtLink><span v-if="index+1 < data.colors.data.length">, </span>
+                    <NuxtLink :to="localePath('/'+(data?.type?.data?.attributes?.slug ?? 'product')+'/'+(locale === 'en' ? 'colors' : 'kolor')+'/'+color.attributes.slug)" class="p-small link">{{ color.attributes.title }}</NuxtLink><span v-if="index+1 < data.colors.data.length">, </span>
                   </template>
                 </div>
               </div>
@@ -64,7 +64,7 @@
               <div>
                 <div class="subheader small">{{ $t('silhouette') }}</div>
                 <div class="p-small">
-                  <NuxtLink :to="localePath('/'+data.type.data.attributes.slug+'/'+(locale === 'en' ? 'silhouettes' : 'silhouette')+'/'+data.silhouettes.data.attributes.slug)" class="p-small link">{{ data.silhouettes.data.attributes.title }}</NuxtLink>
+                  <NuxtLink :to="localePath('/'+(data?.type?.data?.attributes?.slug ?? 'product')+'/'+(locale === 'en' ? 'silhouettes' : 'silhouette')+'/'+data.silhouettes.data.attributes.slug)" class="p-small link">{{ data.silhouettes.data.attributes.title }}</NuxtLink>
                 </div>
               </div>
             </div>
@@ -74,7 +74,7 @@
                 <div class="subheader small">{{ $t('fabric') }}</div>
                 <div class="p-small">
                   <template v-for="(fabric, index) in data.fabrics.data">
-                    <NuxtLink :to="localePath('/'+data.type.data.attributes.slug+'/'+(locale === 'en' ? 'fabrics' : 'tkanina')+'/'+fabric.attributes.slug)" class="p-small link">{{ fabric.attributes.title }}</NuxtLink><span v-if="index+1 < data.fabrics.data.length">, </span>
+                    <NuxtLink :to="localePath('/'+(data?.type?.data?.attributes?.slug ?? 'product')+'/'+(locale === 'en' ? 'fabrics' : 'tkanina')+'/'+fabric.attributes.slug)" class="p-small link">{{ fabric.attributes.title }}</NuxtLink><span v-if="index+1 < data.fabrics.data.length">, </span>
                   </template>
                 </div>
               </div>
