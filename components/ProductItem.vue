@@ -1,6 +1,6 @@
 <template>
   <NuxtLink :to="localePath(to)" v-if="!shimmer">
-    <div class="product-item">
+    <div class="product-item" >
         <div class="product-item-head">
           <span class="h3">{{title}}</span>
           <LikeButton :liked="liked" :class="hideLikedDefault ? 'hide-liked-default' : ''" @click="handleLike(id)"/>
@@ -58,7 +58,6 @@ const emits = defineEmits(['updateLikes'])
 const { $toggleLikeProduct } = useNuxtApp()
 
 const liked = computed(() => props.likeList?.includes(props.id.toString()))
-
 
 
 
@@ -137,22 +136,25 @@ $transition: .5s ease-in-out;
     margin: 0;
   }
 }
+//.product-item:focus {
+//  opacity: .1;
+//}
 
 @include md {
 
   .product-item .product-item-head {
     padding: 16px 24px;
   }
-  .product-item-head .h3 {
-    opacity: 1;
-  }
-
-
-  .hide-liked-default.icon-heart-yes-24,
-  .product-item-head .icon-heart-no-24,
-  .product-item-head .icon-heart-yes-24 {
-    opacity: 1!important;
-  }
+  //.product-item-head .h3 {
+  //  opacity: 1;
+  //}
+  //
+  //
+  //.hide-liked-default.icon-heart-yes-24,
+  //.product-item-head .icon-heart-no-24,
+  //.product-item-head .icon-heart-yes-24 {
+  //  opacity: 1!important;
+  //}
 
 
   .icon-like {
@@ -160,7 +162,9 @@ $transition: .5s ease-in-out;
   }
 }
 
-@media (hover: hover) {
+
+
+//@media (hover: hover) {
   :deep(.img-component.base) {
     transition: 2.5s ease-in-out;
   }
@@ -175,12 +179,14 @@ $transition: .5s ease-in-out;
       opacity: 1;
     }
 
-
-    :deep(.img-component.base) {
-      transform: scale(1.1);
-
+    @media (hover: hover) {
+      :deep(.img-component.base) {
+        transform: scale(1.1);
+      }
     }
+
+
   }
-}
+//}
 
 </style>
