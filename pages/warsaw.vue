@@ -229,6 +229,8 @@ const userData = ref({
   consent: {value: false, error: false, required: true},
 })
 
+
+
 const steps = ref([
   {
     name: t('book_step_1'),
@@ -278,7 +280,11 @@ function goStep(_step, payload) {
   }
   if (_step === 3) {
     fbq('track', 'Lead');  // Pixel??
-    gtag('event', 'success_form', {'send_to': 'AW-16455473849/E3k4COnnw5cZELm1yqY9'});
+    gtag('event', 'success_form', {
+      'send_to': 'AW-16455473849/E3k4COnnw5cZELm1yqY9',
+      peopleJoinWithMe: userData.value.people,
+      howDidIFindOut: userData.value.find_out ?? 'null'
+    });
     console.log('event-sent');
   }
 
