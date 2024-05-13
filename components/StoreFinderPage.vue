@@ -112,23 +112,25 @@ const countries = ref(await getListOfCountries(locale.value))
 const banner = ref(await getBanner(locale.value))
 
 
-if (process.client) {
-  const country = document.cookie.replace(
-      /(?:(?:^|.*;\s*)country\s*\=\s*([^;]*).*$)|^.*$/,
-      "$1",
-  );
-  countryCode.value = country;
-  // console.log('client', country);
-}
-if (process.server) {
-  const nuxtApp = useNuxtApp()
-  const {ssrContext} = nuxtApp
-  const event = ssrContext.event
-  const country = event.context.country
-  countryCode.value = country
-  // console.log('server', country);
-}
-
+// if (process.client) {
+//   const country = document.cookie.replace(
+//       /(?:(?:^|.*;\s*)country\s*\=\s*([^;]*).*$)|^.*$/,
+//       "$1",
+//   );
+//   countryCode.value = country;
+//   // console.log('client', country);
+// }
+// if (process.server) {
+//   const nuxtApp = useNuxtApp()
+//   const {ssrContext} = nuxtApp
+//   const event = ssrContext.event
+//   const country = event.context.country
+//   countryCode.value = country
+//   // console.log('server', country);
+// }
+import getCountryCode from "../api/getCountryCode";
+countryCode.value = await getCountryCode()
+// console.log('-> ',countryCode.value);
 
 // console.log('b - ', countrySlug.value);
 if (!countrySlug.value) {

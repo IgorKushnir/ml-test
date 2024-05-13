@@ -89,6 +89,7 @@
                 name="phone"
                 id="phone"
             />
+
             <label v-if="true" for="phone" class="error-message">{{ $t('book_error_empty_field') }}</label>
           </div>
 
@@ -201,6 +202,7 @@
 
 <script setup>
 import getFlagship from '~/api/getFlagship'
+import phoneCodes from '~/api/phoneCodes.json'
 
 const { t,locale } = useI18n()
 
@@ -478,7 +480,27 @@ function _getDaysInMonth(month, year) {
 }
 
 
+watch(() => userData.value.phone.value, (phone) => {
+  if (phone.length === 0) phone = '+'
+  if (phone[0] !== '+') phone = '+'.concat(phone.slice(1))
 
+  phone = phone.replace(/[^+0-9]/g, "")
+  userData.value.phone.value = phone
+})
+
+function setCountryCode(countryCode) {
+  const index = phoneCodes.findIndex(l => l.code === countryCode)
+  if (index && index !== -1) {
+    userData.value.phone.value = phoneCodes[index].dial_code
+  }
+}
+
+import getCountryCode from "../api/getCountryCode";
+
+onMounted(async () => {
+  let countryCode = await getCountryCode()
+  setCountryCode(countryCode === 'null' ? 'US' : countryCode)
+})
 </script>
 
 <style scoped lang="scss">

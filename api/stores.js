@@ -182,7 +182,12 @@ async function getListOfCountries(lang) {
     //     e.call()
     //     return data
     // }
-    return data;
+    return data
+    // return new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //         resolve(data)
+    //     }, 2000)
+    // });
 }
 
 export {getCountry, getListOfCountries, getBanner}

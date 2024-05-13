@@ -11,14 +11,17 @@ export default defineEventHandler(async (event) => {
     const config = useRuntimeConfig();
     const apiKey = config.ABSTRACT_API
 
-    ip = ip.split(',')
-    ip = ip[0] ?? null
+    ip = ip?.split(',')
+    ip = ip?.[0] ?? null
 
     // console.log({ip});
     // console.log(isIPv4(ip));
-    // event.context.country = "US"
-    // setCookie(event, 'country', "US")
+
+    // event.context.country = "UA"
+    // setCookie(event, 'country', "UA")
     // return
+
+    // if (!ip) return
 
     if (!isIPv4(ip)) {
         const country_code = null
