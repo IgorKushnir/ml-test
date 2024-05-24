@@ -100,7 +100,7 @@ useHead({
                     t=document.createElement("script");t.async=!0,t.src=e;var
                     r=document.getElementsByTagName("script")[0];
                     r.parentNode.insertBefore(t,r)}}("https://s.pinimg.com/ct/core.js");
-                  pintrk('load', '2612604842428', {em: '<user_email_address>'});
+                  pintrk('load', '2613056388970', {em: '<user_email_address>'});
                   pintrk('page');
                   `
     }
@@ -115,7 +115,7 @@ useHead({
       // tagPosition: 'bodyOpen'
     },
     { // Pinterest Tag
-      innerHTML: `<img height="1" width="1" style="display:none;" alt="" src="https://ct.pinterest.com/v3/?event=init&tid=2612604842428&pd[em]=<hashed_email_address>&noscript=1" />`
+      innerHTML: `<img height="1" width="1" style="display:none;" alt="" src="https://ct.pinterest.com/v3/?event=init&tid=2613056388970&pd[em]=<hashed_email_address>&noscript=1" />`
     },
   ],
 })
