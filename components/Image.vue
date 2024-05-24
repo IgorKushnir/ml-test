@@ -5,7 +5,7 @@
     <img
         v-if="!path.data?.attributes?.mime?.startsWith('video/')"
         :src="$getImage(path, size)"
-        :alt="alt"
+        :alt="path.data?.attributes?.alternativeText ?? alt"
         class="img-component base"
         loading="lazy"
     />

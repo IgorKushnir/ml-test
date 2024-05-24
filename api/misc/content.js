@@ -41,6 +41,7 @@ function content(extra) {
                     placeholder
                     width
                     height
+                    alternativeText
                   }
                 }
               }
@@ -53,6 +54,7 @@ function content(extra) {
                     placeholder
                     width
                     height
+                    alternativeText
                   }
                 }
               }
@@ -77,6 +79,7 @@ function content(extra) {
                     placeholder
                     width
                     height
+                    alternativeText
                   }
                 }
               }
@@ -101,6 +104,7 @@ function content(extra) {
                     placeholder
                     width
                     height
+                    alternativeText
                   }
                 }
               }
@@ -113,6 +117,7 @@ function content(extra) {
                     placeholder
                     width
                     height
+                    alternativeText
                   }
                 }
               }
@@ -134,6 +139,7 @@ function content(extra) {
                     url
                     placeholder
                     mime
+                    alternativeText
                   }
                 }
               }
@@ -171,6 +177,7 @@ function content(extra) {
                   placeholder
                   width
                   height
+                  alternativeText
                 }
               }
             }
