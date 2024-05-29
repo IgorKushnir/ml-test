@@ -5,7 +5,7 @@
           title: $t('book_title'),
         }
     ]"
-         :localizations="[{locale: 'en', slug: 'book-an-appointment'}, {locale: 'pl', slug: 'book-an-appointment'}]"
+         :localizations="[{locale: 'en', slug: 'request-an-appointment'}, {locale: 'pl', slug: 'request-an-appointment'}]"
     />
 
     <InnerHeader :title="$t('book_title')" :sub_title="$t('book_sub_title')"/>
