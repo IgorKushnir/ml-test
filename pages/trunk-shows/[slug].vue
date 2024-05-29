@@ -9,7 +9,7 @@
           title: data?.attributes?.title,
         }
     ]"
-         :pathToPage="{en: 'trunk-shows', pl: 'trunk-shows'}"
+         :pathToPage="{en: 'trunk-shows', pl: 'pokazy'}"
          :localizations="data?.attributes?.localizations?.data"
     />
 
