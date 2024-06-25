@@ -12,7 +12,7 @@
 
       <template v-else>
         <Image class="hide-md" :path="image_4x3" :alt="title"  size="medium"/>
-        <Image class="show-md" :path="image" :alt="title"  size="medium"/>
+        <Image class="show-md" :path="image" :alt="title"  :size="wide ? 'large' : 'medium'"/>
       </template>
 
 
