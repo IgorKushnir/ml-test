@@ -5,12 +5,13 @@
         <div class="close-button icon-close-24" v-on:click="close"/>
         <PinchScrollZoom
             ref="zoomer"
+            centered
             within
             key-actions
             :width="width"
             :height="height"
-            :min-scale=".3"
-            :max-scale="2"
+            :min-scale="1"
+            :max-scale="4"
             :content-width="zoomImage.data.attributes.width"
             :content-height="zoomImage.data.attributes.height"
         >
