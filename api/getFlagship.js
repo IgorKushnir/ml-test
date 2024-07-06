@@ -42,6 +42,11 @@ export default async function (lang, publicationState = "LIVE") {
           service_id
           publish
         }
+        specials {
+            name
+            from
+            to
+        }
       }
     }
   }

@@ -32,6 +32,7 @@
                        @getHours="((day) => getHours(day))"
                        @goStep="(payload) => goStep(2, payload)"
                        :selectedDay="selectedDay"
+                       :specials="data?.specials"
       />
 
 

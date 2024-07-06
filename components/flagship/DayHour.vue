@@ -19,10 +19,10 @@
         <div class="subheader small center">{{ $t("Sat") }}</div>
         <div class="subheader small center">{{ $t("Sun") }}</div>
       </div>
-      <div ref="calendarEl" class="swiper">
+      <div ref="calendarEl" class="swiper" style="overflow: visible;">
         <div class="swiper-wrapper">
 
-          <div v-for="(month, index) in !bookingDates ? placeholderDates : bookingDates" class="swiper-slide">
+          <div v-for="(month, index) in !bookingDatesWithSpecials ? placeholderDates : bookingDatesWithSpecials" class="swiper-slide">
             <div class="month">
               <div v-for="day in month"
                    class="day"
@@ -33,12 +33,31 @@
                    v-on:click="() => day.available ? getHours(day.date) : null"
               >
                 <div class="day-container">
-                  <span class="p-small">{{day.day}}</span>
+                  <div class="specials" v-if="day.specials?.length > 0">
+                    <div class="tooltip-wrapper">
+                      <div class="tooltip">
+                        <div v-for="special in day.specials">
+                          <template v-if="special.inRange">
+                            <span class="ico"></span>{{special.name}}
+                          </template>
+                        </div>
+                      </div>
+                    </div>
+
+                    <template v-for="special in day.specials">
+                      <div class="special" v-if="special.inRange" :class="special.inRange + ' ' + special.position"></div>
+                    </template>
+                  </div>
+
+                  <span class="p-small relative">{{day.day}}</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+      <div class="m-t-16">
+        <div v-for="special in specials" class="legend p-small"><span class="ico"></span>{{ special.name }}</div>
       </div>
     </div>
 
@@ -86,6 +105,9 @@ const props = defineProps({
   selectedDay: {
     type: String
   },
+  specials: {
+    type: Object
+  }
 })
 // const loadingDates = ref(true)
 // const loadingHours = ref(true)
@@ -166,9 +188,51 @@ const bookingHoursTransformed = computed(() => {
 })
 
 
+const bookingDatesWithSpecials = computed(() => {
+  if (!props.bookingDates) return
+  const bd = props.bookingDates
+  if (props.specials?.length > 0) {
+    Object.keys(bd).forEach((month) => {
+      bd[month].forEach((dayData, dayIndex) => {
+        // console.log(bd[month][dayIndex]);
+        const sp = props.specials.map(special => {
+          return isDateInRange(dayData, special)
+        })
+        if ((sp.map(s => s.inRange) ?? []).includes(true)) {
+          bd[month][dayIndex].specials =  sp
+        }
+      })
+    })
+  }
+
+  return bd
+})
 
 function isToday(date) {
   return new Date().toISOString().split('T')[0] === date
+}
+function isDateInRange(day, special) {
+  const {from, to, name} = special
+  const date = day.date ?? (day.year+"-"+((day.month+1) < 10 ? '0'+(day.month+1) : (day.month+1))+"-"+(day.day < 10 ? '0'+day.day : day.day));
+  const inputDate = new Date(date);
+  const fromDate = new Date(from);
+  const toDate = new Date(to);
+
+  if (isNaN(inputDate) || isNaN(fromDate) || isNaN(toDate)) {
+    console.error(("Invalid date format. Please use 'YYYY-MM-DD'."));
+    return { inRange: false, position: null, name: null }
+    // throw new Error("Invalid date format. Please use 'YYYY-MM-DD'.");
+  }
+
+  if (inputDate < fromDate || inputDate > toDate) {
+    return { inRange: false, position: null, name: null };
+  } else if (inputDate.getTime() === fromDate.getTime()) {
+    return { inRange: true, position: 'first', name };
+  } else if (inputDate.getTime() === toDate.getTime()) {
+    return { inRange: true, position: 'last', name };
+  } else {
+    return { inRange: true, position: 'middle', name };
+  }
 }
 function getHours(date) {
   if (useIsMobile().value) {
@@ -358,7 +422,96 @@ function initSwiper() {
 }
 
 
+.specials {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 2px;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  padding: 8px;
+}
+.special {
+  background-color: $blue;
+  width: 8px;
+  height: 8px;
+  opacity: 1;
+  border-radius: 50%;
+}
 
+.special.false {
+  visibility: hidden;
+}
+@include md {
+  .specials {
+    padding: 4px;
+  }
+  .special.true {
+    width: 6px;
+    height: 6px;
+  }
+}
+//.special.first {
+//  border-top-left-radius: 24px;
+//  border-bottom-left-radius: 24px;
+//}
+//.special.last {
+//  border-top-right-radius: 24px;
+//  border-bottom-right-radius: 24px;
+//}
+@media (hover: hover) {
+     .day-container:hover > .specials > .tooltip-wrapper {
+       display: flex;
+     }
+}
+.tooltip-wrapper {
+  position: absolute;
+  top: -104px;
+  left: -4px;
+  height: 100px;
+  max-height: 100px;
+  align-items: flex-end;
+  //display: flex;
+  display: none;
+}
+.tooltip {
+  background-color: $dark-blue;
+  color: $white;
+
+  font-size: 10px;
+  padding: 4px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+.tooltip > div > .ico {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: $blue;
+  border-radius: 50%;
+  margin-right: 4px;
+}
+
+.tooltip > div:nth-child(2) > .ico, .special:nth-child(3), .legend:nth-child(2) > .ico {
+  background-color: $gold;
+}
+.tooltip > div:nth-child(3) > .ico, .special:nth-child(4), .legend:nth-child(3) > .ico{
+  background-color: $pink;
+}
+
+.legend > .ico {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background-color: $blue;
+  border-radius: 50%;
+  margin-right: 8px;
+}
 
 .relative {
   position: relative;
