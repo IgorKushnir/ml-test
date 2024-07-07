@@ -87,6 +87,18 @@ query ProductsWithFilters{
             }
           }
         }
+        gallery {
+          data {
+            attributes {
+              mime
+              width
+              height
+              url
+              formats
+              placeholder
+            }
+          }
+        }
       }
     }
   }

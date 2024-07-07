@@ -1,4 +1,5 @@
 <template>
+<!--  <pre>{{productsData}}</pre>-->
   <SnackBar ref="snackBar" @action="undoHandler"/>
   <transition name="fade">
     <Container v-if="productsData  && productsData?.data?.length > 0">
@@ -13,6 +14,7 @@
           <ProductItem :title="product.attributes.title"
                        :to="'/' + (product.attributes.type.data?.attributes.slug ?? 'product') + '/' + product.attributes.slug"
                        :image="product.attributes.cover_3x4"
+                       :gallery="product.attributes.gallery"
                        :id="product.id"
                        :like-list="likeList"
                        @updateLikes="updateLikes"
@@ -148,6 +150,8 @@ onMounted(() => {
     document.addEventListener('scroll', scroll, {passive: true});
   }
   likeList.value = $getLikedProducts();
+
+
 })
 
 function updateLikes(id) {

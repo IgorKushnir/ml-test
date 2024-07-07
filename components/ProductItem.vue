@@ -1,18 +1,41 @@
 <template>
-  <NuxtLink :to="localePath(to)" v-if="!shimmer">
-    <div class="product-item" >
+
+  <NuxtLink :to="localePath(to)" v-if="!shimmer" class="pointer-none">
+
+
+    <div class="product-item pointer-none" >
+      <div v-if="gallery" ref="pagination" class="swiper-pagination"></div>
+      <div v-if="gallery" ref="next" class="button-arrow pointer-auto icon-arrow-16"></div>
+      <div v-if="gallery" ref="prev" class="button-arrow prev pointer-auto icon-arrow-16"></div>
         <div class="product-item-head">
           <span class="h3">{{title}}</span>
-          <LikeButton :liked="liked" :class="hideLikedDefault ? 'hide-liked-default' : ''" @click="handleLike(id)"/>
+          <LikeButton class="pointer-auto" :liked="liked" :class="hideLikedDefault ? 'hide-liked-default' : ''" @click="handleLike(id)"/>
         </div>
-        <Image :path="image" :alt="productType ? title + ' ' + productType : title"  size="medium" :class="'image ' + ratio"/>
+        <Image v-if="!gallery" :path="image" :alt="productType ? title + ' ' + productType : title"  size="medium" :class="'image ' + ratio"/>
 
+
+      <div ref="swiperEl" class="swiper swiper-product pointer-auto">
+        <div class="swiper-wrapper" v-if="gallery">
+          <Image class="swiper-slide" :path="image" :alt="productType ? title + ' ' + productType : title"  size="medium" :class="'image ' + ratio"/>
+          <template v-for="_image in gallery?.data ?? []">
+            <Image v-if="(image.data.attributes.url !== _image.attributes.url) && _image.attributes.mime.startsWith('image')" class="swiper-slide"  :path="{data: _image}" :alt="productType ? title + ' ' + productType : title"  size="medium" :class="'image ' + ratio"/>
+          </template>
+        </div>
+      </div>
+
+
+
+<!--      {{image}}-->
+<!--      {{gallery.data}}-->
     </div>
   </NuxtLink>
   <div v-else class="shimmer ratio-3x4"></div>
 </template>
 
 <script setup>
+import '~/assets/js/swiper/swiper-bundle.min.css';
+import Swiper from '~/assets/js/swiper/swiper-bundle.esm.browser.min.js'
+
 const props = defineProps({
   id: {
     type: String,
@@ -43,6 +66,10 @@ const props = defineProps({
     type: Object,
     required: false
   },
+  gallery: {
+    type: Object,
+    required: false,
+  },
   hideLikedDefault: {
     type: Boolean,
     required: false,
@@ -65,10 +92,34 @@ function handleLike(id) {
   liked.value = $toggleLikeProduct(id)
   emits('updateLikes', id)
 }
+const swiperEl = ref()
+const pagination = ref()
+const next = ref()
+const prev = ref()
+
+onMounted(() => {
+  if (swiperEl.value !== null) {
+    new Swiper(swiperEl.value, {
+      spaceBetween: 1,
+      loop: true,
+      navigation: {
+        nextEl: next.value,
+        prevEl: prev.value,
+      },
+      pagination: {
+        el: pagination.value,
+      }
+    })
+
+  }
+
+})
 </script>
 
 <style scoped lang="scss">
-
+.relative {
+  position: relative;
+}
 .shimmer {
   -webkit-mask:linear-gradient(-60deg,#000 40%,#0001,#000 60%) right/400% 100%;
   animation: shimmer 2s infinite;
@@ -166,22 +217,29 @@ $transition: .5s ease-in-out;
 
 //@media (hover: hover) {
   :deep(.img-component.base) {
-    transition: 2.5s ease-in-out;
+    transition: 0.5s ease-in-out;
   }
-  .product-item:hover  {
+  .product-item:hover, .button-arrow:hover > .product-item  {
     &:after {
       opacity: 1;
     }
 
+
+
+    :deep(.swiper-pagination),
     .product-item-head .h3,
     .product-item-head .icon-heart-no-24,
     .product-item-head .icon-heart-yes-24 {
       opacity: 1;
     }
 
+
     @media (hover: hover) {
       :deep(.img-component.base) {
         transform: scale(1.1);
+      }
+      .button-arrow {
+        opacity: 1;
       }
     }
 
@@ -189,4 +247,53 @@ $transition: .5s ease-in-out;
   }
 //}
 
+
+
+.button-arrow {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-color: $white;
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  right: 16px;
+  top: calc(50% - 20px);
+  opacity: 0;
+  transition: $transition opacity;
+  z-index: 6;
+}
+.button-arrow:hover {
+  background-color: $light-gray;
+}
+.button-arrow.prev {
+  transform: scale(-1);
+  right: unset;
+  left: 16px;
+
+}
+:deep(.swiper-pagination) {
+  z-index: 6;
+  //text-align: left;
+  //padding-left: 22px;
+  opacity: 0;
+  transition: opacity $transition;
+}
+@include md {
+  :deep(.swiper-pagination) {
+    opacity: 1;
+    bottom: -18px;
+    //text-align: center;
+    //padding-left: unset;
+
+  }
+}
+:deep(.swiper-pagination-bullet) {
+  width: 4px;
+  height: 4px;
+}
+:deep(.swiper-pagination-bullet-active) {
+  background-color: black;
+}
 </style>
