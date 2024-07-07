@@ -280,15 +280,15 @@ $transition: .5s ease-in-out;
   opacity: 0;
   transition: opacity $transition;
 }
-@include md {
-  :deep(.swiper-pagination) {
-    opacity: 1;
-    bottom: -18px;
-    //text-align: center;
-    //padding-left: unset;
-
-  }
-}
+//@include md {
+//  :deep(.swiper-pagination) {
+//    opacity: 1;
+//    bottom: -18px;
+//    //text-align: center;
+//    //padding-left: unset;
+//
+//  }
+//}
 :deep(.swiper-pagination-bullet) {
   width: 4px;
   height: 4px;
