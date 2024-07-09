@@ -5,8 +5,8 @@
 
     <div class="product-item pointer-none" >
       <div v-if="gallery" ref="pagination" class="swiper-pagination"></div>
-      <div v-if="gallery" ref="next" class="button-arrow pointer-auto icon-arrow-16"></div>
-      <div v-if="gallery" ref="prev" class="button-arrow prev pointer-auto icon-arrow-16"></div>
+      <div v-if="gallery" ref="next" class="button-arrow pointer-auto icon-arrow-16"><div class="blur"/></div>
+      <div v-if="gallery" ref="prev" class="button-arrow prev pointer-auto icon-arrow-16"><div class="blur"/></div>
         <div class="product-item-head">
           <span class="h3">{{title}}</span>
           <LikeButton class="pointer-auto" :liked="liked" :class="hideLikedDefault ? 'hide-liked-default' : ''" @click="handleLike(id)"/>
@@ -253,7 +253,7 @@ $transition: .5s ease-in-out;
   position: absolute;
   width: 40px;
   height: 40px;
-  background-color: $white;
+  //background-color: $white;
   z-index: 99;
   display: flex;
   align-items: center;
@@ -264,8 +264,10 @@ $transition: .5s ease-in-out;
   transition: $transition opacity;
   z-index: 6;
 }
-.button-arrow:hover {
-  background-color: $light-gray;
+
+.button-arrow:hover .blur{
+  //background-color: $light-gray;
+  filter: blur(10px);
 }
 .button-arrow.prev {
   transform: scale(-1);
@@ -273,6 +275,23 @@ $transition: .5s ease-in-out;
   left: 16px;
 
 }
+.button-arrow .blur {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-color: $white;
+  filter: blur(15px);
+  border-radius: 50%;
+}
+//.button-arrow:after {
+//  background-color: #00dc82;
+//  position: absolute;
+//  width: 100%;
+//  height: 100%;
+//  filter: blur(1px);
+//  z-index: 0;
+//}
 :deep(.swiper-pagination) {
   z-index: 6;
   //text-align: left;
