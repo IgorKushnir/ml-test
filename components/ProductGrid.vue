@@ -20,6 +20,7 @@
                        @updateLikes="updateLikes"
                        :hideLikedDefault="moodboard"
                        :product-type="product?.attributes?.type?.data?.attributes?.slug"
+                       :showLike="showLike"
           />
         </div>
       </template>
@@ -97,6 +98,10 @@ const props = defineProps({
     type: Number,
     required: false,
     default: 0
+  },
+  showLike: {
+    type: Boolean,
+    default: true
   }
 })
 const {$getLikedProducts, $toggleLikeProduct} = useNuxtApp()

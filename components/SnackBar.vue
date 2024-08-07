@@ -80,4 +80,7 @@ defineExpose({ showSnackBar })
   opacity: 0;
   transform: translateY(32px);
 }
+.link {
+  flex: 0;
+}
 </style>

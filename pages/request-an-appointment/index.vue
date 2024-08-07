@@ -482,6 +482,11 @@ function send() {
     ).then(res => {
       sent.value = true;
       fbq('track', 'Lead'); // Pixel??
+      // gtag('event', 'success_form_send_request', {
+      //   'send_to': 'AW-16455473849/E3k4COnnw5cZELm1yqY9',
+      //   // peopleJoinWithMe: userData.value.people,
+      //   // howDidIFindOut: userData.value.find_out ?? 'null'
+      // });
     }).catch(error => console.log('error', error))
   }
 }

@@ -1,21 +1,20 @@
 <template>
+  <NuxtLink :to="localePath(to)" v-if="!shimmer" :class="gallery != null ? 'pointer-none' : ''">
 
-  <NuxtLink :to="localePath(to)" v-if="!shimmer" class="pointer-none">
 
-
-    <div class="product-item pointer-none" >
+    <div class="product-item" :class="gallery != null ? 'pointer-none' : ''">
       <div v-if="gallery" ref="pagination" class="swiper-pagination"></div>
       <div v-if="gallery" ref="next" class="button-arrow pointer-auto icon-arrow-16"><div class="blur"/></div>
       <div v-if="gallery" ref="prev" class="button-arrow prev pointer-auto icon-arrow-16"><div class="blur"/></div>
         <div class="product-item-head">
           <span class="h3">{{title}}</span>
-          <LikeButton class="pointer-auto" :liked="liked" :class="hideLikedDefault ? 'hide-liked-default' : ''" @click="handleLike(id)"/>
+          <LikeButton v-if="showLike" class="pointer-auto" :liked="liked" :class="hideLikedDefault ? 'hide-liked-default' : ''" @click="handleLike(id)"/>
         </div>
         <Image v-if="!gallery" :path="image" :alt="productType ? title + ' ' + productType : title"  size="medium" :class="'image ' + ratio"/>
 
 
-      <div ref="swiperEl" class="swiper swiper-product pointer-auto">
-        <div class="swiper-wrapper" v-if="gallery">
+      <div ref="swiperEl" class="swiper swiper-product pointer-auto" v-if="gallery">
+        <div class="swiper-wrapper">
           <Image class="swiper-slide" :path="image" :alt="productType ? title + ' ' + productType : title"  size="medium" :class="'image ' + ratio"/>
           <template v-for="_image in gallery?.data ?? []">
             <Image v-if="(image.data.attributes.url !== _image.attributes.url) && _image.attributes.mime.startsWith('image')" class="swiper-slide"  :path="{data: _image}" :alt="productType ? title + ' ' + productType : title"  size="medium" :class="'image ' + ratio"/>
@@ -79,6 +78,10 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: false
+  },
+  showLike: {
+    type: Boolean,
+    default: true
   }
 })
 const emits = defineEmits(['updateLikes'])
@@ -98,7 +101,7 @@ const next = ref()
 const prev = ref()
 
 onMounted(() => {
-  if (swiperEl.value !== null) {
+  if (swiperEl.value != null) {
     new Swiper(swiperEl.value, {
       spaceBetween: 1,
       loop: true,
