@@ -21,7 +21,7 @@
 
 
 
-        <div class="p-small m-b-16 gray">3 items</div>
+        <div class="p-small m-b-16 gray">{{liked.length}} dress</div>
 <!--        <div class="m-b-32">-->
 <!--          <NuxtLink :to="link" class="link">{{link}}</NuxtLink>-->
 <!--        </div>-->
