@@ -19,7 +19,7 @@
 <!--&lt;!&ndash;            <NuxtLink v-if="true || locale !== 'pl'" :to="switchLocalePath('pl') === '' ? '/' : switchLocalePath('pl')" class="nav-link__tertiary hover hide-md">Poland</NuxtLink>&ndash;&gt;-->
 <!--          </ClientOnly>-->
 
-          <HeaderWishCounter />
+          <HeaderWishCounter class="show-md" />
 
           <div v-on:click="showHideMenu" class="nav-icon hover mobile-menu">
             <div v-if="!mobileMenuOpened" class="icon-menu-24"/>
