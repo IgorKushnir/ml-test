@@ -24,8 +24,12 @@
           </transition>
 
         </div>
+
       </div>
+
     </div>
+    <Content v-if="content" :data="content"/>
+
   </Container>
 </template>
 
@@ -50,7 +54,10 @@ defineProps({
   },
   cover: {
     type: Object
-  }
+  },
+  content: {
+    type: Object
+  },
 })
 
 function select(id) {

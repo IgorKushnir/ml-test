@@ -24,7 +24,7 @@
           :cover="data.cover_4x3"
           :text="data.description"
           :services="services"
-      />
+          :content="data?.content"/>
 
       <FlagshipDayHour v-if="step === 1"
                        :bookingDates="bookingDates"

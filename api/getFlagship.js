@@ -1,5 +1,6 @@
 import seo from './misc/seo'
 import locals from './misc/locals'
+import content from './misc/content'
 
 export default async function (lang, publicationState = "LIVE") {
     const graphql = useStrapiGraphQL()
@@ -27,6 +28,8 @@ export default async function (lang, publicationState = "LIVE") {
             }
           }
         }
+                ${content()}
+
         success
         contact_title
         contact_address

@@ -93,12 +93,12 @@ function showZoomImage(path) {
 }
 
 .img-component.base {
-  z-index: 1;
+  z-index: 0;
 }
 .img-component.placeholder {
   filter: blur(40px);
   transform: scale(1.5);
-  z-index: 0;
+  z-index: -1;
 }
 
 video {
