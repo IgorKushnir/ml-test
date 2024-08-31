@@ -10,6 +10,10 @@ export default defineNuxtConfig({
         '@nuxtjs/strapi',
         '@nuxtjs/i18n'
     ],
+    devServer: {
+        host: '192.168.3.98',
+        port: 3000
+    },
     i18n: {
         locales: ['en', 'pl'],
         defaultLocale: 'en',
@@ -97,6 +101,7 @@ export default defineNuxtConfig({
         GTM: process.env.GTM,
         GOOGLE_ANALYTICS: process.env.GOOGLE_ANALYTICS,
         SEARCH_URL: process.env.SEARCH_URL,
+        MODE: process.env.MODE,
         // url:  'https://millanova-backend-iwjo4.ondigitalocean.app'
     },
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="gallery" :class="[classes, columns].join(' ')">
+  <div ref="gallery" class="gallery" :class="[classes, columns].join(' ')">
     <template v-for="(item, index) in data">
       <div
           v-if="!(hideFirst && index === 0)"
@@ -21,6 +21,9 @@
 </template>
 
 <script setup>
+import PhotoSwipeLightbox from 'photoswipe/lightbox';
+import 'photoswipe/style.css';
+
 const props = defineProps({
   classes: {
     type: String,
@@ -56,12 +59,40 @@ const props = defineProps({
 
 })
 
+const gallery = ref()
+
 function isLandscape(width, height) {
   return (width / height) < 1
 }
 
-</script>
 
+onMounted(() => {
+if (props.zoom) {
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: gallery.value,
+    children: 'a',
+    pswpModule: () => import('photoswipe'),
+    // bgOpacity: 0.6,
+
+    mainClass: 'pswp--custom',
+    arrowPrevSVG: '<div class="button-arrow visible prev pointer-auto icon-arrow-16 white"><div class="blurq half-contrast"/></div>',
+    arrowNextSVG: '<div class="button-arrow visible pointer-auto icon-arrow-16 white"><div class="blurq half-contrast"/></div>',
+    closeSVG: '<div class="icon-close-24 white" style="font-size: 24px"/>',
+    zoom: false,
+    counter: false
+    // mainClass: 'pswp--custom-icon-colors',
+  });
+  lightbox.init();
+}
+})
+
+</script>
+<style>
+/*.pswp--custom-icon-colors {*/
+/*  --pswp-icon-color: #00fffc;*/
+/*  --pswp-icon-color-secondary: #333;*/
+/*}*/
+</style>
 <style scoped lang="scss">
 
 
@@ -71,6 +102,7 @@ function isLandscape(width, height) {
   grid-auto-flow: dense;
 }
 .gallery-item {
+  display: block;
   min-height: 100%;
 }
 .gallery.one {
@@ -94,6 +126,7 @@ function isLandscape(width, height) {
 .vertical {
   grid-column: auto/span 1;
 }
+
 
 
 @include xl {
@@ -136,4 +169,6 @@ function isLandscape(width, height) {
     }
   }
 }
+
+
 </style>

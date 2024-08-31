@@ -1,6 +1,9 @@
 <template>
-  <div class="img-component-container" :class="(zoom && !path.data?.attributes?.mime?.startsWith('video/')) ? 'zoom' : ''" v-on:click="() => showZoomImage(path)">
-    <img :src="placeholder" :alt="alt" class="img-component placeholder">
+  <component :is="canZoom ? 'a' : 'div'" :href="canZoom ? $getImage(path, 'large') : null"
+             :data-pswp-width="path?.data?.attributes?.formats?.large?.width"
+             :data-pswp-height="path?.data?.attributes?.formats?.large?.height"
+             data-cropped="true"
+             class="img-component-container" :class="(zoom && !path.data?.attributes?.mime?.startsWith('video/')) ? 'zoom' : ''" v-on:click="() => showZoomImage(path)">
 
     <img
         v-if="!path.data?.attributes?.mime?.startsWith('video/')"
@@ -9,6 +12,7 @@
         class="img-component base"
         loading="lazy"
     />
+    <img :src="placeholder" :alt="alt" class="img-component placeholder">
 
     <video
         v-if="path.data?.attributes?.mime?.startsWith('video/')"
@@ -21,11 +25,11 @@
         :type="path.data.attributes.mime"
     />
 
-  </div>
+  </component>
 </template>
 
 <script setup>
-import {useIsMobile, useZoomImage} from "../composables/states";
+// import {useIsMobile, useZoomImage} from "../composables/states";
 
 const { $getAbsoluteUrl,  $getImage} = useNuxtApp();
 
@@ -58,13 +62,14 @@ const placeholder = computed(() => {
 
 const isNotSvg = computed(() => props.path.data?.attributes?.url.endsWith('.jpg') || props.path.data?.attributes?.url.endsWith('.jpeg') || props.path.data?.attributes?.url.endsWith('.png') || props.path.data?.attributes?.url.endsWith('.JPG') || props.path.data?.attributes?.url.endsWith('.JPEG') || props.path.data?.attributes?.url.endsWith('.PNG'))
 
-const zoomImage = useZoomImage();
-const isMobile = useIsMobile();
+const canZoom = computed(() => props.zoom && !props.path.data?.attributes?.mime?.startsWith('video/'))
+// const zoomImage = useZoomImage();
+// const isMobile = useIsMobile();
 
 function showZoomImage(path) {
-  if (props.zoom && !props.path.data?.attributes?.mime?.startsWith('video/')) {
-    zoomImage.value = path;
-  }
+  // if (props.zoom && !props.path.data?.attributes?.mime?.startsWith('video/')) {
+  //   zoomImage.value = path;
+  // }
 }
 
 // function loaded() {
@@ -87,9 +92,13 @@ function showZoomImage(path) {
   object-fit: cover;
 }
 
+.img-component.base {
+  z-index: 1;
+}
 .img-component.placeholder {
   filter: blur(40px);
   transform: scale(1.5);
+  z-index: 0;
 }
 
 video {
@@ -110,6 +119,6 @@ video {
 //  //background-color: #000000;
 //}
 .img-component-container.zoom {
-  cursor: zoom-in;
+  //cursor: zoom-in;
 }
 </style>

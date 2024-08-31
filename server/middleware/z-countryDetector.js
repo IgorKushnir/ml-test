@@ -6,10 +6,13 @@ export default defineEventHandler(async (event) => {
     //     // console.log('----------', getRequestIP(event));
     //     console.log(getResponseHeaders(event));
     // }
-    const headers = getRequestHeaders(event)
-    let ip = headers['x-forwarded-for']
     const config = useRuntimeConfig();
     const apiKey = config.ABSTRACT_API
+    if (config.MODE === 'local') return
+
+    const headers = getRequestHeaders(event)
+    let ip = headers['x-forwarded-for']
+
 
     ip = ip?.split(',')
     ip = ip?.[0] ?? null

@@ -305,6 +305,61 @@ img {
 .pointer-none {
   pointer-events: none
 }
+
+
+
+.button-arrow {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  //background-color: $white;
+  //z-index: 99;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  right: 16px;
+  top: calc(50% - 20px);
+  opacity: 0;
+  transition: .5s ease-in-out opacity;
+  z-index: 6;
+}
+
+
+// Arrows
+.button-arrow:hover .blur{
+  //background-color: $light-gray;
+  filter: blur(10px);
+}
+.button-arrow.prev {
+  transform: scale(-1);
+  right: unset;
+  left: 16px;
+
+}
+.button-arrow .blur {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-color: $white;
+  filter: blur(15px);
+  border-radius: 50%;
+}
+.button-arrow.visible {
+  opacity: 1;
+  //font-size: 20px;
+}
+.blur.half-contrast {
+  opacity: .3;
+}
+.pswp__button {
+  overflow: visible!important;
+}
+.pswp--custom {
+  //--pswp-bg: #7079bf!important;
+}
+
+
 @include lg {
   .hide-lg {
     display: none!important;
