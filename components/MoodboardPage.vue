@@ -66,22 +66,25 @@ const firstLoading = ref(true)
 
 const { locale, locales } = useI18n()
 
-let {data, pending, refresh, error} = useLazyAsyncData('moodboard', () => productsResponse({
-  products: products.value,
-  lang: locale.value
-}), {
-  transform: (d) => {
-    const _products = d.data.products.data;
-    let viewed = _products.filter(product => viewedProductIds.value.includes(product.id))
-    let liked = _products.filter(product => likedProductIds.value.includes(product.id))
+const data = ref()
+const pending = ref(true)
 
-    viewed.sort((a, b) => viewedProductIds.value.indexOf(a.id) - viewedProductIds.value.indexOf(b.id));
-    liked.sort((a, b) => likedProductIds.value.indexOf(a.id) - likedProductIds.value.indexOf(b.id));
-
-    return {viewed, liked}
-  },
-})
-
+// let {data, pending, refresh, error} = useLazyAsyncData('moodboard', () => productsResponse({
+//   products: products.value,
+//   lang: locale.value
+// }), {
+//   transform: (d) => {
+//     const _products = d.data.products.data;
+//     console.log(1, d.data.products.data);
+//     let viewed = _products.filter(product => viewedProductIds.value.includes(product.id))
+//     let liked = _products.filter(product => likedProductIds.value.includes(product.id))
+//
+//     viewed.sort((a, b) => viewedProductIds.value.indexOf(a.id) - viewedProductIds.value.indexOf(b.id));
+//     liked.sort((a, b) => likedProductIds.value.indexOf(a.id) - likedProductIds.value.indexOf(b.id));
+//
+//     return {viewed, liked}
+//   },
+// })
 
 onMounted(() => {
   if (!isSharedMoodBoardPage.value) {
@@ -111,27 +114,60 @@ onMounted(() => {
   }
 
 
-  // // Check unexisting products and remove from the like list
-  // if (data.value?.liked?.length > 0) {
-  //   likedProductIds.value.forEach(likedProductId => {
-  //     const index = data.value.liked.findIndex(p => p.id === likedProductId)
-  //     if (index === -1) {
-  //       $toggleLikeProduct(likedProductId)
-  //     }
-  //   })
-  // }
 
 
 
 })
+//  useLazyAsyncData('moodboard', () => productsResponse({
+//   products: products.value,
+//   lang: locale.value
+// }), {
+//   transform: (d) => {
+//     const _products = d.data.products.data;
+//     console.log(1, d.data.products.data);
+//     let viewed = _products.filter(product => viewedProductIds.value.includes(product.id))
+//     let liked = _products.filter(product => likedProductIds.value.includes(product.id))
+//
+//     viewed.sort((a, b) => viewedProductIds.value.indexOf(a.id) - viewedProductIds.value.indexOf(b.id));
+//     liked.sort((a, b) => likedProductIds.value.indexOf(a.id) - likedProductIds.value.indexOf(b.id));
+//
+//     console.log({viewed, liked})
+//     data.value = {viewed, liked}
+//     return {viewed, liked}
+//   },
+// })
+async function getInitialData() {
+  try {
+    const d = await productsResponse({
+      products: products.value,
+      lang: locale.value
+    })
 
-function getInitialData() {
-  if (!pending.value) {
-    refreshNuxtData('moodboard')
+    const _products = d.data.products.data;
+    let viewed = _products.filter(product => viewedProductIds.value.includes(product.id))
+    let liked = _products.filter(product => likedProductIds.value.includes(product.id))
+
+    viewed.sort((a, b) => viewedProductIds.value.indexOf(a.id) - viewedProductIds.value.indexOf(b.id));
+    liked.sort((a, b) => likedProductIds.value.indexOf(a.id) - likedProductIds.value.indexOf(b.id));
+
+    data.value = {viewed, liked}
+    pending.value = false
     firstLoading.value = false;
-  } else {
-    setTimeout(getInitialData, 100)
+
+  } catch (e) {
+
   }
+
+  // console.log(products.value);
+
+  // console.log(error);
+
+  // if (!pending.value) {
+  //   refreshNuxtData('moodboard')
+  //   firstLoading.value = false;
+  // } else {
+  //   setTimeout(getInitialData, 100)
+  // }
 }
 
 function decodeFromBase64(string) {

@@ -1,6 +1,6 @@
 <template>
   <div class="body" id="body">
-    <ZoomImage/>
+<!--    <ZoomImage/>-->
     <div>
       <Header/>
 

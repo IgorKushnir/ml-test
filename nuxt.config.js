@@ -10,10 +10,10 @@ export default defineNuxtConfig({
         '@nuxtjs/strapi',
         '@nuxtjs/i18n'
     ],
-    devServer: {
-        host: '192.168.3.98',
-        port: 3000
-    },
+    // devServer: {
+    //     host: '192.168.3.98',
+    //     port: 3000
+    // },
     i18n: {
         locales: ['en', 'pl'],
         defaultLocale: 'en',
