@@ -111,6 +111,7 @@ export default async function (lang) {
               attributes {
                 footer_title
                 footer_copyright
+                moodboard_description
                 seo_pattern {
                   name
                   pathStartsWith

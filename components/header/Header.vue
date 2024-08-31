@@ -1,9 +1,9 @@
 <template>
   <HeaderSearchModalNew  :show="showSearch" @close="showSearch = false"/>
 
-  <transition name="fade">
-    <HeaderWishCounter v-if="$route.name !== 'moodboard'"  class="show-md"/>
-  </transition>
+<!--  <transition name="fade">-->
+<!--    <HeaderWishCounter v-if="$route.name !== 'moodboard'"  class="show-md"/>-->
+<!--  </transition>-->
   <header class="navigation">
 
     <div class="container" style="position: static;">
@@ -19,6 +19,7 @@
 <!--&lt;!&ndash;            <NuxtLink v-if="true || locale !== 'pl'" :to="switchLocalePath('pl') === '' ? '/' : switchLocalePath('pl')" class="nav-link__tertiary hover hide-md">Poland</NuxtLink>&ndash;&gt;-->
 <!--          </ClientOnly>-->
 
+          <HeaderWishCounter />
 
           <div v-on:click="showHideMenu" class="nav-icon hover mobile-menu">
             <div v-if="!mobileMenuOpened" class="icon-menu-24"/>

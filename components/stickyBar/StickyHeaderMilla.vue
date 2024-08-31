@@ -16,6 +16,7 @@
           <div class="grid-column-end"><slot name="end"/></div>
           <div class="grid-column-center"><slot name="center"/></div>
           <div class="grid-column-start"><slot name="start"/></div>
+          <div class="grid-column-full"><slot name="full"/></div>
 
 
         </div>
@@ -170,7 +171,6 @@ addRouteMiddleware(async (to, from) => {
   grid-template-columns: 1fr auto 1fr;
   justify-items: center;
   white-space: nowrap;
-
 }
 
 
@@ -247,6 +247,13 @@ addRouteMiddleware(async (to, from) => {
   grid-row-start: 1;
   margin-left: auto;
 }
+.grid-column-full {
+  white-space: nowrap;
+  grid-column: 1 / -1; /* This makes the child span from the first to the last column */
+  margin-left: auto;
+  width: 100%;
+
+}
 
 @include md {
   .grid-column-center {
@@ -255,5 +262,6 @@ addRouteMiddleware(async (to, from) => {
   .grid-column-end {
     grid-column-start: 2;
   }
+
 }
 </style>

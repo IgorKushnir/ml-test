@@ -33,29 +33,33 @@ const counter = useFavCount()
   border-radius: 8px;
 }
 @include md {
-
   .nav-icon.wish-icon {
-    position: fixed;
-    background-color: $white;
-    color: $dark-blue !important;
-    padding: 16px;
-    border-radius: 28px;
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-    margin: 0;
-    bottom: 16px;
-    right: 16px;
-
-    .wish-counter {
-      position: absolute;
-      top: 0;
-      right: -6px;
-      font-size: 12px;
-      border-radius: 10px;
-      min-width: 20px;
-      height: 20px;
-      padding: 4px;
-    }
+    position: absolute!important;
+    left: -48px;
+    //margin-right: 16px!important;
   }
+  //.nav-icon.wish-icon {
+  //  position: fixed;
+  //  background-color: $white;
+  //  color: $dark-blue !important;
+  //  padding: 16px;
+  //  border-radius: 28px;
+  //  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  //  margin: 0;
+  //  bottom: 16px;
+  //  right: 16px;
+  //
+  //  .wish-counter {
+  //    position: absolute;
+  //    top: 0;
+  //    right: -6px;
+  //    font-size: 12px;
+  //    border-radius: 10px;
+  //    min-width: 20px;
+  //    height: 20px;
+  //    padding: 4px;
+  //  }
+  //}
 
 }
 </style>

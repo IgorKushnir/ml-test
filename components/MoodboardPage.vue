@@ -7,8 +7,11 @@
 <!--        {{data?.liked?.length}} dress-->
 <!--      </template>-->
 
-      <template #end>
-        <div class="share p-small" v-on:click="() => shareModalControl.show = true"><span class="icon-taget-16"/>{{ $t('share') }}</div>
+      <template #full>
+        <div class="share-button-container">
+          <div class="p-small t" v-if="translations.moodboard_description">{{translations.moodboard_description}}</div>
+          <div class="share p-small" v-on:click="() => shareModalControl.show = true"><span class="icon-taget-16"/>{{ $t('share') }}</div>
+        </div>
       </template>
     </StickyBarStickyHeaderMilla>
 
@@ -46,6 +49,7 @@
 <script setup>
 import productsResponse from '~/api/getProductsById'
 const {$getViewedProduct, $getLikedProducts, $toggleLikeProduct} = useNuxtApp()
+const translations = useTranslationsData().value
 
 const route = useRoute()
 const router = useRouter()
@@ -193,20 +197,42 @@ function decodeFromBase64(string) {
   padding: 0 25px;
   cursor: pointer;
 
+  background-color: $dark-blue;
+  color: $white;
   & > * {
     padding: 0 6px;
   }
 
-  &:hover {
-    background-color: $light-gray;
-  }
+  //&:hover {
+  //  background-color: $light-gray;
+  //}
 
   &.active {
     border-bottom: 2px solid $dark-blue;
     padding-top: 1px;
   }
 }
+.share-button-container {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: flex-end;
 
+
+}
+.t {
+  text-wrap: wrap;
+  text-wrap: balance;
+  text-align: right;
+
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-width: 280px;
+  line-height: 120%;
+}
 @include md {
   .share {
     height: 56px;
@@ -214,6 +240,9 @@ function decodeFromBase64(string) {
     & > * {
       padding: 0 6px;
     }
+  }
+  .t {
+    max-width: 250px;
   }
 }
 
