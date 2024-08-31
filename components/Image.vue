@@ -119,6 +119,6 @@ video {
 //  //background-color: #000000;
 //}
 .img-component-container.zoom {
-  //cursor: zoom-in;
+  cursor: zoom-in;
 }
 </style>
