@@ -81,30 +81,7 @@ async function getTrunkShow(slug, lang) {
             }
           }
         }
-        
-        offered {
-          products(
-            pagination: {
-            limit: -1
-          }) {
-            data {
-              attributes {
-                title
-                slug
-                cover_3x4 {
-                  data {
-                    attributes {
-                      url
-                      formats
-                      placeholder
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-        
+                
         
         products(
             pagination: {
