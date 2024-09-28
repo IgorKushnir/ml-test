@@ -81,6 +81,7 @@ async function getTrunkShow(slug, lang) {
             }
           }
         }
+        
         offered {
           products(
             pagination: {
@@ -103,6 +104,29 @@ async function getTrunkShow(slug, lang) {
             }
           }
         }
+        
+        
+        products(
+            pagination: {
+            limit: -1
+          }) {
+            data {
+              attributes {
+                title
+                slug
+                cover_3x4 {
+                  data {
+                    attributes {
+                      url
+                      formats
+                      placeholder
+                    }
+                  }
+                }
+              }
+            }
+          }
+        
       }
     }
   }

@@ -84,6 +84,23 @@ query Product{
             }
           }
         }
+        trunk_shows {
+          data {
+            attributes {
+              title
+              slug
+              cover_4x3 {
+                  data {
+                    attributes {
+                      url
+                      formats
+                      placeholder
+                    }
+                  }
+                }
+            }
+          }
+        }
         collection {
           data {
             attributes {

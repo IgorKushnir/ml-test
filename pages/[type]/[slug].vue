@@ -95,6 +95,22 @@
               </div>
             </div>
 
+            <div v-if="data?.trunk_shows?.data.length > 0" class="info extra">
+              <div class="m-b-32 m-b-16-md">
+                <div class="subheader small">{{$t('trunk_shows')}}</div>
+                <div v-for="show in data?.trunk_shows?.data" class="trunk-show-preview-container m-b-4">
+                  <div class="trunk-show-preview"><Image :path="show.attributes.cover_4x3"/></div>
+                  <div>
+                    <NuxtLink  :to="localePath('/trunk-shows/'+show.attributes.slug)" class="p-small link dark-blue m-b-4">
+                      {{ show.attributes.title }}
+                    </NuxtLink>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+
 
             <NuxtLink v-if="data.storeLink" :to="localePath(data.storeLink)" target="_blank" class="button m-t-16 m-t-0-md m-b-24-md m-r-16 target">{{$t('buy_online')}}</NuxtLink>
             <NuxtLink v-if="!discontinued"  :to="locale === 'pl' ? localePath('/warsaw') : (localePath('/request-an-appointment')+'?source='+(data?.collection?.data?.attributes?.slug ?? 'null'))" target="_self" class="button m-t-16 m-t-0-md m-b-24-md">
@@ -156,6 +172,7 @@
 import getProduct from '~/api/getProduct'
 const { $setViewedProduct, $getViewedProduct, $getLikedProducts, $toggleLikeProduct } = useNuxtApp()
 import {useTypesData} from "~/composables/states";
+import Image from "../../components/Image";
 const isMobile = useIsMobile();
 
 const route = useRoute();
@@ -394,6 +411,20 @@ onMounted(() => {
   display: inline-block;
 }
 
+.trunk-show-preview-container {
+  display: flex;
+  gap: 8px;
+  //justify-content: center;
+  justify-items: center;
+
+}
+.trunk-show-preview {
+  width: 24px;
+  height: 20px;
+  //overflow: hidden;
+  position: relative;
+  display: inline-block;
+}
 
 @include lg {
   .horizontal {
