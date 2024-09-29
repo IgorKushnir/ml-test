@@ -70,6 +70,7 @@ import getActiveFilters from '~/api/getActiveFilters'
 import {useTypesData} from "~/composables/states";
 
 
+const { find } = useStrapi()
 
 const {$getAbsoluteUrl} = useNuxtApp();
 
@@ -79,6 +80,8 @@ const route = useRoute();
 const router = useRouter();
 const { locale } = useI18n()
 const localePath = useLocalePath()
+
+const topProductIds = ref([])
 
 const productPage = ref(1)
 const pages = ref(1)
@@ -95,6 +98,22 @@ router.options.history.pages[slug] = previousPages;
 // console.log({previousPages});
 
 pages.value = previousPages ?? 1;
+
+
+// Get topProducts ids
+try {
+  const {data} = await find('product-setting', {
+    populate: "topProducts",
+    locale: locale.value
+  })
+  console.log(data);
+  if (data?.attributes?.topProducts?.data) {
+    topProductIds.value = data.attributes.topProducts.data.map(e => e.id)
+    // console.log(topProductIds.value);
+  }
+} catch (e) {
+  console.error(e);
+}
 
 let {
   data: dataAvailableFilters,
@@ -133,6 +152,10 @@ filters.value = [...filters.value, ...initialFilters.value];
 
 const type = computed(() => typeData.value.find(e => e.slug === slug))
 
+
+
+
+
 let initialData = ref([])
 let {
   data: dataProducts,
@@ -142,13 +165,24 @@ let {
   lang: locale.value,
   type: slug,
   page: productPage.value,
-  pages: pages.value
+  pages: pages.value,
+  topProducts: filters.value.length > 0 ? null : [topProductIds.value] // Is the query without filter -> extrude top products
 }), {
   transform: (d) => {
     const collection = 'products';
 
     let initialPageSize = 12;
     pages.value = 1;
+
+    // Add Top products
+    if (d.data?.topProducts?.data.length > 0) {
+      console.log('top products');
+
+      // order top products
+      d.data.topProducts.data = d.data.topProducts.data.sort((a, b) => topProductIds.value.indexOf(parseInt(a.id)) - topProductIds.value.indexOf(parseInt(b.id)))
+
+      d.data[collection].data = [...d.data.topProducts.data, ...d.data[collection].data]
+    }
 
     const p = router.options.history?.pages?.[slug];
     if (p) {

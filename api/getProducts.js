@@ -1,4 +1,6 @@
-export default async function ({filters, type, lang, page, pages = null}) {
+export default async function ({filters, type, lang, page, pages = null, topProducts}) {
+
+    // console.log({filters, type, lang, page, pages})
     const graphql = useStrapiGraphQL()
     const collection = 'products';
 
@@ -9,6 +11,8 @@ export default async function ({filters, type, lang, page, pages = null}) {
         // console.log({pages, pageSize, page});
     }
 
+    let extrudeFilter = ''
+    if (topProducts) extrudeFilter = 'id: { notIn: ['+topProducts.join(',')+']}'
 
 
 
@@ -32,34 +36,7 @@ export default async function ({filters, type, lang, page, pages = null}) {
         }
     }`
     }
-
-    const response = graphql(`
-query ProductsWithFilters{
-
-  products (
-    filters: {
-      or: [ { discontinued: { eq: null } } { discontinued: { eq: false } } ] 
-      and: [ ${_filters} ]
-      ${typeFilter}
-
-  }
-    pagination: {
-      pageSize: ${pageSize}
-      page: ${page}
-    }
-    sort: "title"
-    locale: "${lang}"
-  ) {
-  meta {
-      pagination {
-        total
-        page
-        pageSize
-        pageCount
-      }
-    }
-    
-    data {
+    const data = `    data {
     id
       attributes {
         title
@@ -101,9 +78,69 @@ query ProductsWithFilters{
         }
       }
     }
+  }`
+
+    const response = graphql(`
+query ProductsWithFilters{
+
+${topProducts ? `
+topProducts:products (
+    filters: {
+      or: [ { discontinued: { eq: null } } { discontinued: { eq: false } } ] 
+      and: [ ${_filters} ]
+      ${typeFilter}
+      id: {in: [${topProducts.join(',')}]}
+
   }
+    pagination: {
+      pageSize: ${pageSize}
+      page: ${page}
+    }
+    locale: "${lang}"
+  ) {
+  meta {
+      pagination {
+        total
+        page
+        pageSize
+        pageCount
+      }
+    }
+    
+    ${data}
+` : ``}
+
+
+  products (
+    filters: {
+      or: [ { discontinued: { eq: null } } { discontinued: { eq: false } } ] 
+      and: [ ${_filters} ]
+      ${typeFilter}
+      ${extrudeFilter}
+
+  }
+    pagination: {
+      pageSize: ${pageSize}
+      page: ${page}
+    }
+    sort: ["collection.order:asc", "title"]
+    locale: "${lang}"
+  ) {
+  meta {
+      pagination {
+        total
+        page
+        pageSize
+        pageCount
+      }
+    }
+    
+    ${data}
 }
 `);
+
+
+
 
 
     return response
