@@ -48,10 +48,45 @@
 
 
         <transition name="fade">
-          <div v-if="result !== null && show && (result?.hits?.length > 0)" class="result">
+          <div v-if="((result !== null && (result?.hits?.length > 0)) || tags.length > 0) && show" class="result">
 
             <div class="container">
-<!--              <pre>{{result}}</pre>-->
+<!--              Tags-->
+              <div class="tags-grid m-v-8" v-if="tags.length > 0">
+                <template v-for="tag in tags">
+                  <Tag v-if="tagsNames?.[locale]?.[tag.index]?.slug && tagsNames[locale][tag.index].name"
+                       :to="tagsNames[locale][tag.index]?.slug + tag.slug" v-on:click="close">
+                    <!--                <Tag v-for="tag in tags" :to="'/dress?'+tag.index+'s='+tag.slug+'&u=t'" v-on:click="close">-->
+                    <div>
+                      <div class="subheader xs gray m-b-0">{{tagsNames[locale][tag.index].name}}</div>
+
+                      <div v-html="highlight(tag.title, search)"/>
+                    </div>
+                    <!--                  <span class="icon-arrow-16"/>-->
+                  </Tag>
+                </template>
+              </div>
+<!--              Collections-->
+              <div class="tags-grid m-v-8 collections" v-if="collections.length > 0">
+                <Tag v-for="item in collections"
+                     :to="localePath('/collection/' + item.slug)"
+                     v-on:click="close" class="collection-item">
+                  <div style="width: 72px">
+                    <div class="ratio-4x3 relative" >
+                      <Image :path="{data: {attributes: item.cover_4x3}}" size="small" :alt="item.title"/>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="subheader xs gray m-b-0">{{ $t('collection') }}</div>
+                    <div class="brake-word m-t-4" v-html="highlight(item.title, search)"/>
+<!--                    <div class="collection-label gray m-t-4">{{ item.line?.title }}</div>-->
+                  </div>
+                    <!--                  <div class="collection-label gray m-t-4">{{ item.type?.locale }}</div>-->
+                </Tag>
+              </div>
+
+
 
               <!--              <div v-if="result.nbHits === 0">No results</div>-->
               <div class="search-grid m-v-40">
@@ -90,6 +125,8 @@
 const { locale } = useI18n()
 const {$isUrl} = useNuxtApp()
 
+const route = useRoute()
+
 const props = defineProps({
   show: {
     type: Boolean,
@@ -103,9 +140,39 @@ const fileAdded = ref(false)
 const input = ref()
 const config = useRuntimeConfig();
 const result = ref({});
+const tags = ref([]);
+const collections = ref([]);
+const news = ref([]);
+
 const pending = ref(false);
 const errorUrl = ref(false);
 const resizedImageCanvas = ref();
+
+const tagsNames = {
+  en: {
+    silhouette: {name: "silhouette", slug: "/dress/silhouettes/"},
+    color: {name: "color", slug: "/dress/colors/"},
+    style: {name: "style", slug: "/dress/styles/"},
+    neckline: {name: "neckline", slug: "/dress/necklines/"},
+    decoration: {name: "decoration", slug: "/dress/decorations/"},
+    other: {name: "other", slug: "/dress/others/"},
+    backneckline: {name: "back necklines", slug: "/dress/backnecklines/"},
+    fabric: {name: "fabric", slug: "/dress/fabrics/"},
+    // collection: {name: "collection", slug: "/collection/"}
+  },
+  pl: {
+    silhouette: {name: "silhouette", slug: "/pl/suknie/silhouette/" },
+    color: {name: "kolor", slug: "/pl/suknie/kolor/" },
+    style: {name: "styl", slug: "/pl/suknie/styl/" },
+    neckline: {name: "dekolt", slug: "/pl/suknie/necklinia/" },
+    decoration: {name: "dekor", slug: "/pl/suknie/dekor/" },
+    other: {name: "inni", slug: "/pl/suknie/inni/" },
+    backneckline: {name: "dekolt z tylu", slug: "/pl/suknie/dekolt-z-tylu/" },
+    fabric: {name: "tkanina", slug: "/pl/suknie/tkanina/" },
+    // collection: {name: "kolekcje", slug: "/pl/kolekcja/"} //todo: link to collection
+  },
+}
+
 
 async function settings() {
   const data = await $fetch(`indexes/product/settings`, {
@@ -132,6 +199,8 @@ async function settings() {
   // console.log(data);
 
 
+
+
   // const data = await $fetch(`keys`, {
   //   baseURL: config.SEARCH_URL,
   //   method: 'GET',
@@ -143,38 +212,86 @@ async function settings() {
   // console.log(data);
 }
 
+// Product settings
+// {
+//   "displayedAttributes": [
+//   "title",
+//   "id",
+//   "slug",
+//   "cover_3x4",
+//   "type",
+//   "collection",
+// ],
+//     "filterableAttributes": ["locale"],
+//     "searchableAttributes": [
+//   "title",
+// ]
+// }
+
+// Collection settings
+// {
+//   "displayedAttributes": [
+//   "title",
+//   "id",
+//   "slug",
+//   "cover_4x3",
+//   "line",
+//   "locale"
+// ],
+//     "filterableAttributes": ["locale"],
+//     "searchableAttributes": [
+//   "title"
+// ]
+// }
+
+// Tags settings
+// PATCH http://localhost:7700/indexes/--NAME_OF_ONDEX--/settings
+// {
+//   "displayedAttributes": [
+//   "title",
+//   "id",
+//    "slug",
+//   "locale"
+// ],
+//     "filterableAttributes": ["locale"],
+//     "searchableAttributes": [
+//   "title"
+// ]
+// }
+
 async function getResult() {
   pending.value = true;
   errorUrl.value = false
   if (search.value.length === 0) {
     result.value = [];
+    tags.value = [];
+    collections.value = [];
+    news.value = [];
   } else {
-    // const data = await $fetch(`indexes/product/search`, {
-    //   baseURL: config.SEARCH_URL,
-    //   method: 'POST',
-    //   headers: {
-    //     Authorization:
-    //         'Bearer ' + config.MEILISEARCH_API_KEY,
-    //   },
-    //   body: {
-    //     "q": search.value,
-    //   }
-    // });
-
-    const data = await $fetch(`/api/search?q=${search.value}&locale=${locale.value}`, {
+    const res = await $fetch(`/api/search?q=${search.value}&locale=${locale.value}`, {
       method: 'GET'
     });
+    // console.log(res);
 
-    // // Filter by locale
-    // // todo: needs to fix fol poland
-    // data.hits = data.hits.filter(d => d.type?.locale === locale.value)
-    // if (data.hits.length === 0) {
-    //   data.estimatedTotalHits = 0
-    //   data.nbHits = 0
-    // }
+    const {color, fabric, line, decoration, backneckline, neckline, silhouette, style, other} = res;
+
+    const _tags = [];
+
+    [color, fabric, line, decoration, backneckline, neckline, silhouette, style, other].forEach(e => {
+      if (e?.hits?.length) {
+        _tags.push(...e.hits.map(t => {
+          return {
+            ...t,
+            index: e.index
+          }
+        }))
+      }
+    })
+    tags.value = _tags
+    collections.value = res.collections.hits;
 
 
-    result.value = data;
+    result.value = res.products;
   }
   pending.value = false;
 }
@@ -359,34 +476,6 @@ const convertFileToBase64 = (file) => {
   });
 };
 
-// function convertUrlToBase64(url, callback) {
-//   return new Promise((resolve, reject) => {
-//     var xhr = new XMLHttpRequest();
-//     xhr.onload = function() {
-//       var reader = new FileReader();
-//       reader.onloadend = function() {
-//         resolve(reader.result);
-//       }
-//       reader.readAsDataURL(xhr.response);
-//     };
-//     xhr.open('GET', url);
-//     xhr.responseType = 'blob';
-//     xhr.send();
-//   })
-//
-// }
-
-// const convertUrlToBase64 = url => fetch(url)
-//     .then(response => response.blob())
-//     .then(blob => new Promise((resolve, reject) => {
-//       const reader = new FileReader()
-//       reader.onloadend = () => resolve(reader.result)
-//       reader.onerror = reject
-//       reader.readAsDataURL(blob)
-//     }))
-//     .catch(e => console.error(e))
-
-
 
 </script>
 
@@ -523,7 +612,14 @@ const convertFileToBase64 = (file) => {
   z-index: 99;
   overflow-y: auto;
 }
-
+.collections {
+  display: flex;
+  //flex-wrap: wrap;
+}
+.collection-item {
+  //display: inline-flex;
+  //width: auto;
+}
 
 @include lg {
   .search-grid {
@@ -574,6 +670,15 @@ const convertFileToBase64 = (file) => {
 }
 
 
+
+
+.tags-grid {
+  display: flex;
+  //flex-wrap: wrap;
+  gap: 8px;
+  max-width: 100%;
+  overflow: auto;
+}
 
 .slide-enter-active,
 .slide-leave-active {

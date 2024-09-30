@@ -4,7 +4,7 @@
     <div>
       <Header/>
 
-      <NuxtPage/>
+      <NuxtPage />
 
 
     </div>

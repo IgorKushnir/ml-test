@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div v-if="dataProducts!== null">
       <InnerHeader :title="route.meta?.h1 ?? type.title"/>
 
@@ -106,7 +105,7 @@ try {
     populate: "topProducts",
     locale: locale.value
   })
-  console.log(data);
+  // console.log(data);
   if (data?.attributes?.topProducts?.data) {
     topProductIds.value = data.attributes.topProducts.data.map(e => e.id)
     // console.log(topProductIds.value);
@@ -243,6 +242,7 @@ async function filterData(e, page) {
       window.scroll({top: 0})
     }
   })
+
 }
 
 async function checkFiltersHandler(e) {
@@ -286,6 +286,17 @@ function setQuery(filters) {
 
 }
 
+
+// // Added with Tags in search
+// watch(() => route.meta, () => {
+//   filters.value = parseQuery()
+//
+//   if (route.query.u) {
+//     console.log('Went from search tag');
+//     handleFilter(filters.value)
+//   }
+// })
+
 function parseQuery() {
   const query = route.meta.query ?? route.query; //
   let queryKeys = Object.keys(query);
@@ -307,6 +318,7 @@ function parseQuery() {
 
 
 function handleFilter(e) {
+  // console.log({e});
   setQuery(e);
   pendingProducts.value = true
   dataProducts.value.data = []
