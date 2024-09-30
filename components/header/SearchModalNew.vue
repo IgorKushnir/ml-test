@@ -48,7 +48,7 @@
 
 
         <transition name="fade">
-          <div v-if="((result !== null && (result?.hits?.length > 0)) || tags.length > 0) && show" class="result">
+          <div v-if="((result !== null && (result?.hits?.length > 0)) || tags.length > 0 || collections.length > 0) && show" class="result">
 
             <div class="container">
 <!--              Tags-->
@@ -288,7 +288,7 @@ async function getResult() {
       }
     })
     tags.value = _tags
-    collections.value = res.collections.hits;
+    collections.value = res?.collections?.hits;
 
 
     result.value = res.products;
