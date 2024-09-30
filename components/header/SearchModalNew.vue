@@ -50,8 +50,8 @@
         <transition name="fade">
           <div v-if="((result !== null && (result?.hits?.length > 0)) || tags?.length > 0 || collections?.length > 0) && show" class="result">
 
-            <div class="container">
-<!--              Tags-->
+            <div class="m-t-40 m-t-16-md">
+              <!--              Tags-->
               <div class="tags-grid m-v-8" v-if="tags?.length > 0">
                 <template v-for="tag in tags">
                   <Tag v-if="tagsNames?.[locale]?.[tag.index]?.slug && tagsNames[locale][tag.index].name"
@@ -66,7 +66,7 @@
                   </Tag>
                 </template>
               </div>
-<!--              Collections-->
+              <!--              Collections-->
               <div class="tags-grid m-v-8 collections" v-if="collections?.length > 0">
                 <Tag v-for="item in collections"
                      :to="localePath('/collection/' + item.slug)"
@@ -80,16 +80,16 @@
                   <div>
                     <div class="subheader xs gray m-b-0">{{ $t('collection') }}</div>
                     <div class="brake-word m-t-4" v-html="highlight(item.title, search)"/>
-<!--                    <div class="collection-label gray m-t-4">{{ item.line?.title }}</div>-->
+                    <!--                    <div class="collection-label gray m-t-4">{{ item.line?.title }}</div>-->
                   </div>
-                    <!--                  <div class="collection-label gray m-t-4">{{ item.type?.locale }}</div>-->
+                  <!--                  <div class="collection-label gray m-t-4">{{ item.type?.locale }}</div>-->
                 </Tag>
               </div>
+            </div>
 
 
-
-              <!--              <div v-if="result.nbHits === 0">No results</div>-->
-              <div class="search-grid m-v-40">
+            <div class="container p-h-16-md">
+              <div class="search-grid m-v-40 m-v-16-md">
                 <NuxtLink
                     v-for="item in result.hits"
                     :to="localePath('/' + (item?.type?.slug ?? 'product') + '/' + item.slug)"
@@ -218,13 +218,15 @@ async function settings() {
 //   "title",
 //   "id",
 //   "slug",
-//   "cover_3x4",
-//   "type",
-//   "collection",
+//   "cover_3x4.formats.small",
+//   "type.title",
+//   "type.slug",
+//   "collection.title",
+//   "collection.slug"
 // ],
 //     "filterableAttributes": ["locale"],
 //     "searchableAttributes": [
-//   "title",
+//   "title"
 // ]
 // }
 
@@ -234,8 +236,9 @@ async function settings() {
 //   "title",
 //   "id",
 //   "slug",
-//   "cover_4x3",
-//   "line",
+//   "cover_4x3.formats.small",
+//   "line.title",
+//   "line.slug",
 //   "locale"
 // ],
 //     "filterableAttributes": ["locale"],
@@ -678,6 +681,12 @@ const convertFileToBase64 = (file) => {
   gap: 8px;
   max-width: 100%;
   overflow: auto;
+  padding: 0 max(calc((100% - $grid-max-width) / 2 + 40px), 40px);
+}
+@include md {
+  .tags-grid {
+    padding: 0 16px;
+  }
 }
 
 .slide-enter-active,
