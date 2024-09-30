@@ -48,11 +48,11 @@
 
 
         <transition name="fade">
-          <div v-if="((result !== null && (result?.hits?.length > 0)) || tags.length > 0 || collections.length > 0) && show" class="result">
+          <div v-if="((result !== null && (result?.hits?.length > 0)) || tags?.length > 0 || collections?.length > 0) && show" class="result">
 
             <div class="container">
 <!--              Tags-->
-              <div class="tags-grid m-v-8" v-if="tags.length > 0">
+              <div class="tags-grid m-v-8" v-if="tags?.length > 0">
                 <template v-for="tag in tags">
                   <Tag v-if="tagsNames?.[locale]?.[tag.index]?.slug && tagsNames[locale][tag.index].name"
                        :to="tagsNames[locale][tag.index]?.slug + tag.slug" v-on:click="close">
@@ -67,7 +67,7 @@
                 </template>
               </div>
 <!--              Collections-->
-              <div class="tags-grid m-v-8 collections" v-if="collections.length > 0">
+              <div class="tags-grid m-v-8 collections" v-if="collections?.length > 0">
                 <Tag v-for="item in collections"
                      :to="localePath('/collection/' + item.slug)"
                      v-on:click="close" class="collection-item">
