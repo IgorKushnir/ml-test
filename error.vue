@@ -2,6 +2,7 @@
   <div class="body" id="body">
     <div>
       <Header/>
+
       <State
           :title="error.statusCode == 404 ? 'Page not found' : error.message"
           :text="error.statusCode == 404 ? 'Looks like you just missed the party! The page you are looking for was moved, removed, renamed or no longer exists.' : error.description"
@@ -36,19 +37,28 @@ const { locale } = useI18n()
 
 
 // get Initial data (Menu, Lines, Types)
-let {data: initialData, error: initialError} = await getInitialData(locale.value);
-if (!initialError.value) {
-  useMenuData().value = [initialData.value[0], initialData.value[1]]
-  useTypesData().value = initialData.value[2];
-  useTranslationsData().value = initialData.value[3];
-}
-const translations = useTranslationsData();
+try {
+  // console.log('hello');
+  let {data: initialData, error: initialError} = await getInitialData(locale.value);
+  if (!initialError.value) {
+    useMenuData().value = [initialData.value.menu, initialData.value.lines]
+    useTypesData().value = initialData.value.types;
+    useTranslationsData().value = initialData.value.translations;
+  }
+
+  const translations = useTranslationsData();
 
 
 // Get all filters
-let allFilters = useFiltersData();
-let {data, pending, refresh, error: dError} = await getAllFilters('en');
-if (!dError.value) allFilters.value = data.value;
+  let allFilters = useFiltersData();
+  let {data, pending, refresh, error: dError} = await getAllFilters('en');
+  if (!dError.value) allFilters.value = data.value;
+} catch (e) {
+  console.error(e);
+}
+
+
+
 
 
 
