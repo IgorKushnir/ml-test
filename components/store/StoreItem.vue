@@ -22,18 +22,18 @@
           <div v-if="store.address || store.phone || store.website || store?.lines?.data.length > 0" class="contacts m-t-32 m-t-16-md">
 
             <div class="m-b-8">
-              <a :href="'http://maps.google.com/?q='+store.city+', '+store.address" target="_blank" class="link normal">{{ store.address }}</a>
+              <a :href="'http://maps.google.com/?q='+store.city+', '+store.address" target="_blank" rel="nofollow" class="link normal">{{ store.address }}</a>
             </div>
             <!--          <br v-if="store.phone">-->
             <div v-if="store.phone" class="m-b-8">
               <a :href="'tel: '+store.phone" target="_blank" class="link normal">{{ store.phone }}</a>
             </div>
             <div v-if="store.website" class="m-b-8">
-              <a :href="store.website" target="_blank" class="link normal">{{ store.website }}</a>
+              <a :href="store.website" target="_blank" rel="nofollow" class="link normal">{{ store.website }}</a>
             </div>
             <div v-if="store.instagram">
               <span class="icon-instagram-16"/>
-              <a v-if="store.instagram" :href="store.instagram" target="_blank" class="link normal">
+              <a v-if="store.instagram" :href="store.instagram" target="_blank" rel="nofollow" class="link normal">
                 {{getInstagramName(store.instagram)}}
               </a>
             </div>
