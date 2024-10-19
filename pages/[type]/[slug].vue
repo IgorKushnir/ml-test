@@ -102,7 +102,7 @@
                   <div class="trunk-show-preview"><Image :path="show.attributes.cover_4x3"/></div>
                   <div>
                     <NuxtLink  :to="localePath('/trunk-shows/'+show.attributes.slug)" class="p-small link dark-blue m-b-4">
-                      {{ show.attributes.title }}
+                      {{ show.attributes.title, show.attributes.country, show.attributes.city, $getDatesInRange(show.attributes.from, show.attributes.to, $getMonths, true) }}
                     </NuxtLink>
                   </div>
                 </div>
@@ -170,7 +170,7 @@
 
 <script setup lang="js">
 import getProduct from '~/api/getProduct'
-const { $setViewedProduct, $getViewedProduct, $getLikedProducts, $toggleLikeProduct } = useNuxtApp()
+const { $setViewedProduct, $getViewedProduct, $getLikedProducts, $toggleLikeProduct, $getMonths, $getDatesInRange } = useNuxtApp()
 import {useTypesData} from "~/composables/states";
 import Image from "../../components/Image";
 const isMobile = useIsMobile();

@@ -89,6 +89,10 @@ query Product{
             attributes {
               title
               slug
+              country
+              city
+              from
+              to
               cover_4x3 {
                   data {
                     attributes {
