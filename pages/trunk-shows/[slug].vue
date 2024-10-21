@@ -36,14 +36,14 @@
               <div class="col-6 col-12-md m-v-12"><ListIcon icon="calendar-16">{{ $getDatesInRange(data.attributes.from, data.attributes.to, $getMonths, true) }}</ListIcon></div>
               <div class="col-6 col-12-md m-v-12" v-if="data.attributes.phone"><ListIcon icon="phone-16" :to="'tel: '+data.attributes.phone"><span class="link">{{ data.attributes.phone }}</span></ListIcon></div>
               <div class="col-6 col-12-md m-v-12" v-if="data.attributes.address">
-                <ListIcon icon="location-16" :to="'https://www.google.com/maps/place/'+data.attributes.address"  target="_blank">
+                <ListIcon icon="location-16" :to="'https://www.google.com/maps/place/'+data.attributes.address"  target="_blank" rel="nofollow">
                   {{ data.attributes.address }}
                   <div class="display-block m-t-8">
                     <div class="p-small link" style="display: inline-block">Show on map <span class="icon-taget-16"/></div>
                   </div>
                 </ListIcon>
               </div>
-              <div class="col-6 col-12-md m-v-12" v-if="data.attributes.website"><ListIcon icon="taget-16" :to="data.attributes.website" target="_blank"><span class="link">{{ data.attributes.website }}</span></ListIcon></div>
+              <div class="col-6 col-12-md m-v-12" v-if="data.attributes.website"><ListIcon icon="taget-16" :to="data.attributes.website" target="_blank" rel="nofollow"><span class="link">{{ data.attributes.website }}</span></ListIcon></div>
 
             </div>
 
