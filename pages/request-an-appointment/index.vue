@@ -8,7 +8,7 @@
          :localizations="[{locale: 'en', slug: 'request-an-appointment'}, {locale: 'pl', slug: 'request-an-appointment'}]"
     />
 
-    <InnerHeader :title="$t('book_title')" :sub_title="$t('book_sub_title')"/>
+    <InnerHeader :title="$t('book_title')" :sub_title="!sent ? $t('book_sub_title') : ''"/>
 
     <div v-if="queryData.store">
       <div class="row justify-center">
