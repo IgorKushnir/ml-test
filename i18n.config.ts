@@ -98,7 +98,7 @@ export default defineI18nConfig(() => ({
             book_number_of_people: "Number of people joining you",
             book_find_out: "How did you find out about Milla Nova?",
             book_consent: "Clicking this implies your consent to receive text messages regarding upcoming appointments, confirmations, and relevant information. MN values your privacy and ensures that your information won't be shared.",
-            service_unavailable: "The service is currently unavailable",
+            service_unavailable: "All dates on this day are already booked. Please check another date.",
 
             search_product_name: "Product name",
             search_product_name_or_image: "Product name or image url",
@@ -206,7 +206,7 @@ export default defineI18nConfig(() => ({
             book_number_of_people: "Liczba dołączających osób",
             book_find_out: "Jak dowiedziałeś się o Milla Nova?",
             book_consent: "Kliknięcie tej opcji oznacza zgodę na otrzymywanie wiadomości tekstowych dotyczących nadchodzących spotkań, potwierdzeń i istotnych informacji. MN ceni Twoją prywatność i zapewnia, że Twoje dane nie będą udostępniane.",
-            service_unavailable: "Usługa jest obecnie niedostępna",
+            service_unavailable: "Wszystkie terminy tego dnia są już zarezerwowane. Sprawdź inną datę.",
 
 
             January: 'Styczeń',
