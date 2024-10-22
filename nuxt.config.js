@@ -3,6 +3,7 @@ import graphql from '@rollup/plugin-graphql';
 
 export default defineNuxtConfig({
     ssr: true,
+    swr: true,
     css: [
         '@/assets/style/main.scss',
     ],
