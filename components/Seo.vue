@@ -64,11 +64,9 @@ function setLocalizations() {
   if(props.localizations && !isSetLocals) {
     // isSetLocals = true
     props.localizations.forEach(loc => {
-      let _locale = loc.attributes
-      if (!_locale) _locale = loc
+      const _locale = loc?.attributes ?? loc
 
-      let type;
-      if (_locale.type) type = _locale.type.data.attributes.slug
+      const type = _locale.type?.data?.attributes?.slug ?? null
 
       const p = _locale.locale === "en" ? [] : [_locale.locale]
       // console.log({p});
@@ -191,7 +189,7 @@ function parseVariablesInBrackets(str) {
 
 
   if (variables && variables.length > 0) {
-    variables = variables.map(el => el.replace('[', '').replace(']', ''))
+    variables = variables?.map(el => el.replace('[', '').replace(']', ''))
 
     variables.forEach(variable => {
       let text = '['+variable+']'
@@ -223,10 +221,10 @@ function setSeo() {
   // console.log(props.localizations);
   if (props.localizations && props.localizations.length > 0) {
     props.localizations.forEach(loc => {
-      if (!loc.slug && loc.attributes) loc = loc.attributes
+      if (!loc.slug && loc.attributes) loc = loc?.attributes
 
       let type;
-      if (loc.type) type = loc.type.data.attributes.slug
+      if (loc.type) type = loc.type.data?.attributes?.slug
 
 
       if (loc.locale === 'en') {
