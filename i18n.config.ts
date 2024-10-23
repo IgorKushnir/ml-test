@@ -52,6 +52,7 @@ export default defineI18nConfig(() => ({
             filters_reset_all: 'Reset all',
             filters_dismiss: 'Dismiss',
             filters_show: 'Show',
+            inspiration: "Inspiration",
 
             storefinder_title: 'Store finder',
             storefinder_show_on_map: 'Show on map',
@@ -162,6 +163,7 @@ export default defineI18nConfig(() => ({
             filters_reset_all: 'Zresetować wszystko',
             filters_dismiss: 'Odrzucać',
             filters_show: 'Pokazywać',
+            inspiration: "Inspiracja",
 
             storefinder_title: 'Wyszukiwarka salonu',
             storefinder_show_on_map: 'Pokaż na mapie',

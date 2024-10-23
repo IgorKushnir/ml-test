@@ -10,7 +10,7 @@
 
     <transition name="fade">
       <div v-if="data != null">
-        <InnerHeader title="Inspiration"/>
+        <InnerHeader :title="$t('inspiration')"/>
 
         <Container>
           <template v-for="(item, index) in data.data">
