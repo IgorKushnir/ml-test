@@ -10,6 +10,8 @@
       <template #full>
         <div class="share-button-container">
           <div class="p-small t" v-if="translations.moodboard_description">{{translations.moodboard_description}}</div>
+          <p class="p-small t t--wide t--desktop">{{ $t('moodboard_subtitle_desktop') }}</p>
+          <p class="p-small t t--mobile">{{ $t('moodboard_subtitle_mobile') }}</p>
           <div class="share p-small" v-on:click="() => shareModalControl.show = true"><span class="icon-taget-16"/>{{ $t('share') }}</div>
         </div>
       </template>
@@ -221,7 +223,6 @@ function decodeFromBase64(string) {
 
 }
 .t {
-  text-wrap: wrap;
   text-wrap: balance;
   text-align: right;
 
@@ -232,6 +233,26 @@ function decodeFromBase64(string) {
   -webkit-box-orient: vertical;
   max-width: 280px;
   line-height: 120%;
+
+  &--wide {
+    max-width: max-content;
+  }
+
+  &--desktop {
+    display: none;
+
+    @media (min-width: 768px) {
+      display: block;
+    }
+  }
+
+  &--mobile {
+    display: block;
+
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
 }
 @include md {
   .share {
