@@ -181,7 +181,7 @@
             </div>
 
             <NuxtLink v-for="(item, index) in data.social" :class="'icon-'+item.icon + (data.social.length > index+1 ? ' m-r-16' : '')" :to="item.url" target="_blank"
-                      class="social hover m-h-8-md m-b-16"/>
+                      class="social hover"/>
           </Fact>
         </div>
       </Container>
@@ -517,6 +517,7 @@ onMounted(async () => {
 
 
 .social {
+  margin: 16px 8px;
   font-size: 20px;
   height: 24px;
   display: inline-block;
@@ -525,11 +526,11 @@ onMounted(async () => {
 }
 @include md {
   .social {
+    margin: 4px;
     font-size: 22px;
     height: auto;
     width: auto;
     padding: 12px;
-    border: 1px solid $border-dark;
   }
 }
 </style>
