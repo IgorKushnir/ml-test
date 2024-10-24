@@ -79,7 +79,7 @@ export default defineNuxtConfig({
         // },
     },
     build: {
-
+        analyze: true,
     },
     app: {
         pageTransition: { name: 'page', mode: 'out-in' }
