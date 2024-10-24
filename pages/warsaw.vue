@@ -341,7 +341,9 @@ async function getDaysAndHours() {
       method: "POST",
       body: {
         type: "days",
-        service_id: selectedServiceId.value
+        service_id: selectedServiceId.value,
+        date_from: new Date(Date.now()).toLocaleDateString('en-CA'),
+        date_to: new Date(Date.now() + 91 * 24 * 60 * 60 * 1000).toLocaleDateString('en-CA')
       }
     })
     if (!d.success) throw d.meta
@@ -349,11 +351,12 @@ async function getDaysAndHours() {
     let bb = {}
      d.data.booking_dates.forEach(d => {
       const _d = new Date(d)
+      const year = _d.getFullYear()
        const month = _d.getMonth()
-       if (!bb[month]) {
-         bb[month] = _getDaysInMonth(_d.getMonth(), _d.getFullYear())
+       if (!bb[`${year}-${month}`]) {
+         bb[`${year}-${month}`] = _getDaysInMonth(_d.getMonth(), _d.getFullYear())
        }
-       bb[month][_d.getDate()-1] = {
+       bb[`${year}-${month}`][_d.getDate()-1] = {
          available: true,
          dayOfWeek: _d.getDay(),
          day: _d.getDate(),

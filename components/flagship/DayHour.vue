@@ -6,7 +6,7 @@
       <div class="shine" v-if="!bookingDates"/>
       <div class="calendar-nav">
         <div ref="prev" class="prev"><div class="icon-arrow-16 back"/></div>
-        <div  v-if="bookingDates" class="calendar-date">{{ $t($getMonths[currentMonthIndex][0]) }} {{bookingDates[currentMonthIndex][0].year}}</div>
+        <div  v-if="bookingDates" class="calendar-date">{{ $t($getMonths[currentMonthIndex][0]) }} {{currentYear}}</div>
         <div  v-else class="calendar-date"/>
         <div ref="next" class="next"><div class="icon-arrow-16"/></div>
       </div>
@@ -168,7 +168,7 @@ const prev = ref()
 const currentCalendarIndex = ref(0)
 const currentMonthIndex = computed(() => {
   if (!props.bookingDates) return
-  const indexes = Object.keys(props.bookingDates)
+  const indexes = Object.keys(props.bookingDates).map(date => date.split('-')[1])
   return indexes[currentCalendarIndex.value]
 })
 
@@ -207,6 +207,7 @@ const bookingDatesWithSpecials = computed(() => {
 
   return bd
 })
+const currentYear = computed(() => props?.bookingDates ? Object.keys(props.bookingDates).find(date => date.split('-')[1] === currentMonthIndex)[0].year : "")
 
 function isToday(date) {
   return new Date().toISOString().split('T')[0] === date
