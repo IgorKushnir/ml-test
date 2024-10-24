@@ -25,13 +25,13 @@
               <a :href="'http://maps.google.com/?q='+store.city+', '+store.address" target="_blank" rel="nofollow" class="link normal">{{ store.address }}</a>
             </div>
             <!--          <br v-if="store.phone">-->
-            <div v-if="store.phone" class="m-b-8">
-              <a :href="'tel: '+store.phone" target="_blank" class="link normal">{{ store.phone }}</a>
+            <div v-if="store?.phone" class="m-b-8">
+              <a :href="'tel: '+store.phone" target="_blank" class="link normal">{{ parsePhoneNumber(store.phone)?.formatInternational() }}</a>
             </div>
-            <div v-if="store.website" class="m-b-8">
+            <div v-if="store?.website" class="m-b-8">
               <a :href="store.website" target="_blank" rel="nofollow" class="link normal">{{ store.website }}</a>
             </div>
-            <div v-if="store.instagram">
+            <div v-if="store?.instagram">
               <span class="icon-instagram-16"/>
               <a v-if="store.instagram" :href="store.instagram" target="_blank" rel="nofollow" class="link normal">
                 {{getInstagramName(store.instagram)}}
@@ -73,6 +73,7 @@
 </template>
 
 <script setup>
+import parsePhoneNumber from 'libphonenumber-js'
 import Flag from "./Flag";
 import Button from "../Button";
 
