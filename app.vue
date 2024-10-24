@@ -103,7 +103,15 @@ useHead({
                   pintrk('load', '2613056388970', {em: '<user_email_address>'});
                   pintrk('page');
                   `
-    }
+    },
+    {innerHTML: `(function(h,o,t,j,a,r){
+                h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+                h._hjSettings={hjid:5179312,hjsv:6};
+                a=o.getElementsByTagName('head')[0];
+                r=o.createElement('script');r.async=1;
+                r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+                a.appendChild(r);
+                })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');`}
     // { async: true, src: "https://www.googletagmanager.com/gtag/js?id=AW-16455473849"},
     // {
     //   innerHTML: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-16455473849');`
