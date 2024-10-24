@@ -2,11 +2,11 @@
   <div class="footer m-t-64 m-t-40-md p-v-16 white">
     <div class="container row-reverse-md m-t-80 m-t-40-md">
       <div class="row gap-S">
-        <div class="col-6 col-4-xl col-12-lg p-v-0">
+        <div class="col-6 col-4-xl col-12-lg p-v-0 p-0">
           <div class="h2 white m-t-0 hide-md">{{ translations.footer_title}}</div>
           <div class="m-v-40">
             <NuxtLink v-for="item in social" :class="'icon-'+item.icon" :to="item.url" target="_blank"
-                      class="social white hover m-r-16 m-h-8-md m-b-16"/>
+                      class="social white hover"/>
           </div>
 
           <ClientOnly>
@@ -107,6 +107,7 @@ const { locale } = useI18n()
 }
 
 .social {
+  margin: 16px 8px;
   font-size: 20px;
   height: 24px;
   display: inline-block;
@@ -174,14 +175,14 @@ const { locale } = useI18n()
     text-align: center;
   }
   .menu {
-    column-count: 1;
+    column-count: 2;
   }
   .social {
+    margin: 4px;
     font-size: 22px;
     height: auto;
     width: auto;
     padding: 12px;
-    border: 1px solid $border-light;
   }
   .row-reverse-md  .row {
     flex-direction: column-reverse;
