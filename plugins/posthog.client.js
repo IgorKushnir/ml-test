@@ -2,7 +2,7 @@ import { defineNuxtPlugin } from '#app'
 import posthog from 'posthog-js'
 export default defineNuxtPlugin(nuxtApp => {
     const runtimeConfig = useRuntimeConfig();
-    if (runtimeConfig.public.strapi.MODE === 'local') return
+    if (runtimeConfig.public.strapi.MODE === 'local' || !!runtimeConfig.public.posthogPublicKey) return
 
     const posthogClient = posthog.init(runtimeConfig.public.posthogPublicKey, {
         api_host: runtimeConfig.public.posthogHost,
