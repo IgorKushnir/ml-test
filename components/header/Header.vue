@@ -29,10 +29,10 @@
 
         <!-- Logo-->
         <NuxtLink v-if="$route.path !== localePath('/')" :to="localePath('/')" class="logo-container">
-          <img src="@/assets/img/logo.svg" alt="Milla Nova Logo" class="logo">
+          <img src="@/assets/img/logo.svg" alt="Milla Nova Logo" class="logo" />
         </NuxtLink>
         <div v-else class="logo-container">
-          <img src="@/assets/img/logo.svg" alt="Milla Nova Logo" class="logo">
+          <img src="@/assets/img/logo.svg" alt="Milla Nova Logo" class="logo" />
         </div>
 
         <div class="right-side">

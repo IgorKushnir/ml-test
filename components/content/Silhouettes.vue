@@ -23,7 +23,7 @@
           <div class="swiper-wrapper">
             <NuxtLink v-for="dress in [...data.silhouettes.data]" :to="(locale === 'en' ? '/dress/silhouettes/' : '/pl/suknie/silhouette/') + dress.attributes.slug" :key="dress.attributes.slug" class="swiper-slide">
               <div class="new-ratio-1x1">
-                <img class="silhouette" :src="`/img/silhouette/${dress.attributes.slug}.png`" :alt="dress.attributes.title"/>
+                <nuxt-img class="silhouette" :src="`/img/silhouette/${dress.attributes.slug}.png`" :alt="dress.attributes.title"/>
               </div>
               <div class="nav-link m-v-16">{{ dress.attributes.title }}</div>
             </NuxtLink>
