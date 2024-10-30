@@ -25,7 +25,7 @@ export default  defineEventHandler(async (event) => {
     if (body.type === "days") {
         try {
             const service_id = body.service_id
-            const res =  await fetch(`${url}/book_dates/${company_id}?service_ids=${service_id}`, {
+            const res =  await fetch(`${url}/book_dates/${company_id}?service_ids=${service_id}${body?.date_from ? `&date_from=${body.date_from}` : ''}${body?.date_to ? `&date_to=${body.date_to}` : ''}`, {
                 method: "GET",
                 headers
             })
