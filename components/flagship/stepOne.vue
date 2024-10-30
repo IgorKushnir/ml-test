@@ -10,7 +10,7 @@
         <div class="contact">
           <span class="subheader m-b-0">{{ sub_header }}</span>
           <h1 class="title">{{ title }}</h1>
-          <p class="m-t-0">{{text}}</p>
+          <p class="m-t-0 text-center">{{text}}</p>
           <Loader v-if="!services"/>
 
           <transition name="fade" mode="out-in">

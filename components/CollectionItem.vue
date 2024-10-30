@@ -18,7 +18,7 @@
 
 
       <div class="collection-item-head" :class="poster ? 'gradient' : ''">
-        <div class="collection-content p-v-56 p-h-56 p-v-32-xl p-h-16-md">
+        <div class="collection-content p-v-56 p-h-56 p-v-32-xl p-h-32-md">
           <p class="subheader">{{subHeader}}</p>
           <h2>{{title}}</h2>
           <p class="text" v-if="text">{{ text }}</p>
@@ -126,9 +126,12 @@ function hover(hover, el) {
   //max-height: 500px;
 }
 .text {
-  max-width: 700px;
+  width: max-content;
+  max-width: min(100%, 700px);
   margin-left: auto;
   margin-right: auto;
+  text-align: justify;
+  text-align-last: center;
 }
 //@media (hover: hover) {
 //  .btn-ctn {

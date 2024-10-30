@@ -154,6 +154,11 @@ img {
   }
 }
 
+.text-center {
+  text-align: justify;
+  text-align-last: center;
+}
+
 .discontinued {
   opacity: .8;
   filter:  sepia(100%) brightness(95%) hue-rotate(180deg) grayscale(.85);
