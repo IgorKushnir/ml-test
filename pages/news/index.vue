@@ -6,7 +6,6 @@
         }
     ]"
          :localizations="[{locale: 'en', slug: 'news'},{locale: 'pl', slug: 'aktualnosci'}]"
-
     />
 
     <transition name="fade">
@@ -36,12 +35,10 @@ import {getNews} from '~/api/news'
 const { locale } = useI18n()
 
 const page = ref(1);
-const {data: newsData, pending, refresh, error} = await useLazyAsyncData('news', () => getNews(locale.value), {
-  transform: (d) => {
-    return d?.data['news']
-  }
-})
 
+const {data: newsData, pending, refresh, error} = await useLazyAsyncData('news', () => getNews(locale.value), {
+  transform: (transformData) => transformData?.data['news']
+})
 </script>
 
 <style scoped>

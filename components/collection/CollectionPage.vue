@@ -17,8 +17,6 @@
     <transition name="fade">
 
       <div v-if="!pendingCollection && dataCollection != null">
-
-
         <InnerHeader :title="dataCollection.title" :sub_header="dataCollection.line.data.attributes.title"
                      :sub_title="dataCollection.description"/>
         <StickyBarStickyHeaderMilla
@@ -37,7 +35,6 @@
             />
           </template>
         </StickyBarStickyHeaderMilla>
-        <!--      {{ filterSelected }}-->
         <TagContainer class="hide-md">
           <div
               v-for="(item, index) in filterSelected"
@@ -73,7 +70,6 @@
         </ProductGrid>
       </div>
     </transition>
-    <!--    <Loading :pending="pendingProducts"/>-->
     <PageNotFound  :show="dataCollection === null"/>
   </div>
 </template>
@@ -90,18 +86,12 @@ const fetchFilters = ref(true)
 const productPage = ref(1)
 const pages = ref(1)
 
-
 const { locale } = useI18n()
-
 
 const previousPages = router.options.history?.pages?.[slug]
 router.options.history.pages = {}
 router.options.history.pages[slug] = previousPages;
-// console.log({previousPages});
-
 pages.value = previousPages ?? 1;
-
-
 
 const {
   data: dataCollection,
@@ -109,11 +99,12 @@ const {
 } = await getCollection(slug, locale.value)
 
 
-let filters = ref([{
+const filters = ref([{
   key: 'collection',
   values: [slug]
 }])
-let {
+
+const {
   data: dataAvailableFilters,
   pending: pendingFilters,
 } = await useAsyncData('data_activeFilters', () => getActiveFilters({filters: filters.value, lang: locale.value, type: null, fetchFilters: fetchFilters.value}), {
@@ -121,10 +112,8 @@ let {
     return d.data['products']['meta']
   },
 })
+
 let initialAvailableFilters = {};
-
-
-
 const initialFilters = ref([]);
 // onMounted(() => {
   initialAvailableFilters = dataAvailableFilters.value ?? {};
@@ -142,13 +131,9 @@ const initialFilters = ref([]);
   filters.value = [...filters.value, ...initialFilters.value];
 // })
 
+const initialData = ref([])
 
-
-
-
-
-let initialData = ref([])
-let {
+const {
   data: dataProducts,
   pending: pendingProducts,
 } = await useLazyAsyncData('data_products', () => getProducts({filters: filters.value, lang: locale.value, type: null, page: productPage.value, pages: pages.value }), {
@@ -165,7 +150,6 @@ let {
       d.data[collection].meta.pagination.pageSize = initialPageSize
     }
 
-
     if (productPage.value === 1 || pages.value !== 1) {
       initialData.value = []
     }
@@ -179,15 +163,11 @@ let {
 
 onMounted(() => {
   initialData.value = dataProducts.value?.data ?? []
-
-
 })
-let currentFilters =  ref([])
+const currentFilters =  ref([])
 
 async function filterData(e, page) {
   productPage.value = page;
-  // console.log('page--: ',page);
-
 
   // // Get selected filters in one array
   let selected = []
@@ -199,7 +179,7 @@ async function filterData(e, page) {
   }))
 
   // Filter query by list of allows
-  let allowQuery = Object.keys(initialAvailableFilters.filters ?? {});
+  const allowQuery = Object.keys(initialAvailableFilters.filters ?? {});
   selected = selected.filter((k) => allowQuery.includes(k.key))
 
   filterSelected.value = selected;
@@ -213,6 +193,7 @@ async function filterData(e, page) {
   })
 
 }
+
 async function checkFiltersHandler(e) {
   let f = [...filters.value];
   if (e !== null) {
@@ -230,8 +211,8 @@ async function checkFiltersHandler(e) {
   fetchFilters.value = false
   filters.value = f
   refreshNuxtData('data_activeFilters')
-
 }
+
 function setQuery(filters) {
   const query = {}
   let allowQuery = Object.keys(initialAvailableFilters.filters ?? {});
@@ -253,21 +234,16 @@ function parseQuery() {
   const query = route.query;
   let queryKeys = Object.keys(query);
 
-  // console.log(dataAvailableFilters.value.filters, '0');
-
   // Filter query by list of allows
   let allowQuery = Object.keys(initialAvailableFilters?.filters ?? {});
   queryKeys = queryKeys.filter((k) => allowQuery.includes(k))
 
-
-  return queryKeys.map(key => {
-    return {
+  return queryKeys.map(key => ({
       key: key,
       values: query[key] === '' ? [] :query[key]?.split(',') ?? []
-    }
-  })
+    })
+  )
 }
-
 
 function handleFilter(e) {
   setQuery(e);
@@ -275,10 +251,10 @@ function handleFilter(e) {
   dataProducts.value.data = []
   filterData(e, 1)
 }
+
 function cutOneFilter(index) {
   const filterToRemove = filterSelected.value[index]
   filterSelected.value.splice(index, 1)
-  // console.log({filterToRemove});
 
   const index1 = filters.value.findIndex((f) => f.key === filterToRemove.key );
   if (index1 !== -1) {
@@ -302,7 +278,6 @@ function cutOneFilter(index) {
     }
   })
   initialFilters.value = _filters;
-
 
   setQuery(filters.value)
   dataProducts.value.data = []

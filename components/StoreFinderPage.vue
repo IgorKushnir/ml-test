@@ -1,7 +1,6 @@
 <template>
   <div>
     <ContentBanner :data="banner" type="banner"/>
-<!--    <pre>{{banner}}</pre>-->
     <div v-if="countries">
       <InnerHeader v-if="countries[countryIndex]?.value" :title="countries[countryIndex]?.value"
                    :sub_header="$t('storefinder_title')"/>
@@ -24,7 +23,6 @@
               @index="(i) => changeLine(i)"
           />
         </template>
-
 
       </StickyBarStickyHeaderMilla>
 
@@ -58,17 +56,10 @@
         </Container>
       </transition>
       <Loading v-if="countryIndex !== -1 && pending" :pending="pending"/>
-
-
     </div>
 
-
     <Loading v-if="!countries" :pending="!countries"/>
-
     <PageNotFound :show="!data?.data && !pending && countryIndex !== -1"/>
-
-<!--    :title="countryIndex !== -1 ? 'Wedding Dresses in ' + countries[countryIndex]?.value: 'Store finder'"-->
-
     <Seo
         :data="data?.data?.attributes"
         :title="countries[countryIndex]?.value"
@@ -76,7 +67,7 @@
         {
           title: countryIndex !== -1 ? 'Wedding Dresses in ' + countries[countryIndex]?.value: 'Store finder',
         }
-    ]"
+        ]"
         :localizations="[{locale: 'en', slug: 'store-finder'}, {locale: 'pl', slug: 'wyszukiwarka-sklepow'}]"
     />
   </div>
@@ -84,11 +75,12 @@
 
 <script setup>
 import {getListOfCountries, getCountry, getBanner} from '~/api/stores'
-// import getCountryCode from '~/api/getCountryCode'
-
+import getCountryCode from "../api/getCountryCode";
 
 const router = useRouter();
 const route = useRoute();
+const { locale } = useI18n()
+const localePath = useLocalePath()
 
 // No transition for page
 route.meta.pageTransition = {
@@ -98,41 +90,16 @@ route.meta.pageTransition = {
 const countrySlug = ref(route.params.country);
 const countryCode = ref(null);
 const countryIndex = ref(-1);
-
 const stateIndex = ref(-1)
 const cityIndex = ref(-1)
 const lineIndex = ref(-1)
-
-let showMap = ref(false)
-
-const { locale } = useI18n()
-const localePath = useLocalePath()
+const showMap = ref(false)
 
 const countries = ref(await getListOfCountries(locale.value))
 const banner = ref(await getBanner(locale.value))
 
-
-// if (process.client) {
-//   const country = document.cookie.replace(
-//       /(?:(?:^|.*;\s*)country\s*\=\s*([^;]*).*$)|^.*$/,
-//       "$1",
-//   );
-//   countryCode.value = country;
-//   // console.log('client', country);
-// }
-// if (process.server) {
-//   const nuxtApp = useNuxtApp()
-//   const {ssrContext} = nuxtApp
-//   const event = ssrContext.event
-//   const country = event.context.country
-//   countryCode.value = country
-//   // console.log('server', country);
-// }
-import getCountryCode from "../api/getCountryCode";
 countryCode.value = await getCountryCode()
-// console.log('-> ',countryCode.value);
 
-// console.log('b - ', countrySlug.value);
 if (!countrySlug.value) {
   countryIndex.value = getIndexByCode(countryCode.value)
   countrySlug.value = getSlugByCode(countryCode.value)
@@ -147,29 +114,27 @@ const {data, pending, refresh, error} = await useLazyAsyncData('country', () => 
   }
 })
 
-
 onMounted(async () => {
   if (countryCode.value) {
     changeRoute()
   }
 })
 
-
 function getStores() {
   let stores = []
   data.value?.data?.attributes.city.forEach(city => {
     city.store.forEach(store => {
-      store.country_code = data.value.data.attributes.country_code
-      store.city = city.name
-      store.state = city.state
-      stores.push(store)
+      stores.push({...store,
+        country_code: data.value.data.attributes.country_code,
+        city: city.name,
+        state: city.state
+      })
     })
   })
   return stores
 }
 
 const stores = computed(() => {
-  // return []
   let sores = getStores();
   if (stateIndex.value !== -1) {
     sores = sores.filter(store => store.state === states.value[stateIndex.value]?.value)
@@ -186,6 +151,7 @@ const stores = computed(() => {
   return [...sores.filter(store => store.premium), ...sores.filter(store => !store.premium)];
   // return sores;
 })
+
 const states = computed(() => {
   if (countryIndex.value === -1) return [];
   let _states = (data.value?.data?.attributes?.city ?? [])
@@ -194,22 +160,18 @@ const states = computed(() => {
       })
 
   // remove dublicates
-  if (_states?.length > 0) {
-    _states = _states.map(c => c.state);
-    _states = _states.filter(function(item, pos) {
-      return _states.indexOf(item) == pos;
-    })
-    _states = _states.sort((a, b) => a.localeCompare(b)) // sort alphabetic
-    _states = _states.map(c => {
-      return {value: c}
-    })
+  if (_states.length > 0) {
+    _states = _states
+    .map(({state}) => state)
+    .filter((item, pos) => _states.indexOf(item) == pos)
+    .sort((a, b) => a.localeCompare(b))
+    .map(value => ({value})
+    )
   }
-
 
   return _states
 })
 const cities = computed(() => {
-  // return []
   if (countryIndex.value === -1) return [];
 
   let _cities =  data.value?.data?.attributes?.city
@@ -222,14 +184,10 @@ const cities = computed(() => {
       return city.state === states.value[stateIndex.value].value
     })
   }
-  // console.log(_cities);
 
-  return _cities?.map(c => {
-    return {value: c.name}
-  }) ?? [];
+  return _cities?.map(({name}) => ({value: name})) ?? [];
 })
 const lines = computed(() => {
-  // return []
   if (countryIndex.value === -1) return [];
 
   let l = [];
@@ -255,24 +213,11 @@ const lines = computed(() => {
 })
 
 watch(() => countrySlug.value, (s) => {
-  // console.log('---', countrySlug.value);
   refresh()
 })
 
-// onMounted(async () => {
-//   if (countrySlug.value !== data?.value?.data?.attributes?.slug) {
-//     // console.log('here', countrySlug.value);
-//     refresh()
-//   }
-// })
-
-
-// async function getCountryNameByIndex(index) {
-//   if (index !== -1) return countries.value[index]
-// }
-
 async function getSlugByCode(code) {
-  const index = countries.value?.findIndex(c => c.flag === code)
+  const index = countries.value?.findIndex(({flag}) => flag === code)
   return countries.value[index]?.slug
 }
 
@@ -283,7 +228,7 @@ function getIndexBySlug(slug) {
 
 function getIndexByCode(code) {
   if (!countries.value) return -1
-  const index = countries.value.findIndex(c => c.flag === code)
+  const index = countries.value.findIndex(({flag}) => flag === code)
   return index
 }
 
@@ -306,6 +251,7 @@ function changeState(index) {
   cityIndex.value = -1;
   lineIndex.value = -1;
 }
+
 function changeCity(index) {
   cityIndex.value = index;
   lineIndex.value = -1;
@@ -316,26 +262,16 @@ function changeLine(index) {
 }
 
 async function changeRoute() {
-  // history.pushState(
-  //     {},
-  //     null,
-  //     await countrySlug.value
-  // )
   const country = await countrySlug.value
-  const path = country ? localePath('/store-finder/' + country) : localePath('/store-finder')
+  const path = country ? localePath(`/store-finder/${country}`) : localePath('/store-finder')
 
   navigateTo(path)
-  // window.history.pushState(window.history.state, '', path)
-  // window.scroll({
-  //   top: 0
-  // })
-
 }
 
 
 // Redirect from old path
 if (route.query.country && is_server()) {
-  navigateTo(localePath('/store-finder/' + route.query.country), {
+  navigateTo(localePath(`/store-finder/${route.query.country}`), {
     redirectCode: 301
   })
 }

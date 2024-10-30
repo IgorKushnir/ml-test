@@ -49,10 +49,5 @@ const {$getDate, $getMonths} = useNuxtApp()
 const { locale } = useI18n()
 
 const {data, pending} = await getInspiration(slug, locale.value)
-
-onMounted(() => {
-  // refresh()
-})
-
 </script>
 

@@ -34,13 +34,6 @@ watch(() => route.query, (r) => {
   query.value = route.query
 })
 const type = computed(() => query.value.form)
-
-
-
-
-
-
-
 </script>
 
 <style scoped>

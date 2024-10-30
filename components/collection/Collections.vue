@@ -12,7 +12,6 @@
       <div v-if="!pending && data != null">
         <InnerHeader :title="$t('collections')"/>
         <StickyBarStickyHeaderMilla>
-          <!--        // Data types to global data-->
           <template #center>
             <StickyBarStickyMenu :data="typeData" path="/" class="grid-column-center"/>
           </template>
@@ -42,7 +41,6 @@
 </template>
 
 <script setup>
-
 import getCollections from '~/api/getCollections'
 import {useTypesData} from "../../composables/states";
 import StickyHeaderMilla from "../stickyBar/StickyHeaderMilla";
@@ -52,8 +50,6 @@ const { locale } = useI18n()
 let {data, pending, refresh, error} = await getCollections(locale.value)
 
 const typeData = useTypesData()
-
-
 </script>
 
 <style scoped>

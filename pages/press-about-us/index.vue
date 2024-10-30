@@ -8,7 +8,6 @@
          :localizations="[{locale: 'en', slug: 'press-about-us'},{locale: 'pl', slug: 'prasa'}]"
     />
 
-
     <transition name="fade">
       <div v-if="!pending && data != null">
         <InnerHeader :title="$t('press_about_us')"/>
@@ -16,7 +15,6 @@
         <Container justify="justify-center">
           <div class="row gap-S">
             <template v-for="(item, index) in data">
-
               <div class="col-4 col-6-lg col-12-sm">
                 <NuxtLink v-if="item.attributes.cover_4x3?.data" :to="item.attributes.url ?? '#'" target="_blank">
                   <div class="ratio-4x3 m-b-24">
@@ -30,12 +28,8 @@
                       <Image :path="item.attributes.logo" :alt="item.attributes.title"/>
                     </div>
                   </div>
-
                   <h2 class="m-t-0 m-b-0 h4 gray unset-uppercase">{{ item.attributes.title }}</h2>
                 </NuxtLink>
-
-
-
 
                 <p class="h2 dark-blue quote" v-if="item.attributes.description"><span class="quote before">"</span>{{ item.attributes.description }}"</p>
 
@@ -46,7 +40,6 @@
                   </NuxtLink>
                 </div>
               </div>
-
             </template>
           </div>
         </Container>
@@ -59,7 +52,6 @@
 </template>
 
 <script setup>
-
 import {getPressAboutUs} from "~/api/pressAboutUs";
 
 const {data, pending, refresh, error} = await getPressAboutUs("en")
@@ -68,8 +60,6 @@ function getUrlTitle(url) {
   const u = new URL(url)
   return u.host
 }
-
-
 </script>
 
 <style scoped>
@@ -85,16 +75,8 @@ function getUrlTitle(url) {
   margin-right: 16px;
   flex-shrink: 0;
 }
-h4 {
-  /*display: inline-block;*/
-}
+
 .press-logo > div > .img-component-container :deep(.img-component.base) {
-  /*opacity: .1;*/
-  /*width: 60%;*/
-  /*height: 60%;*/
-  /*top: 20%;*/
-  /*left: 20%;*/
-  /*mix-blend-mode: multiply;*/
   background-image: none;
   object-fit: fill;
   object-position: bottom;
@@ -102,8 +84,6 @@ h4 {
 }
 .press-logo > div > .img-component-container :deep(.img-component.placeholder) {
   display: none;
-  /*opacity: .2;*/
-  /*filter: blur(120px);*/
 }
 
 .unset-uppercase {

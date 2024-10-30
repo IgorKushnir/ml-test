@@ -3,10 +3,6 @@
 
     <InnerHeader :title="isSharedMoodBoardPage ? $t('shared_moodboard_title') : $t('moodboard_title')"/>
     <StickyBarStickyHeaderMilla v-if="data?.liked?.length > 0 && !isSharedMoodBoardPage">
-<!--      <template #center>-->
-<!--        {{data?.liked?.length}} dress-->
-<!--      </template>-->
-
       <template #full>
         <div class="share-button-container">
           <div class="p-small t" v-if="translations.moodboard_description">{{translations.moodboard_description}}</div>
@@ -17,7 +13,6 @@
       </template>
     </StickyBarStickyHeaderMilla>
 
-<!--    <Button><span class="icon-search-24"/>Share mood board</Button>-->
     <transition name="fade">
       <div v-if="!pending && !firstLoading ">
         <ProductGrid
@@ -55,42 +50,23 @@ const translations = useTranslationsData().value
 
 const route = useRoute()
 const router = useRouter()
-
-const isSharedMoodBoardPage = computed(() => route.params.id != null)
+const { locale, locales } = useI18n()
 
 const shareModalControl = ref({show: false})
-
 const viewedProductIds = ref([]);
 const likedProductIds = ref([]);
+
+const isSharedMoodBoardPage = computed(() => route.params.id != null)
 const products = computed(() => {
   const arr = [...viewedProductIds.value, ...likedProductIds.value];
   return arr.filter(function (item, pos) {
     return arr.indexOf(item) === pos;
   })
 })
+
 const firstLoading = ref(true)
-
-const { locale, locales } = useI18n()
-
 const data = ref()
 const pending = ref(true)
-
-// let {data, pending, refresh, error} = useLazyAsyncData('moodboard', () => productsResponse({
-//   products: products.value,
-//   lang: locale.value
-// }), {
-//   transform: (d) => {
-//     const _products = d.data.products.data;
-//     console.log(1, d.data.products.data);
-//     let viewed = _products.filter(product => viewedProductIds.value.includes(product.id))
-//     let liked = _products.filter(product => likedProductIds.value.includes(product.id))
-//
-//     viewed.sort((a, b) => viewedProductIds.value.indexOf(a.id) - viewedProductIds.value.indexOf(b.id));
-//     liked.sort((a, b) => likedProductIds.value.indexOf(a.id) - likedProductIds.value.indexOf(b.id));
-//
-//     return {viewed, liked}
-//   },
-// })
 
 onMounted(() => {
   if (!isSharedMoodBoardPage.value) {
@@ -105,51 +81,21 @@ onMounted(() => {
       getInitialData()
 
     } catch (e) {
-      // console.error(e);
-      // data,
+      console.error(e);
       pending.value = false
       firstLoading.value = false;
     }
-
-    // if (typeof idsString === "string") {
-    //   console.log({ids});
-    // }
-
-
-
   }
-
-
-
-
-
 })
-//  useLazyAsyncData('moodboard', () => productsResponse({
-//   products: products.value,
-//   lang: locale.value
-// }), {
-//   transform: (d) => {
-//     const _products = d.data.products.data;
-//     console.log(1, d.data.products.data);
-//     let viewed = _products.filter(product => viewedProductIds.value.includes(product.id))
-//     let liked = _products.filter(product => likedProductIds.value.includes(product.id))
-//
-//     viewed.sort((a, b) => viewedProductIds.value.indexOf(a.id) - viewedProductIds.value.indexOf(b.id));
-//     liked.sort((a, b) => likedProductIds.value.indexOf(a.id) - likedProductIds.value.indexOf(b.id));
-//
-//     console.log({viewed, liked})
-//     data.value = {viewed, liked}
-//     return {viewed, liked}
-//   },
-// })
+
 async function getInitialData() {
   try {
-    const d = await productsResponse({
+    const productsData = await productsResponse({
       products: products.value,
       lang: locale.value
     })
 
-    const _products = d.data.products.data;
+    const _products = productsData.data.products.data;
     let viewed = _products.filter(product => viewedProductIds.value.includes(product.id))
     let liked = _products.filter(product => likedProductIds.value.includes(product.id))
 
@@ -159,21 +105,9 @@ async function getInitialData() {
     data.value = {viewed, liked}
     pending.value = false
     firstLoading.value = false;
-
   } catch (e) {
-
+    console.error(e)
   }
-
-  // console.log(products.value);
-
-  // console.log(error);
-
-  // if (!pending.value) {
-  //   refreshNuxtData('moodboard')
-  //   firstLoading.value = false;
-  // } else {
-  //   setTimeout(getInitialData, 100)
-  // }
 }
 
 function decodeFromBase64(string) {

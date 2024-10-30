@@ -11,7 +11,6 @@
     ]"
          :pathToPage="{en: 'news', pl: 'aktualnosci'}"
          :localizations="data?.attributes?.localizations?.data"
-
     />
 
     <transition name="fade">
@@ -43,11 +42,11 @@
 <script setup>
 import {getNewsPost} from '~/api/news'
 
-
 const route = useRoute()
-const slug = route.params.slug
 const { $getDate, $getMonths } = useNuxtApp()
+const { locale } = useI18n()
 
+const slug = route.params.slug
 let draft = route.query?.draft;
 
 let publicationState = "LIVE";
@@ -55,12 +54,6 @@ if (draft === 'true') {
   publicationState = "PREVIEW";
 }
 
-const { locale } = useI18n()
-
 const {data, pending, refresh, error} = await getNewsPost(slug, locale.value, publicationState)
-// onMounted(() => {
-//   refresh()
-// })
-
 </script>
 
