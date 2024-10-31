@@ -10,7 +10,8 @@ export default defineNuxtConfig({
     modules: [
         '@nuxtjs/strapi',
         '@nuxtjs/i18n',
-        '@nuxt/image'
+        '@nuxt/image',
+        '@nuxtjs/critters'
     ],
     // devServer: {
     //     host: '192.168.3.98',

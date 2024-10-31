@@ -17,6 +17,7 @@
     "@coddicat/vue-pinch-scroll-zoom": "^4.3.5",
     "@gtm-support/vue-gtm": "^2.1.0",
     "@nuxt/image": "^1.8.1",
+    "@nuxtjs/critters": "^0.7.2",
     "@pinecone-database/pinecone": "^2.1.0",
     "@rollup/plugin-graphql": "^1.1.0",
     "axios": "^0.27.2",

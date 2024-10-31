@@ -7,11 +7,11 @@
     <div class="row justify-center" >
       <div v-if="content['__typename'] === 'ComponentContentText'" class="text-block p-t-0 p-b-0"
            :class="layout(content['text_layout'])">
-        <ContentText :data="content.text"/>
+        <LazyContentText :data="content.text"/>
       </div>
 
       <template v-if="content['__typename'] === 'ComponentContentImageVideoGrig'">
-        <ContentMediaGrid :data="content.media.data" :classes="layout(content['grid_layout'])  + ' p-v-0'"
+        <LazyContentMediaGrid :data="content.media.data" :classes="layout(content['grid_layout'])  + ' p-v-0'"
                           :columns="content.columns"
         />
       </template>
@@ -19,7 +19,7 @@
 
       <div v-if="content['__typename'] === 'ComponentContentFact'" :class="layout(content['fact_layout'])" class="p-v-0">
         <div :class="content.ratio === 'vertical' ? 'new-ratio-3x4' : 'new-ratio-16x9'">
-          <Fact :data="content"/>
+          <LazyFact :data="content"/>
         </div>
       </div>
 
@@ -27,17 +27,17 @@
       <div v-if="content['__typename'] === 'ComponentContentMediaBanner'"
            :class="content.media_banner_layout === 'full' ? 'anti-container p-h-0' : layout(content.media_banner_layout)"
            class="p-v-0">
-        <ContentBanner :data="content.banner" type="content"/>
+        <LazyContentBanner :data="content.banner" type="content"/>
       </div>
 
 
 
       <div v-if="content['__typename'] === 'ComponentContentBlocks'" :class="layout('normal')" class="p-v-0">
-        <ContentBlocks :data="content.blocks" :type="content.type ?? 'chess'"/>
+        <LazyContentBlocks :data="content.blocks" :type="content.type ?? 'chess'"/>
       </div>
 
       <div v-if="content['__typename'] === 'ComponentContentCarusel'" class="anti-container">
-        <Carusel
+        <LazyCarusel
             :data="caruselData(content.carusel)"
             :column="content.column === 'six' ? 6 : 4"
             :col-class="layout(content['carusel_layout'])"
@@ -48,7 +48,7 @@
 
       <template v-if="content['__typename'] === 'ComponentContentPoster'">
         <div class="row gap-S">
-          <ContentPosters :data="content.poster"/>
+          <LazyContentPosters :data="content.poster"/>
         </div>
       </template>
 
@@ -63,12 +63,12 @@
 
 
       <div v-if="content['__typename'] === 'ComponentContentEmbedVideo'" :class="layout(content.layout ?? 'normal')" class="p-v-0">
-        <ContentEmbed :data="content.embed"/>
+        <LazyContentEmbed :data="content.embed"/>
       </div>
 
       <div v-if="content['__typename'] === 'ComponentContentLatestContent'"  class="col-12 p-v-0">
         <div class="row gap-S justify-center">
-          <ContentLatestContent :data="content"/>
+          <LazyContentLatestContent :data="content"/>
         </div>
       </div>
 
