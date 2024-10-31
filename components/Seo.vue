@@ -63,7 +63,7 @@ watch(() => props.localizations, () => {
 function setLocalizations() {
   if(props.localizations && !isSetLocals) {
     // isSetLocals = true
-    props.localizations.forEach(loc => {
+    props.localizations?.forEach(loc => {
       const _locale = loc?.attributes ?? loc
 
       const type = _locale.type?.data?.attributes?.slug ?? null
@@ -191,7 +191,7 @@ function parseVariablesInBrackets(str) {
   if (variables && variables?.length > 0) {
     variables = variables?.map(el => el.replace('[', '').replace(']', ''))
 
-    variables.forEach(variable => {
+    variables?.forEach(variable => {
       let text = '['+variable+']'
       if (props.data && props.data[variable]) {
 
@@ -220,7 +220,7 @@ function setSeo() {
 
   // console.log(props.localizations);
   if (props.localizations && props.localizations?.length > 0) {
-    props.localizations.forEach(loc => {
+    props.localizations?.forEach(loc => {
       if (!loc.slug && loc.attributes) loc = loc?.attributes
 
       let type;

@@ -41,9 +41,9 @@ try {
   // console.log('hello');
   let {data: initialData, error: initialError} = await getInitialData(locale.value);
   if (!initialError.value) {
-    useMenuData().value = [initialData.value.menu, initialData.value.lines]
-    useTypesData().value = initialData.value.types;
-    useTranslationsData().value = initialData.value.translations;
+    useMenuData().value = [initialData.value?.menu, initialData.value?.lines]
+    useTypesData().value = initialData.value?.types;
+    useTranslationsData().value = initialData.value?.translations;
   }
 
   const translations = useTranslationsData();

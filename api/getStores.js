@@ -65,9 +65,9 @@ export default async function (lang) {
             let c = countries.map(country => {
 
                 let cities = []
-                country.attributes.city.forEach(city => {
+                country.attributes.city?.forEach(city => {
                     if (city.store?.length > 0) {
-                        city.store.forEach(c => {
+                        city.store?.forEach(c => {
                             c.country_code = country.attributes.country_code
                             c.city = city.name
                         })

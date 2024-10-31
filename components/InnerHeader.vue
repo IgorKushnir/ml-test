@@ -59,7 +59,7 @@ const props = defineProps({
 
 function goStep(index) {
   if (props.currentStep > index) {
-    props.steps.forEach(step => {
+    props.steps?.forEach(step => {
       step.active = false
     })
     props.steps[index].active = true

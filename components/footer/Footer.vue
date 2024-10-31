@@ -3,7 +3,7 @@
     <div class="container row-reverse-md m-t-80 m-t-40-md">
       <div class="row gap-S">
         <div class="col-6 col-4-xl col-12-lg p-v-0 p-0">
-          <div class="h2 white m-t-0 hide-md">{{ translations.footer_title}}</div>
+          <div class="h2 white m-t-0 hide-md">{{ translations?.footer_title}}</div>
           <div class="m-v-40">
             <NuxtLink v-for="item in social" :class="'icon-'+item.icon" :to="item.url" target="_blank"
                       class="social white hover"/>
@@ -79,9 +79,9 @@
 import {useMenuData, useTranslationsData} from "~/composables/states";
 
 const menu = useMenuData().value[0]?.primary
-const translations = useTranslationsData().value
+const translations = useTranslationsData()?.value
 const social = useMenuData().value[0]?.social
-const additional = useMenuData().value[0].footer_additional
+const additional = useMenuData().value[0]?.footer_additional
 const {$isUrl} = useNuxtApp()
 const { locale } = useI18n()
 

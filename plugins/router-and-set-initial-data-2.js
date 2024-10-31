@@ -36,7 +36,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     const filters = await setFilters(locale.value)
     const initialData = await setInitialData(locale.value)
 
-    const types = initialData.types
+    const types = initialData?.types
 
 
     const {data, error} = await getDressRedirects(locale.value)

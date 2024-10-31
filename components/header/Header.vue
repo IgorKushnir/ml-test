@@ -215,7 +215,7 @@ onMounted(() => {
 
   // Mouse leave
   const navigation = window.document.getElementsByClassName('nav')[0]
-  navigation.addEventListener("mouseleave", function (e) {
+  navigation?.addEventListener("mouseleave", function (e) {
     hideSubMenu();
   }, {passive: true})
 

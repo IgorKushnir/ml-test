@@ -42,9 +42,9 @@ import {useFiltersData, useTypesData, useMenuData, useTranslationsData} from "~/
 // get Initial data (Menu, Lines, Types)
 let {data: initialData, error: initialError} = await getInitialData(locale.value);
 if (!initialError.value) {
-  useMenuData().value = [initialData.value.menu, initialData.value.lines]
-  useTypesData().value = initialData.value.types;
-  useTranslationsData().value = initialData.value.translations;
+  useMenuData().value = [initialData.value?.menu, initialData.value?.lines]
+  useTypesData().value = initialData.value?.types;
+  useTranslationsData().value = initialData.value?.translations;
 
 }
 // Get all filters
