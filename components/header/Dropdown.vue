@@ -22,7 +22,7 @@
 
 
         <!--Collections-->
-        <ul class="collections  col-5  col-8-lg col-12-md p-b-0-md m-t-8-md" v-if="item.collections && lines.length > 0">
+        <ul class="collections  col-5  col-8-lg col-12-md p-b-0-md m-t-8-md" v-if="item.collections && lines?.length > 0">
           <li v-for="line in lines" class="line">
             <span class="subheader small">{{ line.attributes.title }}</span>
             <ul>
@@ -40,8 +40,8 @@
         </ul>
 
         <!--Submenu-->
-        <ul class="sub-menu col-3 col-4-lg col-12-md m-t-8-md" v-if="item.items.length > 0">
-          <li v-if="item.items.length > 0" v-for="sub_menu in $divideSubMenu(item.items)">
+        <ul class="sub-menu col-3 col-4-lg col-12-md m-t-8-md" v-if="item.items?.length > 0">
+          <li v-if="item.items?.length > 0" v-for="sub_menu in $divideSubMenu(item.items)">
             <ul v-for="sub_item in sub_menu">
               <li>
                 <NuxtLink

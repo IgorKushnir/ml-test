@@ -44,7 +44,7 @@
       </div>
 
       <div ref="menu_wrapper" class="menu_wrapper hide">
-        <div class="nav">
+        <div class="nav" v-if="data[0]">
           <ul v-for="(item, index) in data[0]['primary']" class="nav-container">
             <li>
               <NuxtLink
@@ -137,7 +137,7 @@ const showSearch = ref(false)
 // On mobile click to submenu open
 function navClickHandler(isDropdown, index) {
   if (isMobile.value && isDropdown) {
-    if (data.value[0]?.primary[index]?.show) {
+    if (data.value[0] && data.value[0]?.primary[index]?.show) {
       hideSubMenu();
     } else {
       showSubMenu(index)
@@ -158,7 +158,9 @@ function mouseLeaveHandler() {
 // Show submenu
 const showSubMenu = (index) => {
   hideSubMenu();
-  data.value[0].primary[index].show = true;
+  if (data.value[0] && data.value[0]?.primary[index]) {
+    data.value[0].primary[index].show = true;
+  }
   activeIndex.value = index;
 
   link.value[activeIndex.value].$el.parentElement.classList.add('active')
@@ -166,7 +168,9 @@ const showSubMenu = (index) => {
 }
 // Hide submenu
 const hideSubMenu = () => {
-  data.value[0].primary[activeIndex.value].show = false;
+  if ( data.value[0] && data.value[0]?.primary[activeIndex.value]) {
+    data.value[0].primary[activeIndex.value].show = false;
+  }
 
   link.value[activeIndex.value].$el.parentElement.classList.remove('active')
 }
