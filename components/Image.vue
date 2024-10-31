@@ -5,25 +5,18 @@
              data-cropped="true"
              class="img-component-container" :class="(zoom && !path.data?.attributes?.mime?.startsWith('video/')) ? 'zoom' : ''" v-on:click="() => showZoomImage(path)">
 
-    <img
+    <nuxt-img
         v-if="!path.data?.attributes?.mime?.startsWith('video/')"
         :src="$getImage(path, size)"
         :alt="path.data?.attributes?.alternativeText ?? alt"
         class="img-component base"
         loading="lazy"
     />
-    <img :src="placeholder" :alt="alt" class="img-component placeholder">
+    <nuxt-img :src="placeholder" :alt="alt" class="img-component placeholder" />
 
-    <video
-        v-if="path.data?.attributes?.mime?.startsWith('video/')"
-        playsinline=""
-        :src="$getAbsoluteUrl(path.data.attributes.url)"
-        loop="loop"
-        tabindex="-1"
-        muted autoplay
-        aria-hidden="true"
-        :type="path.data.attributes.mime"
-    />
+    <video ref="mainVideo" v-if="path.data?.attributes?.mime?.startsWith('video/')" muted autoplay playsinline :poster="poster" loop tabindex="-1">
+      <source ref="videoSource" :type="path.data.attributes.mime" aria-hidden="true">
+     </video>
 
   </component>
 </template>
@@ -32,6 +25,8 @@
 // import {useIsMobile, useZoomImage} from "../composables/states";
 
 const { $getAbsoluteUrl,  $getImage} = useNuxtApp();
+import { onMounted, ref } from 'vue';
+import bannerImage from '@/assets/img/placeholder.svg';
 
 let props = defineProps({
   path: {
@@ -51,13 +46,34 @@ let props = defineProps({
   zoom: {
     type: Boolean,
     required: false
+  },
+  poster: {
+    type: Object,
+    required: false
   }
 })
 
-const placeholder = computed(() => {
-  if (!props.path.data?.attributes?.placeholder) return "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAEAAIDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAf/xAAgEAACAgEDBQAAAAAAAAAAAAABAgADBgQFBxESIjFB/8QAFAEBAAAAAAAAAAAAAAAAAAAABP/EABYRAQEBAAAAAAAAAAAAAAAAAAEAEf/aAAwDAQACEQMRAD8AsuO8a4dXj+2I+ObTe66WoG27R1O7nsHkzFepJ9k/TERBgZMV2//Z"
-  return props.path.data.attributes.placeholder
-})
+const placeholder = computed(() => !props.path.data?.attributes?.placeholder ? "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAEAAIDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAf/xAAgEAACAgEDBQAAAAAAAAAAAAABAgADBgQFBxESIjFB/8QAFAEBAAAAAAAAAAAAAAAAAAAABP/EABYRAQEBAAAAAAAAAAAAAAAAAAEAEf/aAAwDAQACEQMRAD8AsuO8a4dXj+2I+ObTe66WoG27R1O7nsHkzFepJ9k/TERBgZMV2//Z" : props.path.data.attributes.placeholder
+)
+
+const mainVideo = ref(null);
+const videoSource = ref(null);
+const poster = computed(() => props.poster?.data?.attributes?.url ?? bannerImage)
+
+onMounted(async () => {
+      await nextTick();
+      if (document.readyState === 'complete') {
+        loadVideo();
+      } else {
+        window.addEventListener('load', loadVideo);
+      }
+    });
+    const loadVideo = () => {
+      if (mainVideo.value && videoSource.value) {
+        videoSource.value.src = $getAbsoluteUrl(props.path.data.attributes.url);
+        mainVideo.value.load(); 
+      }
+    };
 
 
 const isNotSvg = computed(() => props.path.data?.attributes?.url.endsWith('.jpg') || props.path.data?.attributes?.url.endsWith('.jpeg') || props.path.data?.attributes?.url.endsWith('.png') || props.path.data?.attributes?.url.endsWith('.JPG') || props.path.data?.attributes?.url.endsWith('.JPEG') || props.path.data?.attributes?.url.endsWith('.PNG'))
