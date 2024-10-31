@@ -1,7 +1,7 @@
 <template>
 
-  <Container>
-    <div class="col-6 hide-lg">
+  <Container justify="justify-center">
+    <div class="col-6 image">
       <div class="ratio-1x1">
         <Image :path="data.cover_1x1" :alt="data.title"/>
       </div>
@@ -31,8 +31,6 @@ defineProps({
 </script>
 
 <style scoped lang="scss">
-
-
 .contact {
   width: 100%;
   height: 100%;
@@ -48,10 +46,19 @@ defineProps({
     width: 100%;
   }
 }
+
+.image {
+  width: 50%;
+}
+
 @include lg {
   .new-ratio-1x1 {
     aspect-ratio: unset;
   }
+
+  .image {
+  width: 100%;
+}
 }
 
 </style>
