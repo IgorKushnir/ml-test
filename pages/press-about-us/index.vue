@@ -18,14 +18,14 @@
             <template v-for="(item, index) in data">
 
               <div class="col-4 col-6-lg col-12-sm">
-                <NuxtLink v-if="item.attributes.cover_4x3.data" :to="item.attributes.url ?? '#'" target="_blank">
+                <NuxtLink v-if="item.attributes.cover_4x3?.data" :to="item.attributes.url ?? '#'" target="_blank">
                   <div class="ratio-4x3 m-b-24">
                     <Image :path="item.attributes.cover_4x3" :alt="item.attributes.title"/>
                   </div>
                 </NuxtLink>
 
-                <NuxtLink v-if="item.attributes.logo.data" :to="item.attributes.url ?? '#'" target="_blank" class="press-header-container m-b-24">
-                  <div v-if="item.attributes.logo.data" class="press-logo">
+                <NuxtLink v-if="item.attributes.logo?.data" :to="item.attributes.url ?? '#'" target="_blank" class="press-header-container m-b-24">
+                  <div v-if="item.attributes.logo?.data" class="press-logo">
                     <div class="ratio-1x1">
                       <Image :path="item.attributes.logo" :alt="item.attributes.title"/>
                     </div>

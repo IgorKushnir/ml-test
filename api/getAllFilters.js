@@ -177,11 +177,11 @@ query getAllFilters{
 
     const { data, pending, refresh, error } = await useAsyncData('data_'+collection, () => response, {
         transform: (d) => {
-            const keys = Object.keys(d.data);
+            const keys = Object.keys(d?.data);
             return keys.map(k => {
                 return {
                     uid: k,
-                    data: d.data[k].data
+                    data: d?.data[k]?.data
                 }
             })
         },

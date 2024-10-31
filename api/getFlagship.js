@@ -59,7 +59,7 @@ export default async function (lang, publicationState = "LIVE") {
 
 
     const { data, pending, refresh, error } = await useLazyAsyncData('data_'+collection, () => response, {
-        transform: (d) => d.data[collection].data ? d.data[collection].data.attributes : null,
+        transform: (d) => d?.data[collection]?.data ? d?.data[collection]?.data.attributes : null,
     })
     return { data, pending, refresh, error };
 }

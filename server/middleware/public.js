@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
         try {
             const response = await axios.get( url + "/robot-txt/robots")
             if (response.status === 200) {
-                const data = response.data.body;
+                const data = response?.data.body;
                 return '<pre>' + data + '</pre>'
             } else {
                 throw 'response.status: '+ response.status
@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
         try {
             const response = await axios.get( url + "/api/sitemap/index.xml")
             if (response.status === 200) {
-                const data = response.data;
+                const data = response?.data;
                 // return '<pre>' + data + '</pre>'
                 send(event, data, 'xsl')
                 // return data
@@ -43,7 +43,7 @@ export default defineEventHandler(async (event) => {
         try {
             const response = await axios.get( "https://admin.millanova.com/api/sitemap"+path)
             if (response.status === 200) {
-                const data = response.data;
+                const data = response?.data;
                 // return '<pre>' + data + '</pre>'
                 send(event, data, 'xsl')
                 // return data

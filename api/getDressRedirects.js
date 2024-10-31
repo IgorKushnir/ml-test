@@ -37,7 +37,7 @@ query Landings{
 
      return await useLazyAsyncData('data_'+collection, () => response, {
         transform: (d) => {
-            return transformDressRedirectJson(d.data?.types)
+            return transformDressRedirectJson(d?.data?.types)
         },
     })
 }
@@ -48,7 +48,7 @@ function transformDressRedirectJson(response) {
     let _redirects = []
     if (!response) return _redirects
 
-    response.data?.forEach((types) => {
+    response?.data?.forEach((types) => {
         const slug = types.attributes.slug
         const locale = types.attributes.locale
         types.attributes.productLandingsRedirects?.forEach((meta) => {

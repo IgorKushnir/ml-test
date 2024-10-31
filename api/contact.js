@@ -51,7 +51,7 @@ export default async function (lang) {
 
     return await useLazyAsyncData('data_contact', () => response, {
         transform: (d) => {
-            return  d.data?.contactUs.data.attributes;
+            return  d?.data?.contactUs?.data?.attributes;
         },
     })
 }

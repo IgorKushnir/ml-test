@@ -38,7 +38,7 @@ const { locale } = useI18n()
 const page = ref(1);
 const {data: newsData, pending, refresh, error} = await useLazyAsyncData('news', () => getNews(locale.value), {
   transform: (d) => {
-    return d.data['news']
+    return d?.data['news']
   }
 })
 

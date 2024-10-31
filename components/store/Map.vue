@@ -39,7 +39,7 @@ watch(() => props.show, ()=> {
     setMarkers()
   }
 })
-watch(() => props.data, ()=> {
+watch(() => props?.data, ()=> {
   if (props.show) {
     setMarkers()
   }
@@ -54,7 +54,7 @@ function setMarkers() {
 
 
 
-  props.data.forEach((d, index) => {
+  props?.data?.forEach((d, index) => {
     const location = new google.maps.LatLng(d.lat, d.lng);
     locations.push(location)
     const marker = new google.maps.Marker({

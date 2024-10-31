@@ -128,18 +128,18 @@ export default async function (lang) {
 
     return await useAsyncData('data_initial', () => response, {
         transform: (d) => {
-            const menu = d.data.menu.data.attributes;
+            const menu = d?.data?.menu?.data.attributes;
 
             // Check if line is empty (collection inside)
-            let lines = d.data?.lines?.data
-            lines = lines.filter(l => l.attributes.collections.data?.length > 0)
+            let lines = d?.data?.lines?.data
+            lines = lines.filter(l => l.attributes.collections?.data?.length > 0)
 
-            let types = d.data.types.data
+            let types = d?.data.types?.data
             if (types?.length > 0) {
                 types = types.map(type => type.attributes)
             }
 
-            let translations = d.data.transtation.data.attributes
+            let translations = d?.data.transtation?.data.attributes
             translations.seo_pattern = translations.seo_pattern.sort((a, b) => {
                     if ((a.pathStartsWith && a.pathStartsWith !== '')) {
                         return -1

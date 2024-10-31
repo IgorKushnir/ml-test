@@ -51,7 +51,7 @@ const props = defineProps({
 })
 
 function ratio(item) {
-  return item.media.data.attributes.height / item.media.data.attributes.width
+  return item.media?.data.attributes.height / item.media?.data.attributes.width
 }
 </script>
 

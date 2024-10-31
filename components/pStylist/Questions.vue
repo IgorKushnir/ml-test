@@ -123,7 +123,7 @@ function continueHandle(question) {
   // Check if at least one option selected
   if (!isOptionSelected(question)) return;
 
-  if (index.value === props.data.questions.length - 1) {
+  if (index.value === props?.data.questions.length - 1) {
     index.value = 0;
     return
   }

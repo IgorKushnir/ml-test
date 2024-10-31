@@ -48,7 +48,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
         filters.forEach(filterProduct => {
             const filter = filterProduct.uid
-            filterProduct.data.forEach(filterItem => {
+            filterProduct?.data.forEach(filterItem => {
                 const filterValue = filterItem.attributes.slug
                 let from = '/' + type + '?' + filter + '=' + filterValue
                 let to = '/' + type + '/' + filter + '/' + filterValue

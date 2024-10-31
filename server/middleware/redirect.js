@@ -59,7 +59,7 @@ export default fromNodeMiddleware(async (req, res, next) => {
 
 
     // Redirect from old (static) list
-    let oldRedirectsData = oldRedirects().data
+    let oldRedirectsData = oldRedirects()?.data
     oldRedirectsData.forEach(item => {
         const from = item.attributes.from;
         const to = item.attributes.to;
@@ -73,7 +73,7 @@ export default fromNodeMiddleware(async (req, res, next) => {
     // Redirect from admin list
     const response = await axios.get(config.STRAPI_URL + "/api/redirects?pagination[limit]=-1")
     if (response.status === 200) {
-        const data = response.data.data;
+        const data = response?.data?.data;
         // console.log(data);
         data.forEach(item => {
             const from = item.attributes.from;

@@ -1,7 +1,7 @@
 <template>
   <div class="intro ratio-main-screen" :class="start ? 'start' :( hover ? 'hover' : '')">
     <Image class="hide-md" size="large" :path="data.cover_4x3" :alt="(!data.title || data.title === '') ? title : data.title"/>
-    <Image class="show-md" :path="data.cover_3x4.data ? data.cover_3x4 : data.cover_4x3" :alt="(!data.title || data.title === '') ? title : data.title"/>
+    <Image class="show-md" :path="data.cover_3x4?.data ? data.cover_3x4 : data.cover_4x3" :alt="(!data.title || data.title === '') ? title : data.title"/>
     <div class="overlay"></div>
     <State
         :title="data.title"

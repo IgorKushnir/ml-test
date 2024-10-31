@@ -78,7 +78,7 @@
             <div class="container col-8 col-10-xl col-12-lg  ">
               <div class="row gap-S">
             <NuxtLink
-                v-for="item in data.attributes.products.data"
+                v-for="item in data.attributes.products?.data"
                 class="img-hover col-3 col-4-lg col-6-md col-12-sm"
                 :to="localePath('/product/' + item?.attributes?.slug)"
                 target="_self"

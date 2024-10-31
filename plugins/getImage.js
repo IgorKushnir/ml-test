@@ -18,12 +18,12 @@ export default defineNuxtPlugin(() => {
                         return $getAbsoluteUrl(data?.data?.attributes.url) + q
                     }
                 }
-                if (format === null || data.data.attributes.formats[format] === undefined) {
-                    return $getAbsoluteUrl(data.data.attributes.url)  + q;
+                if (format === null || data?.data.attributes.formats[format] === undefined) {
+                    return $getAbsoluteUrl(data?.data.attributes.url)  + q;
                 }
                 if (format) {
-                    if (data.data.attributes.formats[format] !== null) {
-                        return $getAbsoluteUrl(data.data.attributes.formats[format].url)  + q;
+                    if (data?.data.attributes.formats[format] !== null) {
+                        return $getAbsoluteUrl(data?.data?.attributes.formats[format].url)  + q;
                     } else {
                         return placeholder
                     }

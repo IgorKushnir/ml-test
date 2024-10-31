@@ -48,7 +48,7 @@ const {data, pending, refresh, error} = await useLazyAsyncData('inspirations', (
     //   data.value = d.data['inspirations']
     // }
 
-    return d.data['inspirations']
+    return d?.data['inspirations']
   }
 })
 // if (page.value === 1) {
@@ -80,9 +80,9 @@ nuxtApp.hook('page:loadNext', () => {
     console.log('load: ' + (currentPage+1));
     page.value = currentPage+1;
 
-    const d = data.value.data;
+    const d = data.value?.data;
     refreshNuxtData('inspirations').then(() => {
-      data.value.data = [...d, ...data.value.data]
+      data.value.data = [...d, ...data?.value.data]
     })
 
   }

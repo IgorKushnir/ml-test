@@ -77,7 +77,7 @@ const amount = computed(()=> {
 
 function checkSelected() {
   // console.log(props.data.data);
-  filterItemData.value = props.data.data.map(d => {
+  filterItemData.value = props?.data?.data.map(d => {
     let m = d.attributes;
     if (props.initialItemSelected) {
       m.value = props.initialItemSelected.includes(m.slug);
@@ -100,7 +100,7 @@ function setItemValue(i, e) {
   let filters = filterItemData.value.filter(d => d.value)
 
   filters = {
-    key: props.data.uid,
+    key: props?.data.uid,
     values: filters.map(d => d.slug)
   }
 

@@ -12,7 +12,7 @@ const props = defineProps({
   }
 })
 
-const url = computed(() => props.data.type === 'youtube' ? '//www.youtube.com/embed/' + props.data.id : props.data.type === 'vimeo' ? 'https://player.vimeo.com/video/' + props.data.id : null)
+const url = computed(() => props?.data.type === 'youtube' ? '//www.youtube.com/embed/' + props?.data.id : props?.data.type === 'vimeo' ? 'https://player.vimeo.com/video/' + props?.data.id : null)
 
 </script>
 

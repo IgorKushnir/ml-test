@@ -311,7 +311,7 @@ async function getServices() {
     if (!d.success) throw d.meta
 
 
-    bookingServices.value = d.data.filter(services => services.is_online);
+    bookingServices.value = d?.data.filter(services => services.is_online);
     const staff = []
     bookingServices.value.forEach(service => {
       service.staff.forEach(st => staff.push(st.id))
@@ -351,7 +351,7 @@ async function getDaysAndHours() {
     if (!d.success) throw d.meta
 
     let bb = {}
-     d.data.booking_dates.forEach(d => {
+     d?.data.booking_dates.forEach(d => {
       const _d = new Date(d)
       const year = _d.getFullYear()
        const month = _d.getMonth()
@@ -397,7 +397,7 @@ async function getHours(date) {
     })
     if (!d.success) throw d.meta
 
-    bookingHours.value = d.data
+    bookingHours.value = d?.data
 
   } catch (e) {
     console.error(e);

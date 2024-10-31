@@ -367,7 +367,7 @@ const cities = computed(() => {
   // Exclude the stores without store email
   cities = cities.filter(c => {
     c.store = c.store.filter(s => {
-      return  s.lines.data.length !== 0 && !(s.lines.data.length <= 1 && s.lines.data.map(l => l.attributes.slug).includes('milla-evening')) && (s.email !== null && s.email !== '')
+      return  s.lines?.data.length !== 0 && !(s.lines?.data.length <= 1 && s.lines?.data.map(l => l.attributes.slug).includes('milla-evening')) && (s.email !== null && s.email !== '')
     })
     return c.store.length > 0
   })

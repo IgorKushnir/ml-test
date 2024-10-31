@@ -54,8 +54,8 @@ export default  defineEventHandler(async (event) => {
 
             let allData = []
             resAll.forEach(d => {
-                d.data.forEach(dd => dd.staff_id = d.staff_id)
-                allData.push(...d.data)
+                d?.data.forEach(dd => dd.staff_id = d.staff_id)
+                allData.push(...d?.data)
             })
 
             // Remove dublicated hours

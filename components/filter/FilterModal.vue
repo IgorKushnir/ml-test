@@ -147,7 +147,7 @@ checkIsFilterButtonShow()
 function handleValue(e) {
   let currentSelected = []
   props.allFilters.forEach(e => {
-    e.data.forEach(d => {
+    e?.data.forEach(d => {
       currentSelected.push(d.attributes.value);
     })
   })
@@ -195,7 +195,7 @@ function closeFilter() {
 const isSelectedFilters = computed(()=> {
   let selected = []
   props.allFilters.forEach(f => {
-    f.data.forEach(e => {
+    f?.data.forEach(e => {
       if (e.attributes.value) {
         selected.push(true)
       }
@@ -213,7 +213,7 @@ function resetHandler() {
   emits('filters', filters.value);
 
   props.allFilters.forEach(f => {
-    f.data.forEach(e => {
+    f?.data.forEach(e => {
       e.attributes.value = false
     })
   })

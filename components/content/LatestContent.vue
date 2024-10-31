@@ -35,13 +35,13 @@ const { locale } = useI18n()
 
 
 const {data: newsData, pending, refresh, error} =
-    props.data.instance === 'news' ? await useLazyAsyncData('news', () => getNews(locale.value, 1, props.data.amount), {
+    props?.data.instance === 'news' ? await useLazyAsyncData('news', () => getNews(locale.value, 1, props?.data.amount), {
   transform: (d) => {
     return d.data['news']
   }
-}) : props.data.instance === 'inspiration' ? await useLazyAsyncData('inspirations', () => getInspirations(locale.value, null, 1, props.data.amount), {
+}) : props?.data.instance === 'inspiration' ? await useLazyAsyncData('inspirations', () => getInspirations(locale.value, null, 1, props?.data.amount), {
       transform: (d) => {
-        return d.data['inspirations']
+        return d?.data['inspirations']
       }
     }) : null
 
