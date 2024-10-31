@@ -7,7 +7,7 @@
           <h1 class="title">
             <span class="subheader" v-if="sub_header" style="display: block">{{ sub_header }}<br></span>
             {{ title }}</h1>
-          <p v-if="sub_title" style="margin: 0 auto">{{ sub_title }}</p>
+          <p v-if="sub_title" style="margin: 0 auto" class="text-center">{{ sub_title }}</p>
         </div>
       </div>
     </div>
@@ -71,7 +71,6 @@ function goStep(index) {
 </script>
 
 <style scoped lang="scss">
-
 
 .header {
   display: flex;

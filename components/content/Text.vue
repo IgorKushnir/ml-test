@@ -1,6 +1,5 @@
 <template>
   <div class="text-content" v-html="data"/>
-<!--  <div>{{data}}</div>-->
 </template>
 
 <script setup>
@@ -11,20 +10,9 @@ const props = defineProps({
     required: true
   }
 })
-
-
-
-
-
 </script>
 
-
-
-
-
 <style lang="scss">
-
-
 .text-content {
   height: 100%;
   *:first-child {
@@ -34,11 +22,11 @@ const props = defineProps({
     margin-bottom: 0;
   }
 }
+
 .text-content img {
   max-width: 100%;
   background-image: unset;
 }
-
 
 .text-content > .history {
   column-count: 2;
@@ -59,6 +47,7 @@ const props = defineProps({
     color: $dark-blue;
   }
 }
+
 .text-content > .timeline-list {
   & ul {
     list-style: none !important;
@@ -85,8 +74,6 @@ const props = defineProps({
     }
   }
 }
-
-
 
 .text-content > .key-list {
   & ul {
@@ -116,25 +103,20 @@ const props = defineProps({
   }
 }
 
-
-
-
-
-
 .block-center {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100%;
-  text-align: center;
+  text-align: justify;
+  text-align-last: center;
   p {
     max-width: 340px;
+    text-align: justify !important;
+  text-align-last: center !important;
   }
 }
-
-
-
 
 @include md {
   .text-content > .timeline-list {
@@ -160,15 +142,8 @@ const props = defineProps({
         margin-bottom: 8px;
       }
     }
-
   }
-
-
-
-
-
 }
-
 
 // Table
 .text-content table {
@@ -200,5 +175,4 @@ const props = defineProps({
     padding: 0 16px;
   }
 }
-
 </style>
