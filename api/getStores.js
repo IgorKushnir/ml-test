@@ -66,7 +66,7 @@ export default async function (lang) {
 
                 let cities = []
                 country.attributes.city.forEach(city => {
-                    if (city.store.length > 0) {
+                    if (city.store?.length > 0) {
                         city.store.forEach(c => {
                             c.country_code = country.attributes.country_code
                             c.city = city.name

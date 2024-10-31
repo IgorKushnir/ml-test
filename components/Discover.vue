@@ -54,7 +54,7 @@
     ]"
          :title="route.meta?.title ?? type?.title"
          :description="route.meta?.description"
-         :blockRobots="((route.path === localePath('/'+type.slug) && filterSelected.length > 0) || (route.path !== localePath('/'+type.slug) && route.meta.title == null))"
+         :blockRobots="((route.path === localePath('/'+type.slug) && filterSelected?.length > 0) || (route.path !== localePath('/'+type.slug) && route.meta.title == null))"
          :seoText="route.meta?.seoText"
          :localizations="route.meta.localizations ?? type.localizations.data"
     />
@@ -165,7 +165,7 @@ let {
   type: slug,
   page: productPage.value,
   pages: pages.value,
-  topProducts: filters.value.length > 0 ? null : [topProductIds.value] // Is the query without filter -> extrude top products
+  topProducts: filters.value?.length > 0 ? null : [topProductIds.value] // Is the query without filter -> extrude top products
 }), {
   transform: (d) => {
     const collection = 'products';
@@ -174,7 +174,7 @@ let {
     pages.value = 1;
 
     // Add Top products
-    if (d.data?.topProducts?.data.length > 0) {
+    if (d.data?.topProducts?.data?.length > 0) {
       console.log('top products');
 
       // order top products
@@ -256,7 +256,7 @@ async function checkFiltersHandler(e) {
         f.push(eF)
       }
     })
-    f = f.filter(d => d.values.length > 0)
+    f = f.filter(d => d.values?.length > 0)
   }
   pendingFilters.value = true;
   fetchFilters.value = false
@@ -335,7 +335,7 @@ function cutOneFilter(index) {
     const index2 = filters.value[index1].values.findIndex((f) => f === filterToRemove.value)
     if (index2 !== -1) {
       filters.value[index1].values.splice(index2, 1)
-      if (filters.value[index1].values.length === 0) {
+      if (filters.value[index1].values?.length === 0) {
         filters.value.splice(index1, 1)
       }
     }

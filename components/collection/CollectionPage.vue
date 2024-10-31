@@ -12,7 +12,7 @@
     ]"
          :pathToPage="{en: 'collections', pl: 'kolekcja'}"
          :localizations="dataCollection?.localizations?.data"
-         :blockRobots="filterSelected.length > 0"
+         :blockRobots="filterSelected?.length > 0"
     />
     <transition name="fade">
 
@@ -57,7 +57,7 @@
         >
           <template #promo>
             <div class="col-8 col-12-lg"
-                 v-if="dataCollection.show_promo && dataCollection.cover_4x3.data != null && filterSelected.length === 0"
+                 v-if="dataCollection.show_promo && dataCollection.cover_4x3.data != null && filterSelected?.length === 0"
             >
               <div class="promo" v-if="dataCollection.show_promo">
                 <Image :path="dataCollection.cover_4x3" :alt="dataCollection.title"/>
@@ -66,7 +66,7 @@
             </div>
           </template>
           <template #fact>
-            <div v-if="dataCollection.fact !== null && filterSelected.length === 0" :class="(dataCollection.fact.ratio === 'vertical' ?  'col-4'  : 'col-8') + ' col-6-lg col-12-lg new-ratio-16x9-md'">
+            <div v-if="dataCollection.fact !== null && filterSelected?.length === 0" :class="(dataCollection.fact.ratio === 'vertical' ?  'col-4'  : 'col-8') + ' col-6-lg col-12-lg new-ratio-16x9-md'">
               <Fact :data="dataCollection.fact"/>
             </div>
           </template>
@@ -224,7 +224,7 @@ async function checkFiltersHandler(e) {
         f.push(eF)
       }
     })
-    f = f.filter(d => d.values.length > 0)
+    f = f.filter(d => d.values?.length > 0)
   }
   pendingFilters.value = true;
   fetchFilters.value = false
@@ -285,7 +285,7 @@ function cutOneFilter(index) {
     const index2 = filters.value[index1].values.findIndex((f) => f === filterToRemove.value )
     if (index2 !== -1) {
       filters.value[index1].values.splice(index2, 1)
-      if (filters.value[index1].values.length === 0) {
+      if (filters.value[index1].values?.length === 0) {
         filters.value.splice(index1, 1)
       }
     }

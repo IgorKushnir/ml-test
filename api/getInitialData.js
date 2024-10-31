@@ -132,10 +132,10 @@ export default async function (lang) {
 
             // Check if line is empty (collection inside)
             let lines = d.data?.lines?.data
-            lines = lines.filter(l => l.attributes.collections.data.length > 0)
+            lines = lines.filter(l => l.attributes.collections.data?.length > 0)
 
             let types = d.data.types.data
-            if (types.length > 0) {
+            if (types?.length > 0) {
                 types = types.map(type => type.attributes)
             }
 

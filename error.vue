@@ -90,7 +90,7 @@ onMounted(async () => {
   reportWindowSize()
   window.addEventListener('resize', reportWindowSize, {passive: true});
   //Like list counter
-  likeCounter.value = $getLikedProducts().length
+  likeCounter.value = $getLikedProducts()?.length
 });
 
 // Check size

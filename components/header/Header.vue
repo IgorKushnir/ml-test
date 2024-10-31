@@ -8,7 +8,7 @@
 
     <div class="container" style="position: static;">
       <div class="top-nav">
-        <div class="left-side">
+        <div class="left-side" v-if="data[0]?.length > 0">
           <NuxtLink v-for="item in data[0]['primary_additional']" :to="$isAbsoluteUrl(item.url) ? item.url : localePath(item.url)" :class="'nav-link__tertiary hover hide-md' + (item.target ? ' target' : '')" :target="item.target ? '_target' : '_self'">{{item.title}}</NuxtLink>
 
 <!--          <ClientOnly>-->
@@ -71,7 +71,7 @@
             </li>
           </ul>
 
-          <div class="m-v-32 show-md">
+          <div class="m-v-32 show-md" v-if="data[0]?.length > 0">
             <NuxtLink
                 v-for="item in data[0]['primary_additional']" :to="item.url"
                 style="display: block"
@@ -197,7 +197,7 @@ function showHideMenu() {
 
 // Check if menu item has submenu
 const hasSubMenu = (item) => {
-  return item.collections || item.items.length > 0
+  return item.collections || item.items?.length > 0
 };
 
 

@@ -59,7 +59,7 @@ function transformDressRedirectJson(response) {
                     // return {attributes: locale}
                     return locale
                 })
-                if (locales.length === 0) locales = null
+                if (locales?.length === 0) locales = null
 
                 _redirects.push({
                     name: meta.to,

@@ -29,7 +29,7 @@ const {$getLikedProducts} = nuxtApp
 const { locale } = useI18n()
 watch(locale, () => {
   //Like list counter
-  likeCounter.value = $getLikedProducts().length
+  likeCounter.value = $getLikedProducts()?.length
 })
 
 
@@ -111,7 +111,8 @@ useHead({
                 r=o.createElement('script');r.async=1;
                 r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
                 a.appendChild(r);
-                })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');`}
+                })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');`},
+    {async: true, src:`//cdn.cookie-script.com/s/${process.env.COOKIEYES_CODE}.js`}
     // { async: true, src: "https://www.googletagmanager.com/gtag/js?id=AW-16455473849"},
     // {
     //   innerHTML: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-16455473849');`
@@ -142,7 +143,7 @@ onMounted(async () => {
   loadNextHook()
 
   //Like list counter
-  likeCounter.value = $getLikedProducts().length
+  likeCounter.value = $getLikedProducts()?.length
 });
 
 // Check size

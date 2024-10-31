@@ -79,7 +79,7 @@ function setLocalizations() {
       // Remove last /
       let _path = '/'+p.join('/');
 
-      if (_path.length > 1 && _path[_path.length-1] === '/') {
+      if (_path?.length > 1 && _path[_path.length-1] === '/') {
         _path = _path.slice(0, -1);
       }
       // const _path = [_locale.locale === "en" ? null : '/'+_locale.locale, props.pathToPage[_locale.locale], _locale.slug].join('/')
@@ -188,7 +188,7 @@ function parseVariablesInBrackets(str) {
   let variables = str.match(regexp)
 
 
-  if (variables && variables.length > 0) {
+  if (variables && variables?.length > 0) {
     variables = variables?.map(el => el.replace('[', '').replace(']', ''))
 
     variables.forEach(variable => {
@@ -219,7 +219,7 @@ function setSeo() {
   const links = []
 
   // console.log(props.localizations);
-  if (props.localizations && props.localizations.length > 0) {
+  if (props.localizations && props.localizations?.length > 0) {
     props.localizations.forEach(loc => {
       if (!loc.slug && loc.attributes) loc = loc?.attributes
 
@@ -251,7 +251,7 @@ function setSeo() {
         links.push({rel: 'alternate', href: site + _path, hrefLang: loc.locale})
       }
     })
-    if (!(props.localizations && props.localizations.length > 0 && props.localizations.findIndex(loc => loc.locale === locale.value) !== -1)) {
+    if (!(props.localizations && props.localizations?.length > 0 && props.localizations.findIndex(loc => loc.locale === locale.value) !== -1)) {
       let _siteUrl = siteUrl
       if (_siteUrl.endsWith('/')) _siteUrl = _siteUrl.slice(0, -1)
 
