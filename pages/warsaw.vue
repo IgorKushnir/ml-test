@@ -180,8 +180,10 @@
               <a :href="'tel: '+data.contact_phone.replaceAll(' ', '').replaceAll('-', '').replaceAll(')', '').replaceAll('(', '')" target="_blank" class="link normal  m-l-8">{{ data.contact_phone }}</a>
             </div>
 
-            <NuxtLink v-for="(item, index) in data.social" :class="'icon-'+item.icon + (data.social.length > index+1 ? ' m-r-16' : '')" :to="item.url" target="_blank"
-                      class="social hover"/>
+            <template v-if="data.social">
+              <NuxtLink v-for="(item, index) in data.social" :class="'icon-'+item.icon + (data?.social?.length > index+1 ? ' m-r-16' : '')" :to="item.url" target="_blank"
+                        class="social hover"/>
+            </template>
           </Fact>
         </div>
       </Container>
