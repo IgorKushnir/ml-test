@@ -121,7 +121,7 @@ export default defineNuxtConfig({
         ADMIN_URL: process.env.STRAPI_URL || 'http://127.0.0.1:1337',
         PINECONE_KEY: process.env.PINECONE_KEY,
         public: {
-            posthogPublicKey: 'phc_TLmemHD0HjTshufikjRicBXIIbPQqCz6lqPR7VRvvHL',
+            posthogPublicKey: process.env.POSTHOG_KEY,
             posthogHost: 'https://us.i.posthog.com'
         }
     },
