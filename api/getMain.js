@@ -58,7 +58,30 @@ query Main{
               }
             }
           }
-          
+          poster_3x4 {
+            data {
+              attributes {
+                mime
+                formats
+                url
+                placeholder
+                width
+                height
+              }
+            }
+          }
+          poster_4x3 {
+            data {
+              attributes {
+                mime
+                formats
+                url
+                placeholder
+                width
+                height
+              }
+            }
+          }
         }
                 ${content(extra_blocks)}
 

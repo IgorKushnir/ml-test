@@ -2,6 +2,7 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
+    "build:analyze": "yarn nuxt build --analyze",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
