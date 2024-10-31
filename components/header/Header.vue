@@ -137,7 +137,7 @@ const showSearch = ref(false)
 // On mobile click to submenu open
 function navClickHandler(isDropdown, index) {
   if (isMobile.value && isDropdown) {
-    if (data.value[0].primary[index].show) {
+    if (data.value[0]?.primary[index]?.show) {
       hideSubMenu();
     } else {
       showSubMenu(index)
