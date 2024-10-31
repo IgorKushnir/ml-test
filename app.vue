@@ -29,7 +29,7 @@ const {$getLikedProducts} = nuxtApp
 const { locale } = useI18n()
 watch(locale, () => {
   //Like list counter
-  likeCounter.value = $getLikedProducts().length
+  likeCounter.value = $getLikedProducts()?.length
 })
 
 
@@ -143,7 +143,7 @@ onMounted(async () => {
   loadNextHook()
 
   //Like list counter
-  likeCounter.value = $getLikedProducts().length
+  likeCounter.value = $getLikedProducts()?.length
 });
 
 // Check size

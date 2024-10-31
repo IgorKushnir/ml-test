@@ -10,7 +10,7 @@
         <div class="close hide-md" v-on:click="() => props.control.show = false">
           <div class="icon-close-24"/>
         </div>
-        <div v-if="liked && liked.length > 0" class="images">
+        <div v-if="liked && liked?.length > 0" class="images">
           <div v-for="img in liked" class="img" :class="liked.length > 9 ? 'small' : ''">
             <Image :path="img.attributes.cover_3x4" size="thumbnail" />
           </div>
@@ -21,7 +21,7 @@
 
 
 
-        <div class="p-small m-b-16 gray">{{liked.length}} dress</div>
+        <div class="p-small m-b-16 gray">{{liked?.length}} dress</div>
 <!--        <div class="m-b-32">-->
 <!--          <NuxtLink :to="link" class="link">{{link}}</NuxtLink>-->
 <!--        </div>-->

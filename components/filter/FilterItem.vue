@@ -66,7 +66,7 @@ open.value = props.defaultOpen;
 
 let filterItemData = ref([])
 const amount = computed(()=> {
-  const am = filterItemData.value.filter(d => d.value).length
+  const am = filterItemData.value.filter(d => d.value)?.length
   if (am > 0) open.value = true;
   return am
 })

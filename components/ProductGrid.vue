@@ -36,7 +36,7 @@
 
   <Loading :pending="pendingProducts" extended-class="half"/>
   <transition name="fade">
-    <div v-if="productsData && !pendingProducts && productsData.data.length === 0">
+    <div v-if="productsData && !pendingProducts && productsData?.data?.length === 0">
       <State v-if="!moodboard" title="No products" class="half"></State>
       <State v-if="moodboard"
              :title="$t('moodboard_empty_title')"
@@ -190,7 +190,7 @@ addRouteMiddleware(async (to, from) => {
 
 
 function undoHandler() {
-  if (lastRemovedProduct.value.length > 0) {
+  if (lastRemovedProduct.value?.length > 0) {
     props.productsData.data.splice(lastRemovedProduct.value[0], 0, lastRemovedProduct.value[1])
 
 

@@ -106,7 +106,7 @@ watch(index, () => {
 function checkField(key, data) {
   const item = sendData.value[key];
   if (item.required) {
-    if (item.value.length === 0) {
+    if (item.value?.length === 0) {
       item.error = 'The field must not be empty';
       return
     }

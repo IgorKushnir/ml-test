@@ -125,8 +125,8 @@ watch(() => props.showFilters, (e) => {
 
 const allFiltersFiltered = computed(()=> {
   return props.allFilters.filter((d, index) => {
-    const availableItem = props.availableFilters[d.uid].length > 0
-    return d.data.length > 0 && availableItem
+    const availableItem = props.availableFilters[d.uid]?.length > 0
+    return d.data?.length > 0 && availableItem
   })
 })
 
@@ -151,7 +151,7 @@ function handleValue(e) {
       currentSelected.push(d.attributes.value);
     })
   })
-  if (filteredItems.value.length === 0) {
+  if (filteredItems.value?.length === 0) {
     filteredItems.value = currentSelected.map(e => false);
   }
   selectedItems.value = currentSelected;
@@ -201,7 +201,7 @@ const isSelectedFilters = computed(()=> {
       }
     })
   })
-  return selected.length > 0
+  return selected?.length > 0
 })
 
 

@@ -11,7 +11,7 @@
         <div class="contact">
           <h1 class="title">{{ data.title }}</h1>
           <p class="m-t-0">{{data.text}}</p>
-          <div v-if="data.entry.length > 0" class="navs m-v-32 m-v-0-lg">
+          <div v-if="data.entry?.length > 0" class="navs m-v-32 m-v-0-lg">
             <NavButton v-for="item in data.entry" :to="'?form=' + item.slug" :title="item.title"/>
           </div>
         </div>

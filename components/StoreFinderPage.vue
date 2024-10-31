@@ -12,14 +12,14 @@
           <Select v-if="!(countryCode === 'UA')" :data="countries" name="Country" all="All countries"
                   :index="countryIndex" :flag="true"
                   @index="(i) => changeCountry(i)"/>
-          <Select v-if="states && states.length > 0" :data="states" name="State" all="All states" :index="stateIndex"
+          <Select v-if="states && states?.length > 0" :data="states" name="State" all="All states" :index="stateIndex"
                   @index="(i) => changeState(i)"/>
-          <Select v-if="cities && cities.length > 1" :data="cities" name="City" all="All cities" :index="cityIndex"
+          <Select v-if="cities && cities?.length > 1" :data="cities" name="City" all="All cities" :index="cityIndex"
                   @index="(i) => changeCity(i)"/>
         </template>
         <template #end>
           <Select
-              v-if="lines && lines.length > 1" :data="lines" name="Lines" all="All lines" side="right"
+              v-if="lines && lines?.length > 1" :data="lines" name="Lines" all="All lines" side="right"
               :index="lineIndex"
               @index="(i) => changeLine(i)"
           />
@@ -46,7 +46,7 @@
         <Container v-if="!showMap && !pending">
           <template v-if="countryIndex !== -1" v-for="store in stores">
             <StoreItem :store="store"
-                       :class="store.cover_1x1?.data ? 'col-8 col-12-xl' : (stores.length <= 2) ? 'col-6 col-8-lg col-12-md' : 'col-4 col-6-xl col-12-md'"/>
+                       :class="store.cover_1x1?.data ? 'col-8 col-12-xl' : (stores?.length <= 2) ? 'col-6 col-8-lg col-12-md' : 'col-4 col-6-xl col-12-md'"/>
           </template>
           <template v-if="countryIndex === -1" v-for="(country, index) in countries">
             <a :href="localePath('/store-finder/'+country.slug)" v-on:click="(e) => changeCountry(index, e)"
@@ -194,7 +194,7 @@ const states = computed(() => {
       })
 
   // remove dublicates
-  if (_states.length > 0) {
+  if (_states?.length > 0) {
     _states = _states.map(c => c.state);
     _states = _states.filter(function(item, pos) {
       return _states.indexOf(item) == pos;
@@ -214,7 +214,7 @@ const cities = computed(() => {
 
   let _cities =  data.value?.data?.attributes?.city
       .filter(city => {
-        return city.store.length > 0
+        return city.store?.length > 0
       })
 
   if (stateIndex.value !== -1) {
@@ -237,7 +237,7 @@ const lines = computed(() => {
   getStores().forEach(store => {
     if (cityIndex.value !== -1 && store.city !== cities.value[cityIndex.value]?.value) return
 
-    if (store.lines.data.length > 0) {
+    if (store.lines.data?.length > 0) {
       store.lines.data.forEach(line => {
         const slug = line.attributes.slug;
         if (!keys.includes(slug)) {

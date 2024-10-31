@@ -71,13 +71,13 @@ function toggleFilters(state) {
 
 function emitFilters(e) {
   emits('filters', e)
-  count.value = e.map(d => d.values.length).reduce((partialSum, a) => partialSum + a, 0)
+  count.value = e.map(d => d.values?.length).reduce((partialSum, a) => partialSum + a, 0)
 }
 function checkFiltersHandler(f) {
   emits('checkFilters', f)
 }
 function calculateFiltersAmount(filters) {
-  count.value = filters.map(d => d.values.length).reduce((partialSum, a) => partialSum + a, 0)
+  count.value = filters.map(d => d.values?.length).reduce((partialSum, a) => partialSum + a, 0)
 }
 </script>
 
