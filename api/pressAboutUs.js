@@ -9,6 +9,7 @@ async function getPressAboutUs(lang) {
     pagination: {
       limit: -1
     }
+    sort: "createdAt:desc"
   ) {
     data {
       attributes {
