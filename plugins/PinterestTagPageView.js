@@ -5,7 +5,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
     const router = useRouter()
     router.afterEach((route) => {
-        if (process.client) {
+        if (process.client && process.env.PINTEREST_ID) {
             pintrk('track', 'pagevisit', {
                 event_id: 'eventId0001'
             });
