@@ -3,7 +3,7 @@ import graphql from '@rollup/plugin-graphql';
 
 export default defineNuxtConfig({
     ssr: true,
-    swr: true,
+    isr: true,
     css: [
         '@/assets/style/main.scss',
     ],
@@ -149,6 +149,9 @@ export default defineNuxtConfig({
         mode: 'init',
         // enables nuxt-delay-hydration in dev mode for testing  
         debug: process.env.NODE_ENV === 'development'
-      }  
+      },
+    experimental: {
+        buildCache: true
+    }
 })
 

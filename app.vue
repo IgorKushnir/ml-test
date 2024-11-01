@@ -14,8 +14,6 @@
 // ****  Nuxt SSR Optimizing Tips ****
 // https://vueschool.io/articles/vuejs-tutorials/nuxt-ssr-optimizing-tips/
 // ****
-const start = Date.now()
-console.log('start', start)
 
 import {useIsMobile} from "~/composables/states";
 
@@ -119,8 +117,6 @@ useHead({
   ],
 })
 
-console.log('beforeMount', Date.now() - start)
-
 onMounted(async () => {
   gtag('config', 'AW-16455473849'); // Google Ads - Addon to Gtag
 
@@ -164,9 +160,6 @@ function loadNextHook() {
 
   }, {passive: true});
 }
-
-console.log('end', Date.now() - start)
-
 </script>
 
 <style lang="scss">
