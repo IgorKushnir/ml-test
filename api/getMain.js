@@ -2,8 +2,6 @@ import content from './misc/content'
 import seo from './misc/seo'
 
 export default async function (lang) {
-  const start = Date.now();
-  console.log('start', start)
     const graphql = useStrapiGraphQL()
     const collection = 'main';
 
@@ -97,7 +95,5 @@ query Main{
     const { data, pending, refresh, error } = await useLazyAsyncData('data_'+collection, () => response, {
         transform: (d) => d?.data[collection]?.data,
     })
-    
-    console.log('duration', Date.now() - start)
     return { data, pending, refresh, error };
 }
