@@ -14,6 +14,7 @@
 // ****  Nuxt SSR Optimizing Tips ****
 // https://vueschool.io/articles/vuejs-tutorials/nuxt-ssr-optimizing-tips/
 // ****
+const start = Date.now()
 console.log('start', start)
 
 import {useIsMobile} from "~/composables/states";
@@ -34,7 +35,6 @@ import getInitialData from '~/api/getInitialData';
 import {useFiltersData, useTypesData, useMenuData, useTranslationsData} from "~/composables/states";
 
 // get Initial data (Menu, Lines, Types)
-const start = Date.now()
 let {data: initialData, error: initialError} = await getInitialData(locale.value);
 if (!initialError.value) {
   useMenuData().value = [initialData.value?.menu, initialData.value?.lines]
