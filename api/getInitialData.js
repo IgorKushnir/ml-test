@@ -2,6 +2,8 @@ import seo from './misc/seo'
 import locals from './misc/locals'
 
 export default async function (lang) {
+  const start = Date.now()
+console.log('getInitialData start', start)
     const graphql = useStrapiGraphQL()
 
     const menuAndLines = `
@@ -149,6 +151,7 @@ export default async function (lang) {
                 })
 
             // return [menu, lines, types, translations]
+            console.log('beforeMount', Date.now() - start)
             return {menu, lines, types, translations}
         },
     })
