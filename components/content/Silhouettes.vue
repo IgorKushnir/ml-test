@@ -7,8 +7,6 @@
       </div>
     </Container>
 
-
-
     <Container justify="justify-center m-b-80 m-b-56-md">
       <div class="col-8 col-10-lg col-12-md p-v-0" style="position: relative">
         <div ref="prev" class="prev hide-md">
@@ -23,7 +21,7 @@
           <div class="swiper-wrapper">
             <NuxtLink v-for="dress in [...data.silhouettes?.data]" :to="(locale === 'en' ? '/dress/silhouettes/' : '/pl/suknie/silhouette/') + dress.attributes.slug" :key="dress.attributes.slug" class="swiper-slide">
               <div class="new-ratio-1x1">
-                <nuxt-img class="silhouette" :src="`/img/silhouette/${dress.attributes.slug}.png`" :alt="dress.attributes.title"/>
+                <nuxt-img class="silhouette" :src="`/img/silhouette/${dress.attributes.slug}.png`" :alt="dress.attributes.title" loading="lazy"/>
               </div>
               <div class="nav-link m-v-16">{{ dress.attributes.title }}</div>
             </NuxtLink>

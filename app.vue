@@ -3,12 +3,9 @@
 <!--    <ZoomImage/>-->
     <div>
       <Header/>
-
       <NuxtPage />
-
-
     </div>
-    <Footer/>
+    <LazyFooter/>
   </div>
 </template>
 
@@ -17,10 +14,9 @@
 // ****  Nuxt SSR Optimizing Tips ****
 // https://vueschool.io/articles/vuejs-tutorials/nuxt-ssr-optimizing-tips/
 // ****
-
+console.log('start', start)
 
 import {useIsMobile} from "~/composables/states";
-
 
 const nuxtApp = useNuxtApp()
 const likeCounter = useFavCount()
@@ -32,14 +28,13 @@ watch(locale, () => {
   likeCounter.value = $getLikedProducts()?.length
 })
 
-
-
 import getAllFilters from '~/api/getAllFilters'
 import getInitialData from '~/api/getInitialData';
 
 import {useFiltersData, useTypesData, useMenuData, useTranslationsData} from "~/composables/states";
 
 // get Initial data (Menu, Lines, Types)
+const start = Date.now()
 let {data: initialData, error: initialError} = await getInitialData(locale.value);
 if (!initialError.value) {
   useMenuData().value = [initialData.value?.menu, initialData.value?.lines]
@@ -51,11 +46,6 @@ if (!initialError.value) {
 let {data, error} = await getAllFilters(locale.value);
 let allFilters = useFiltersData();
 if (!error.value) allFilters.value = data.value;
-
-
-
-
-
 
 useHead({
   title: 'Milla Nova',
@@ -112,7 +102,7 @@ useHead({
                 r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
                 a.appendChild(r);
                 })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');` : ''},
-    {async: true, src:`//cdn.cookie-script.com/s/${process.env.COOKIEYES_CODE}.js`},
+    {async: true, src: process.env.COOKIEYES_CODE ? `//cdn.cookie-script.com/s/${process.env.COOKIEYES_CODE}.js` : ''},
     // { async: true, src: "https://www.googletagmanager.com/gtag/js?id=AW-16455473849"},
     // {
     //   innerHTML: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-16455473849');`
@@ -129,10 +119,7 @@ useHead({
   ],
 })
 
-
-
-
-
+console.log('beforeMount', Date.now() - start)
 
 onMounted(async () => {
   gtag('config', 'AW-16455473849'); // Google Ads - Addon to Gtag
@@ -158,9 +145,6 @@ function reportWindowSize() {
   document.documentElement.style.setProperty('--vh', `${vh}px`);
 }
 
-
-
-
 function loadNextHook() {
   let currentPageHeight = ref(0);
   let allowLoadNext = true;
@@ -180,6 +164,8 @@ function loadNextHook() {
 
   }, {passive: true});
 }
+
+console.log('end', Date.now() - start)
 
 </script>
 
