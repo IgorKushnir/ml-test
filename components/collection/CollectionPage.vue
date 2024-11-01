@@ -60,8 +60,8 @@
                  v-if="dataCollection.show_promo && dataCollection.cover_4x3.data != null && filterSelected?.length === 0"
             >
               <div class="promo" v-if="dataCollection.show_promo">
-                <Image :path="dataCollection.cover_4x3" :alt="dataCollection.title"/>
-                <Image v-if="dataCollection.video.data != null" class="video" :path="dataCollection.video" :alt="dataCollection.title"/>
+                <Image v-if="dataCollection.video.data !== null" class="video" :path="dataCollection.video" :alt="dataCollection.title" :poster="dataCollection?.cover_3x4" />
+                <Image v-else :path="dataCollection.cover_4x3" :alt="dataCollection.title"/>
               </div>
             </div>
           </template>

@@ -12,12 +12,13 @@
         class="img-component base"
         loading="lazy"
     />
-    <nuxt-img :src="placeholder" :alt="alt" class="img-component placeholder" />
-
+    
     <video ref="mainVideo" v-if="path.data?.attributes?.mime?.startsWith('video/')" muted autoplay playsinline :poster="poster" loop tabindex="-1">
       <source ref="videoSource" :type="path.data.attributes.mime" aria-hidden="true">
-     </video>
-
+    </video>
+    
+    <nuxt-img :src="placeholder" :alt="alt" class="img-component placeholder" />
+    
   </component>
 </template>
 
