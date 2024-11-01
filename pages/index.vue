@@ -4,9 +4,9 @@
     <transition name="fade">
       <div class="content" v-if="!pending && data != null">
         <ContentBanner :data="data.attributes.banner" type="main"/>
-
-        <!-- <Content :data="data.attributes.content"/> -->
-
+        <template v-for="content in data.attributes.content">
+          <Content :data="content"/>
+        </template>
       </div>
     </transition>
     <PageNotFound :show="!pending && data === null"/>
@@ -22,10 +22,8 @@ import getMain from '~/api/getMain'
 const { locale } = useI18n()
 
 let { data, pending, refresh, error } = await getMain(locale.value)
-
 </script>
 
 <style scoped>
-
 
 </style>

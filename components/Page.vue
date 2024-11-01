@@ -6,7 +6,9 @@
 
         <ContentBanner :data="data.banner" :title="data.title" :text="data.text" />
 
-        <Content :data="data.content"/>
+        <template v-for="content in data.content">
+          <Content :data="content"/>
+        </template>
 
       </div>
     </transition>

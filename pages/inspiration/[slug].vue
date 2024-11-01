@@ -29,7 +29,9 @@
           </div>
         </Container>
 
-        <Content :data="data.attributes?.content"/>
+        <template v-for="content in data.attributes?.content">
+          <Content :data="content"/>
+        </template>
 
       </div>
     </transition>

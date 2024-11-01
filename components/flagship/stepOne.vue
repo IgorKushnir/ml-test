@@ -28,7 +28,11 @@
       </div>
 
     </div>
-    <Content v-if="content" :data="content"/>
+    <template v-if="content">
+      <template v-for="data in content">
+        <Content :data="data"/>
+      </template>
+    </template>
 
   </Container>
 </template>

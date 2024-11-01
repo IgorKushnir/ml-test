@@ -1,77 +1,66 @@
 <template>
-
-  <div v-for="(content, index) in _data"
-       class="container"
-             :class="content.size ??  'm-v-80 m-v-40-xl m-v-32-md'"
-  >
+  <div v-if="data" class="container" :class="data?.size ??  'm-v-80 m-v-40-xl m-v-32-md'">
     <div class="row justify-center" >
-      <div v-if="content['__typename'] === 'ComponentContentText'" class="text-block p-t-0 p-b-0"
-           :class="layout(content['text_layout'])">
-        <LazyContentText :data="content.text"/>
+      <div v-if="data['__typename'] === 'ComponentContentText'" class="text-block p-t-0 p-b-0"
+           :class="layout(data['text_layout'])">
+        <LazyContentText :data="data.text"/>
       </div>
 
-      <template v-if="content['__typename'] === 'ComponentContentImageVideoGrig'">
-        <LazyContentMediaGrid :data="content.media.data" :classes="layout(content['grid_layout'])  + ' p-v-0'"
-                          :columns="content.columns"
+      <template v-if="data['__typename'] === 'ComponentContentImageVideoGrig'">
+        <LazyContentMediaGrid :data="data.media.data" :classes="layout(data['grid_layout'])  + ' p-v-0'"
+                          :columns="data.columns"
         />
       </template>
 
-
-      <div v-if="content['__typename'] === 'ComponentContentFact'" :class="layout(content['fact_layout'])" class="p-v-0">
-        <div :class="content.ratio === 'vertical' ? 'new-ratio-3x4' : 'new-ratio-16x9'">
-          <LazyFact :data="content"/>
+      <div v-if="data['__typename'] === 'ComponentContentFact'" :class="layout(data['fact_layout'])" class="p-v-0">
+        <div :class="data.ratio === 'vertical' ? 'new-ratio-3x4' : 'new-ratio-16x9'">
+          <LazyFact :data="data"/>
         </div>
       </div>
 
-
-      <div v-if="content['__typename'] === 'ComponentContentMediaBanner'"
-           :class="content.media_banner_layout === 'full' ? 'anti-container p-h-0' : layout(content.media_banner_layout)"
+      <div v-if="data['__typename'] === 'ComponentContentMediaBanner'"
+           :class="data.media_banner_layout === 'full' ? 'anti-container p-h-0' : layout(data.media_banner_layout)"
            class="p-v-0">
-        <LazyContentBanner :data="content.banner" type="content"/>
+        <LazyContentBanner :data="data.banner" type="content"/>
       </div>
 
-
-
-      <div v-if="content['__typename'] === 'ComponentContentBlocks'" :class="layout('normal')" class="p-v-0">
-        <LazyContentBlocks :data="content.blocks" :type="content.type ?? 'chess'"/>
+      <div v-if="data['__typename'] === 'ComponentContentBlocks'" :class="layout('normal')" class="p-v-0">
+        <LazyContentBlocks :data="data.blocks" :type="data.type ?? 'chess'"/>
       </div>
 
-      <div v-if="content['__typename'] === 'ComponentContentCarusel'" class="anti-container">
+      <div v-if="data['__typename'] === 'ComponentContentCarusel'" class="anti-container">
         <LazyCarusel
-            :data="caruselData(content.carusel)"
-            :column="content.column === 'six' ? 6 : 4"
-            :col-class="layout(content['carusel_layout'])"
-            :layout="content['carusel_layout']"
-            :nav-compact="!(content['carusel_layout'] === 'wide')"
+            :data="caruselData(data.carusel)"
+            :column="data.column === 'six' ? 6 : 4"
+            :col-class="layout(data['carusel_layout'])"
+            :layout="data['carusel_layout']"
+            :nav-compact="!(data['carusel_layout'] === 'wide')"
         />
       </div>
 
-      <template v-if="content['__typename'] === 'ComponentContentPoster'">
+      <template v-if="data['__typename'] === 'ComponentContentPoster'">
         <div class="row gap-S">
-          <LazyContentPosters :data="content.poster"/>
+          <LazyContentPosters :data="data.poster"/>
         </div>
       </template>
 
-
-      <template v-if="content['__typename'] === 'ComponentContentDivider'" >
-        <div v-if="content.line" class="brake-line p-v-0"></div>
+      <template v-if="data['__typename'] === 'ComponentContentDivider'" >
+        <div v-if="data.line" class="brake-line p-v-0"></div>
       </template>
 
-      <div v-if="content['__typename'] === 'ComponentContentSilhouettes'" class="anti-container p-h-0 p-v-0">
-        <ContentSilhouettes :data="content"/>
+      <div v-if="data['__typename'] === 'ComponentContentSilhouettes'" class="anti-container p-h-0 p-v-0">
+        <ContentSilhouettes :data="data"/>
       </div>
 
-
-      <div v-if="content['__typename'] === 'ComponentContentEmbedVideo'" :class="layout(content.layout ?? 'normal')" class="p-v-0">
-        <LazyContentEmbed :data="content.embed"/>
+      <div v-if="data['__typename'] === 'ComponentContentEmbedVideo'" :class="layout(data.layout ?? 'normal')" class="p-v-0">
+        <LazyContentEmbed :data="data.embed"/>
       </div>
 
-      <div v-if="content['__typename'] === 'ComponentContentLatestContent'"  class="col-12 p-v-0">
+      <div v-if="data['__typename'] === 'ComponentContentLatestContent'"  class="col-12 p-v-0">
         <div class="row gap-S justify-center">
-          <LazyContentLatestContent :data="content"/>
+          <LazyContentLatestContent :data="data"/>
         </div>
       </div>
-
 
     </div>
   </div>
@@ -81,7 +70,7 @@
 
 const props = defineProps({
   data: {
-    type: Array,
+    type: Object,
     required: true,
   }
 })
