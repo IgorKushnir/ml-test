@@ -60,7 +60,7 @@ export default fromNodeMiddleware(async (req, res, next) => {
 
     // Redirect from old (static) list
     let oldRedirectsData = oldRedirects()?.data
-    oldRedirectsData.forEach(item => {
+    oldRedirectsData?.forEach(item => {
         const from = item.attributes.from;
         const to = item.attributes.to;
         const condition = from && to;
@@ -75,7 +75,7 @@ export default fromNodeMiddleware(async (req, res, next) => {
     if (response.status === 200) {
         const data = response?.data?.data;
         // console.log(data);
-        data.forEach(item => {
+        data?.forEach(item => {
             const from = item.attributes.from;
             const to = item.attributes.to;
             const condition = from && to;

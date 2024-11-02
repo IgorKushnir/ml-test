@@ -192,8 +192,8 @@ const bookingDatesWithSpecials = computed(() => {
   if (!props.bookingDates) return
   const bd = props.bookingDates
   if (props.specials?.length > 0) {
-    Object.keys(bd).forEach((month) => {
-      bd[month].forEach((dayData, dayIndex) => {
+    Object.keys(bd)?.forEach((month) => {
+      bd[month]?.forEach((dayData, dayIndex) => {
         // console.log(bd[month][dayIndex]);
         const sp = props.specials.map(special => {
           return isDateInRange(dayData, special)

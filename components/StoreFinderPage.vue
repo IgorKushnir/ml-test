@@ -123,7 +123,7 @@ onMounted(async () => {
 function getStores() {
   let stores = []
   data.value?.data?.attributes.city.forEach(city => {
-    city.store.forEach(store => {
+    city.store?.forEach(store => {
       stores.push({...store,
         country_code: data.value.data.attributes.country_code,
         city: city.name,
@@ -192,11 +192,11 @@ const lines = computed(() => {
 
   let l = [];
   let keys = [];
-  getStores().forEach(store => {
+  getStores()?.forEach(store => {
     if (cityIndex.value !== -1 && store.city !== cities.value[cityIndex.value]?.value) return
 
     if (store.lines.data?.length > 0) {
-      store.lines.data.forEach(line => {
+      store.lines.data?.forEach(line => {
         const slug = line.attributes.slug;
         if (!keys.includes(slug)) {
           l.push({

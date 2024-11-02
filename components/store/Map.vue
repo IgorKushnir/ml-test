@@ -71,7 +71,7 @@ function setMarkers() {
     infowindows.push(infowindow)
 
     marker.addListener("click", () => {
-      infowindows.forEach(infoW => {
+      infowindows?.forEach(infoW => {
         infoW.close()
       })
       storeIndex.value = index;
@@ -88,7 +88,7 @@ function setMarkers() {
   })
 
   let bounds = new google.maps.LatLngBounds();
-  locations.forEach(l => {
+  locations?.forEach(l => {
     bounds.extend(l);
   })
 
@@ -296,7 +296,7 @@ onMounted(async () => {
   });
 
   google.maps.event.addListener(myMap, 'zoom_changed', function() {
-    infowindows.forEach(infoW => {
+    infowindows?.forEach(infoW => {
       infoW.close()
     })
   })

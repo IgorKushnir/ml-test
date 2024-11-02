@@ -48,7 +48,7 @@ export default defineNuxtPlugin(() => {
 
             divideSubMenu: (subMenu) => {
                 let splitIndexes = [];
-                subMenu.forEach((e, index) => {
+                subMenu?.forEach((e, index) => {
                     if (e.url === '#') {
                         splitIndexes.push(index - 1)
                     }

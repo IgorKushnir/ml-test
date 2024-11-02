@@ -2,8 +2,6 @@ import seo from './misc/seo'
 import locals from './misc/locals'
 
 export default async function (lang) {
-  const start = Date.now()
-console.log('getInitialData start', start)
     const graphql = useStrapiGraphQL()
 
     const menuAndLines = `
@@ -127,7 +125,6 @@ console.log('getInitialData start', start)
     `
     const response = graphql(`query Initial{ ${ [ menuAndLines, types, translations  ].join('') } }`);
 
-
     return await useAsyncData('data_initial', () => response, {
         transform: (d) => {
             const menu = d?.data?.menu?.data.attributes;
@@ -151,7 +148,6 @@ console.log('getInitialData start', start)
                 })
 
             // return [menu, lines, types, translations]
-            console.log('beforeMount', Date.now() - start)
             return {menu, lines, types, translations}
         },
     })

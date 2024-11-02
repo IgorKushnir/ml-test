@@ -87,7 +87,7 @@ const sent = ref(false)
 
 function generateData() {
   sendData.value = {}
-  item.value.form.forEach(e => {
+  item.value.form?.forEach(e => {
     sendData.value[e.title] =  {
       value: '',
       type: e.type,
@@ -117,7 +117,7 @@ function checkField(key, data) {
 
 function send() {
   const keys = Object.keys(sendData.value);
-  keys.forEach(key => {
+  keys?.forEach(key => {
     checkField(key, sendData.value[key])
   })
   const error = keys.map(key => sendData.value[key].error !== null).includes(true)

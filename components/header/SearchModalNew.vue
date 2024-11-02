@@ -280,7 +280,7 @@ async function getResult() {
 
     const _tags = [];
 
-    [color, fabric, line, decoration, backneckline, neckline, silhouette, style, other].forEach(e => {
+    [color, fabric, line, decoration, backneckline, neckline, silhouette, style, other]?.forEach(e => {
       if (e?.hits?.length) {
         _tags.push(...e.hits.map(t => {
           return {

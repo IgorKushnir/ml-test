@@ -89,8 +89,8 @@ const props = defineProps({
 // Generate list of collections on row
 const getCoversList = () => {
   let collections = [];
-  props.lines.forEach((line) => {
-    line['attributes'].collections.data.forEach(collection => {
+  props.lines?.forEach((line) => {
+    line['attributes'].collections.data?.forEach(collection => {
       return collections.push(collection.attributes)
     });
   })

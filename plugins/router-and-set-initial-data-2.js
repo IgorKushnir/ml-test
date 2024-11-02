@@ -10,7 +10,7 @@ const Discover = import('~/components/Discover.vue').then(r => {
 
 async function setInitialData(lang) {
     // get Initial data (Menu, Lines, Types)
-    let {data: initialData, error: initialError} = await getInitialData(lang);
+    // let {data: initialData, error: initialError} = await getInitialData(lang);
     // if (!initialError.value) {
     //     useMenuData().value = [initialData.value[0], initialData.value[1]]
     //     useTypesData().value = initialData.value[2];
@@ -18,15 +18,15 @@ async function setInitialData(lang) {
     //
     // }
 
-    return initialData.value
+    // return initialData.value
 }
 
 async function setFilters(lang) {
     // Get all filters
-    let {data, error} = await getAllFilters(lang);
+    // let {data, error} = await getAllFilters(lang);
     // let allFilters = useFiltersData();
     // if (!error.value) allFilters.value = data.value;
-    return data.value
+    // return data.value
 }
 
 export default defineNuxtPlugin(async (nuxtApp) => {
@@ -39,16 +39,16 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     const types = initialData?.types
 
 
-    const {data, error} = await getDressRedirects(locale.value)
-    if (error.value) return
+    // const {data, error} = await getDressRedirects(locale.value)
+    // if (error.value) return
     // console.log(data.value);
     // Adding default product redirects
-    types.forEach(productType => {
+    types?.forEach(productType => {
         const type = productType.slug;
 
-        filters.forEach(filterProduct => {
+        filters?.forEach(filterProduct => {
             const filter = filterProduct.uid
-            filterProduct?.data.forEach(filterItem => {
+            filterProduct?.data?.forEach(filterItem => {
                 const filterValue = filterItem.attributes.slug
                 let from = '/' + type + '?' + filter + '=' + filterValue
                 let to = '/' + type + '/' + filter + '/' + filterValue
@@ -78,7 +78,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     let routesFrom = []
 
 
-    data.value.forEach(newRoute => {
+    data.value?.forEach(newRoute => {
         routesFrom.push(newRoute.from)
 
         // Replace to poland translation slug
@@ -136,7 +136,7 @@ const polandSlugTranslations = {
 }
 function replacePathToPlLang(path) {
     let to = path
-    Object.keys(polandSlugTranslations).forEach(key => {
+    Object.keys(polandSlugTranslations)?.forEach(key => {
         to = to.replaceAll(key, polandSlugTranslations[key])
     })
     return to;
