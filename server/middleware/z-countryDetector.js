@@ -33,6 +33,7 @@ export default defineEventHandler(async (event) => {
         setCookie(event, 'country', country_code)
 
     } else {
+        if(!apiKey) {return}
         const url = "https://ipgeolocation.abstractapi.com/v1/?api_key="+apiKey+"&ip_address="+ip
         // const url = "https://ipgeolocation.abstractapi.com/v1/?api_key=a673704aa12d440fbd1a87c392290a47&ip_address=92.184.105.98"
 
