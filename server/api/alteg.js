@@ -53,15 +53,15 @@ export default  defineEventHandler(async (event) => {
             if (resAll.length < 1) return {success: false}
 
             let allData = []
-            resAll.forEach(d => {
-                d?.data.forEach(dd => dd.staff_id = d.staff_id)
+            resAll?.forEach(d => {
+                d?.data?.forEach(dd => dd.staff_id = d.staff_id)
                 allData.push(...d?.data)
             })
 
             // Remove dublicated hours
             const ids = [];
             let _allData = [];
-            allData.forEach(item => {
+            allData?.forEach(item => {
                 // // all slots
                 // _allData.push(item)
 

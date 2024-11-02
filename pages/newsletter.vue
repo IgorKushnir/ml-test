@@ -117,7 +117,7 @@ onMounted(() => {
   }
 })
 function checkQueries() {
-  query.forEach(q => {
+  query?.forEach(q => {
     const index = data.value.type.findIndex(e => (e.title === q) || (e.title.toLowerCase() === q))
     if(index !== -1) {
       data.value.type[index].value = true
@@ -148,7 +148,7 @@ function subscribe() {
   // Validate options
   let options = []
   if (data.value.type && data.value.type.length > 0) {
-    data.value.type.forEach(t => {
+    data.value.type?.forEach(t => {
       if (t.value) {
         options.push(t.title)
       }

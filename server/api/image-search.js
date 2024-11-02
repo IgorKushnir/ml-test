@@ -145,7 +145,7 @@ async function managingImagesFromAdminPayload(index, body, mode) {
     const promises = []
 
     if (isPublished && containsImages && isSlug && isType) {
-        images.forEach(image => {
+        images?.forEach(image => {
             const imageUrl = image.formats?.medium?.url
             if (imageUrl) {
                 promises.push(
@@ -240,7 +240,7 @@ async function getAllProducts(locale = 'en', limit = -1) {
                 images.push({id: d.attributes.cover_3x4.data.id, formats: d.attributes?.cover_3x4?.data?.attributes?.formats})
             }
             if (d.attributes?.gallery && d.attributes?.gallery?.data?.length > 0) {
-                d.attributes?.gallery?.data.forEach(im => {
+                d.attributes?.gallery?.data?.forEach(im => {
                     if (im.attributes?.formats?.medium) {
                         images.push({id: im.id, formats: im.attributes?.formats})
                     }

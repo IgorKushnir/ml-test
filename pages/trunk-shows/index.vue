@@ -63,7 +63,7 @@ const getMonthSection = computed(() => {
     return [date.getUTCMonth(), date.getUTCFullYear()]
   })
   let prev;
-  d.forEach((e, i) => {
+  d?.forEach((e, i) => {
     if (e[0] !== prev) {
       prev = e[0];
       d[i] = $getMonths[e[0]][0] + ' ' + e[1]

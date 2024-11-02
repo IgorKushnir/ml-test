@@ -13,7 +13,7 @@
           image-path="/img/decline.svg"
       />
     </div>
-    <Footer/>
+    <LazyFooter/>
   </div>
 </template>
 
@@ -39,20 +39,20 @@ const { locale } = useI18n()
 // get Initial data (Menu, Lines, Types)
 try {
   // console.log('hello');
-  let {data: initialData, error: initialError} = await getInitialData(locale.value);
-  if (!initialError.value) {
-    useMenuData().value = [initialData.value?.menu, initialData.value?.lines]
-    useTypesData().value = initialData.value?.types;
-    useTranslationsData().value = initialData.value?.translations;
-  }
+  // let {data: initialData, error: initialError} = await getInitialData(locale.value);
+  // if (!initialError.value) {
+  //   useMenuData().value = [initialData.value?.menu, initialData.value?.lines]
+  //   useTypesData().value = initialData.value?.types;
+  //   useTranslationsData().value = initialData.value?.translations;
+  // }
 
   const translations = useTranslationsData();
 
 
 // Get all filters
   let allFilters = useFiltersData();
-  let {data, pending, refresh, error: dError} = await getAllFilters('en');
-  if (!dError.value) allFilters.value = data.value;
+  // let {data, pending, refresh, error: dError} = await getAllFilters('en');
+  // if (!dError.value) allFilters.value = data.value;
 } catch (e) {
   console.error(e);
 }

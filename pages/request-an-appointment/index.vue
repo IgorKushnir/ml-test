@@ -444,7 +444,7 @@ function send() {
   // return
   const keys = Object.keys(sendData.value);
   let firstError;
-  keys.forEach((key) => {
+  keys?.forEach((key) => {
     let isError = checkField(key)
     if (!isError && !firstError) {
       firstError = key;
@@ -463,7 +463,7 @@ function send() {
     loading.value = true
 
     let finalData = {};
-    keys.forEach((key) => {
+    keys?.forEach((key) => {
       finalData[key] = sendData.value[key].value ?? null
     })
 

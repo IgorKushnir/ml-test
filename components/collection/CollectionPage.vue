@@ -120,8 +120,8 @@ const initialFilters = ref([]);
 
   initialFilters.value = parseQuery();
 
-  initialFilters.value.forEach(item => {
-    item.values.forEach(it => {
+  initialFilters.value?.forEach(item => {
+    item.values?.forEach(it => {
       filterSelected.value.push({
         key: item.key,
         value: it
@@ -171,7 +171,7 @@ async function filterData(e, page) {
 
   // // Get selected filters in one array
   let selected = []
-  filters.value.forEach(f => f.values.forEach(item => {
+  filters.value?.forEach(f => f.values?.forEach(item => {
     selected.push({
       key: f.key,
       value: item
@@ -197,7 +197,7 @@ async function filterData(e, page) {
 async function checkFiltersHandler(e) {
   let f = [...filters.value];
   if (e !== null) {
-    e.forEach(eF => {
+    e?.forEach(eF => {
       const index = f.findIndex(fF => eF.key === fF.key)
       if (index !== -1) {
         f[index] = eF
@@ -216,7 +216,7 @@ async function checkFiltersHandler(e) {
 function setQuery(filters) {
   const query = {}
   let allowQuery = Object.keys(initialAvailableFilters.filters ?? {});
-  filters.forEach(q => {
+  filters?.forEach(q => {
     if (allowQuery.includes(q.key)) { // Filter query by list of allows
       query[q.key] = q.values.join(',');
       if (query[q.key] === '') {
@@ -269,7 +269,7 @@ function cutOneFilter(index) {
 
   // selected filters
   const _filters = [];
-  filterSelected.value.forEach(filter => {
+  filterSelected.value?.forEach(filter => {
     const index = _filters.findIndex(i => i.key === filter.key)
     if (index === -1) {
       _filters.push({key: filter.key, values: [filter.value]});

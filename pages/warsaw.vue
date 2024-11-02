@@ -313,8 +313,8 @@ async function getServices() {
 
     bookingServices.value = d?.data.filter(services => services.is_online);
     const staff = []
-    bookingServices.value.forEach(service => {
-      service.staff.forEach(st => staff.push(st.id))
+    bookingServices.value?.forEach(service => {
+      service.staff?.forEach(st => staff.push(st.id))
     })
 
     // leave unique staff id
@@ -351,7 +351,7 @@ async function getDaysAndHours() {
     if (!d.success) throw d.meta
 
     let bb = {}
-     d?.data.booking_dates.forEach(d => {
+     d?.data.booking_dates?.forEach(d => {
       const _d = new Date(d)
       const year = _d.getFullYear()
        const month = _d.getMonth()
@@ -411,7 +411,7 @@ async function postRecord() {
 
   const fields = Object.keys(userData.value)
   const errors = []
-  fields.forEach(field => {
+  fields?.forEach(field => {
     if (userData.value[field].required) {
       if (field === 'consent') {
         userData.value[field].value === false ? (userData.value[field].error = true, errors.push(field)) : userData.value[field].error = false
