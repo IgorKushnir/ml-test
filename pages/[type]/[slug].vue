@@ -49,12 +49,12 @@
             </div>
 
 
-            <div v-if="data.colors.data.length > 0" class="info m-b-32  m-b-16-md">
+            <div v-if="data.colors.data?.length > 0" class="info m-b-32  m-b-16-md">
               <div>
                 <div class="subheader small">{{ $t('color') }}</div>
                 <div class="p-small">
                   <template v-for="(color, index) in data.colors.data">
-                    <NuxtLink :to="localePath('/'+(data?.type?.data?.attributes?.slug ?? 'product')+'/'+(locale === 'en' ? 'colors' : 'kolor')+'/'+color.attributes.slug)" class="p-small link">{{ color.attributes.title }}</NuxtLink><span v-if="index+1 < data.colors.data.length">, </span>
+                    <NuxtLink :to="localePath('/'+(data?.type?.data?.attributes?.slug ?? 'product')+'/'+(locale === 'en' ? 'colors' : 'kolor')+'/'+color.attributes.slug)" class="p-small link">{{ color.attributes.title }}</NuxtLink><span v-if="index+1 < data.colors.data?.length">, </span>
                   </template>
                 </div>
               </div>
@@ -69,12 +69,12 @@
               </div>
             </div>
 
-            <div v-if="data.fabrics.data.length > 0" class="info m-b-32  m-b-16-md">
+            <div v-if="data.fabrics.data?.length > 0" class="info m-b-32  m-b-16-md">
               <div>
                 <div class="subheader small">{{ $t('fabric') }}</div>
                 <div class="p-small">
                   <template v-for="(fabric, index) in data.fabrics.data">
-                    <NuxtLink :to="localePath('/'+(data?.type?.data?.attributes?.slug ?? 'product')+'/'+(locale === 'en' ? 'fabrics' : 'tkanina')+'/'+fabric.attributes.slug)" class="p-small link">{{ fabric.attributes.title }}</NuxtLink><span v-if="index+1 < data.fabrics.data.length">, </span>
+                    <NuxtLink :to="localePath('/'+(data?.type?.data?.attributes?.slug ?? 'product')+'/'+(locale === 'en' ? 'fabrics' : 'tkanina')+'/'+fabric.attributes.slug)" class="p-small link">{{ fabric.attributes.title }}</NuxtLink><span v-if="index+1 < data.fabrics.data?.length">, </span>
                   </template>
                 </div>
               </div>
@@ -82,7 +82,7 @@
 
 
 
-            <div v-if="data.properties.length > 0" class="info extra">
+            <div v-if="data.properties?.length > 0" class="info extra">
               <div v-for="property in data.properties" class="m-b-32 m-b-16-md">
                 <div class="subheader small">{{ property.title }}</div>
                 <div v-if="property.level" class="p-small dark-blue m-b-4 starts">
@@ -95,7 +95,7 @@
               </div>
             </div>
 
-            <div v-if="data?.trunk_shows?.data.length > 0" class="info extra">
+            <div v-if="data?.trunk_shows?.data?.length > 0" class="info extra">
               <div class="m-b-32 m-b-16-md">
                 <div class="subheader small">{{$t('trunk_shows')}}</div>
                 <div v-for="show in data?.trunk_shows?.data" class="trunk-show-preview-container m-b-4">
@@ -146,7 +146,7 @@
         <h2 v-if="discontinued" class="m-t-0 m-b-40 m-b-24-md">{{ $t('find_alternatives') }}</h2>
       </Carusel>
 
-      <Carusel v-if="data.extra !== null && data.extra.also.length > 0 && !discontinued" :data="data.extra?.also"  class="m-v-80">
+      <Carusel v-if="data.extra !== null && data.extra.also?.length > 0 && !discontinued" :data="data.extra?.also"  class="m-v-80">
         <h2 class="m-t-0 m-b-40 m-b-24-md">{{ $t('you_may_also_like') }}</h2>
       </Carusel>
 

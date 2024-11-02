@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
 
     // if (!ip) return
 
-    if (!isIPv4(ip)) {
+    if (!!ip && !isIPv4(ip)) {
         const country_code = null
 
         event.context.country = country_code
@@ -56,7 +56,4 @@ export default defineEventHandler(async (event) => {
             setCookie(event, 'country', null)
         }
     }
-
-
-
 })

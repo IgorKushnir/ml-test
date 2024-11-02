@@ -9,9 +9,9 @@
               empty-color="#D7DBDD"
               border-width="2"
               border-bg-width="1"
-              :percent="100 / (data.questions.length + 1) * (index + 1)"
+              :percent="100 / (data.questions?.length + 1) * (index + 1)"
           />
-          <span>{{ index + 1 + '/' + data.questions.length }}</span>
+          <span>{{ index + 1 + '/' + data.questions?.length }}</span>
         </div>
         <!--        <span class="counter"></span>-->
       </div>
@@ -116,14 +116,14 @@ function isOptionSelected(question) {
   const options = question.option_photo ?? question.option_text;
   const lengthOfTrue = options.filter(option => option.value)
 
-  return lengthOfTrue.length > 0
+  return lengthOfTrue?.length > 0
 }
 
 function continueHandle(question) {
   // Check if at least one option selected
   if (!isOptionSelected(question)) return;
 
-  if (index.value === props?.data.questions.length - 1) {
+  if (index.value === props?.data.questions?.length - 1) {
     index.value = 0;
     return
   }

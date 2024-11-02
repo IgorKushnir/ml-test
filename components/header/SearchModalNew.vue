@@ -19,7 +19,7 @@
                         <Spinner class="loader" v-if="pending"/>
                       </transition>
                       <!--                    <transition name="fade" mode="in-out" >-->
-                      <div v-if="search.length === 0 && !fileAdded" v-on:click="() => inputUpload.click()">
+                      <div v-if="search?.length === 0 && !fileAdded" v-on:click="() => inputUpload.click()">
                         <span class="gray">{{ $t('or') }}</span>
                         <strong class="p-small m-l-4"
                                 style="cursor: pointer">{{ $t('upload_image') }}</strong>
@@ -27,7 +27,7 @@
                       </div>
                       <!--                    </transition>-->
                       <!--                    <transition name="fade" mode="out-in" >-->
-                      <strong v-if="search.length > 0" v-on:click="search = ''" class="p-small m-l-16"
+                      <strong v-if="search?.length > 0" v-on:click="search = ''" class="p-small m-l-16"
                               style="cursor: pointer">{{ $t('search_clear') }}</strong>
                       <!--                    </transition>-->
                     </div>
@@ -265,7 +265,7 @@ async function settings() {
 async function getResult() {
   pending.value = true;
   errorUrl.value = false
-  if (search.value.length === 0) {
+  if (search.value?.length === 0) {
     result.value = [];
     tags.value = [];
     collections.value = [];
@@ -327,7 +327,7 @@ function highlight(text, search) {
   var index = innerHTML.toLowerCase().indexOf(search.toLowerCase());
 
   if (index >= 0) {
-    innerHTML = innerHTML.substring(0, index) + "<strong>" + innerHTML.substring(index, index + search.length) + "</strong>" + innerHTML.substring(index + search.length);
+    innerHTML = innerHTML.substring(0, index) + "<strong>" + innerHTML.substring(index, index + search?.length) + "</strong>" + innerHTML.substring(index + search?.length);
     return innerHTML;
   }
   return text;

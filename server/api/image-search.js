@@ -52,7 +52,7 @@ export default  defineEventHandler(async (event) => {
                 // console.log(im);
                 try {
                     await managingImagesFromAdminPayload(index, product, mode)
-                    console.log(i,'/', allProductsEn.length, 'Updated product id: '+product.id)
+                    console.log(i,'/', allProductsEn?.length, 'Updated product id: '+product.id)
                 } catch (e) {
                     console.error('Not: '+product.id)
                 }
@@ -140,7 +140,7 @@ async function managingImagesFromAdminPayload(index, body, mode) {
     const isPublished = body.publishedAt != null;
     const isSlug = body.slug != null;
     const isType = body.type != null;
-    const containsImages = images.length > 0;
+    const containsImages = images?.length > 0;
 
     const promises = []
 
@@ -166,7 +166,7 @@ async function managingImagesFromAdminPayload(index, body, mode) {
         idsListToRemove = idsListToRemove.vectors.map(v => v.id)
 
         // Delete all old
-        if (idsListToRemove.length > 0) await index.deleteMany([...idsListToRemove]);
+        if (idsListToRemove?.length > 0) await index.deleteMany([...idsListToRemove]);
         console.log('Deleted: ', idsListToRemove);
 
 
@@ -209,8 +209,8 @@ async function managingImagesFromAdminPayload(index, body, mode) {
         })
 
 
-        if (dataToUpsert.length > 0) await index.upsert(dataToUpsert)
-        console.log(`Upsert ${dataToUpsert.length} items`);
+        if (dataToUpsert?.length > 0) await index.upsert(dataToUpsert)
+        console.log(`Upsert ${dataToUpsert?.length} items`);
 
 
     } catch (e) {

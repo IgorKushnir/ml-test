@@ -321,7 +321,7 @@ async function getServices() {
     bookingStaff.value = staff.filter(function(item, pos) {
       return staff.indexOf(item) == pos;
     })
-    if (!bookingStaff.value || bookingStaff.value.length === 0) {
+    if (!bookingStaff.value || bookingStaff.value?.length === 0) {
       throw 'staff ids not found'
     }
 
@@ -423,7 +423,7 @@ async function postRecord() {
   })
   // console.log(fields, errors);
 
-  if (errors.length > 0) {
+  if (errors?.length > 0) {
     const yOffset = -40;
     const element = document.getElementById(errors[0]);
     const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
@@ -487,7 +487,7 @@ function _getDaysInMonth(month, year) {
 
 
 watch(() => userData.value.phone.value, (phone) => {
-  if (phone.length === 0) phone = '+'
+  if (phone?.length === 0) phone = '+'
   if (phone[0] !== '+') phone = '+'.concat(phone.slice(1))
 
   phone = phone.replace(/[^+0-9]/g, "")

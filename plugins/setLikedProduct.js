@@ -36,7 +36,7 @@ export default defineNuxtPlugin((nuxt) => {
 
                     // Set counter
                     const likeCounter = useFavCount()
-                    likeCounter.value = jsonStore.length
+                    likeCounter.value = jsonStore?.length
                 }
 
 

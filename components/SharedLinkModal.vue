@@ -11,7 +11,7 @@
           <div class="icon-close-24"/>
         </div>
         <div v-if="liked && liked?.length > 0" class="images">
-          <div v-for="img in liked" class="img" :class="liked.length > 9 ? 'small' : ''">
+          <div v-for="img in liked" class="img" :class="liked?.length > 9 ? 'small' : ''">
             <Image :path="img.attributes.cover_3x4" size="thumbnail" />
           </div>
         </div>

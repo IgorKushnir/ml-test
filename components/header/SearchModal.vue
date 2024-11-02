@@ -18,7 +18,7 @@
                       <Spinner v-if="pending"/>
                     </transition>
                     <transition name="fade">
-                      <strong v-if="search.length > 0" v-on:click="search = ''" class="p-small m-l-16"
+                      <strong v-if="search?.length > 0" v-on:click="search = ''" class="p-small m-l-16"
                               style="cursor: pointer">{{ $t('search_clear') }}</strong>
                     </transition>
                   </div>
@@ -118,7 +118,7 @@ async function settings() {
 
 async function getResult() {
   pending.value = true;
-  if (search.value.length === 0) {
+  if (search.value?.length === 0) {
     result.value = [];
   } else {
     // const data = await $fetch(`indexes/product/search`, {
@@ -173,7 +173,7 @@ function highlight(text, search) {
   var index = innerHTML.toLowerCase().indexOf(search.toLowerCase());
 
   if (index >= 0) {
-    innerHTML = innerHTML.substring(0, index) + "<strong>" + innerHTML.substring(index, index + search.length) + "</strong>" + innerHTML.substring(index + search.length);
+    innerHTML = innerHTML.substring(0, index) + "<strong>" + innerHTML.substring(index, index + search?.length) + "</strong>" + innerHTML.substring(index + search?.length);
     return innerHTML;
   }
   return text;

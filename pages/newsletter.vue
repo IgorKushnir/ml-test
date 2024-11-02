@@ -131,7 +131,7 @@ function subscribe() {
   let errors = [];
 
   // Validate Email
-  if (email.value && email.value.length > 0) {
+  if (email.value && email.value?.length > 0) {
     if(!$validateEmail(email.value)) {
       emailErrorMessage.value = 'Enter valid email address';
       emailEl.value.classList.add('error')
@@ -147,14 +147,14 @@ function subscribe() {
 
   // Validate options
   let options = []
-  if (data.value.type && data.value.type.length > 0) {
+  if (data.value.type && data.value.type?.length > 0) {
     data.value.type?.forEach(t => {
       if (t.value) {
         options.push(t.title)
       }
     })
 
-    if (options.length === 0) {
+    if (options?.length === 0) {
       optionsEl.value.classList.add('error')
       errors.push(true)
     } else {
@@ -164,7 +164,7 @@ function subscribe() {
 
 
   // Validate is ready to send
-  if (errors.length === 0) {
+  if (errors?.length === 0) {
     subscribeFetch(email.value, options)
   }
 }

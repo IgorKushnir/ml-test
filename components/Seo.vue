@@ -79,7 +79,7 @@ function setLocalizations() {
       // Remove last /
       let _path = '/'+p.join('/');
 
-      if (_path?.length > 1 && _path[_path.length-1] === '/') {
+      if (_path?.length > 1 && _path[_path?.length-1] === '/') {
         _path = _path.slice(0, -1);
       }
       // const _path = [_locale.locale === "en" ? null : '/'+_locale.locale, props.pathToPage[_locale.locale], _locale.slug].join('/')
