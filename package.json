@@ -29,6 +29,7 @@
     "photoswipe": "^5.4.4",
     "posthog-js": "^1.146.0",
     "vue-gtag-next": "^1.14.0",
+    "vue-viewport": "^0.0.1",
     "vue3-circle-progress": "^1.0.7"
   },
   "engines": {
