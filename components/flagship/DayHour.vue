@@ -180,7 +180,7 @@ const bookingHoursTransformed = computed(() => {
     if (!hours.includes(h)) {
       transformed.push([hour])
     } else {
-      transformed[transformed.length-1].push(hour)
+      transformed[transformed?.length-1].push(hour)
     }
     hours.push(h)
   })

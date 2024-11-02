@@ -367,9 +367,9 @@ const cities = computed(() => {
   // Exclude the stores without store email
   cities = cities.filter(c => {
     c.store = c.store.filter(s => {
-      return  s.lines?.data.length !== 0 && !(s.lines?.data.length <= 1 && s.lines?.data.map(l => l.attributes.slug).includes('milla-evening')) && (s.email !== null && s.email !== '')
+      return  s.lines?.data?.length !== 0 && !(s.lines?.data?.length <= 1 && s.lines?.data.map(l => l.attributes.slug).includes('milla-evening')) && (s.email !== null && s.email !== '')
     })
-    return c.store.length > 0
+    return c.store?.length > 0
   })
   return cities
 })
@@ -431,7 +431,7 @@ watch(() => sendData.value.store.index, (store) => {
 })
 
 watch(() => sendData.value.phone.value, (phone) => {
-  if (phone.length === 0) phone = '+'
+  if (phone?.length === 0) phone = '+'
   if (phone[0] !== '+') phone = '+'.concat(phone.slice(1))
 
   phone = phone.replace(/[^+0-9]/g, "")
@@ -494,7 +494,7 @@ function send() {
 function checkField(key) {
   const item = sendData.value[key];
   if (item.required) {
-    if (!item.value || item.value.length === 0) {
+    if (!item.value || item.value?.length === 0) {
       item.error = t('book_error_empty_field');
       return false
     }
@@ -523,7 +523,7 @@ function validatePhone(phone) {
   const regex = /^\+?([0-9]{10,14})$/;
   const phoneCodesList = phoneCodes.map(p => p.dial_code);
   let codeError = true;
-  for (let i = 0; i < phoneCodesList.length; i++) {
+  for (let i = 0; i < phoneCodesList?.length; i++) {
     if (phone.startsWith(phoneCodesList[i])) {
       codeError = false;
       break;

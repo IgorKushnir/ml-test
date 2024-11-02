@@ -2,10 +2,10 @@
   <div class="body" id="body">
 <!--    <ZoomImage/>-->
     <div>
-    <!--    <Header/> -->
+    <Header/>
       <NuxtPage />
     </div>
-    <!--   <LazyFooter/> -->
+    <LazyFooter/>
   </div>
 </template>
 
@@ -33,16 +33,16 @@ import getInitialData from '~/api/getInitialData';
 import {useFiltersData, useTypesData, useMenuData, useTranslationsData} from "~/composables/states";
 
 // get Initial data (Menu, Lines, Types)
-// let {data: initialData, error: initialError} = await getInitialData(locale.value);
-// if (!initialError.value) {
-//   useMenuData().value = [initialData.value?.menu, initialData.value?.lines]
-//   useTypesData().value = initialData.value?.types;
-//   useTranslationsData().value = initialData.value?.translations;
-// }
+let {data: initialData, error: initialError} = await getInitialData(locale.value);
+if (!initialError.value) {
+  useMenuData().value = [initialData.value?.menu, initialData.value?.lines]
+  useTypesData().value = initialData.value?.types;
+  useTranslationsData().value = initialData.value?.translations;
+}
 // Get all filters
-// let {data, error} = await getAllFilters(locale.value);
-// let allFilters = useFiltersData();
-// if (!error.value) allFilters.value = data.value;
+let {data, error} = await getAllFilters(locale.value);
+let allFilters = useFiltersData();
+if (!error.value) allFilters.value = data.value;
 
 useHead({
   title: 'Milla Nova',
@@ -117,7 +117,7 @@ useHead({
 })
 
 onMounted(async () => {
-  // gtag('config', 'AW-16455473849'); // Google Ads - Addon to Gtag
+  gtag && gtag('config', 'AW-16455473849'); // Google Ads - Addon to Gtag
 
   reportWindowSize()
   window.addEventListener('resize', reportWindowSize, {passive: true});

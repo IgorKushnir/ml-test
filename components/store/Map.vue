@@ -99,12 +99,12 @@ function setMarkers() {
 }
 // defineExpose({ showMap })
 function addMarkers() {
-  for (let i = 0; i < markers.length; i++) {
+  for (let i = 0; i < markers?.length; i++) {
     markers[i].setMap(myMap)
   }
 }
 function removeMarkers() {
-  for (let i = 0; i < markers.length; i++) {
+  for (let i = 0; i < markers?.length; i++) {
     markers[i].setMap(null)
     markers[i] = null;
   }

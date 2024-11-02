@@ -1,5 +1,4 @@
 import axios from "axios";
-import fs from "fs";
 
 export default defineEventHandler(async (event) => {
     const path = getRequestPath(event);

@@ -19,7 +19,7 @@
           </div>
           <p v-if="store.description" class="p-small">{{store.description}}</p>
 
-          <div v-if="store.address || store.phone || store.website || store?.lines?.data.length > 0" class="contacts m-t-32 m-t-16-md">
+          <div v-if="store.address || store.phone || store.website || store?.lines?.data?.length > 0" class="contacts m-t-32 m-t-16-md">
 
             <div class="m-b-8">
               <a :href="'http://maps.google.com/?q='+store.city+', '+store.address" target="_blank" rel="nofollow" class="link normal">{{ store.address }}</a>
@@ -41,7 +41,7 @@
 
 
 
-            <template v-if="store?.lines?.data.length > 0">
+            <template v-if="store?.lines?.data?.length > 0">
               <div class="subheader small m-t-32  m-t-16-md m-b-8 gray">Lines:</div>
               <div  class="p-small gray" v-for="line in store.lines.data">{{ line.attributes.title  }}</div>
               <!--          <p  class="p-small" >{{store.lines.data.map(line => line.attributes.title).join(', ')   }}</p>-->
@@ -108,7 +108,7 @@ function encodeToBase64(string) {
 }
 function getInstagramName(link) {
   const ar = link.split('/').filter(a => a !== '')
-  return '@' + (ar[ar.length-1] ?? '')
+  return '@' + (ar[ar?.length-1] ?? '')
 }
 
 </script>

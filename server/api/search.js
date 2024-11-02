@@ -1,5 +1,4 @@
 // Search proxy
-import {query} from "vue-gtag-next";
 
 export default  defineEventHandler(async (event) => {
     const config = useRuntimeConfig();

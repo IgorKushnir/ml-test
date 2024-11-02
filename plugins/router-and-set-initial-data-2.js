@@ -10,23 +10,23 @@ const Discover = import('~/components/Discover.vue').then(r => {
 
 async function setInitialData(lang) {
     // get Initial data (Menu, Lines, Types)
-    // let {data: initialData, error: initialError} = await getInitialData(lang);
-    // if (!initialError.value) {
-    //     useMenuData().value = [initialData.value[0], initialData.value[1]]
-    //     useTypesData().value = initialData.value[2];
-    //     useTranslationsData().value = initialData.value[3];
-    //
-    // }
+    let {data: initialData, error: initialError} = await getInitialData(lang);
+    if (!initialError.value) {
+        useMenuData().value = [initialData.value[0], initialData.value[1]]
+        useTypesData().value = initialData.value[2];
+        useTranslationsData().value = initialData.value[3];
+    
+    }
 
-    // return initialData.value
+    return initialData.value
 }
 
 async function setFilters(lang) {
     // Get all filters
-    // let {data, error} = await getAllFilters(lang);
-    // let allFilters = useFiltersData();
-    // if (!error.value) allFilters.value = data.value;
-    // return data.value
+    let {data, error} = await getAllFilters(lang);
+    let allFilters = useFiltersData();
+    if (!error.value) allFilters.value = data.value;
+    return data.value
 }
 
 export default defineNuxtPlugin(async (nuxtApp) => {
@@ -39,8 +39,8 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     const types = initialData?.types
 
 
-    // const {data, error} = await getDressRedirects(locale.value)
-    // if (error.value) return
+    const {data, error} = await getDressRedirects(locale.value)
+    if (error.value) return
     // console.log(data.value);
     // Adding default product redirects
     types?.forEach(productType => {

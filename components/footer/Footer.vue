@@ -23,7 +23,7 @@
                 {{ item.title }}
               </NuxtLink>
             </div>
-            <div :class="$divideSubMenu(item.items).length > 0 ? 'm-b-40' : ''" class="hide-md">
+            <div :class="$divideSubMenu(item.items)?.length > 0 ? 'm-b-40' : ''" class="hide-md">
               <div v-for="subMenu in $divideSubMenu(item.items)" class="m-v-24">
                 <div v-for="subItem in subMenu" class="m-v-4">
                   <NuxtLink :to="localePath(subItem.url)" :target="subItem.target ? '_blank' : '_self'" class="p-small white hover"

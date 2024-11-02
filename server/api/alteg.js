@@ -50,7 +50,7 @@ export default  defineEventHandler(async (event) => {
             })
             let resAll = await Promise.all(promises)
             resAll = resAll.filter(r => r.success)
-            if (resAll.length < 1) return {success: false}
+            if (resAll?.length < 1) return {success: false}
 
             let allData = []
             resAll?.forEach(d => {
@@ -87,9 +87,9 @@ export default  defineEventHandler(async (event) => {
             })
 
             // Randomize by staff_id
-            for (let i = 0; i < _allData.length; i++) {
+            for (let i = 0; i < _allData?.length; i++) {
                 if (Array.isArray(_allData[i])) {
-                    const ind = getRandomInt(0, _allData[i].length - 1)
+                    const ind = getRandomInt(0, _allData[i]?.length - 1)
                     _allData[i] = _allData[i][ind]
                     // console.log(allData[i][ind-1]);
                 }

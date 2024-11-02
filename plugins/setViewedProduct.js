@@ -24,7 +24,7 @@ export default defineNuxtPlugin((nuxt) => {
 
 
                 // Reduce array
-                if (jsonStore.length > 20) jsonStore.pop()
+                if (jsonStore?.length > 20) jsonStore.pop()
 
                 localStorage[storageName] = JSON.stringify(jsonStore);
 

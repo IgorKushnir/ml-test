@@ -160,7 +160,7 @@ const states = computed(() => {
       })
 
   // remove dublicates
-  if (_states.length > 0) {
+  if (_states?.length > 0) {
     _states = _states
     .map(({state}) => state)
     .filter((item, pos) => _states.indexOf(item) == pos)

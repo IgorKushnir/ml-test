@@ -23,7 +23,7 @@ import getMain from '~/api/getMain'
 
 const { locale } = useI18n()
 
-// let { data, pending, refresh, error } = await getMain(locale.value)
+let { data, pending, refresh, error } = await getMain(locale.value)
 </script>
 
 <style scoped>
