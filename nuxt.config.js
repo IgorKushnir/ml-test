@@ -13,6 +13,7 @@ export default defineNuxtConfig({
         '@nuxt/image',
         '@nuxtjs/critters',
         'nuxt-delay-hydration',
+        'nuxt-viewport',
     ],
     // devServer: {
     //     host: '192.168.3.98',
@@ -152,6 +153,18 @@ export default defineNuxtConfig({
       },
     experimental: {
         buildCache: true
-    }
+    },
+    viewport: {
+        breakpoints: {
+        default: 320,
+        xxs: 480,
+        xs: 576,
+        sm: 768,
+        md: 996,
+        lg: 1200,
+        xl: 1367,
+        xxl: 1600,
+        '4k': 1921
+    }}
 })
 
