@@ -218,14 +218,6 @@ async function managingImagesFromAdminPayload(index, body, mode) {
         throw e
     }
 
-
-
-
-
-
-
-    // console.log('-------',body);
-    // checkUpdatedFields(_body.product, _body.productPrevious)
 }
 
 
