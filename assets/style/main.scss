@@ -423,15 +423,6 @@ img {
 }
 
 
-@media (min-width: map-get($breakpoints, "md-min")) {
-  .show-md {
-    display: none !important;
-  }
-}
-@media (min-width: map-get($breakpoints, "sm-min")) {
-  .show-sm {
-    display: none !important;
-  }
-}
+
 
 

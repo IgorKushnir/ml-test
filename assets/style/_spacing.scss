@@ -1,3 +1,5 @@
+@use "sass:string";
+@use "sass:map";
 $spaceamounts: (0, 4, 8, 12, 16, 24, 32, 40, 48, 56, 64, 80, 96, 112, 120, 160); // Adjust this to include the pixel amounts you need.
 $sides: (top, bottom, left, right, v, h); // Leave this variable alone
 
@@ -5,32 +7,32 @@ $sides: (top, bottom, left, right, v, h); // Leave this variable alone
   @each $side in $sides {
     @if $side == 'v'  or  $side == 'h' {
       @if $side == 'v' {
-        .m-#{str-slice($side, 0, 1)}-#{$space} {
+        .m-#{string.slice($side, 0, 1)}-#{$space} {
           margin-top: #{$space}px !important;
           margin-bottom: #{$space}px !important;
         }
 
-        .p-#{str-slice($side, 0, 1)}-#{$space} {
+        .p-#{string.slice($side, 0, 1)}-#{$space} {
           padding-top: #{$space}px !important;
           padding-bottom: #{$space}px !important;
         }
       } @else {
-        .m-#{str-slice($side, 0, 1)}-#{$space} {
+        .m-#{string.slice($side, 0, 1)}-#{$space} {
           margin-left: #{$space}px !important;
           margin-right: #{$space}px !important;
         }
 
-        .p-#{str-slice($side, 0, 1)}-#{$space} {
+        .p-#{string.slice($side, 0, 1)}-#{$space} {
           padding-left: #{$space}px !important;
           padding-right: #{$space}px !important;
         }
       }
     } @else {
-      .m-#{str-slice($side, 0, 1)}-#{$space} {
+      .m-#{string.slice($side, 0, 1)}-#{$space} {
         margin-#{$side}: #{$space}px !important;
       }
 
-      .p-#{str-slice($side, 0, 1)}-#{$space} {
+      .p-#{string.slice($side, 0, 1)}-#{$space} {
         padding-#{$side}: #{$space}px !important;
       }
     }
@@ -42,32 +44,32 @@ $sides: (top, bottom, left, right, v, h); // Leave this variable alone
     @each $side in $sides {
       @if $side == 'v'  or  $side == 'h' {
         @if $side == 'v' {
-          .m-#{str-slice($side, 0, 1)}-#{$space}-xl {
+          .m-#{string.slice($side, 0, 1)}-#{$space}-xl {
             margin-top: #{$space}px !important;
             margin-bottom: #{$space}px !important;
           }
 
-          .p-#{str-slice($side, 0, 1)}-#{$space}-xl {
+          .p-#{string.slice($side, 0, 1)}-#{$space}-xl {
             padding-top: #{$space}px !important;
             padding-bottom: #{$space}px !important;
           }
         } @else {
-          .m-#{str-slice($side, 0, 1)}-#{$space}-xl {
+          .m-#{string.slice($side, 0, 1)}-#{$space}-xl {
             margin-left: #{$space}px !important;
             margin-right: #{$space}px !important;
           }
 
-          .p-#{str-slice($side, 0, 1)}-#{$space}-xl {
+          .p-#{string.slice($side, 0, 1)}-#{$space}-xl {
             padding-left: #{$space}px !important;
             padding-right: #{$space}px !important;
           }
         }
       } @else {
-        .m-#{str-slice($side, 0, 1)}-#{$space}-xl {
+        .m-#{string.slice($side, 0, 1)}-#{$space}-xl {
           margin-#{$side}: #{$space}px !important;
         }
 
-        .p-#{str-slice($side, 0, 1)}-#{$space}-xl {
+        .p-#{string.slice($side, 0, 1)}-#{$space}-xl {
           padding-#{$side}: #{$space}px !important;
         }
       }
@@ -79,32 +81,32 @@ $sides: (top, bottom, left, right, v, h); // Leave this variable alone
     @each $side in $sides {
       @if $side == 'v'  or  $side == 'h' {
         @if $side == 'v' {
-          .m-#{str-slice($side, 0, 1)}-#{$space}-lg {
+          .m-#{string.slice($side, 0, 1)}-#{$space}-lg {
             margin-top: #{$space}px !important;
             margin-bottom: #{$space}px !important;
           }
 
-          .p-#{str-slice($side, 0, 1)}-#{$space}-lg {
+          .p-#{string.slice($side, 0, 1)}-#{$space}-lg {
             padding-top: #{$space}px !important;
             padding-bottom: #{$space}px !important;
           }
         } @else {
-          .m-#{str-slice($side, 0, 1)}-#{$space}-lg {
+          .m-#{string.slice($side, 0, 1)}-#{$space}-lg {
             margin-left: #{$space}px !important;
             margin-right: #{$space}px !important;
           }
 
-          .p-#{str-slice($side, 0, 1)}-#{$space}-lg {
+          .p-#{string.slice($side, 0, 1)}-#{$space}-lg {
             padding-left: #{$space}px !important;
             padding-right: #{$space}px !important;
           }
         }
       } @else {
-        .m-#{str-slice($side, 0, 1)}-#{$space}-lg {
+        .m-#{string.slice($side, 0, 1)}-#{$space}-lg {
           margin-#{$side}: #{$space}px !important;
         }
 
-        .p-#{str-slice($side, 0, 1)}-#{$space}-lg {
+        .p-#{string.slice($side, 0, 1)}-#{$space}-lg {
           padding-#{$side}: #{$space}px !important;
         }
       }
@@ -116,32 +118,32 @@ $sides: (top, bottom, left, right, v, h); // Leave this variable alone
     @each $side in $sides {
       @if $side == 'v'  or  $side == 'h' {
         @if $side == 'v' {
-          .m-#{str-slice($side, 0, 1)}-#{$space}-md {
+          .m-#{string.slice($side, 0, 1)}-#{$space}-md {
             margin-top: #{$space}px !important;
             margin-bottom: #{$space}px !important;
           }
 
-          .p-#{str-slice($side, 0, 1)}-#{$space}-md {
+          .p-#{string.slice($side, 0, 1)}-#{$space}-md {
             padding-top: #{$space}px !important;
             padding-bottom: #{$space}px !important;
           }
         } @else {
-          .m-#{str-slice($side, 0, 1)}-#{$space}-md {
+          .m-#{string.slice($side, 0, 1)}-#{$space}-md {
             margin-left: #{$space}px !important;
             margin-right: #{$space}px !important;
           }
 
-          .p-#{str-slice($side, 0, 1)}-#{$space}-md {
+          .p-#{string.slice($side, 0, 1)}-#{$space}-md {
             padding-left: #{$space}px !important;
             padding-right: #{$space}px !important;
           }
         }
       } @else {
-        .m-#{str-slice($side, 0, 1)}-#{$space}-md {
+        .m-#{string.slice($side, 0, 1)}-#{$space}-md {
           margin-#{$side}: #{$space}px !important;
         }
 
-        .p-#{str-slice($side, 0, 1)}-#{$space}-md {
+        .p-#{string.slice($side, 0, 1)}-#{$space}-md {
           padding-#{$side}: #{$space}px !important;
         }
       }
@@ -153,35 +155,46 @@ $sides: (top, bottom, left, right, v, h); // Leave this variable alone
     @each $side in $sides {
       @if $side == 'v'  or  $side == 'h' {
         @if $side == 'v' {
-          .m-#{str-slice($side, 0, 1)}-#{$space}-sm {
+          .m-#{string.slice($side, 0, 1)}-#{$space}-sm {
             margin-top: #{$space}px !important;
             margin-bottom: #{$space}px !important;
           }
 
-          .p-#{str-slice($side, 0, 1)}-#{$space}-sm {
+          .p-#{string.slice($side, 0, 1)}-#{$space}-sm {
             padding-top: #{$space}px !important;
             padding-bottom: #{$space}px !important;
           }
         } @else {
-          .m-#{str-slice($side, 0, 1)}-#{$space}-sm {
+          .m-#{string.slice($side, 0, 1)}-#{$space}-sm {
             margin-left: #{$space}px !important;
             margin-right: #{$space}px !important;
           }
 
-          .p-#{str-slice($side, 0, 1)}-#{$space}-sm {
+          .p-#{string.slice($side, 0, 1)}-#{$space}-sm {
             padding-left: #{$space}px !important;
             padding-right: #{$space}px !important;
           }
         }
       } @else {
-        .m-#{str-slice($side, 0, 1)}-#{$space}-sm {
+        .m-#{string.slice($side, 0, 1)}-#{$space}-sm {
           margin-#{$side}: #{$space}px !important;
         }
 
-        .p-#{str-slice($side, 0, 1)}-#{$space}-sm {
+        .p-#{string.slice($side, 0, 1)}-#{$space}-sm {
           padding-#{$side}: #{$space}px !important;
         }
       }
     }
+  }
+}
+
+@media (min-width: map.get($breakpoints, "md-min")) {
+  .show-md {
+    display: none !important;
+  }
+}
+@media (min-width: map.get($breakpoints, "sm-min")) {
+  .show-sm {
+    display: none !important;
   }
 }

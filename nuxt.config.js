@@ -3,7 +3,12 @@ import graphql from '@rollup/plugin-graphql';
 
 export default defineNuxtConfig({
     ssr: true,
-    isr: true,
+    nitro: {
+        prerender: {
+            crawlLinks: true,
+            routes: ['/'],
+          }
+      },
     css: [
         '@/assets/style/main.scss',
     ],
