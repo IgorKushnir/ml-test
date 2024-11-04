@@ -114,8 +114,6 @@ try {
 } catch (e) {
   console.error(e);
 }
-console.log('filters', filters.value)
-console.log('fetchFilters', fetchFilters.value)
 
 let {
   data: dataAvailableFilters,
@@ -137,7 +135,6 @@ const initialFilters = ref([]);
 initialAvailableFilters = dataAvailableFilters.value;
 
 initialFilters.value = parseQuery();
-console.log('initialFilters.value', initialFilters.value)
 // redirect
 // if (props.redirectData?.filter) initialFilters.value.push(props.redirectData?.filter)
 
@@ -178,7 +175,6 @@ let {
 
     // Add Top products
     if (d.data?.topProducts?.data?.length > 0) {
-      console.log('top products');
 
       // order top products
       d.data.topProducts.data = d.data.topProducts.data.sort((a, b) => topProductIds.value.indexOf(parseInt(a.id)) - topProductIds.value.indexOf(parseInt(b.id)))
