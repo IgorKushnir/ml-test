@@ -71,14 +71,13 @@ import {useTypesData} from "~/composables/states";
 
 const { find } = useStrapi()
 
-const {$getAbsoluteUrl} = useNuxtApp();
-
 const typeData = useTypesData()
 
 const route = useRoute();
 const router = useRouter();
 const { locale } = useI18n()
 const localePath = useLocalePath()
+
 
 const topProductIds = ref([])
 
@@ -150,10 +149,6 @@ filters.value = [...filters.value, ...initialFilters.value];
 
 
 const type = computed(() => typeData.value.find(e => e.slug === slug))
-
-
-
-
 
 let initialData = ref([])
 let {

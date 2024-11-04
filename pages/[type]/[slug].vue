@@ -4,14 +4,15 @@
 
       <StickyBarStickyHeaderMilla :title="data.title">
         <template #end>
-          <StickyBarBack v-if="data.extra.previous" reverse :text="$t('previous')" @clicks="prevHandler"/>
-          <StickyBarBack v-if="data.extra.next" :text="$t('next')" @click="nextHandler"/>
+          <StickyBarBack v-if="data?.extra?.previous" reverse :text="$t('previous')" @clicks="prevHandler"/>
+          <StickyBarBack v-if="data?.extra?.next" :text="$t('next')" @click="nextHandler"/>
         </template>
       </StickyBarStickyHeaderMilla>
 
 
       <div class="promo ratio-3x4 show-md">
         <Image
+            v-if="data?.gallery?.data?.length > 0 && data.gallery.data[0]"
             :path="{data: data.gallery.data[0]}"
             :alt="data.title + ' ' + data?.type?.data?.attributes?.title"
             :class="discontinued ? 'discontinued' : ''"
@@ -32,49 +33,49 @@
 
           <div class="sticky-content">
 <!--            <div v-if="discontinued" class="badge light_bg p-h-16 p-v-8 gray">Discontinued</div>-->
-            <p class="m-b-32" v-if="data.description" v-html="$handleNewLine(data.description)" />
+            <p class="m-b-32" v-if="data?.description" v-html="$handleNewLine(data.description)" />
 
 
-            <div class="info m-t-40" v-if="data.collection.data">
+            <div class="info m-t-40" v-if="data?.collection?.data">
               <div class="m-b-32 m-r-40">
                 <div class="subheader small">{{ $t('collection') }}</div>
-                <NuxtLink :to="localePath('/collection/'+data.collection.data.attributes.slug)" class="p-small link">{{ data.collection.data.attributes.title }}</NuxtLink>
+                <NuxtLink :to="localePath(`/collection/${data.collection.data?.attributes?.slug}`)" class="p-small link">{{ data.collection.data?.attributes?.title }}</NuxtLink>
               </div>
               <div class="m-b-32">
                 <div class="subheader small">{{ $t('line') }}</div>
                 <div class="p-small dark-blue">
-                  {{ data.collection.data.attributes.line.data.attributes.title }}
+                  {{ data.collection.data?.attributes?.line?.data?.attributes?.title }}
                 </div>
               </div>
             </div>
 
 
-            <div v-if="data.colors.data?.length > 0" class="info m-b-32  m-b-16-md">
+            <div v-if="data?.colors?.data?.length > 0" class="info m-b-32  m-b-16-md">
               <div>
                 <div class="subheader small">{{ $t('color') }}</div>
                 <div class="p-small">
                   <template v-for="(color, index) in data.colors.data">
-                    <NuxtLink :to="localePath('/'+(data?.type?.data?.attributes?.slug ?? 'product')+'?'+(locale === 'en' ? 'colors' : 'kolor')+'='+color.attributes.slug)" class="p-small link">{{ color.attributes.title }}</NuxtLink><span v-if="index+1 < data.colors.data?.length">, </span>
+                    <NuxtLink :to="localePath(`/${(data?.type?.data?.attributes?.slug ?? 'product')}?${routeLocalization[locale].colors}=${color?.attributes?.slug}`)" class="p-small link">{{ color?.attributes?.title }}</NuxtLink><span v-if="index + 1 < data.colors.data?.length">, </span>
                   </template>
                 </div>
               </div>
             </div>
 
-            <div v-if="data.silhouettes.data" class="info m-b-32  m-b-16-md">
+            <div v-if="data?.silhouettes?.data" class="info m-b-32  m-b-16-md">
               <div>
                 <div class="subheader small">{{ $t('silhouette') }}</div>
                 <div class="p-small">
-                  <NuxtLink :to="localePath('/'+(data?.type?.data?.attributes?.slug ?? 'product')+'?'+(locale === 'en' ? 'silhouettes' : 'silhouette')+'='+data.silhouettes.data.attributes.slug)" class="p-small link">{{ data.silhouettes.data.attributes.title }}</NuxtLink>
+                  <NuxtLink :to="localePath(`/${(data?.type?.data?.attributes?.slug ?? 'product')}?${routeLocalization[locale].silhouettes}=${data.silhouettes.data.attributes.slug}`)" class="p-small link">{{ data.silhouettes.data?.attributes?.title }}</NuxtLink>
                 </div>
               </div>
             </div>
 
-            <div v-if="data.fabrics.data?.length > 0" class="info m-b-32  m-b-16-md">
+            <div v-if="data.fabrics?.data?.length > 0" class="info m-b-32  m-b-16-md">
               <div>
                 <div class="subheader small">{{ $t('fabric') }}</div>
                 <div class="p-small">
                   <template v-for="(fabric, index) in data.fabrics.data">
-                    <NuxtLink :to="localePath('/'+(data?.type?.data?.attributes?.slug ?? 'product')+'?'+(locale === 'en' ? 'fabrics' : 'tkanina')+'='+fabric.attributes.slug)" class="p-small link">{{ fabric.attributes.title }}</NuxtLink><span v-if="index+1 < data.fabrics.data?.length">, </span>
+                    <NuxtLink :to="localePath(`/${(data?.type?.data?.attributes?.slug ?? 'product')}?${routeLocalization[locale].fabrics}=${fabric.attributes.slug}`)" class="p-small link">{{ fabric.attributes.title }}</NuxtLink><span v-if="index+1 < data.fabrics.data?.length">, </span>
                   </template>
                 </div>
               </div>
@@ -173,6 +174,7 @@ import getProduct from '~/api/getProduct'
 const { $setViewedProduct, $getViewedProduct, $getLikedProducts, $toggleLikeProduct, $getMonths, $getDatesInRange } = useNuxtApp()
 import {useTypesData} from "~/composables/states";
 import Image from "../../components/Image";
+import {routeLocalization} from '~/composables/routeLocalization'
 const isMobile = useIsMobile();
 
 const route = useRoute();
@@ -180,7 +182,6 @@ const router = useRouter();
 let slug = route.params.slug;
 let draft = route.query?.draft;
 const likeList = ref([])
-
 const { locale } = useI18n()
 const localePath = useLocalePath()
 
@@ -197,34 +198,21 @@ let {data, pending} = await getProduct(slug, JSON.stringify(extrudedIds), public
 const discontinued = computed(() => data.value.discontinued)
 
 // Redirect from not TYPE path
-if (process.server) {
+if (import.meta.server) {
   const types = useTypesData()
-
   const fullPath = route.fullPath;
-  // const path = fullPath.replaceAll('/', '').replace(slug, '')
-  let path = fullPath.split('/')
-  path = path.filter(p => p !== '' && p !== locale.value)
-  path = path[0]
 
-  const index = types.value.findIndex(t => t.slug === path)
-  if (index === -1) {
-    // localePath()
-    //
-    // console.log(data.value?.type?.data?.attributes?.slug, path);
+  if (types.value.some(({slug}) => fullPath.includes(slug))) {
 
     if (data.value?.type?.data?.attributes?.slug) {
-      // console.log('redirext');
 
-      const redirectLink = ['',data.value?.type?.data?.attributes?.slug, slug].join('/')
+      const redirectLink = `/${data.value.type.data.attributes.slug}/${slug}`
       navigateTo(localePath(redirectLink), { redirectCode: 301 })
     }
   }
-}
 
-
-if (process.server) {
   if (data.value) {
-    const indexOfFirsImage = data.value?.gallery?.data.findIndex(item => item.attributes.mime.startsWith('image'))
+    const firsImage = data.value?.gallery?.data.find(item => item.attributes.mime.startsWith('image'))
     let structuredData = {
       "@context": "https://schema.org/",
       "@type": "Product",
@@ -235,7 +223,11 @@ if (process.server) {
         "name": "Milla Nova"
       }
     }
-    if (indexOfFirsImage !== -1) structuredData["image"] = data.value.gallery?.data[indexOfFirsImage]?.attributes?.formats?.medium?.url ?? data.value.gallery?.data[indexOfFirsImage]?.attributes?.url ?? ''
+    if (firsImage) {
+      structuredData["image"] = firsImage?.attributes?.formats?.medium?.url ?? firsImage?.attributes?.url ?? ''
+    } else {
+      console.error('Check product error: ', data.value.title);
+    }
 
     useHead({
       script: [
@@ -246,16 +238,11 @@ if (process.server) {
       ]
     })
 
-    if (!indexOfFirsImage && indexOfFirsImage != 0) {
-      console.error('Check product error: ', data.value.title, indexOfFirsImage);
-    }
   } else {
     console.error(404, route.fullPath);
   }
 
 }
-
-
 
 
 function getLikeList() {
@@ -270,40 +257,33 @@ function handleLike(id) {
 
 
 function prevHandler() {
-  router.push(localePath('/'+data.value.extra.previous.type.slug+'/' + data.value.extra.previous.slug))
+  router.push(localePath(`/${data.value.extra.previous.type.slug}/${data.value.extra.previous.slug}`))
 }
 
 function nextHandler() {
-  router.push(localePath('/'+data.value.extra.next.type.slug+'/' + data.value.extra.next.slug))
+  router.push(localePath(`/${data.value.extra.next.type.slug}/${data.value.extra.next.slug}`))
 }
 
 
 const breadcrumbs = computed(() => {
-  let res = [
+  const res = [
     {
       title: data?.value?.title,
       path: null
     }
   ]
   if (data?.value?.collection?.data) {
-    res = [
-      {
+    res.unshift({
         title: data?.value.collection?.data?.attributes?.title,
-        path: '/collection/' + data?.value.collection?.data?.attributes?.slug,
-      },
-        ...res
-    ]
-  } else {
-    if (data?.value?.type?.data) {
-      res = [
-        {
+        path: `/collection/${data?.value.collection?.data?.attributes?.slug}`,
+      })
+  } else if (data?.value?.type?.data) {
+      res.unshift({
           title: data?.value.type?.data?.attributes?.title,
-          path: '/' + data?.value.type?.data?.attributes?.slug,
-        },
-        ...res
-      ]
+          path: `/${data?.value.type?.data?.attributes?.slug}`,
+        })
     }
-  }
+  
   return res;
 })
 
@@ -325,9 +305,6 @@ function getStars(level) {
 onMounted(() => {
   getLikeList()
 
-
-
-
   function mount() {
     if (pending.value) {
       setTimeout(() => {
@@ -339,29 +316,12 @@ onMounted(() => {
         const viewedIds = $getViewedProduct()
         useViewedProductIds().value = viewedIds;
 
-        data.value.extra.also = data.value.extra.also.filter(item => {
-          return !viewedIds.includes(item.attributes.id.toString())
-        });
+        data.value.extra.also = data.value.extra.also.filter(item => !viewedIds.includes(item.attributes.id.toString()));
       }
-
     }
   }
   mount()
 
-
-  // refresh().then(_ => {
-  //   $setViewedProduct(data.value.id)
-  //
-  //   const viewedIds = $getViewedProduct()
-  //
-  //   useViewedProductIds().value = viewedIds;
-  //
-  //   data.value.extra.also = data.value.extra.also.filter(item => {
-  //     return !viewedIds.includes(item.attributes.id.toString())
-  //   });
-  //   // const dataFiltered = computed(() => )
-  //
-  // });
 })
 
 </script>
