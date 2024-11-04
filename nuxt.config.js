@@ -152,10 +152,6 @@ export default defineNuxtConfig({
       debug: process.env.NODE_ENV === 'development'
     },
 
-  experimental: {
-      buildCache: true
-  },
-
   viewport: {
       breakpoints: {
       default: 320,
