@@ -90,6 +90,7 @@ const fetchFilters = ref(true)
 let slug = route.meta.slug ?? route.params.slug; //  from router.option.ts
 let filterSelected = ref([])
 let filters = ref([]);
+console.log('slug', slug)
 
 const previousPages = router.options.history?.pages?.[slug]
 router.options.history.pages = {}
@@ -113,6 +114,8 @@ try {
 } catch (e) {
   console.error(e);
 }
+console.log('filters', filters.value)
+console.log('fetchFilters', fetchFilters.value)
 
 let {
   data: dataAvailableFilters,
@@ -134,7 +137,7 @@ const initialFilters = ref([]);
 initialAvailableFilters = dataAvailableFilters.value;
 
 initialFilters.value = parseQuery();
-
+console.log('initialFilters.value', initialFilters.value)
 // redirect
 // if (props.redirectData?.filter) initialFilters.value.push(props.redirectData?.filter)
 
