@@ -1,5 +1,4 @@
-@import url('https://fonts.cdnfonts.com/css/pf-bague-sans-pro');
-$font-family: 'PF Bague Sans Pro';
+$font-family: 'Bague';
 
 %uppercase {
   text-transform: uppercase;
@@ -273,3 +272,17 @@ a.button {
 }
 
 
+@font-face {
+  font-family: $font-family;
+  src: url('~/assets/fonts/Regular.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: $font-family;
+  src: url('~/assets/fonts/Medium.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
