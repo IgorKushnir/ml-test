@@ -1,7 +1,7 @@
 <template>
   <div v-if="data" class="banner" :class=" type === 'content' ? 'ratio-16x9  ratio-3x4-md' : type === 'banner' ? 'ratio-banner' : 'ratio-main-screen'">
 
-    <Image class="hide-md" v-if="viewport.isGreaterThan('sm')"" size="large" :path="data.cover_4x3" :alt="(!data.title || data.title === '') ? title : data.title" :poster="data?.poster_4x3" />
+    <Image class="hide-md" v-if="viewport.isGreaterThan('sm')" size="large" :path="data.cover_4x3" :alt="(!data.title || data.title === '') ? title : data.title" :poster="data?.poster_4x3" />
     <Image class="show-md" v-else :path="data.cover_3x4.data ? data.cover_3x4 : data.cover_4x3" :alt="(!data.title || data.title === '') ? title : data.title" :poster="data?.poster_3x4 ? data.poster_3x4 : data?.poster_4x3" />
     <div class="overlay" />
     <div class="wrapper" :class="type">
