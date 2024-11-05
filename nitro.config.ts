@@ -17,7 +17,7 @@ export default defineNuxtConfig({
                 '/newsletter', 
                 '/store-finder', '/pl/wyszukiwarka-sklepow',
             ]
-            return Array.from(routes).filter(route => !route.includes('?') && && !pagesToIgnore.includes(route))
+            return Array.from(routes).filter(route => !route.includes('?') && !pagesToIgnore.includes(route))
           },
       },
     },
