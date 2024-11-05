@@ -120,7 +120,7 @@ function checkQueries() {
   query?.forEach(q => {
     const index = data.value?.type.findIndex(e => (e?.title === q) || (e?.title?.toLowerCase() === q))
     if(index !== -1) {
-      data.value?.type[index].value = true
+      data.value.type[index].value = true
     }
   })
 }
