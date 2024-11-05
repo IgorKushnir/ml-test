@@ -89,7 +89,6 @@ const fetchFilters = ref(true)
 let slug = route.meta.slug ?? route.params.slug; //  from router.option.ts
 let filterSelected = ref([])
 let filters = ref([]);
-console.log('slug', slug)
 
 const previousPages = router.options.history?.pages?.[slug]
 router.options.history.pages = {}
