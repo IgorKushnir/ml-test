@@ -6,7 +6,7 @@
         }
     ]"/>
     <div v-if="!pending">
-      <InnerHeader :title="data.title" :sub_title="data.description"/>
+      <InnerHeader :title="data?.title" :sub_title="data?.description"/>
 
 
       <transition name="fade" mode="out-in">
@@ -14,17 +14,17 @@
           <div class="col-6 col-8-xl col-10-lg col-12-md">
 
             <form  @submit.prevent="subscribe">
-              <template v-if="data.type?.length > 0">
+              <template v-if="data?.type?.length > 0">
                 <h3 class="m-t-0">You are interested in:</h3>
 
                 <div class="m-t-32 m-b-56" ref="optionsEl">
                   <CheckBox
-                      v-for="item in data.type"
-                      :label="item.title"
-                      :description="item.description"
-                      :value="item.value ?? false"
+                      v-for="item in data?.type"
+                      :label="item?.title"
+                      :description="item?.description"
+                      :value="item?.value ?? false"
                       available
-                      @click="item.value = !item.value"
+                      @click="item?.value = !item?.value"
                   />
                   <label  class="error-message">Choose at least one option</label>
                 </div>
@@ -61,12 +61,12 @@
           </div>
         </Container>
         <State v-else
-               :title="feedbackContent.title"
-               :text="feedbackContent.text"
-               :button="feedbackContent.button"
+               :title="feedbackContent?.title"
+               :text="feedbackContent?.text"
+               :button="feedbackContent?.button"
                class="half"
                @click="stateButtonClickHandle"
-               :image-path="feedbackContent.imagePath"
+               :image-path="feedbackContent?.imagePath"
         />
       </transition>
 
@@ -118,9 +118,9 @@ onMounted(() => {
 })
 function checkQueries() {
   query?.forEach(q => {
-    const index = data.value.type.findIndex(e => (e.title === q) || (e.title.toLowerCase() === q))
+    const index = data.value?.type.findIndex(e => (e?.title === q) || (e?.title?.toLowerCase() === q))
     if(index !== -1) {
-      data.value.type[index].value = true
+      data.value?.type[index].value = true
     }
   })
 }
@@ -150,7 +150,7 @@ function subscribe() {
   if (data.value.type && data.value.type?.length > 0) {
     data.value.type?.forEach(t => {
       if (t.value) {
-        options.push(t.title)
+        options.push(t?.title)
       }
     })
 

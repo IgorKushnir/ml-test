@@ -1,33 +1,20 @@
 import {defineNuxtConfig} from 'nuxt/config'
 import graphql from '@rollup/plugin-graphql';
 
-const pagesToIgnore = [
-    "/inspiration", '/inspiracja', 
-    '/moodboard',
-    '/news', '/aktualnosci', 
-    '/press-about-us', '/prasa', 
-    '/request-an-appointment', 
-    '/newsletter', 
-    '/store-finder', '/wyszukiwarka-sklepow',
-]
-
 export default defineNuxtConfig({
   ssr: true,
   nitro: {
     prerender: {
-        crawlLinks: true,
-        routes: ['/'],
-        ignore: pagesToIgnore,
+        crawlLinks: false,
+        routes: ['/', 
+            '/dress', '/pl/suknie',
+            '/veils', '/pl/welony',
+            '/accessories', '/pl/akcesoria',
+            '/collections', '/pl/kolekcje',
+            '/store-finder', '/pl/wyszukiwarka-sklepow',
+            '/company', '/pl/firma',
+            '/inspiration', '/pl/inspiracja' ],
       },
-    hooks: {
-        "prerender:generate"(route) {
-            if (route.route?.includes("?") || pagesToIgnore.some(ignorePage => route.route.includes(ignorePage))) {
-              route.skip = true;
-            }
-            route?.skip && console.log(route.route, route.skip)
-            return route
-          },
-    },
     },
   css: [
       '@/assets/style/main.scss',
