@@ -3,7 +3,30 @@ import graphql from '@rollup/plugin-graphql';
 
 export default defineNuxtConfig({
   ssr: true,
-
+  nitro: {
+    prerender: {
+        crawlLinks: true,
+        routes: ['/'],
+      },
+    hooks: {
+        async 'prerender:routes' (routes) {
+            console.log('routes', routes)
+            const pagesToIgnore = [
+                "/inspiration", '/pl/inspiracja', 
+                '/moodboard', '/pl/moodboard', 
+                '/news', '/pl/aktualnosci', 
+                '/press-about-us', '/pl/prasa', 
+                '/request-an-appointment', 
+                '/newsletter', 
+                '/store-finder', '/pl/wyszukiwarka-sklepow',
+            ]
+            const filteredRoutes = Array.from(routes).filter(route => !route.includes('?') && !pagesToIgnore.includes(route))
+            console.log('filteredRoutes', filteredRoutes)
+        
+            return filteredRoutes
+        },
+    },
+    },
   css: [
       '@/assets/style/main.scss',
   ],
