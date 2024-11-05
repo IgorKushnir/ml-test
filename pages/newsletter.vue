@@ -19,12 +19,12 @@
 
                 <div class="m-t-32 m-b-56" ref="optionsEl">
                   <CheckBox
-                      v-for="item in data?.type"
+                      v-for="item in data.type"
                       :label="item?.title"
                       :description="item?.description"
-                      :value="item?.value ?? false"
+                      :value="item.value ?? false"
                       available
-                      @click="item?.value = !item?.value"
+                      @click="item.value = !item.value"
                   />
                   <label  class="error-message">Choose at least one option</label>
                 </div>
