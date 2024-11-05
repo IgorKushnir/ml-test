@@ -17,11 +17,13 @@
     <transition name="fade">
 
       <div v-if="!pendingCollection && dataCollection != null">
-        <InnerHeader :title="dataCollection.title" :sub_header="dataCollection.line.data.attributes.title"
-                     :sub_title="dataCollection.description"/>
+        <InnerHeader 
+          :title="dataCollection?.title" 
+          :sub_header="dataCollection?.line?.data?.attributes?.title"
+          :sub_title="dataCollection?.description"/>
         <StickyBarStickyHeaderMilla
             :back="(router.options?.history?.state?.back === '/collections' || router.options?.history?.state?.back === '/kolekcje')"
-            :title="dataCollection.title"
+            :title="dataCollection?.title"
         >
           <template #end>
             <Filter
@@ -47,23 +49,23 @@
         <ProductGrid
             :products-data="dataProducts"
             :pending-products="pendingProducts"
-            :promo="dataCollection.show_promo"
+            :promo="dataCollection?.show_promo"
             @load="page => filterData(filters, page)"
             infinite
             :shimmerItems="0"
         >
           <template #promo>
             <div class="col-8 col-12-lg"
-                 v-if="dataCollection.show_promo && dataCollection.cover_4x3.data != null && filterSelected?.length === 0"
+                 v-if="dataCollection?.show_promo && dataCollection?.cover_4x3?.data != null && filterSelected?.length === 0"
             >
-              <div class="promo" v-if="dataCollection.show_promo">
-                <Image v-if="dataCollection.video.data !== null" class="video" :path="dataCollection.video" :alt="dataCollection.title" :poster="dataCollection?.cover_3x4" />
-                <Image v-else :path="dataCollection.cover_4x3" :alt="dataCollection.title"/>
+              <div class="promo" v-if="dataCollection?.show_promo">
+                <Image v-if="dataCollection?.video?.data !== null" class="video" :path="dataCollection.video" :alt="dataCollection?.title" :poster="dataCollection?.cover_3x4" />
+                <Image v-else :path="dataCollection?.cover_4x3" :alt="dataCollection?.title"/>
               </div>
             </div>
           </template>
           <template #fact>
-            <div v-if="dataCollection.fact !== null && filterSelected?.length === 0" :class="(dataCollection.fact.ratio === 'vertical' ?  'col-4'  : 'col-8') + ' col-6-lg col-12-lg new-ratio-16x9-md'">
+            <div v-if="dataCollection?.fact !== null && filterSelected?.length === 0" :class="(dataCollection.fact?.ratio === 'vertical' ?  'col-4'  : 'col-8') + ' col-6-lg col-12-lg new-ratio-16x9-md'">
               <Fact :data="dataCollection.fact"/>
             </div>
           </template>
@@ -77,7 +79,7 @@
 import getCollection from '~/api/getCollection'
 import getProducts from '~/api/getProducts'
 import getActiveFilters from '~/api/getActiveFilters'
-const {$getAbsoluteUrl} = useNuxtApp();
+
 const route = useRoute();
 const router = useRouter();
 let slug = route.params.slug;

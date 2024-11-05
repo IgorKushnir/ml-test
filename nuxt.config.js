@@ -8,7 +8,23 @@ export default defineNuxtConfig({
       prerender: {
           crawlLinks: true,
           routes: ['/'],
-          ignore: ["/inspiration", '/pl/inspiracja', '/moodboard', '/pl/moodboard', '/news', '/pl/aktualnosci', '/press-about-us', '/pl/prasa', '/request-an-appointment', '/newsletter', '/store-finder', '/pl/wyszukiwarka-sklepow'],
+          ignore: [
+            "/inspiration", '/pl/inspiracja', 
+            '/moodboard', '/pl/moodboard', 
+            '/news', '/pl/aktualnosci', 
+            '/press-about-us', '/pl/prasa', 
+            '/request-an-appointment', 
+            '/newsletter', 
+            '/store-finder', '/pl/wyszukiwarka-sklepow',
+            '^/product/.*\\?.*$',
+            '^/pl/product/.*\\?.*$',
+            '^/dress/.*\\?.*$',
+            '^/pl/suknie/.*\\?.*$',
+            '^/accessories/.*\\?.*$',
+            '^/pl/akcesoria/.*\\?.*$',
+            '^/veils/.*\\?.*$',
+            '^/pl/welony/.*\\?.*$',
+        ],
         }
     },
 
