@@ -10,7 +10,7 @@
         :src="$getImage(path, size)"
         :alt="path.data?.attributes?.alternativeText ?? alt"
         class="img-component base"
-        loading="lazy"
+        :loading="lazy ? 'lazy' : ''"
         format="webp"
     />
     
@@ -52,6 +52,11 @@ let props = defineProps({
   poster: {
     type: Object,
     required: false
+  },
+  lazy: {
+    type: Boolean,
+    required: false,
+    default: false,
   }
 })
 

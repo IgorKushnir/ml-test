@@ -22,12 +22,13 @@
             <div class="col-12 subheader small center m-b-0 m-t-16 show-sm">{{line?.title}}</div>
 
             <template v-if="line?.collections?.data?.length > 0">
-              <div v-for="collection in line.collections.data" class="col-4 col-6-xl col-12-sm">
+              <div v-for="(collection, index) in line.collections.data" class="col-4 col-6-xl col-12-sm">
                 <CollectionItem
                     :title="collection?.attributes?.title"
                     :sub-header="line?.title"
                     :image="collection?.attributes?.cover_3x4"
                     :to="localePath(`/collection/${collection.attributes.slug}`)"
+                    :lazyLoadImage="index !== 0"
                 />
               </div>
             </template>

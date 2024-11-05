@@ -7,12 +7,12 @@
               class="collection-item"
     >
       <template v-if="(!wide && !(poster && image_4x3))">
-        <Image :path="image" :alt="title"  size="medium"/>
+        <Image :path="image" :alt="title"  size="medium" :lazy="lazyLoadImage" />
       </template>
 
       <template v-else>
-        <Image class="hide-md" :path="image_4x3" :alt="title"  :size="wide ? 'large' : 'medium'"/>
-        <Image class="show-md" :path="image" :alt="title" size="medium" />
+        <Image class="hide-md" :path="image_4x3" :alt="title"  :size="wide ? 'large' : 'medium'" :lazy="lazyLoadImage"/>
+        <Image class="show-md" :path="image" :alt="title" size="medium" :lazy="lazyLoadImage" />
       </template>
 
 
@@ -82,6 +82,11 @@ const props = defineProps({
     type: Object,
     required: false
   },
+  lazyLoadImage: {
+    type: Boolean,
+    required: false,
+    default: false,
+  }
 })
 
 function hover(hover, el) {
