@@ -207,7 +207,8 @@ const bookingDatesWithSpecials = computed(() => {
 
   return bd
 })
-const currentYear = computed(() => props?.bookingDates ? Object.keys(props.bookingDates).find(date => date.split('-')[1] === currentMonthIndex)[0].year : "")
+
+const currentYear = computed(() => props?.bookingDates ? Object.keys(props.bookingDates)[0].year : "")
 
 function isToday(date) {
   return new Date().toISOString().split('T')[0] === date

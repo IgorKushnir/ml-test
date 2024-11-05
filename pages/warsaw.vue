@@ -456,12 +456,7 @@ async function postRecord() {
   } catch (e) {
     console.error(e);
     consoleErrors.value.push(e)
-
-    if (e.message) {
-      altegError.value = e.message
-    } else {
-      altegError.value = t("service_unavailable")
-    }
+    altegError.value = t("service_unavailable")
   }
 
   sendingRequest.value = false
