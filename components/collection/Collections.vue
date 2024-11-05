@@ -17,18 +17,20 @@
           </template>
         </StickyBarStickyHeaderMilla>
 
-        <Container>
+        <Container v-if="data?.length > 0">
           <template v-for="line in data">
-            <div class="col-12 subheader small center m-b-0 m-t-16 show-sm">{{line.title}}</div>
+            <div class="col-12 subheader small center m-b-0 m-t-16 show-sm">{{line?.title}}</div>
 
-            <div v-for="collection in line.collections.data" class="col-4 col-6-xl col-12-sm">
-              <CollectionItem
-                  :title="collection.attributes.title"
-                  :sub-header="line.title"
-                  :image="collection.attributes.cover_3x4"
-                  :to="localePath('/collection/' + collection.attributes.slug)"
-              />
-            </div>
+            <template v-if="line?.collections?.data?.length > 0">
+              <div v-for="collection in line.collections.data" class="col-4 col-6-xl col-12-sm">
+                <CollectionItem
+                    :title="collection?.attributes?.title"
+                    :sub-header="line?.title"
+                    :image="collection?.attributes?.cover_3x4"
+                    :to="localePath(`/collection/${collection.attributes.slug}`)"
+                />
+              </div>
+            </template>
           </template>
         </Container>
       </div>
@@ -43,11 +45,10 @@
 <script setup>
 import getCollections from '~/api/getCollections'
 import {useTypesData} from "../../composables/states";
-import StickyHeaderMilla from "../stickyBar/StickyHeaderMilla";
 
 const { locale } = useI18n()
 
-let {data, pending, refresh, error} = await getCollections(locale.value)
+let {data, pending} = await getCollections(locale.value)
 
 const typeData = useTypesData()
 </script>
