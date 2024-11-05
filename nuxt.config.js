@@ -29,7 +29,7 @@ export default defineNuxtConfig({
         },
         "prerender:generate"(route) {
             console.log('route start', route)
-            if (route.route?.includes("?") || !pagesToIgnore.includes(route)) {
+            if (route.route?.includes("?") || pagesToIgnore.includes(route)) {
               route.skip = true;
             }
             console.log('route end', route)
