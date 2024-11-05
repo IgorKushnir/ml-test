@@ -5,19 +5,20 @@
              data-cropped="true"
              class="img-component-container" :class="(zoom && !path.data?.attributes?.mime?.startsWith('video/')) ? 'zoom' : ''" v-on:click="() => showZoomImage(path)">
 
-    <nuxt-img
+    <NuxtImg
         v-if="!path.data?.attributes?.mime?.startsWith('video/')"
         :src="$getImage(path, size)"
         :alt="path.data?.attributes?.alternativeText ?? alt"
         class="img-component base"
         loading="lazy"
+        format="webp"
     />
     
     <video ref="mainVideo" v-if="path.data?.attributes?.mime?.startsWith('video/')" muted autoplay playsinline :poster="poster" loop tabindex="-1">
       <source ref="videoSource" :type="path.data.attributes.mime" aria-hidden="true">
     </video>
     
-    <nuxt-img :src="placeholder" :alt="alt" class="img-component placeholder" />
+    <NuxtImg :src="placeholder" :alt="alt" class="img-component placeholder" format="webp" />
     
   </component>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <nuxt-img :src="'/img/flags/'+ code?.toLowerCase() +'.webp'" class="flag" loading="lazy" />
+  <NuxtImg :src="'/img/flags/'+ code?.toLowerCase() +'.webp'" class="flag" loading="lazy" format="webp" />
 
 </template>
 
