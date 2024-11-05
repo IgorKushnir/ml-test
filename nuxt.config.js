@@ -1,6 +1,16 @@
 import {defineNuxtConfig} from 'nuxt/config'
 import graphql from '@rollup/plugin-graphql';
 
+const pagesToIgnore = [
+    "/inspiration", '/pl/inspiracja', 
+    '/moodboard', '/pl/moodboard', 
+    '/news', '/pl/aktualnosci', 
+    '/press-about-us', '/pl/prasa', 
+    '/request-an-appointment',  '/pl/request-an-appointment', 
+    '/newsletter', 
+    '/store-finder', '/pl/wyszukiwarka-sklepow',
+]
+
 export default defineNuxtConfig({
   ssr: true,
   nitro: {
@@ -11,20 +21,20 @@ export default defineNuxtConfig({
     hooks: {
         async 'prerender:routes' (routes) {
             console.log('routes', routes)
-            const pagesToIgnore = [
-                "/inspiration", '/pl/inspiracja', 
-                '/moodboard', '/pl/moodboard', 
-                '/news', '/pl/aktualnosci', 
-                '/press-about-us', '/pl/prasa', 
-                '/request-an-appointment', 
-                '/newsletter', 
-                '/store-finder', '/pl/wyszukiwarka-sklepow',
-            ]
-            const filteredRoutes = Array.from(routes).filter(route => !route.includes('?') && !pagesToIgnore.includes(route))
+
+            const filteredRoutes = Array.from(routes).filter(route => !route.includes('?') || !pagesToIgnore.includes(route))
             console.log('filteredRoutes', filteredRoutes)
         
             return filteredRoutes
         },
+        "prerender:generate"(route) {
+            console.log('route start', route)
+            if (route.route?.includes("?") || !pagesToIgnore.includes(route)) {
+              route.skip = true;
+            }
+            console.log('route end', route)
+            return route
+          },
     },
     },
   css: [
