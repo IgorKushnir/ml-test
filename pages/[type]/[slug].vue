@@ -225,8 +225,6 @@ if (import.meta.server) {
     }
     if (firsImage) {
       structuredData["image"] = firsImage?.attributes?.formats?.medium?.url ?? firsImage?.attributes?.url ?? ''
-    } else {
-      console.error('Check product error: ', data.value.title);
     }
 
     useHead({
