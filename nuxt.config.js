@@ -2,13 +2,13 @@ import {defineNuxtConfig} from 'nuxt/config'
 import graphql from '@rollup/plugin-graphql';
 
 const pagesToIgnore = [
-    "/inspiration", '/pl/inspiracja', 
-    '/moodboard', '/pl/moodboard', 
-    '/news', '/pl/aktualnosci', 
-    '/press-about-us', '/pl/prasa', 
-    '/request-an-appointment',  '/pl/request-an-appointment', 
+    "/inspiration", '/inspiracja', 
+    '/moodboard',
+    '/news', '/aktualnosci', 
+    '/press-about-us', '/prasa', 
+    '/request-an-appointment', 
     '/newsletter', 
-    '/store-finder', '/pl/wyszukiwarka-sklepow',
+    '/store-finder', '/wyszukiwarka-sklepow',
 ]
 
 export default defineNuxtConfig({
@@ -19,23 +19,17 @@ export default defineNuxtConfig({
         routes: ['/'],
       },
     hooks: {
-        async 'prerender:routes' (routes) {
-            console.log('routes', routes)
-
-            const filteredRoutes = Array.from(routes).filter(route => !route.includes('?') || !pagesToIgnore.includes(route))
-            console.log('filteredRoutes', filteredRoutes)
-        
-            return filteredRoutes
-        },
         "prerender:generate"(route) {
-            console.log('route start', route)
-            if (route.route?.includes("?") || pagesToIgnore.includes(route)) {
+            if (route.route?.includes("?") || pagesToIgnore.some(ignorePage => route.includes(ignorePage))) {
               route.skip = true;
             }
-            console.log('route end', route)
+            route?.skip && console.log(route.route, route.skip)
             return route
           },
     },
+    },
+    experimental: {
+        buildCache: true
     },
   css: [
       '@/assets/style/main.scss',
