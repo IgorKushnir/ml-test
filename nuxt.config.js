@@ -17,6 +17,7 @@ export default defineNuxtConfig({
     prerender: {
         crawlLinks: true,
         routes: ['/'],
+        ignore: pagesToIgnore,
       },
     hooks: {
         "prerender:generate"(route) {
@@ -27,9 +28,6 @@ export default defineNuxtConfig({
             return route
           },
     },
-    },
-    experimental: {
-        buildCache: true
     },
   css: [
       '@/assets/style/main.scss',
