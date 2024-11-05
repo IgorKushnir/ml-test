@@ -20,7 +20,7 @@ export default defineNuxtConfig({
       },
     hooks: {
         "prerender:generate"(route) {
-            if (route.route?.includes("?") || pagesToIgnore.some(ignorePage => route.includes(ignorePage))) {
+            if (route.route?.includes("?") || pagesToIgnore.some(ignorePage => route.route.includes(ignorePage))) {
               route.skip = true;
             }
             route?.skip && console.log(route.route, route.skip)
