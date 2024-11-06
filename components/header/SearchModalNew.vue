@@ -121,6 +121,7 @@
 </template>
 
 <script setup>
+import {debounce} from "./debounce"
 // Todo: 1. Dragndrop; 2. Error toast
 const { locale } = useI18n()
 const {$isUrl} = useNuxtApp()
@@ -298,7 +299,7 @@ async function getResult() {
   }
   pending.value = false;
 }
-
+const debouncedGetResult = debounce(getResult)
 watch(search, () => {
   // settings()
   if ($isUrl(search.value)) {
@@ -306,7 +307,7 @@ watch(search, () => {
     searchByImage(search.value)
   } else {
     // console.log('not url');
-    getResult()
+    debouncedGetResult()
   }
 })
 watch(() => input.value, () => {
