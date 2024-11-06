@@ -17,7 +17,7 @@ query Collections{
             slug
             order
             collections (
-              sort: "order"
+              sort: "createdAt"
             ) {
               data {
                 attributes {
@@ -43,7 +43,7 @@ query Collections{
 
     const { data, pending, refresh, error } = await useLazyAsyncData('l_data_'+collection, () => response, {
         transform: (d) => {
-            const data = d?.data[collection]?.data;
+            const data = d.data[collection].data;
             let lines = data.map(line => line.attributes)
 
             return lines;
