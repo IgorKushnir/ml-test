@@ -345,7 +345,7 @@ async function getDaysAndHours() {
         type: "days",
         service_id: selectedServiceId.value,
         date_from: new Date(Date.now()).toLocaleDateString('en-CA'),
-        date_to: new Date(Date.now() + 91 * 24 * 60 * 60 * 1000).toLocaleDateString('en-CA')
+        date_to: new Date(Date.now() + 61 * 24 * 60 * 60 * 1000).toLocaleDateString('en-CA')
       }
     })
     if (!d.success) throw d.meta
