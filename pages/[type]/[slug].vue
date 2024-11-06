@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="data != null">
+    <div v-if="data != null && !pending">
 
       <StickyBarStickyHeaderMilla :title="data.title">
         <template #end>

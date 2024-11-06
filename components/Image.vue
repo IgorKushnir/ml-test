@@ -27,7 +27,7 @@
 // import {useIsMobile, useZoomImage} from "../composables/states";
 
 const { $getAbsoluteUrl,  $getImage} = useNuxtApp();
-import { onBeforeMount, onMounted, ref } from 'vue';
+import {  onMounted, ref } from 'vue';
 import bannerImage from '@/assets/img/placeholder.svg';
 
 let props = defineProps({
@@ -75,18 +75,13 @@ onMounted(async () => {
         window.addEventListener('load', loadVideo);
       }
     });
+    
     const loadVideo = () => {
       if (mainVideo.value && videoSource.value) {
         videoSource.value.src = $getAbsoluteUrl(props.path.data.attributes.url);
         mainVideo.value.load(); 
       }
     };
-
-onBeforeMount(() => {
-  if (videoSource.value?.src) {
-    videoSource.value.src = null
-  }
-})
 
 const isNotSvg = computed(() => props.path.data?.attributes?.url.endsWith('.jpg') || props.path.data?.attributes?.url.endsWith('.jpeg') || props.path.data?.attributes?.url.endsWith('.png') || props.path.data?.attributes?.url.endsWith('.JPG') || props.path.data?.attributes?.url.endsWith('.JPEG') || props.path.data?.attributes?.url.endsWith('.PNG'))
 
