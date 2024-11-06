@@ -1,11 +1,11 @@
 <template>
   <div>
-    <Seo title="Inspiration" :breadcrumbs="[
+    <Seo :title="$t('inspiration')" :breadcrumbs="[
         {
-          title: 'Inspiration',
+          title: $t('inspiration'),
         }
     ]"
-         :localizations="[{locale: 'en', slug: 'inspiration'}, {locale: 'pl', slug: 'inspiration'}]"
+         :localizations="[{locale: 'en', slug: 'inspiration'}, {locale: 'pl', slug: 'inspiracja'}]"
     />
 
     <transition name="fade">
