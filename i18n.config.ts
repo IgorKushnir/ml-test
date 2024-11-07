@@ -110,7 +110,9 @@ export default defineI18nConfig(() => ({
             search_clear: "Clear",
             error_image_upload: "Invalid image URL. Please check and try again.",
 
-            discover: "Discover"
+            discover: "Discover",
+            wedding_dresses: "Wedding dresses",
+            evening_dresses: "Evening dresses"
         },
         pl: {
             book_title: 'Zarezerwuj wizytę',
@@ -243,7 +245,9 @@ export default defineI18nConfig(() => ({
             error_image_upload: "Nieprawidłowy adres URL obrazu. Sprawdź i spróbuj ponownie.",
 
 
-            discover: "Odkryj"
+            discover: "Odkryj",
+            wedding_dresses: "Suknie ślubne",
+            evening_dresses: "Suknie wieczorowe"
         }
     }
 }))

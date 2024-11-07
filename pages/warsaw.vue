@@ -234,8 +234,6 @@ const userData = ref({
   consent: {value: false, error: false, required: true},
 })
 
-
-
 const steps = ref([
   {
     name: t('book_step_1'),
@@ -251,22 +249,22 @@ const steps = ref([
   },
 ])
 
+const services = [
+  {
+    service_id: 0,
+    title: $t("wedding_dresses")
+  },
+  {
+    service_id: 1,
+    title: $t("evening_dresses")
+  }
+]
+
 const consoleErrors = ref([])
 const altegError = ref(null)
 
 let { data, pending, refresh, error } = await getFlagship(locale.value)
 
-const services = computed(() => {
-  if (!bookingServices.value) return
-  // console.log(bookingServices.value);
-  const ids = bookingServices.value.map(b => b.id);
-  return data.value.servises.filter(s => ids.includes(s.service_id) && s.publish)
-})
-
-// if (process.client) {
-//   // getDaysAndHours()
-// }
-getServices()
 
 function goStep(_step, payload) {
   step.value = _step
@@ -299,41 +297,6 @@ function goStep(_step, payload) {
     top: 0,
     behavior: "smooth"
   })
-}
-async function getServices() {
-  altegError.value = null
-
-  try {
-    const d = await $fetch('/api/alteg', {
-      method: "POST",
-      body: {
-        type: "services",
-      }
-    })
-    if (!d.success) throw d.meta
-
-
-    bookingServices.value = d?.data.filter(services => services.is_online);
-    const staff = []
-    bookingServices.value?.forEach(service => {
-      service.staff?.forEach(st => staff.push(st.id))
-    })
-
-    // leave unique staff id
-    bookingStaff.value = staff.filter(function(item, pos) {
-      return staff.indexOf(item) == pos;
-    })
-    if (!bookingStaff.value || bookingStaff.value?.length === 0) {
-      throw 'staff ids not found'
-    }
-
-  } catch (e) {
-    console.error(e);
-    consoleErrors.value.push(e)
-
-    altegError.value = t("service_unavailable")
-    bookingServices.value = []
-  }
 }
 async function getDaysAndHours() {
   bookingDates.value = null
