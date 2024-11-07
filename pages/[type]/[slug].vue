@@ -206,7 +206,7 @@ if (import.meta.server) {
 
     if (data.value?.type?.data?.attributes?.slug) {
 
-      const redirectLink = `/${data.value.type.data.attributes.slug}/${slug}`
+      const redirectLink = `/${data.value.type?.data?.attributes?.slug}/${slug}`
       navigateTo(localePath(redirectLink), { redirectCode: 301 })
     }
   }
