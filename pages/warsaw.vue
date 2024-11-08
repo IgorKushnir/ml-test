@@ -9,9 +9,7 @@
       <InnerHeader v-if="step !== 0"
                    :sub_header="data.sub_header"
                    :title="data.title"
-                   :steps="step !== 3 ? steps : null"
-                   @step="(index) => goStep(index)"
-                   :currentStep="step"
+                   :sub_title="$t('warsaw_sub_title')"
       />
 
       <FlagshipStepOne
@@ -93,10 +91,10 @@ const services = [
     service_id: 1,
     title: t("wedding_dresses")
   },
-  {
-    service_id: 2,
-    title: t("evening_dresses")
-  }
+  // {
+  //   service_id: 2,
+  //   title: t("evening_dresses")
+  // }
 ]
 
 let { data, pending } = await getFlagship(locale.value)

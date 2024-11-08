@@ -6,7 +6,7 @@
                 autofocus
                 required
                 v-model="userData.firstName.value"
-                class="input m-t-8"
+                class="input m-t-16"
                 type="text"
                 name="firstName"
                 id="firstName"
@@ -18,7 +18,7 @@
             <input
                 required
                 v-model="userData.lastName.value"
-                class="input m-t-8"
+                class="input m-t-16"
                 type="text"
                 name="lastName"
                 id="lastName"
@@ -31,7 +31,7 @@
             <input
                 required
                 v-model="userData.email.value"
-                class="input m-t-8"
+                class="input m-t-16"
                 type="email"
                 name="email"
                 id="email"
@@ -44,7 +44,7 @@
             <input
                 required
                 v-model="userData.phone.value"
-                class="input m-t-8"
+                class="input m-t-16"
                 type="tel"
                 name="phone"
                 id="phone"
@@ -53,86 +53,11 @@
             <label for="phone" class="error-message">{{ $t('book_error_phone') }}</label>
           </div>
 
-          <div class="input-block c-2" :class="userData.weddingDate.error ? 'error' : ''">
-            <label class="p-small required" for="weddingDate">{{ $t('book_celebrated_date') }}</label>
-            <input
-                v-model="userData.weddingDate.value"
-                required
-                class="input m-t-8"
-                type="date"
-                name="weddingDate"
-                id="weddingDate"
-            />
-            <label for="weddingDate" class="error-message">{{ $t('book_error_empty_field') }}</label>
-          </div>
-
-          <div class="input-block c-2" :class="userData.fittingType.error ? 'error' : ''">
-            <label class="p-small required" for="fittingType">{{ $t("fitting_type") }}</label>
-            <select
-                class="input m-t-8"
-                name="fittingType"
-                id="fittingType"
-                v-model="userData.fittingType.value"
-                required
-            >
-            <option :value="null" selected>- {{$t('choose_an_option')}} -</option>
-              <option value="Pierwsza" selected>{{ $t('first_fitting') }}</option>
-              <option value="Powtórna">{{ $t('retry_fitting') }}</option>
-            </select>
-            <label for="fittingType" class="error-message">{{ $t('book_error_empty_field') }}</label>
-          </div>
-
-          <div class="input-block c-2" :class="userData.dressSize.error ? 'error' : ''">
-            <label class="p-small required" for="dressSize">{{ $t("dress_size") }}</label>
-            <select
-                class="input m-t-8"
-                name="dressSize"
-                id="dressSize"
-                v-model="userData.dressSize.value"
-                required
-            >
-            <option :value="null" selected>- {{$t('choose_an_option')}} -</option>
-              <option value="XS-S" selected>{{ $t('xs') }}</option>
-              <option value="M-L">{{ $t('ml') }}</option>
-              <option value="XL i więcej">{{ $t('xl') }}</option>
-            </select>
-            <label for="dressSize" class="error-message">{{ $t('book_error_empty_field') }}</label>
-          </div>
-
-          <div class="input-block c-2" :class="userData.budget.error ? 'error' : ''">
-            <label class="p-small required" for="budget">{{ $t("budget") }}</label>
-            <select
-                class="input m-t-8"
-                name="budget"
-                id="budget"
-                v-model="userData.budget.value"
-                required
-            >
-            <option :value="null" selected>- {{$t('choose_an_option')}} -</option>
-              <option value="4000 - 12 000" selected>4 000 - 12 000</option>
-              <option value="12 000 - 28 000">12 000 - 28 000</option>
-              <option value="28 000+">28 000+</option>
-            </select>
-            <label for="budget" class="error-message">{{ $t('book_error_empty_field') }}</label>
-          </div>
-
-          <div class="input-block c-2" :class="userData.models.error ? 'error' : ''">
-            <label class="p-small" for="email">{{ $t('dress_list') }}</label>
-            <input
-                v-model="userData.models.value"
-                class="input m-t-8"
-                type="text"
-                name="models"
-                id="models"
-            />
-            <label for="models" class="error-message">{{ $t('book_error_empty_field') }}</label>
-          </div>
-
           <div class="input-block c-2" :class="userData.instagram.error ? 'error' : ''">
             <label class="p-small" for="email">{{ $t('instagram') }}</label>
             <input
                 v-model="userData.instagram.value"
-                class="input m-t-8"
+                class="input m-t-16"
                 type="text"
                 name="instagram"
                 id="instagram"
@@ -140,47 +65,23 @@
             <label for="instagram" class="error-message">{{ $t('book_error_empty_field') }}</label>
           </div>
 
-          <div class="input-block c-2">
-            <label class="p-small" for="findOut">{{ $t("book_find_out") }}</label>
-            <select
-                class="input m-t-8"
-                name="findOut"
-                id="findOut"
-                v-model="userData.findOut.value"
-            >
-              <option :value="null" selected>- {{$t('choose_an_option')}} -</option>
-              <option value="Instagram">Instagram</option>
-              <option value="Tik Tok">Tik Tok</option>
-              <option value="Pinterest">Pinterest</option>
-              <option value="Google">Google</option>
-              <option value="Reklama">{{ $t("advertising") }}</option>
-              <option value="Pokazy">{{ $t("trunk_shows") }}</option>
-              <label for="findOut" class="error-message">{{ $t('book_error_empty_field') }}</label>
-              <option value="Z polecenia">{{ $t("word_of_mouth") }}</option>
-            </select>
-          </div>
-
-          <div class="input-block c-2" :class="userData.preferredContact.error ? 'error' : ''">
-            <label class="p-small required" for="preferredContact">{{ $t("preferred_contact") }}</label>
-            <select
-                class="input m-t-8"
-                name="preferredContact"
-                id="preferredContact"
-                v-model="userData.preferredContact.value"
+          <div class="input-block c-2" :class="userData.weddingDate.error ? 'error' : ''">
+            <label class="p-small required" for="weddingDate">{{ $t('book_celebrated_date') }}</label>
+            <input
+                v-model="userData.weddingDate.value"
                 required
-            >
-              <option :value="null" selected>- {{$t('choose_an_option')}} -</option>
-              <option value="email">{{ $t("book_email") }}</option>
-              <option value="telefon">{{ $t("book_phone_call") }}</option>
-              <option value="sms">SMS</option>
-            </select>
-            <label for="preferredContact" class="error-message">{{ $t('book_error_empty_field') }}</label>
+                class="input m-t-16"
+                type="date"
+                name="weddingDate"
+                id="weddingDate"
+            />
+            <label for="weddingDate" class="error-message">{{ $t('book_error_empty_field') }}</label>
           </div>
 
           <div class="input-block c-2">
             <label class="p-small" for="people">{{ $t("book_number_of_people") }}</label>
             <select
-                class="input m-t-8"
+                class="input m-t-16"
                 name="people"
                 id="people"
                 v-model="userData.people.value"
@@ -193,19 +94,73 @@
             <label for="people" class="error-message">{{ $t('book_error_empty_field') }}</label>
           </div>
 
-          <div class="input-block c-2">
-            <label class="p-small" for="people">{{ $t("book_urgent") }}</label>
+          <div class="input-block c-2" :class="userData.fittingType.error ? 'error' : ''">
+            <label class="p-small required" for="fittingType">{{ $t("fitting_type") }}</label>
             <select
-                class="input m-t-8"
-                name="urgent"
-                id="urgent"
-                v-model="userData.urgent.value"
+                class="input m-t-16"
+                name="fittingType"
+                id="fittingType"
+                v-model="userData.fittingType.value"
+                required
             >
-              <option value="nie" selected>{{ $t("no") }}</option>
-              <option value="tak">{{ $t("yes") }}</option>
+            <option :value="null" selected>- {{$t('choose_an_option')}} -</option>
+              <option value="Pierwsza" selected>{{ $t('first_fitting') }}</option>
+              <option value="Powtórna">{{ $t('retry_fitting') }}</option>
             </select>
-            <label for="people" class="error-message">{{ $t('book_error_empty_field') }}</label>
+            <label for="fittingType" class="error-message">{{ $t('book_error_empty_field') }}</label>
           </div>
+
+          <FilterRadio
+          v-model="userData.dressSize.value"
+          name="dressSize"
+          :title="$t('dress_size')"
+          :subtitle="$t('dress_size_subtitle')"
+          required
+          :error="userData.dressSize.error"
+          :errorText="$t('book_error_empty_field')"
+          :items="sizeItems"
+          />
+
+          <FilterRadio
+          v-model="userData.budget.value"
+          name="budget"
+          :title="$t('budget')"
+          required
+          :error="userData.budget.error"
+          :errorText="$t('book_error_empty_field')"
+          :items="budgetItems"
+          />
+
+          <FilterRadio
+          v-model="userData.preferredContact.value"
+          name="preferredContact"
+          :title="$t('preferred_contact')"
+          required
+          :error="userData.preferredContact.error"
+          :errorText="$t('book_error_empty_field')"
+          :items="contactItems"
+          />
+
+          <div class="input-block c-4" :class="userData.models.error ? 'error' : ''">
+            <label class="p-small" for="email">{{ $t('dress_list') }}</label>
+            <p class="p-small subtitle">{{ $t('dress_list_subtitle') }}</p>
+            <textarea
+                v-model="userData.models.value"
+                class="input m-t-16"
+                type="text"
+                name="models"
+                id="models"
+            />
+            <label for="models" class="error-message">{{ $t('book_error_empty_field') }}</label>
+          </div>
+
+          <FilterCheckboxCards
+          :modelValue="userData.findOut.value"
+          :title="$t('book_find_out')"
+          :items="findOutItems"
+          name="findOut"
+          @updateValue="updatefindOutValue"
+          />
 
           <div class="input-block c-4" id="consent"  :class="userData.consent.error ? 'error' : ''">
 
@@ -237,7 +192,7 @@ import {generateBody} from './generateBody'
 import { onMounted } from 'vue';
 
 const { $validateEmail } = useNuxtApp();
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 
 const emits = defineEmits(['goStep'])
 const sendingRequest = ref(false)
@@ -255,10 +210,44 @@ const userData = ref({
   instagram: { value: '', error: false },
   preferredContact: {value: "", error: false, required: true},
   people: {value: 0, error: false},
-  findOut: {value: null, error: false, required: true},
-  urgent: {value: 'nie', error: false},
+  findOut: {value: [], error: false, required: true},
   consent: {value: false, error: false, required: true},
 })
+
+const sizeItems = [
+  {name: 'xs', value: 'XS-S', title: t('xs')},
+  {name: 'ml', value: 'M-L', title: t('ml')},
+  {name: 'xl', value: 'XL i więcej', title: t('xl')},
+]
+
+const budgetItems = [
+{name: '6000 - 12 000', value: '6000 - 12 000', title: '6000 - 12 000'},
+{name: '12 000 - 28 000', value: '12 000 - 28 000', title: '12 000 - 28 000'},
+{name: '28 000+', value: '28 000+', title: '28 000+'},
+]
+
+const contactItems = [
+{name: 'telefon', value: 'telefon', title: t('book_phone_call')},
+{name: 'email', value: 'email', title: t('book_email')},
+{name: 'sms', value: 'sms', title: t('text_message')},
+]
+
+const findOutItems = [
+{name: 'Instagram', value: 'Instagram', title: 'Instagram'},
+{name: 'Tik Tok', value: 'Tik Tok', title: 'Tik Tok'},
+{name: 'Pinterest', value: 'Pinterest', title: 'Pinterest'},
+{name: 'Google', value: 'Google', title: 'Google'},
+{name: 'Reklama', value: 'Reklama', title: t("advertising")},
+{name: 'Z polecenia', value: 'Z polecenia', title: t("word_of_mouth")},
+]
+
+const updatefindOutValue = (value) => {
+  if (userData.value.findOut.value.includes(value)) {
+    userData.value.findOut.value = userData.value.findOut.value.filter(item => item !== value)
+  } else {
+    userData.value.findOut.value.push(value)
+  }
+}
 
 function validatePhone(phone) {
   const regex = /^\+?([0-9]{10,14})$/;
@@ -340,3 +329,10 @@ onMounted(async () => {
   sendingRequest.value = false
 }
 </script>
+
+<style lang="scss" scoped>
+.subtitle {
+    font-style: italic;
+    margin: 8px 0;
+}
+</style>

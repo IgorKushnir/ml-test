@@ -29,7 +29,6 @@ export default defineI18nConfig(() => ({
             book_preferable_appointment_date: 'Preferable appointment date',
             book_confirm: 'I don’t mind receiving invitations to exclusive events and staying updated on brands\' promos and news.',
             book_send: 'Send',
-            book_urgent: 'Is urgent request',
             book_home_page: 'Home page',
             book_thank_you: 'Thank you!',
             book_has_been_processed: 'Your request has been processed. A manager from a selected retailer will contact you shortly to confirm the reservation and clarify the details if needed. Please be informed that this is not the final confirmation of the appointment. The boutique will contact you within 24 hours after receiving your request to finalize the date of your appointment.',
@@ -120,16 +119,20 @@ export default defineI18nConfig(() => ({
             fitting_type: "Type of fitting appointment",
             first_fitting: "First fitting",
             retry_fitting: "Re-try fitting",
-            dress_size: "Typical dress size",
+            dress_size: "What is your typical dress size?",
+            dress_size_subtitle: "This information allows our stylists to prepare dresses in specific sizes ahead of your appointment.",
             xs: "XS-S",
             ml: "M-L",
             xl: "XL+",
-            budget: "Comfortable budget",
-            dress_list: "List of dresses to try on",
+            budget: "What budget are you comfortable with?",
+            dress_list: "Please provide an initial list of dresses you'd like to try on.",
+            dress_list_subtitle: "We will prepare them in advance to get a sense of your approximate style.",
             instagram: "Instagram nickname or profile link",
             word_of_mouth: 'Word of mouth',
             advertising: "Advertising",
-            preferred_contact: "Preferred method of contact"
+            preferred_contact: "What’s your preferred method of contact?",
+            warsaw_sub_title: "Take the first step toward your dream dress!",
+            text_message: "Text message"
         },
         pl: {
             yes: 'Tak',
@@ -159,7 +162,6 @@ export default defineI18nConfig(() => ({
             book_preferable_appointment_date: 'Preferowana data wizyty',
             book_confirm: 'Nie mam nic przeciwko otrzymywaniu zaproszeń na ekskluzywne wydarzenia i byciu na bieżąco z promocjami i nowościami marek.',
             book_send: 'Wysłać',
-            book_urgent: "Pilna",
             book_home_page: 'Strona główna',
             book_thank_you: 'Dziękuję!',
             book_has_been_processed: 'Twoje zgłoszenie zostało przetworzone. Menedżer wybranego sprzedawcy wkrótce skontaktuje się z Tobą, aby potwierdzić rezerwację i w razie potrzeby wyjaśnić szczegóły. Informujemy, że nie jest to ostateczne potwierdzenie terminu spotkania. Butik skontaktuje się z Tobą w ciągu 24 godzin od otrzymania Twojego zgłoszenia w celu sfinalizowania daty spotkania.',
@@ -237,7 +239,6 @@ export default defineI18nConfig(() => ({
             book_consent: "Kliknięcie tej opcji oznacza zgodę na otrzymywanie wiadomości tekstowych dotyczących nadchodzących spotkań, potwierdzeń i istotnych informacji. MN ceni Twoją prywatność i zapewnia, że Twoje dane nie będą udostępniane.",
             service_unavailable: "Wszystkie terminy tego dnia są już zarezerwowane. Sprawdź inną datę.",
 
-
             January: 'Styczeń',
             February: 'Luty',
             March: 'Marzec',
@@ -272,16 +273,20 @@ export default defineI18nConfig(() => ({
             fitting_type: "Typ przymiarki",
             first_fitting: "Pierwsza",
             retry_fitting: "Powtórna",
-            dress_size: "Rozmiar",
+            dress_size: "Jaki jest Twój typowy rozmiar sukienki?",
+            dress_size_subtitle: "Te informacje pozwalają naszym stylistom przygotować sukienki w określonych rozmiarach przed Twoją wizytą.",
             xs: "XS-S",
             ml: "M-L",
             xl: "XL i więcej",
-            budget: "Budżet (USD)",
-            dress_list: "Modele sukni",
+            budget: "Jaki budżet Ci odpowiada?*",
+            dress_list: "Podaj wstępną listę sukienek, które chcesz przymierzyć.",
+            dress_list_subtitle: "Przygotujemy je wcześniej, aby w przybliżeniu poznać Twój styl",
             instagram: "Pseudonim lub link do profilu na Instagramie",
             word_of_mouth: "Z polecenia",
             advertising: "Reklama",
-            preferred_contact: "Preferowana metoda kontaktu"
+            preferred_contact: "Jaka jest Twoja preferowana metoda kontaktu?",
+            warsaw_sub_title: "Zrób pierwszy krok w stronę wymarzonej sukni!",
+            text_messsage: "Wiadomość tekstowa"
         }
     }
 }))
