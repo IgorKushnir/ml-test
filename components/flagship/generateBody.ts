@@ -1,10 +1,10 @@
-export const generateBody = (userData: {[key: string]: {value: string}}, language: string) => {
-    const parsedBudget = parseInt(userData.budget.value)
-    const timeToWedding = new Date(userData.weddingDate.value).getTime() -  Date.now()
+export const generateBody = (userData: {[key: string]: {value: string | string[]}}, language: string) => {
+    const parsedBudget = typeof userData.budget.value === 'string' ? parseInt(userData.budget.value) : 0
+    const timeToWedding = typeof userData.weddingDate.value === 'string' ? new Date(userData.weddingDate.value).getTime() -  Date.now() : 0
     let priorityCount = 0
 
     switch (parsedBudget) {
-        case 4:
+        case 6:
             priorityCount = priorityCount + 1
             break;
         case 12:
@@ -30,7 +30,7 @@ export const generateBody = (userData: {[key: string]: {value: string}}, languag
     return [
     'Nowe zgłoszenie', //status
     '', //postponed
-     userData.urgent.value, //urgent
+     '', //urgent
      priority, //priority
      `${new Date(Date.now()).toLocaleDateString('pl-PL')}, ${new Date(Date.now()).toLocaleTimeString('pl-PL')}`, //creation date
      userData.firstName.value, // first name
@@ -44,7 +44,7 @@ export const generateBody = (userData: {[key: string]: {value: string}}, languag
      userData.budget.value, // Budżet (USD)
      userData.models.value, // Modele sukni
      userData.instagram.value, // Instagram
-     userData.findOut.value,  // Źródło MillaNova
+     userData.findOut.value?.join(", "),  // Źródło MillaNova
      userData.preferredContact.value, // Kontakt
      '', // Ostatni kontakt
      '', // Ponowny kontakt
