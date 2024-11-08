@@ -16,7 +16,7 @@
 
       <FlagshipStepOne
           v-if="step === 0"
-          @serviceId="(id) => goStep(1, id)"
+          @serviceId="(id) => goStep(id)"
           :sub_header="data.sub_header"
           :title="data.title"
           :cover="data.cover_4x3"
@@ -26,7 +26,7 @@
 
 
       <Container v-if="step === 1" justify="justify-center">
-        <FlagshipContactForm @goStep="(index) => goStep(index)" :selectedServiceId="selectedServiceId" />
+        <FlagshipContactForm @goStep="(index) => goStep(index)" />
       </Container>
 
       <Container>
@@ -72,7 +72,6 @@ import getFlagship from '~/api/getFlagship'
 const { t,locale } = useI18n()
 
 const step = ref(0)
-const selectedServiceId = ref()
 
 const steps = ref([
   {
@@ -91,11 +90,11 @@ const steps = ref([
 
 const services = [
   {
-    service_id: 0,
+    service_id: 1,
     title: t("wedding_dresses")
   },
   {
-    service_id: 1,
+    service_id: 2,
     title: t("evening_dresses")
   }
 ]

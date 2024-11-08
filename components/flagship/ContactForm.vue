@@ -109,7 +109,7 @@
                 required
             >
             <option :value="null" selected>- {{$t('choose_an_option')}} -</option>
-              <option value="4000 - 12 000" selected>4000 - 12 000</option>
+              <option value="4000 - 12 000" selected>4 000 - 12 000</option>
               <option value="12 000 - 28 000">12 000 - 28 000</option>
               <option value="28 000+">28 000+</option>
             </select>
@@ -232,12 +232,13 @@
 
 <script setup>
 import phoneCodes from '~/api/phoneCodes.json'
-const { $validateEmail } = useNuxtApp();
-const { t, locale } = useI18n()
+import getCountryCode from "~/api/getCountryCode";
+import {generateBody} from './generateBody'
+import { onMounted } from 'vue';
 
-const props = defineProps({
-  selectedServiceId: Number
-})
+const { $validateEmail } = useNuxtApp();
+const { locale } = useI18n()
+
 const emits = defineEmits(['goStep'])
 const sendingRequest = ref(false)
 
@@ -254,7 +255,7 @@ const userData = ref({
   instagram: { value: '', error: false },
   preferredContact: {value: "", error: false, required: true},
   people: {value: 0, error: false},
-  findOut: {value: null, error: false},
+  findOut: {value: null, error: false, required: true},
   urgent: {value: 'nie', error: false},
   consent: {value: false, error: false, required: true},
 })
@@ -265,8 +266,12 @@ function validatePhone(phone) {
 }
 
 watch(() => userData.value.phone.value, (phone) => {
-  if (phone?.length === 0) phone = '+'
-  if (phone[0] !== '+') phone = '+'.concat(phone.slice(1))
+  if (phone?.length === 0) {
+    phone = '+'
+  }
+  if (phone[0] !== '+') {
+    phone = `+${phone.slice(1)}`
+  }
 
   phone = phone.replace(/[^+0-9]/g, "")
   userData.value.phone.value = phone
@@ -279,13 +284,9 @@ function setCountryCode(countryCode) {
   }
 }
 
-import getCountryCode from "../../api/getCountryCode";
-import {generateBody} from './generateBody'
-import { onMounted } from 'vue';
-
 onMounted(async () => {
-  let countryCode = await getCountryCode()
-  setCountryCode(countryCode === 'null' ? 'US' : countryCode)
+  const countryCode = await getCountryCode()
+  setCountryCode(countryCode === 'null' ? 'PL' : countryCode)
 })
 
   async function postRecord() {
@@ -306,14 +307,13 @@ onMounted(async () => {
       }
     }
   })
-  const emailValidationResult = $validateEmail(userData.value.email.value)
-  if (!emailValidationResult) {
+
+  if (!$validateEmail(userData.value.email.value)) {
     userData.value.email.error = true
     errors.push('email')
   }
 
-  const phoneValidationResult = validatePhone(userData.value.phone.value)
-  if (!phoneValidationResult) {
+  if (!validatePhone(userData.value.phone.value)) {
     userData.value.phone.error = true
     errors.push('phone')
   }
@@ -327,7 +327,7 @@ onMounted(async () => {
     return
   }
 
-  const body = generateBody(userData.value, props.selectedServiceId === 0 ? 'Suknie ślubne' : 'Suknie wieczorowe', locale.value)
+  const body = generateBody(userData.value, locale.value)
 
   sendingRequest.value = true
   try {
