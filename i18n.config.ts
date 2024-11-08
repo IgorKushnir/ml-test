@@ -3,6 +3,8 @@ export default defineI18nConfig(() => ({
     locale: 'en',
     messages: {
         en: {
+            yes: 'Yes',
+            no: 'No',
             book_title: 'Request an appointment',
             book_sub_title: 'You are one step away from an unforgettable experience of discovering our gowns. Please fill out the form below so a retailer manager can contact you and confirm your booking.',
             book_your_contact_information: 'Your contact information',
@@ -14,6 +16,7 @@ export default defineI18nConfig(() => ({
             book_enter_your_email: 'Enter your email',
             book_phone_number: 'Phone number',
             book_enter_your_phone_number: 'Enter your phone number',
+            book_phone_call: "Phone call",
             book_your_preferred_store: 'Your preferred store',
             book_country: 'Country',
             book_choose_country: 'Choose country',
@@ -26,6 +29,7 @@ export default defineI18nConfig(() => ({
             book_preferable_appointment_date: 'Preferable appointment date',
             book_confirm: 'I don’t mind receiving invitations to exclusive events and staying updated on brands\' promos and news.',
             book_send: 'Send',
+            book_urgent: 'Is urgent request',
             book_home_page: 'Home page',
             book_thank_you: 'Thank you!',
             book_has_been_processed: 'Your request has been processed. A manager from a selected retailer will contact you shortly to confirm the reservation and clarify the details if needed. Please be informed that this is not the final confirmation of the appointment. The boutique will contact you within 24 hours after receiving your request to finalize the date of your appointment.',
@@ -95,8 +99,8 @@ export default defineI18nConfig(() => ({
             choose_an_option: 'Choose an option',
 
             book_step_1: "Service",
-            book_step_2: "Date",
-            book_step_3: "Contact Information",
+            book_step_2: "Contact Information",
+            book_step_3: "Confirmation",
 
             book_number_of_people: "Number of people joining you",
             book_find_out: "How did you find out about Milla Nova?",
@@ -112,9 +116,24 @@ export default defineI18nConfig(() => ({
 
             discover: "Discover",
             wedding_dresses: "Wedding dresses",
-            evening_dresses: "Evening dresses"
+            evening_dresses: "Evening dresses",
+            fitting_type: "Type of fitting appointment",
+            first_fitting: "First fitting",
+            retry_fitting: "Re-try fitting",
+            dress_size: "Typical dress size",
+            xs: "XS-S",
+            ml: "M-L",
+            xl: "XL+",
+            budget: "Comfortable budget",
+            dress_list: "List of dresses to try on",
+            instagram: "Instagram nickname or profile link",
+            word_of_mouth: 'Word of mouth',
+            advertising: "Advertising",
+            preferred_contact: "Preferred method of contact"
         },
         pl: {
+            yes: 'Tak',
+            no: 'Nie',
             book_title: 'Zarezerwuj wizytę',
             book_sub_title: 'Jesteś o krok od niezapomnianego doświadczenia odkrywania naszych sukni. Prosimy o wypełnienie poniższego formularza, aby menedżer ds. sprzedaży detalicznej mógł skontaktować się z Tobą i potwierdzić rezerwację.',
             book_your_contact_information: 'Twoje dane kontaktowe',
@@ -123,9 +142,11 @@ export default defineI18nConfig(() => ({
             book_last_name: 'Nazwisko',
             book_enter_your_last_name: 'Wpisz swoje nazwisko',
             book_email: 'E-mail',
+            book_email_error: 'Wpisz prawidłowy adres e-mail',
             book_enter_your_email: 'Wprowadź swój e-mail',
             book_phone_number: 'Numer telefonu',
             book_enter_your_phone_number: 'Wprowadź swój numer telefonu',
+            book_phone_call: "Telefon",
             book_your_preferred_store: 'Preferowany sklep',
             book_country: 'Kraj',
             book_choose_country: 'Wybierz kraj',
@@ -138,6 +159,7 @@ export default defineI18nConfig(() => ({
             book_preferable_appointment_date: 'Preferowana data wizyty',
             book_confirm: 'Nie mam nic przeciwko otrzymywaniu zaproszeń na ekskluzywne wydarzenia i byciu na bieżąco z promocjami i nowościami marek.',
             book_send: 'Wysłać',
+            book_urgent: "Pilna",
             book_home_page: 'Strona główna',
             book_thank_you: 'Dziękuję!',
             book_has_been_processed: 'Twoje zgłoszenie zostało przetworzone. Menedżer wybranego sprzedawcy wkrótce skontaktuje się z Tobą, aby potwierdzić rezerwację i w razie potrzeby wyjaśnić szczegóły. Informujemy, że nie jest to ostateczne potwierdzenie terminu spotkania. Butik skontaktuje się z Tobą w ciągu 24 godzin od otrzymania Twojego zgłoszenia w celu sfinalizowania daty spotkania.',
@@ -207,8 +229,8 @@ export default defineI18nConfig(() => ({
             choose_an_option: 'Wybierz opcję',
 
             book_step_1: "Usługa",
-            book_step_2: "Data",
-            book_step_3: "Informacje kontaktowe",
+            book_step_2: "Informacje kontaktowe",
+            book_step_3: "Potwierdzenie",
 
             book_number_of_people: "Liczba dołączających osób",
             book_find_out: "Jak dowiedziałeś się o Milla Nova?",
@@ -244,10 +266,22 @@ export default defineI18nConfig(() => ({
             search_clear: "Wyczyść",
             error_image_upload: "Nieprawidłowy adres URL obrazu. Sprawdź i spróbuj ponownie.",
 
-
             discover: "Odkryj",
             wedding_dresses: "Suknie ślubne",
-            evening_dresses: "Suknie wieczorowe"
+            evening_dresses: "Suknie wieczorowe",
+            fitting_type: "Typ przymiarki",
+            first_fitting: "Pierwsza",
+            retry_fitting: "Powtórna",
+            dress_size: "Rozmiar",
+            xs: "XS-S",
+            ml: "M-L",
+            xl: "XL i więcej",
+            budget: "Budżet (USD)",
+            dress_list: "Modele sukni",
+            instagram: "Pseudonim lub link do profilu na Instagramie",
+            word_of_mouth: "Z polecenia",
+            advertising: "Reklama",
+            preferred_contact: "Preferowana metoda kontaktu"
         }
     }
 }))
