@@ -127,7 +127,7 @@ export default defineNuxtConfig({
       PINECONE_KEY: process.env.PINECONE_KEY,
       public: {
           posthogPublicKey: process.env.POSTHOG_KEY,
-          posthogHost: 'https://us.i.posthog.com'
+          posthogHost: 'https://us.i.posthog.com',
       }
   },
 
