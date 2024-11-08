@@ -100,16 +100,12 @@ useHead({
                 a.appendChild(r);
                 })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');` : ''},
     {async: true, src: process.env.COOKIEYES_CODE ? `//cdn.cookie-script.com/s/${process.env.COOKIEYES_CODE}.js` : ''},
-    // { async: true, src: "https://www.googletagmanager.com/gtag/js?id=AW-16455473849"},
-    // {
-    //   innerHTML: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-16455473849');`
-    // },
+    { async: true, src: "https://www.googletagmanager.com/gtag/js?id=AW-16455473849"},
+    {
+      innerHTML: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-16455473849');`
+    },
   ],
   noscript: [
-    {
-      innerHTML: process.env.FACEBOOK_ID ? `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${process.env.FACEBOOK_ID}&ev=PageView&noscript=1" />` : ''
-      // tagPosition: 'bodyOpen'
-    },
     { // Pinterest Tag
       innerHTML: process.env.PINTEREST_ID ? `<img height="1" width="1" style="display:none;" alt="" src="https://ct.pinterest.com/v3/?event=init&tid=${process.env.PINTEREST_ID}&pd[em]=<hashed_email_address>&noscript=1" />` : ''
     },
