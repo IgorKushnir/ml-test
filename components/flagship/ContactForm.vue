@@ -3,7 +3,6 @@
           <div class="input-block c-2" :class="userData.firstName.error ? 'error' : ''">
             <label class="p-small required" for="firstName">{{ $t('book_first_name') }}</label>
             <input
-                autofocus
                 required
                 v-model="userData.firstName.value"
                 class="input m-t-16"

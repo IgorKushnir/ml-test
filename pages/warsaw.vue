@@ -24,8 +24,50 @@
 
 
       <Container v-if="step === 1" justify="justify-center">
+        <ul class="text-list">
+          <li class="text-item">
+            <span>
+              Due to high demand, we are currently accepting <b>first-fitting appointments</b> only for brides whose wedding date is <b>at least 6 months</b> away. If your wedding is coming up sooner, please reach out to us directly to explore available booking options.
+            </span>
+          </li>
+          <li class="text-item">
+            <span>
+              Feel free to invite your loved ones to join and share this significant moment with you. We allow <b>up to 3 guests</b> besides the bride to ensure a comfortable ambiance both for our clients and staff.
+            </span>
+          </li>
+          <li class="text-item">
+            <span>
+              If you are a bride with a specific vision wanting to have a unique one-of-a-kind design, we offer <b>custom-made</b> dresses. Custom designs may require additional time and fees, depending on the complexity of the design - you can learn more during your appointment.
+            </span>
+          </li>
+          <li class="text-item">
+            <span>
+              Our gowns range from <b>$1,000 to $12,000</b>, with an estimated production time of approximately <b>24-26 weeks</b>. We also offer a rush order option with production times under 16-18 weeks for an additional fee of +30% of the dress price.
+            </span>
+          </li>
+          <li class="text-item">
+            <span>
+              The majority of our samples range from <b>S to XL</b>. If you need a larger size, please make sure to specify this on the registration form.
+            </span>
+          </li>
+          <li class="text-item">
+            <span>
+              Prior to your visit, we recommend browsing through our catalog to explore your favored styles, silhouettes, and preferences. This proactive step will streamline the process of discovering your dream dress. Also, check our FAQ before booking.
+            </span>
+          </li>
+        </ul>
+        </Container>
+        <div class="additional-text-wrap" v-if="step === 1">
+          <p class="additional-text">Ready to take the most exciting step of your wedding prep journey?</p>
+          <p class="additional-text">After you complete the survey form, our administrator will contact you within <b>24 hours.</b></p>
+        </div>
+        <Container v-if="step === 1" justify="justify-center">
         <FlagshipContactForm @goStep="(index) => goStep(index)" />
       </Container>
+      <div class="additional-text-wrap additional-text-wrap--small" v-if="step === 1">
+          <p class="additional-text">We're here to support you every step, ensuring a stress-free and joyful experience, so feel free to reach out to us at any time if you need help: <b>+48 882 153 873</b> or email us at <b>warsaw@millanova.com</b> <br>
+            Our showroom is open Monday through Saturday from 10:00 to 19:00.</p>
+        </div>
 
       <Container>
         <div class="col-12">
@@ -67,7 +109,7 @@
 <script setup>
 import getFlagship from '~/api/getFlagship'
 
-const { t,locale } = useI18n()
+const { t, locale } = useI18n()
 
 const step = ref(0)
 
@@ -144,6 +186,44 @@ function goStep(_step, payload) {
   width: 24px;
   padding: 2px;
 }
+
+.text-list {
+  padding: 0;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 950px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: 20px;
+  row-gap: 40px;
+  list-style: none;
+}
+
+.text-item {
+  flex-basis: 48%;
+  padding-top: 24px;
+  border-top: 1px solid $border-dark;
+  color: $gray;
+  font-weight: 400;
+font-size: 18px;
+}
+
+.additional-text-wrap {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 950px;
+  text-align: center;
+
+  &--small {
+    max-width: 790px;
+  }
+}
+
+.additional-text {
+  margin: 8px 0;
+}
+
 @include md {
   .social {
     margin: 4px;
@@ -151,6 +231,13 @@ function goStep(_step, payload) {
     height: auto;
     width: auto;
     padding: 12px;
+  }
+}
+
+@include lg {
+
+  .text-item {
+    flex-basis: 100%;
   }
 }
 </style>
