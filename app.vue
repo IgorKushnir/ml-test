@@ -100,9 +100,9 @@ useHead({
                 a.appendChild(r);
                 })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');` : ''},
     {async: true, src: process.env.COOKIEYES_CODE ? `//cdn.cookie-script.com/s/${process.env.COOKIEYES_CODE}.js` : ''},
-    { async: true, src: "https://www.googletagmanager.com/gtag/js?id=AW-16455473849"},
+    { async: true, src: process.env.GTAG_KEY ? `https://www.googletagmanager.com/gtag/js?id=${process.env.GTAG_KEY}` : ""},
     {
-      innerHTML: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-16455473849');`
+      innerHTML: process.env.GTAG_KEY ? `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '${process.env.GTAG_KEY}');` : ""
     },
   ],
   noscript: [
@@ -113,7 +113,7 @@ useHead({
 })
 
 onMounted(async () => {
-  if(gtag) { gtag('config', 'AW-16455473849'); // Google Ads - Addon to Gtag
+  if(gtag) { gtag('config', process.env.GTAG_KEY); // Google Ads - Addon to Gtag
   }
 
   reportWindowSize()

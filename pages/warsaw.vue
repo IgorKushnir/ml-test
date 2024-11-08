@@ -285,12 +285,14 @@ function goStep(_step, payload) {
   }
   if (_step === 3) {
     fbq('track', 'Lead');  // Pixel??
-    gtag('event', 'success_form', {
-      'send_to': 'AW-16455473849/E3k4COnnw5cZELm1yqY9',
+    if (process.env.GTAG_KEY && gtag) {
+      gtag('event', 'success_form', {
+      'send_to': `${process.env.GTAG_KEY}/E3k4COnnw5cZELm1yqY9`,
       peopleJoinWithMe: userData.value.people,
       howDidIFindOut: userData.value.find_out ?? 'null'
     });
     console.log('event-sent');
+  }
   }
 
   window.scroll({
