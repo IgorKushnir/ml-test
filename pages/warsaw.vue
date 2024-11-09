@@ -54,7 +54,7 @@
           </li>
           <li class="text-item">
             <span>
-              {{ $t("book_text_20") }}
+              {{ $t("book_text_20") }}<a href="https://warsaw.millanova.com/collections/dresses?hide_prices=true ">{{ $t("book_text_20_link") }}</a>{{ $t("book_text_20_2") }}
             </span>
           </li>
         </ul>
