@@ -21,7 +21,7 @@ const update = () => {
 
 <style lang="scss" scoped>
 .wrap {
-    flex-basis: 49%;
+    flex-basis: calc(50% - 10px);
     padding: 20px;
     display: flex;
     justify-content: space-between;
@@ -55,4 +55,5 @@ const update = () => {
     border-left: 1px solid $dark-blue;
     transform: rotateZ(-45deg);
 }
+
 </style>
