@@ -27,46 +27,48 @@
         <ul class="text-list">
           <li class="text-item">
             <span>
-              Due to high demand, we are currently accepting <b>first-fitting appointments</b> only for brides whose wedding date is <b>at least 6 months</b> away. If your wedding is coming up sooner, please reach out to us directly to explore available booking options.
+              {{ $t("book_text_1") }}
+              <b>{{ $t("book_text_2") }}</b>{{ $t("book_text_3") }}<b>{{ $t("book_text_4") }}</b>{{ $t("book_text_5") }}
             </span>
           </li>
           <li class="text-item">
             <span>
-              Feel free to invite your loved ones to join and share this significant moment with you. We allow <b>up to 3 guests</b> besides the bride to ensure a comfortable ambiance both for our clients and staff.
+              {{ $t("book_text_6") }}
+              <b>{{ $t("book_text_7") }}</b>{{ $t("book_text_8") }}
             </span>
           </li>
           <li class="text-item">
             <span>
-              If you are a bride with a specific vision wanting to have a unique one-of-a-kind design, we offer <b>custom-made</b> dresses. Custom designs may require additional time and fees, depending on the complexity of the design - you can learn more during your appointment.
+              {{ $t("book_text_9") }}<b>{{ $t("book_text_10") }}</b>{{ $t("book_text_11") }}
             </span>
           </li>
           <li class="text-item">
             <span>
-              Our gowns range from <b>$1,000 to $12,000</b>, with an estimated production time of approximately <b>24-26 weeks</b>. We also offer a rush order option with production times under 16-18 weeks for an additional fee of +30% of the dress price.
+              {{ $t("book_text_12") }}<b>{{ $t("book_text_13") }}</b>{{ $t("book_text_14") }}<b>{{ $t("book_text_15") }}</b>{{ $t("book_text_16") }}
             </span>
           </li>
           <li class="text-item">
             <span>
-              The majority of our samples range from <b>S to XL</b>. If you need a larger size, please make sure to specify this on the registration form.
+              {{ $t("book_text_17") }}<b>{{ $t("book_text_18") }}</b>{{$t("book_text_19")  }}
             </span>
           </li>
           <li class="text-item">
             <span>
-              Prior to your visit, we recommend browsing through our catalog to explore your favored styles, silhouettes, and preferences. This proactive step will streamline the process of discovering your dream dress. Also, check our FAQ before booking.
+              {{ $t("book_text_20") }}
             </span>
           </li>
         </ul>
         </Container>
         <div class="additional-text-wrap" v-if="step === 1">
-          <p class="additional-text">Ready to take the most exciting step of your wedding prep journey?</p>
-          <p class="additional-text">After you complete the survey form, our administrator will contact you within <b>24 hours.</b></p>
+          <p class="additional-text">{{ $t("book_text_21") }}</p>
+          <p class="additional-text">{{ $t("book_text_22") }}<b>{{ $t("book_text_23") }}</b></p>
         </div>
         <Container v-if="step === 1" justify="justify-center">
         <FlagshipContactForm @goStep="(index) => goStep(index)" />
       </Container>
       <div class="additional-text-wrap additional-text-wrap--small" v-if="step === 1">
-          <p class="additional-text">We're here to support you every step, ensuring a stress-free and joyful experience, so feel free to reach out to us at any time if you need help: <b>+48 882 153 873</b> or email us at <b>warsaw@millanova.com</b> <br>
-            Our showroom is open Monday through Saturday from 10:00 to 19:00.</p>
+          <p class="additional-text">{{ $t("book_text_24") }}<b>+48 882 153 873</b>{{ $t("book_text_25") }}<b>warsaw@millanova.com</b> <br>
+            {{ $t("book_text_26") }}</p>
         </div>
 
       <Container>
@@ -211,12 +213,13 @@ font-size: 18px;
 
 .additional-text-wrap {
   margin: 0 auto;
+  padding: 0 32px;
   width: 100%;
-  max-width: 950px;
+  max-width: 1104px;
   text-align: center;
 
   &--small {
-    max-width: 790px;
+    max-width: 854px;
   }
 }
 
