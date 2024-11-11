@@ -318,12 +318,12 @@ onMounted(async () => {
   const body = generateBody(userData.value, locale.value)
 
   sendingRequest.value = true
-  try {
-    await $fetch( '/api/googlesheets',  {method: "POST", body})
-    emits('goStep', 2)
-  } catch (e) {
-    console.error(e);
-  }
+  // try {
+  //   await $fetch( '/api/googlesheets',  {method: "POST", body})
+  //   emits('goStep', 2)
+  // } catch (e) {
+  //   console.error(e);
+  // }
 
   sendingRequest.value = false
 }
