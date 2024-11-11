@@ -14,7 +14,7 @@
         <Image
             v-if="data?.gallery?.data?.length > 0 && data.gallery.data[0]"
             :path="{data: data.gallery.data[0]}"
-            :alt="data.title + ' ' + data?.type?.data?.attributes?.title"
+            :alt="`${data.title} ${data?.type?.data?.attributes?.title}`"
             :class="discontinued ? 'discontinued' : ''"
         />
         <div class="white-overlay"></div>
@@ -114,7 +114,7 @@
 
 
             <NuxtLink v-if="data.storeLink" :to="localePath(data.storeLink)" target="_blank" class="button m-t-16 m-t-0-md m-b-24-md m-r-16 target">{{$t('buy_online')}}</NuxtLink>
-            <NuxtLink v-if="!discontinued"  :to="locale === 'pl' ? localePath('/warsaw') : (localePath('/request-an-appointment')+'?source='+(data?.collection?.data?.attributes?.slug ?? 'null'))" target="_self" style="width: 100%;" class="button w-full m-t-16 m-t-0-md m-b-24-md">
+            <NuxtLink v-if="!discontinued"  :to="locale === 'pl' ? localePath('/warsaw') : `${localePath('/request-an-appointment')}?source=${data?.collection?.data?.attributes?.slug ?? 'null'}`" target="_self" style="width: 100%;" class="button w-full m-t-16 m-t-0-md m-b-24-md">
               {{ locale === 'pl' ? $t('book_an_appointment') : $t('request_an_appointment') }}</NuxtLink>
 
 
@@ -123,7 +123,7 @@
 
 
         <ContentMediaGrid
-            :data="data.gallery.data" :alt="data.title + ' ' + data?.type?.data?.attributes?.title"
+            :data="data.gallery.data" :alt="`${data.title} ${data?.type?.data?.attributes?.title}`"
             :hide-first="isMobile"
             :zoom="true"
             classes="col-8 col-7-lg col-12-md m-t-0"
@@ -151,16 +151,9 @@
         <h2 class="m-t-0 m-b-40 m-b-24-md">{{ $t('you_may_also_like') }}</h2>
       </Carusel>
 
-
-
-
     </div>
     <Loading :pending="pending"/>
     <PageNotFound :show="data == null && !pending"/>
-
-<!--    {{data?.type?.data?.attributes?.slug}}-->
-<!--    :pathToPage="[data?.type?.data?.attributes?.slug]"-->
-
     <Seo
         :data="data"
         :breadcrumbs="breadcrumbs"
@@ -205,14 +198,13 @@ if (import.meta.server) {
   if (types.value.some(({slug}) => fullPath.includes(slug))) {
 
     if (data.value?.type?.data?.attributes?.slug) {
-
       const redirectLink = `/${data.value.type?.data?.attributes?.slug}/${slug}`
       navigateTo(localePath(redirectLink), { redirectCode: 301 })
     }
   }
 
   if (data.value) {
-    const firsImage = data.value?.gallery?.data.find(item => item.attributes.mime.startsWith('image'))
+    const firstImage = data.value?.gallery?.data.find(item => item.attributes.mime.startsWith('image'))
     let structuredData = {
       "@context": "https://schema.org/",
       "@type": "Product",
@@ -223,8 +215,8 @@ if (import.meta.server) {
         "name": "Milla Nova"
       }
     }
-    if (firsImage) {
-      structuredData["image"] = firsImage?.attributes?.formats?.medium?.url ?? firsImage?.attributes?.url ?? ''
+    if (firstImage) {
+      structuredData["image"] = firstImage?.attributes?.formats?.medium?.url ?? firstImage?.attributes?.url ?? ''
     }
 
     useHead({

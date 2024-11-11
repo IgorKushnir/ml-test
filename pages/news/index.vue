@@ -34,9 +34,7 @@
 import {getNews} from '~/api/news'
 const { locale } = useI18n()
 
-const page = ref(1);
-
-const {data: newsData, pending, refresh, error} = await useLazyAsyncData('news', () => getNews(locale.value), {
+const {data: newsData, pending} = await useLazyAsyncData('news', () => getNews(locale.value), {
   transform: (transformData) => transformData?.data['news']
 })
 </script>
