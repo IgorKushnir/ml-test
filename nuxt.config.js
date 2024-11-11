@@ -13,7 +13,7 @@ export default defineNuxtConfig({
             '/collections', '/pl/kolekcje',
             '/store-finder', '/pl/wyszukiwarka-sklepow',
             '/company', '/pl/firma',
-            '/inspiration' ],
+            '/inspiration', 'pl/inspiracja' ],
       },
     },
   css: [

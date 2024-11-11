@@ -9,7 +9,7 @@
           title: '' + data?.attributes?.title
         }
     ]"
-         :pathToPage="{en: 'inspiration', pl: 'inspiration'}"
+         :pathToPage="{en: 'inspiration', pl: 'inspiracja'}"
          :localizations="data?.attributes?.localizations?.data"
     />
     <transition name="fade">

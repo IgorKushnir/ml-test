@@ -1,4 +1,4 @@
-type TypeSlug = 'accessories' | 'dress' | 'veils' | 'suknie' | 'welony' | 'akcesoria'
+type TypeSlug = 'accessories' | 'dress' | 'veils' | 'product' | 'suknie' | 'welony' | 'akcesoria' | 'produkt'
 
 export type SeoType = {
     canonicalURL: null | string
