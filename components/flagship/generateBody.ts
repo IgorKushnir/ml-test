@@ -2,7 +2,7 @@ export const generateBody = (userData: {[key: string]: {value: string | string[]
     const parsedBudget = typeof userData.budget.value === 'string' ? parseInt(userData.budget.value) : 0
     const timeToWedding = typeof userData.weddingDate.value === 'string' ? new Date(userData.weddingDate.value).getTime() -  Date.now() : 0
     let priorityCount = 0
-
+console.log('parsedBudget', parsedBudget)
     switch (parsedBudget) {
         case 6:
             priorityCount = priorityCount + 1
@@ -16,17 +16,18 @@ export const generateBody = (userData: {[key: string]: {value: string | string[]
         default:
             break;
     }
-
-    if (timeToWedding < 60 * 60 * 24 * 30) {
+    console.log('priorityCount budget', priorityCount)
+console.log('timeToWedding', timeToWedding)
+    if (timeToWedding < 1000 * 60 * 60 * 24 * 30) {
         priorityCount = priorityCount + 3
-    } else if (timeToWedding < 60 * 60 * 24 * 30 * 6) {
+    } else if (timeToWedding < 1000 * 60 * 60 * 24 * 30 * 6) {
         priorityCount = priorityCount + 2
     } else {
         priorityCount = priorityCount + 1
     }
-
+    console.log('priorityCount all', priorityCount)
     const priority = priorityCount > 4 ? 'Wysoki' : priorityCount > 2 ? 'Średni' : 'Niski'
-
+console.log(priority)
     return [
     'Nowe zgłoszenie', //status
     '', //postponed
