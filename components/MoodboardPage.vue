@@ -111,7 +111,7 @@ async function getInitialData() {
 }
 
 function decodeFromBase64(string) {
-  if (process.client) {
+  if (import.meta.client) {
     return atob(string);
   } else {
     return Buffer.from(string, 'base64').toString('utf-8');

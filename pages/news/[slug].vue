@@ -56,6 +56,6 @@ if (draft === 'true') {
   publicationState = "PREVIEW";
 }
 
-const {data, pending, refresh, error} = await getNewsPost(slug, locale.value, publicationState)
+const {data, pending} = await getNewsPost(slug, locale.value, publicationState)
 </script>
 

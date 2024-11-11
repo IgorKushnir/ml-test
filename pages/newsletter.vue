@@ -7,8 +7,6 @@
     ]"/>
     <div v-if="!pending">
       <InnerHeader :title="data?.title" :sub_title="data?.description"/>
-
-
       <transition name="fade" mode="out-in">
         <Container v-if="!feedback" justify="justify-center">
           <div class="col-6 col-8-xl col-10-lg col-12-md">
@@ -30,7 +28,6 @@
                 </div>
               </template>
 
-
               <div class="form m-b-24">
                 <div class="input-block c-2" ref="emailEl">
                   <label>Your email</label>
@@ -44,9 +41,7 @@
                       required
                   />
                   <label  class="error-message">{{ emailErrorMessage }}</label>
-
                 </div>
-
               </div>
 
               <div class="button primary" :class="loading ? 'loading' : ''" v-on:click="subscribe">
@@ -87,10 +82,7 @@ const apiUrl = config.public.strapi.url;
 const {
   data,
   pending,
-  refresh,
-  error
 } = useLazyAsyncData('newsletter', () => newsletterResponse({lang: "en"}), {transform: (d) => d.data?.newsletter?.data?.attributes})
-
 
 const feedback = ref(false)
 const feedbackContent = ref({
@@ -105,7 +97,7 @@ const emailErrorMessage = ref("")
 const optionsEl = ref()
 const email = ref()
 let query = useRoute().query?.subscribe
-query ? query = query.split(',') : query = []
+query = query ? query.split(',') : []
 
 onMounted(() => {
   if (data.value) {
@@ -124,8 +116,6 @@ function checkQueries() {
     }
   })
 }
-
-
 
 function subscribe() {
   let errors = [];
@@ -162,7 +152,6 @@ function subscribe() {
     }
   }
 
-
   // Validate is ready to send
   if (errors?.length === 0) {
     subscribeFetch(email.value, options)
@@ -172,7 +161,7 @@ function subscribe() {
 function subscribeFetch(email, options) {
   loading.value = true
 
-  $fetch(apiUrl + '/email-provider/subscribe',
+  $fetch(`${apiUrl}/email-provider/subscribe`,
       {
         method: 'post',
         body: {
@@ -218,7 +207,6 @@ function subscribeFetch(email, options) {
 function stateButtonClickHandle() {
   feedback.value = false
 }
-
 </script>
 
 <style scoped lang="scss">
@@ -227,5 +215,4 @@ function stateButtonClickHandle() {
     display: block;
   }
 }
-
 </style>
