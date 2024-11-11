@@ -14,7 +14,7 @@
 
         <Container justify="justify-center">
           <div class="row gap-S">
-            <template v-for="(item, index) in data">
+            <template v-for="(item, index) in data" :key="index">
               <div class="col-4 col-6-lg col-12-sm">
                 <NuxtLink v-if="item.attributes.cover_4x3?.data" :to="item.attributes.url ?? '#'" target="_blank">
                   <div class="ratio-4x3 m-b-24">
@@ -34,9 +34,11 @@
                 <p class="h2 dark-blue quote" v-if="item.attributes.description"><span class="quote before">"</span>{{ item.attributes.description }}"</p>
 
                 <div class="m-t-16 m-t-24-sm">
-                  <NuxtLink v-if="item.attributes.url" :to="item.attributes.url"
-                            target="_blank"
-                            class="button m-v-16 m-r-16 m-r-0-sm display-block-lg target lowercase">{{ getUrlTitle(item.attributes.url) }}
+                  <NuxtLink 
+                    v-if="item.attributes.url" 
+                    :to="item.attributes.url"
+                    target="_blank"
+                    class="button m-v-16 m-r-16 m-r-0-sm display-block-lg target lowercase">{{ getUrlTitle(item.attributes.url) }}
                   </NuxtLink>
                 </div>
               </div>
@@ -54,7 +56,7 @@
 <script setup>
 import {getPressAboutUs} from "~/api/pressAboutUs";
 
-const {data, pending, refresh, error} = await getPressAboutUs("en")
+const {data, pending} = await getPressAboutUs("en")
 
 function getUrlTitle(url) {
   const u = new URL(url)

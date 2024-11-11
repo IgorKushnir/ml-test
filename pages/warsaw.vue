@@ -1,18 +1,12 @@
 <template>
   <div>
-<!--    <div class="errors">-->
-<!--      <div v-for="error in consoleErrors"><pre>{{error}}</pre></div>-->
-<!--    </div>-->
     <div v-if="!pending">
-      <!--    Choose a service-->
-      <!--    Select session date and time-->
       <InnerHeader v-if="step !== 0"
                    :sub_header="data.sub_header"
                    :title="data.title"
                    :sub_title="$t('warsaw_sub_title')"
                    :hideBorder="true"
       />
-
       <FlagshipStepOne
           v-if="step === 0"
           @serviceId="(id) => goStep(id)"
@@ -22,40 +16,52 @@
           :text="data.description"
           :services="services"
           :content="data?.content"/>
-
-
       <Container v-if="step === 1" justify="justify-center">
         <ul class="text-list">
           <li class="text-item">
             <span>
               {{ $t("book_text_1") }}
-              <b>{{ $t("book_text_2") }}</b>{{ $t("book_text_3") }}<b>{{ $t("book_text_4") }}</b>{{ $t("book_text_5") }}
+              <b>{{ $t("book_text_2") }}</b>
+              {{ $t("book_text_3") }}
+              <b>{{ $t("book_text_4") }}</b>
+              {{ $t("book_text_5") }}
             </span>
           </li>
           <li class="text-item">
             <span>
               {{ $t("book_text_6") }}
-              <b>{{ $t("book_text_7") }}</b>{{ $t("book_text_8") }}
+              <b>{{ $t("book_text_7") }}</b>
+              {{ $t("book_text_8") }}
             </span>
           </li>
           <li class="text-item">
             <span>
-              {{ $t("book_text_9") }}<b>{{ $t("book_text_10") }}</b>{{ $t("book_text_11") }}
+              {{ $t("book_text_9") }}
+              <b>{{ $t("book_text_10") }}</b>
+              {{ $t("book_text_11") }}
             </span>
           </li>
           <li class="text-item">
             <span>
-              {{ $t("book_text_12") }}<b>{{ $t("book_text_13") }}</b>{{ $t("book_text_14") }}<b>{{ $t("book_text_15") }}</b>{{ $t("book_text_16") }}
+              {{ $t("book_text_12") }}
+              <b>{{ $t("book_text_13") }}</b>
+              {{ $t("book_text_14") }}
+              <b>{{ $t("book_text_15") }}</b>
+              {{ $t("book_text_16") }}
             </span>
           </li>
           <li class="text-item">
             <span>
-              {{ $t("book_text_17") }}<b>{{ $t("book_text_18") }}</b>{{$t("book_text_19")  }}
+              {{ $t("book_text_17") }}
+              <b>{{ $t("book_text_18") }}</b>
+              {{$t("book_text_19")  }}
             </span>
           </li>
           <li class="text-item">
             <span>
-              {{ $t("book_text_20") }}<a href="https://warsaw.millanova.com/collections/dresses?hide_prices=true ">{{ $t("book_text_20_link") }}</a>{{ $t("book_text_20_2") }}
+              {{ $t("book_text_20") }}
+              <a href="https://warsaw.millanova.com/collections/dresses?hide_prices=true ">{{ $t("book_text_20_link") }}</a>
+              {{ $t("book_text_20_2") }}
             </span>
           </li>
         </ul>
@@ -68,10 +74,12 @@
         <FlagshipContactForm @goStep="(index) => goStep(index)" />
       </Container>
       <div class="additional-text-wrap additional-text-wrap--small" v-if="step === 1">
-          <p class="additional-text">{{ $t("book_text_24") }}<b>+48 882 153 873</b>{{ $t("book_text_25") }}<b>warsaw@millanova.com</b> <br>
+          <p class="additional-text">{{ $t("book_text_24") }}
+            <b>+48 882 153 873</b>
+            {{ $t("book_text_25") }}
+            <b>warsaw@millanova.com</b> <br>
             {{ $t("book_text_26") }}</p>
         </div>
-
       <Container>
         <div class="col-12">
           <Fact :data="{background_color: 'light', logo: true, layout: 'wide'}">
@@ -79,22 +87,24 @@
             <div v-if="data.contact_title" class="subheader m-b-16">{{ data.contact_title }}</div>
             <div v-if="data.contact_address" class="m-b-8">
               <span class="icon-location-16"/>
-              <a :href="(data.contact_address_url === null || data.contact_address_url === '') ? 'http://maps.google.com/?q='+data.contact_address : data.contact_address_url" target="_blank" class="link normal m-l-8">{{ data.contact_address }}</a>
+              <a :href="(data.contact_address_url === null || data.contact_address_url === '') ? `http://maps.google.com/?q=${data.contact_address}` : data.contact_address_url" target="_blank" class="link normal m-l-8">{{ data.contact_address }}</a>
             </div>
             <div v-if="data.contact_phone" class="m-b-32">
               <span class="icon-phone-16"/>
-              <a :href="'tel: '+data.contact_phone.replaceAll(' ', '').replaceAll('-', '').replaceAll(')', '').replaceAll('(', '')" target="_blank" class="link normal  m-l-8">{{ data.contact_phone }}</a>
+              <a :href="`tel: ${data.contact_phone.replaceAll(' ', '').replaceAll('-', '').replaceAll(')', '').replaceAll('(', '')}`" target="_blank" class="link normal  m-l-8">{{ data.contact_phone }}</a>
             </div>
 
             <template v-if="data.social">
-              <NuxtLink v-for="(item, index) in data.social" :class="'icon-'+item.icon + (data?.social?.length > index+1 ? ' m-r-16' : '')" :to="item.url" target="_blank"
-                        class="social hover"/>
+              <NuxtLink 
+                v-for="(item, index) in data.social" 
+                :class="`icon-${item.icon}${(data?.social?.length > index + 1 ? ' m-r-16' : '')}`" 
+                :to="item.url" target="_blank"
+                class="social hover"/>
             </template>
           </Fact>
         </div>
       </Container>
     </div>
-
     <Seo
         :data="data"
         :title="data?.title"
@@ -105,7 +115,6 @@
     ]"
         :localizations="[{locale: 'en', slug: 'warsaw'}, {locale: 'pl', slug: 'warszawa'}]"
     />
-
   </div>
 </template>
 
@@ -113,9 +122,7 @@
 import getFlagship from '~/api/getFlagship'
 
 const { t, locale } = useI18n()
-
 const step = ref(0)
-
 const steps = ref([
   {
     name: t('book_step_1'),
@@ -168,7 +175,6 @@ function goStep(_step, payload) {
     behavior: "smooth"
   })
 }
-
 </script>
 
 <style scoped lang="scss">

@@ -25,7 +25,7 @@
 import getContacts from '~/api/contact'
 const { locale } = useI18n()
 
-const {data, pending, refresh, error} = await getContacts(locale.value)
+const {data, pending} = await getContacts(locale.value)
 
 const route = useRoute()
 const query = ref(route.query)

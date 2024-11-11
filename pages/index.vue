@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <transition name="fade">
       <div class="content" v-if="!pending && data != null">
         <ContentBanner v-if="data?.attributes?.banner" :data="data.attributes.banner" type="main"/>
@@ -23,7 +22,7 @@ import getMain from '~/api/getMain'
 
 const { locale } = useI18n()
 
-let { data, pending, refresh, error } = await getMain(locale.value)
+let { data, pending } = await getMain(locale.value)
 </script>
 
 <style scoped>

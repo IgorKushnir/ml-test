@@ -13,7 +13,9 @@
     <div v-if="queryData.store">
       <div class="row justify-center">
         <div class="col-12 light-blue">
-          <div class="center m-v-24 m-v-16-md p-h-16"><div>{{queryData.store}}, {{capitalizeFirstLetter(queryData.city)}}, {{capitalizeFirstLetter(queryData.country_slug)}}</div></div>
+          <div class="center m-v-24 m-v-16-md p-h-16">
+            <div>{{queryData.store}}, {{capitalizeFirstLetter(queryData.city)}}, {{capitalizeFirstLetter(queryData.country_slug)}}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -207,8 +209,6 @@ const config = useRuntimeConfig();
 const apiUrl = config.public.strapi.url;
 const { locale, t } = useI18n()
 
-
-const router = useRouter();
 const route = useRoute();
 
 const queryData = ref({
@@ -238,7 +238,7 @@ if (route.query.q) {
   }
 }
 function decodeFromBase64(string) {
-  if (process.client) {
+  if (import.meta.client) {
     return atob(string);
   } else {
     return Buffer.from(string, 'base64').toString('utf-8');
@@ -248,22 +248,8 @@ function decodeFromBase64(string) {
 // Todo: do it on client side or refresh
 let countryCode = "US";
 const countries = ref(await getListOfCountries(locale.value));
-// countries.value = await getListOfCountries(locale.value)
-// console.log(countries.value);
-// countries.value = await getListOfCountries(locale.value);
 
 let countrySlug = getSlugByCode(countryCode);
-// console.log({countrySlug});
-// if (countries.value) {
-//   countrySlug = getSlugByCode(countryCode);
-// } else {
-//   watch(() => countries.value, () => {
-//     if (!queryData.value.available) {
-//       sendData.value.country.value = getSlugByCode(countryCode);
-//     }
-//     setTimeout(refreshCountry, 100)
-//   })
-// }
 
 
 onMounted(async () => {
@@ -275,13 +261,7 @@ onMounted(async () => {
     refreshCountry()
   }
   setCountryCode()
-
-
 })
-// if (process.client) {
-//
-// }
-
 
 const sendData = ref({
   name: {
@@ -304,7 +284,6 @@ const sendData = ref({
     required: true,
     error: null,
   },
-
   country: {
     value: queryData.value.country_slug ?? countrySlug ,
     required: true,
@@ -320,7 +299,6 @@ const sendData = ref({
     required: true,
     error: null
   },
-
   celebrated_date: {
     value: '',
     required: true,
@@ -331,23 +309,18 @@ const sendData = ref({
     required: true,
     error: null
   },
-
   subscribe: {
     value: false,
     required: false,
     error: null
   },
-store_email: {
+  store_email: {
     value: queryData.value.store_email
   }
 })
 
-
 const loading = ref(false)
 const sent = ref(false)
-
-
-
 
 function setCountryCode() {
   const index = phoneCodes.findIndex(l => l.code === countryCode)
@@ -359,7 +332,6 @@ setCountryCode();
 
 
 const cities = computed(() => {
-  // sendData.value.city.value = undefined
   let cities = countryData?.value?.data?.attributes?.city
   if (!cities) return  []
 
@@ -374,13 +346,11 @@ const cities = computed(() => {
   return cities
 })
 
-
 const stores = ref()
 function getStores() {
   sendData.value.store.index = -1
   sendData.value.store.value = ''
   const index = cities?.value?.findIndex((c) => c.name.toLowerCase() === sendData.value.city.value);
-  // console.log(index, cities?.value[index]);
   if (index !== null && index !== -1) {
     const s = cities?.value[index]
     stores.value = s
@@ -388,20 +358,8 @@ function getStores() {
     stores.value = undefined
   }
 }
-// const stores = computed(() => {
-//   sendData.value.store.index = -1
-//   sendData.value.store.value = ''
-//   const index = cities?.value?.findIndex((c) => c.name.toLowerCase() === sendData.value.city.value);
-//   if (index !== null && index !== -1) {
-//     const s = cities?.value[index]
-//     return s
-//   }
-//   return undefined
-// })
 
-
-
-const {data: countryData, pending: pendingCountry, refresh: refreshCountry, error: errorCountry} = await useLazyAsyncData('country', () => getCountry(sendData.value.country.value, locale.value), {
+const {data: countryData, pending: pendingCountry, refresh: refreshCountry} = await useLazyAsyncData('country', () => getCountry(sendData.value.country.value, locale.value), {
   transform: (d) => {
     return d.data['storeFinder']
   }
@@ -418,6 +376,7 @@ watch(() => sendData.value.country.value, () => {
 watch(() => sendData.value.city.value, () => {
   getStores()
 })
+
 watch(() => sendData.value.store.index, (store) => {
   const index = sendData.value.store.index;
   if (index === -1) {
@@ -430,8 +389,12 @@ watch(() => sendData.value.store.index, (store) => {
 })
 
 watch(() => sendData.value.phone.value, (phone) => {
-  if (phone?.length === 0) phone = '+'
-  if (phone[0] !== '+') phone = '+'.concat(phone.slice(1))
+  if (phone?.length === 0) {
+    phone = '+'
+  }
+  if (phone[0] !== '+') {
+    phone = `+${phone.slice(1)}`
+  }
 
   phone = phone.replace(/[^+0-9]/g, "")
   sendData.value.phone.value = phone
@@ -439,8 +402,6 @@ watch(() => sendData.value.phone.value, (phone) => {
 
 
 function send() {
-  // console.log(sendData.value);
-  // return
   const keys = Object.keys(sendData.value);
   let firstError;
   keys?.forEach((key) => {
@@ -502,8 +463,6 @@ function checkField(key) {
       return false
     }
     if (key === 'phone') {
-      // item.value = '+380993283756'
-
       if (!validatePhone(item.value)) {
         item.error = t('book_error_phone');
         return false
@@ -518,7 +477,6 @@ function validateEmail(email) {
   return regex.test(email);
 }
 function validatePhone(phone) {
-  // console.log(phone);
   const regex = /^\+?([0-9]{10,14})$/;
   const phoneCodesList = phoneCodes.map(p => p.dial_code);
   let codeError = true;
@@ -530,10 +488,12 @@ function validatePhone(phone) {
   }
   return regex.test(phone) && !codeError;
 }
+
 function getSlugByCode(code) {
   const index = countries.value.findIndex(c => c.flag === code)
   return countries.value[index]?.slug
 }
+
 function capitalizeFirstLetter(str) {
   if (!str) return ''
   return str.charAt(0).toUpperCase() + str.slice(1);
