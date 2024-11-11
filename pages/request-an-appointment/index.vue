@@ -416,7 +416,6 @@ watch(() => sendData.value.country.value, () => {
 })
 
 watch(() => sendData.value.city.value, () => {
-  console.log('getStores');
   getStores()
 })
 watch(() => sendData.value.store.index, (store) => {

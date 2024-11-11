@@ -1,5 +1,7 @@
 <template>
-  <div class="sub-header-container ">
+  <div class="sub-header-container" :class="{
+    'sub-header-container--no-border': hideBorder,
+  }">
     <div class="container row justify-center">
       <div class="header col-6 col-10-lg col-12-md center">
         <div :class="sub_title || sub_header ? 'wrapper m-v-40 m-v-32-md' : 'wrapper'">
@@ -54,7 +56,10 @@ const props = defineProps({
       type: Number,
       default: 0
     },
-
+    hideBorder: {
+      type: Boolean,
+      default: false
+    }
 })
 
 function goStep(index) {
@@ -79,6 +84,11 @@ function goStep(index) {
 }
 .sub-header-container {
   border-bottom: 1px solid $border-dark;
+
+  &--no-border {
+    border-color: transparent;
+  }
+
   .container {
     min-height: 152px;
 
