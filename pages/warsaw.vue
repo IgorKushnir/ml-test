@@ -10,6 +10,7 @@
                    :sub_header="data.sub_header"
                    :title="data.title"
                    :sub_title="$t('warsaw_sub_title')"
+                   :hideBorder="true"
       />
 
       <FlagshipStepOne
