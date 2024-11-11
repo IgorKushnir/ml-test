@@ -34,7 +34,6 @@ function backHandler(e) {
   if (props.text != null) {
     e('clicks')
   } else {
-    console.log(router.options?.history?.state?.back);
     router.back()
   }
 }
