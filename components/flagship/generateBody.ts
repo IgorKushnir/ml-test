@@ -16,8 +16,7 @@ export const generateBody = (userData: {[key: string]: {value: string | string[]
         default:
             break;
     }
-    console.log('priorityCount budget', priorityCount)
-console.log('timeToWedding', timeToWedding)
+
     if (timeToWedding < 1000 * 60 * 60 * 24 * 30) {
         priorityCount = priorityCount + 3
     } else if (timeToWedding < 1000 * 60 * 60 * 24 * 30 * 6) {
@@ -26,29 +25,33 @@ console.log('timeToWedding', timeToWedding)
         priorityCount = priorityCount + 1
     }
 
+    if (userData.fittingType.value === 'Powtórna') {
+        priorityCount = priorityCount + 3
+    }
+
     const priority = priorityCount > 4 ? 'Wysoki' : priorityCount > 2 ? 'Średni' : 'Niski'
 
     return [
     'Nowe zgłoszenie', //status
     '', //postponed
-     '', //urgent
-     priority, //priority
-     `${new Date(Date.now()).toLocaleDateString('pl-PL')}, ${new Date(Date.now()).toLocaleTimeString('pl-PL')}`, //creation date
-     userData.firstName.value, // first name
-     userData.lastName.value, // last name
-     userData.email.value, // email
-     userData.phone.value, // Telefon
-     userData.weddingDate.value, // Data ślubu
-     userData.fittingType.value, // Typ przymiarki
+    priority, //priority
+    `${new Date(Date.now()).toLocaleDateString('pl-PL')}, ${new Date(Date.now()).toLocaleTimeString('pl-PL')}`, //creation date
+    userData.lastName.value, // last name
+    userData.firstName.value, // first name
+    userData.email.value, // email
+    userData.phone.value, // Telefon
+    userData.weddingDate.value, // Data ślubu
+    userData.budget.value, // Budżet (PLN)
+    userData.fittingType.value, // Typ przymiarki
+    userData.models.value, // Modele sukni
+    userData.dressSize.value, // Rozmiar
+    userData.preferredContact.value, // Kontakt
+    userData.people.value, // Towarzyszące osoby
+    language, // Język
+    '', // Ostatni kontakt
+    '', //urgent
+    '', // Ponowny kontakt
+    userData.instagram.value, // Instagram
+    userData.findOut.value?.join(", "),  // Źródło MillaNova
      '',  // Menedżer
-     userData.dressSize.value, // Rozmiar
-     userData.budget.value, // Budżet (USD)
-     userData.models.value, // Modele sukni
-     userData.instagram.value, // Instagram
-     userData.findOut.value?.join(", "),  // Źródło MillaNova
-     userData.preferredContact.value, // Kontakt
-     '', // Ostatni kontakt
-     '', // Ponowny kontakt
-     language, // Język
-     userData.people.value, // Towarzyszące osoby
 ]}
