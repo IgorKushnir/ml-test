@@ -78,10 +78,10 @@
 <script setup>
 import {useMenuData, useTranslationsData} from "~/composables/states";
 
-const menu = useMenuData().value[0]?.primary
+const menu = useMenuData().value ? useMenuData().value[0]?.primary : []
 const translations = useTranslationsData()?.value
-const social = useMenuData().value[0]?.social
-const additional = useMenuData().value[0]?.footer_additional
+const social = useMenuData().value ? useMenuData().value[0]?.social : []
+const additional = useMenuData().value ? useMenuData().value[0]?.footer_additional : []
 const {$isUrl} = useNuxtApp()
 const { locale } = useI18n()
 
