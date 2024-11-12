@@ -16,14 +16,17 @@ export const generateBody = (userData: {[key: string]: {value: string | string[]
         default:
             break;
     }
-    console.log('priorityCount budget', priorityCount)
-console.log('timeToWedding', timeToWedding)
+
     if (timeToWedding < 1000 * 60 * 60 * 24 * 30) {
         priorityCount = priorityCount + 3
     } else if (timeToWedding < 1000 * 60 * 60 * 24 * 30 * 6) {
         priorityCount = priorityCount + 2
     } else {
         priorityCount = priorityCount + 1
+    }
+
+    if (userData.fittingType.value === 'Powtórna') {
+        priorityCount = priorityCount + 3
     }
 
     const priority = priorityCount > 4 ? 'Wysoki' : priorityCount > 2 ? 'Średni' : 'Niski'
