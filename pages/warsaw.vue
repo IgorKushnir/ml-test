@@ -18,7 +18,7 @@
           :content="data?.content"/>
       <Container v-if="step === 1" justify="justify-center">
         <ul class="text-list">
-          <li class="text-item">
+          <FlagshipInfoItem :title="t('appointment_timeline')">
             <span>
               {{ $t("book_text_1") }}
               <b>{{ $t("book_text_2") }}</b>
@@ -26,22 +26,22 @@
               <b>{{ $t("book_text_4") }}</b>
               {{ $t("book_text_5") }}
             </span>
-          </li>
-          <li class="text-item">
+          </FlagshipInfoItem>
+          <FlagshipInfoItem :title="t('guest_policy')">
             <span>
               {{ $t("book_text_6") }}
               <b>{{ $t("book_text_7") }}</b>
               {{ $t("book_text_8") }}
             </span>
-          </li>
-          <li class="text-item">
+          </FlagshipInfoItem>
+          <FlagshipInfoItem :title="t('custom_made_dresses')">
             <span>
               {{ $t("book_text_9") }}
               <b>{{ $t("book_text_10") }}</b>
               {{ $t("book_text_11") }}
             </span>
-          </li>
-          <li class="text-item">
+          </FlagshipInfoItem>
+          <FlagshipInfoItem :title="t('pricing_production_time')">
             <span>
               {{ $t("book_text_12") }}
               <b>{{ $t("book_text_13") }}</b>
@@ -49,21 +49,21 @@
               <b>{{ $t("book_text_15") }}</b>
               {{ $t("book_text_16") }}
             </span>
-          </li>
-          <li class="text-item">
+          </FlagshipInfoItem>
+          <FlagshipInfoItem :title="t('sample_sizes')">
             <span>
               {{ $t("book_text_17") }}
               <b>{{ $t("book_text_18") }}</b>
               {{$t("book_text_19")  }}
             </span>
-          </li>
-          <li class="text-item">
+          </FlagshipInfoItem>
+          <FlagshipInfoItem :title="t('prepare_for_your_visit')">
             <span>
               {{ $t("book_text_20") }}
               <a href="https://warsaw.millanova.com/collections/dresses?hide_prices=true ">{{ $t("book_text_20_link") }}</a>
               {{ $t("book_text_20_2") }}
             </span>
-          </li>
+          </FlagshipInfoItem>
         </ul>
         </Container>
         <div class="additional-text-wrap" v-if="step === 1">
@@ -241,6 +241,10 @@ font-size: 18px;
     height: auto;
     width: auto;
     padding: 12px;
+  }
+
+  .text-list {
+    row-gap: 0;
   }
 }
 
