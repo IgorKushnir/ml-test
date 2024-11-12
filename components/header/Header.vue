@@ -44,7 +44,7 @@
       </div>
 
       <div ref="menu_wrapper" class="menu_wrapper hide">
-        <div class="nav" v-if="data[0]">
+        <div class="nav" v-if="data && data[0]">
           <ul v-for="(item, index) in data[0]['primary']" class="nav-container">
             <li>
               <NuxtLink
@@ -71,7 +71,7 @@
             </li>
           </ul>
 
-          <div class="m-v-32 show-md" v-if="data[0]">
+          <div class="m-v-32 show-md" v-if="data && data[0]">
             <NuxtLink
                 v-for="item in data[0]['primary_additional']" :to="item.url"
                 style="display: block"
@@ -94,7 +94,6 @@ import { enter, leave} from '~/api/misc/transitions';
 const { locale } = useI18n()
 
 const data = useMenuData();
-console.log('data', data)
 
 const isMobile = useIsMobile();
 let activeIndex = ref(0);

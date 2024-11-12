@@ -64,6 +64,7 @@ useHead({
     {rel: 'icon', type: 'image/x-icon', href: '/img/favicon.ico'},
     {rel: "shortcut icon", type: "image/x-icon", href: '/img/32.png'},
     {rel: "apple-touch-icon", type: "image/x-icon", href: '/img/256.png'},
+    {rel: "stylesheet", type: "text/css", href: '/swiper-bundle.min.css'}
   ],
 
   script: [

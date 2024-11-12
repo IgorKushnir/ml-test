@@ -15,7 +15,7 @@
 
           <h3 v-if="store.title" class="store-title m-t-8">{{store.title}}</h3>
           <div v-if="!country && store.premium" class="premium-badge">
-            <NuxtImg src="@/assets/img/premium-star.svg" width="24" height="24" alt="Premium client" format="webp" />
+            <img src="@/assets/img/premium-star.svg" width="24" height="24" alt="Premium client" format="webp" />
           </div>
           <p v-if="store.description" class="p-small">{{store.description}}</p>
 
@@ -61,8 +61,8 @@
 
       </div>
 
-      <div v-if="store.cover_1x1?.data" class="cover">
-                    <Image :path="store.cover_1x1" :alt="store.title"/>
+      <div v-if="!!store.cover_1x1?.data" class="cover">
+        <Image :path="store.cover_1x1" :alt="store.title"/>
       </div>
 
 
