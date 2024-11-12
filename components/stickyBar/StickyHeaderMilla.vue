@@ -45,10 +45,14 @@ const inMobile = useIsMobile();
 let prevOffsetY = 0;
 
 watch(() => sticky.value & shift.value, () => {
+  const element = document.getElementsByClassName('navigation')
+  if (!element) {
+    return
+  }
   if (sticky.value & shift.value) {
-    document.getElementsByClassName('navigation')[0].classList.add('shift');
+    element[0].classList.add('shift');
   } else {
-    document.getElementsByClassName('navigation')[0].classList.remove('shift');
+    element[0].classList.remove('shift');
   }
 })
 
