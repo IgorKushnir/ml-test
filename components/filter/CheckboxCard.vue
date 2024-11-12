@@ -32,7 +32,7 @@ const update = () => {
 
     &.active {
         background-color: white;
-        border-color: $dark-blue;
+        border-color: $blue;
     }
 }
 
