@@ -42,10 +42,10 @@ export const generateBody = (userData: {[key: string]: {value: string | string[]
     userData.phone.value, // Telefon
     userData.weddingDate.value, // Data ślubu
     userData.budget.value, // Budżet (PLN)
+    userData.preferredContact.value, // Kontakt
     userData.fittingType.value, // Typ przymiarki
     userData.models.value, // Modele sukni
     userData.dressSize.value, // Rozmiar
-    userData.preferredContact.value, // Kontakt
     userData.people.value, // Towarzyszące osoby
     language, // Język
     '', // Ostatni kontakt
