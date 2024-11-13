@@ -1,7 +1,7 @@
 <template>
   <div class="footer m-t-64 m-t-40-md p-v-16 white">
     <div class="container row-reverse-md m-t-80 m-t-40-md">
-      <div class="row gap-S">
+      <div class="row">
         <div class="col-6 col-4-xl col-12-lg p-v-0 p-0">
           <div class="h2 white m-t-0 hide-md">{{ translations?.footer_title}}</div>
           <div class="m-v-40">
