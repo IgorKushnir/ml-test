@@ -41,7 +41,6 @@
 </template>
 
 <script setup>
-import '~/assets/js/swiper/swiper-bundle.min.css';
 import Swiper from '~/assets/js/swiper/swiper-bundle.esm.browser.min.js'
 
 const props = defineProps({
