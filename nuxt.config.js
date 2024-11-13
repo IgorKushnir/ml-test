@@ -3,19 +3,19 @@ import graphql from '@rollup/plugin-graphql';
 
 export default defineNuxtConfig({
   ssr: true,
-  nitro: {
-    prerender: {
-        crawlLinks: false,
-        routes: ['/', 
-            '/dress', '/pl/suknie',
-            '/veils', '/pl/welony',
-            '/accessories', '/pl/akcesoria',
-            '/collections', '/pl/kolekcje',
-            '/store-finder', '/pl/wyszukiwarka-sklepow',
-            '/company', '/pl/firma',
-            '/inspiration', 'pl/inspiracja' ],
-      },
-    },
+//   nitro: {
+//     prerender: {
+//         crawlLinks: false,
+//         routes: ['/', 
+//             '/dress', '/pl/suknie',
+//             '/veils', '/pl/welony',
+//             '/accessories', '/pl/akcesoria',
+//             '/collections', '/pl/kolekcje',
+//             '/store-finder', '/pl/wyszukiwarka-sklepow',
+//             '/company', '/pl/firma',
+//             '/inspiration', 'pl/inspiracja' ],
+//       },
+//     },
   css: [
       '@/assets/style/main.scss',
   ],
