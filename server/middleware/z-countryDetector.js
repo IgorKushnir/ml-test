@@ -34,7 +34,7 @@ export default defineEventHandler(async (event) => {
 
     } else {
         if(!apiKey) {return}
-        const url = "https://ipgeolocation.abstractapi.com/v1/?api_key="+apiKey+"&ip_address="+ip
+        const url = `https://ipgeolocation.abstractapi.com/v1/?api_key=${apiKey}&ip_address=${ip}`
         // const url = "https://ipgeolocation.abstractapi.com/v1/?api_key=a673704aa12d440fbd1a87c392290a47&ip_address=92.184.105.98"
 
         if (ip) {
@@ -49,7 +49,7 @@ export default defineEventHandler(async (event) => {
                 event.context.country = null
                 setCookie(event, 'country', null)
                 console.error('---abstractapi error---', url);
-                // console.error('---abstractapi---', e);
+                console.error('---abstractapi---', e);
             }
 
         } else {
