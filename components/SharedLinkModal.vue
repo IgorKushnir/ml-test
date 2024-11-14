@@ -67,7 +67,7 @@ function copy() {
 
 }
 function encodeToBase64(string) {
-  if (import.meta.client) {
+  if (process.client) {
     const encoder = new TextEncoder();
     const data = encoder.encode(string);
     const base64 = btoa(String.fromCharCode.apply(null, data));

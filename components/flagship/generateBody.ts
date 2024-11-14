@@ -35,7 +35,7 @@ export const generateBody = (userData: {[key: string]: {value: string | string[]
     'Nowe zgłoszenie', //status
     '', //postponed
     priority, //priority
-    `${new Date(Date.now()).toLocaleDateString('pl-PL')}, ${new Date(Date.now()).toLocaleTimeString('pl-PL')}`, //creation date
+    `${new Date(Date.now()).toLocaleDateString('pl-PL', { timeZone: "Europe/Warsaw" })}, ${new Date(Date.now()).toLocaleTimeString('pl-PL'), { timeZone: "Europe/Warsaw" }}`, //creation date
     userData.lastName.value, // last name
     userData.firstName.value, // first name
     userData.email.value, // email

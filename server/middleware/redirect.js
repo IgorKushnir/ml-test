@@ -44,7 +44,6 @@ export default fromNodeMiddleware(async (req, res, next) => {
     //     })
     // })
 
-
     // Redirect from '/wp-content/...' to '/'
     if (req.url.startsWith('/wp-content')) {
         redirect(req.url, '/', 301)
@@ -71,7 +70,6 @@ export default fromNodeMiddleware(async (req, res, next) => {
 
 
     // Redirect from admin list
-try {
     const response = await axios.get(config.STRAPI_URL + "/api/redirects?pagination[limit]=-1")
     if (response.status === 200) {
         const data = response?.data?.data;
@@ -85,9 +83,6 @@ try {
             }
         })
     }
-} catch (e) {
-    console.error(e)
-}
 
 
 

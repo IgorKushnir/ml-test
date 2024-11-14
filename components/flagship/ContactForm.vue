@@ -74,7 +74,7 @@
                 name="weddingDate"
                 id="weddingDate"
             />
-            <label for="weddingDate" class="error-message">{{ $t('book_error_empty_field') }}</label>
+            <label for="weddingDate" class="error-message">{{ $t('book_error_wedding_date') }}</label>
           </div>
 
           <div class="input-block c-2">
@@ -237,7 +237,7 @@ const findOutItems = [
 {name: 'Pinterest', value: 'Pinterest', title: 'Pinterest'},
 {name: 'Google', value: 'Google', title: 'Google'},
 {name: 'Reklama', value: 'Reklama', title: t("advertising")},
-{name: 'Z polecenia', value: 'Z polecenia', title: t("word_of_mouth")},
+{name: 'Poczta pantoflowa', value: 'Poczta pantoflowa', title: t("word_of_mouth")},
 ]
 
 const updatefindOutValue = (value) => {
@@ -251,6 +251,12 @@ const updatefindOutValue = (value) => {
 function validatePhone(phone) {
   const regex = /^\+?([0-9]{10,14})$/;
   return regex.test(phone);
+}
+
+function validateMinDate(date) {
+  const today = new Date();
+  const inputDate = new Date(date);
+  return inputDate >= today;
 }
 
 watch(() => userData.value.phone.value, (phone) => {
@@ -304,6 +310,11 @@ onMounted(async () => {
   if (!validatePhone(userData.value.phone.value)) {
     userData.value.phone.error = true
     errors.push('phone')
+  }
+
+  if(!validateMinDate(userData.value.weddingDate.value)) {
+    userData.value.weddingDate.error = true
+    errors.push('weddingDate')
   }
 
   if (errors?.length > 0) {
