@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="!pending">
-      <InnerHeader v-if="step !== 0"
+      <InnerHeader v-if="step === 1"
                    :sub_header="data.sub_header"
                    :title="data.title"
                    :sub_title="$t('warsaw_sub_title')"
@@ -20,10 +20,15 @@
         v-if="step === 1"
         @goStep="(index) => goStep(index)"
       />
-      <Container>
+
+      <Container size="0">
         <div class="col-12">
-          <Fact :data="{background_color: 'light', logo: true, layout: 'wide'}">
+          <Fact :data="{background_color: 'light', logo: true, layout: 'wide'}" class="p-b-0">
             <div v-if="step===2" v-html="data.success" class="m-b-56"/>
+            <div class="button-wrap">
+              <NuxtLink :to="localePath('/')" class="button primary">{{ $t('back_home') }}</NuxtLink>
+            </div>
+
             <div v-if="data.contact_title" class="subheader m-b-16">{{ data.contact_title }}</div>
             <div v-if="data.contact_address" class="m-b-8">
               <span class="icon-location-16"/>
@@ -33,7 +38,7 @@
               <span class="icon-phone-16"/>
               <a :href="`tel: ${data.contact_phone.replaceAll(' ', '').replaceAll('-', '').replaceAll(')', '').replaceAll('(', '')}`" target="_blank" class="link normal  m-l-8">{{ data.contact_phone }}</a>
             </div>
-
+            
             <template v-if="data.social">
               <NuxtLink 
                 v-for="(item, index) in data.social" 
@@ -42,6 +47,8 @@
                 class="social hover"/>
             </template>
           </Fact>
+        </div>
+        <div v-if="step===2" class="image-wrap">
         </div>
       </Container>
     </div>
@@ -145,5 +152,19 @@ function goStep(_step, payload) {
     padding: 12px;
   }
 
+}
+
+.button-wrap {
+  margin: 0 auto 40px;
+}
+
+.image-wrap {
+  width: 100%;
+  height: 616px;
+  overflow: hidden;
+  background-image: url('/img/formSuccess.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 </style>

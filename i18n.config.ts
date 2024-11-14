@@ -5,6 +5,7 @@ export default defineI18nConfig(() => ({
         en: {
             yes: 'Yes',
             no: 'No',
+            back_home: "Back to home",
             book_title: 'Request an appointment',
             book_sub_title: 'You are one step away from an unforgettable experience of discovering our gowns. Please fill out the form below so a retailer manager can contact you and confirm your booking.',
             book_your_contact_information: 'Your contact information',
@@ -171,6 +172,7 @@ export default defineI18nConfig(() => ({
         pl: {
             yes: 'Tak',
             no: 'Nie',
+            back_home: "Wróć do domu",
             book_title: 'Zarezerwuj wizytę',
             book_sub_title: 'Jesteś o krok od niezapomnianego doświadczenia odkrywania naszych sukni. Prosimy o wypełnienie poniższego formularza, aby menedżer ds. sprzedaży detalicznej mógł skontaktować się z Tobą i potwierdzić rezerwację.',
             book_your_contact_information: 'Twoje dane kontaktowe',
