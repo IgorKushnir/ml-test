@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
     const path = getRequestPath(event);
     const url = process.env.STRAPI_URL
     const shouldBlockRobots = !!process.env.BLOCK_ROBOTS
-    console.log('path', path)
+
     if (path === "/robots.txt") {
         if (shouldBlockRobots) {
             return '<pre>User-agent: * Disallow: /</pre>'
