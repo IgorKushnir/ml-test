@@ -30,7 +30,7 @@
     </div>
     <template v-if="content">
       <template v-for="data in content">
-        <Content :data="data"/>
+        <LazyContent :data="data"/>
       </template>
     </template>
 

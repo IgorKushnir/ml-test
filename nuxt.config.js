@@ -123,6 +123,7 @@ export default defineNuxtConfig({
       STRAPI_PREVIEW_SECRET: process.env.STRAPI_PREVIEW_SECRET,
       GTM: process.env.GTM,
       ABSTRACT_API: process.env.ABSTRACT_API,
+      IP_INFO_KEY: process.env.IP_INFO_KEY,
       ADMIN_URL: process.env.STRAPI_URL || 'http://localhost:1337',
       PINECONE_KEY: process.env.PINECONE_KEY,
       public: {

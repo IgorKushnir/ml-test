@@ -8,6 +8,7 @@ export default defineEventHandler(async (event) => {
     // }
     const config = useRuntimeConfig();
     const apiKey = config.ABSTRACT_API
+    const ipInfoApiKey = config.IP_INFO_KEY
     if (config.MODE === 'local') return
 
     const headers = getRequestHeaders(event)
@@ -33,23 +34,23 @@ export default defineEventHandler(async (event) => {
         setCookie(event, 'country', country_code)
 
     } else {
-        if(!apiKey) {return}
-        const url = `https://ipgeolocation.abstractapi.com/v1/?api_key=${apiKey}&ip_address=${ip}`
+        if(!ipInfoApiKey) {return}
+        const url = `https://ipinfo.io/json?token=${ipInfoApiKey}`
         // const url = "https://ipgeolocation.abstractapi.com/v1/?api_key=a673704aa12d440fbd1a87c392290a47&ip_address=92.184.105.98"
 
         if (ip) {
             try {
                 const {data} = await axios.get(url)
                 if (data) {
-                    event.context.country = data.country_code
-                    setCookie(event, 'country', data.country_code)
+                    event.context.country = data.country
+                    setCookie(event, 'country', data.country)
                 }
             } catch (e) {
 
                 event.context.country = null
                 setCookie(event, 'country', null)
                 console.error('---abstractapi error---', url);
-                console.error('---abstractapi---', e);
+                // console.error('---abstractapi---', e);
             }
 
         } else {
