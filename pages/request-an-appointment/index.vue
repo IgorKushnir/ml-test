@@ -238,7 +238,7 @@ if (route.query.q) {
   }
 }
 function decodeFromBase64(string) {
-  if (import.meta.client) {
+  if (process.client) {
     return atob(string);
   } else {
     return Buffer.from(string, 'base64').toString('utf-8');

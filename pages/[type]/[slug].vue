@@ -164,10 +164,9 @@
 
 <script setup lang="js">
 import getProduct from '~/api/getProduct'
-const { $setViewedProduct, $getViewedProduct, $getLikedProducts, $toggleLikeProduct, $getMonths, $getDatesInRange } = useNuxtApp()
+const { $setViewedProduct, $getViewedProduct, $getLikedProducts, $toggleLikeProduct } = useNuxtApp()
 import {useTypesData} from "~/composables/states";
 import Image from "../../components/Image";
-import {routeLocalization} from '~/composables/routeLocalization'
 const isMobile = useIsMobile();
 
 const route = useRoute();
@@ -175,6 +174,7 @@ const router = useRouter();
 let slug = route.params.slug;
 let draft = route.query?.draft;
 const likeList = ref([])
+
 const { locale } = useI18n()
 const localePath = useLocalePath()
 
@@ -191,20 +191,29 @@ let {data, pending} = await getProduct(slug, JSON.stringify(extrudedIds), public
 const discontinued = computed(() => data.value.discontinued)
 
 // Redirect from not TYPE path
-if (import.meta.server) {
+if (process.server) {
   const types = useTypesData()
-  const fullPath = route.fullPath;
 
-  if (types.value.some(({slug}) => fullPath.includes(slug))) {
+  const fullPath = route.fullPath;
+  let path = fullPath.split('/')
+  path = path.filter(p => p !== '' && p !== locale.value)
+  path = path[0]
+
+  const index = types.value.findIndex(t => t.slug === path)
+  if (index === -1) {
 
     if (data.value?.type?.data?.attributes?.slug) {
-      const redirectLink = `/${data.value.type?.data?.attributes?.slug}/${slug}`
+
+      const redirectLink = ['',data.value?.type?.data?.attributes?.slug, slug].join('/')
       navigateTo(localePath(redirectLink), { redirectCode: 301 })
     }
   }
+}
 
+
+if (process.server) {
   if (data.value) {
-    const firstImage = data.value?.gallery?.data.find(item => item.attributes.mime.startsWith('image'))
+    const indexOfFirsImage = data.value?.gallery?.data.findIndex(item => item.attributes.mime.startsWith('image'))
     let structuredData = {
       "@context": "https://schema.org/",
       "@type": "Product",
@@ -215,9 +224,7 @@ if (import.meta.server) {
         "name": "Milla Nova"
       }
     }
-    if (firstImage) {
-      structuredData["image"] = firstImage?.attributes?.formats?.medium?.url ?? firstImage?.attributes?.url ?? ''
-    }
+    if (indexOfFirsImage !== -1) structuredData["image"] = data.value.gallery?.data[indexOfFirsImage]?.attributes?.formats?.medium?.url ?? data.value.gallery?.data[indexOfFirsImage]?.attributes?.url ?? ''
 
     useHead({
       script: [
@@ -228,10 +235,12 @@ if (import.meta.server) {
       ]
     })
 
+    if (!indexOfFirsImage && indexOfFirsImage != 0) {
+      console.error('Check product error: ', data.value.title, indexOfFirsImage);
+    }
   } else {
     console.error(404, route.fullPath);
   }
-
 }
 
 
@@ -247,33 +256,40 @@ function handleLike(id) {
 
 
 function prevHandler() {
-  router.push(localePath(`/${data.value.extra.previous.type.slug}/${data.value.extra.previous.slug}`))
+  router.push(localePath('/'+data.value.extra.previous.type.slug+'/' + data.value.extra.previous.slug))
 }
 
 function nextHandler() {
-  router.push(localePath(`/${data.value.extra.next.type.slug}/${data.value.extra.next.slug}`))
+  router.push(localePath('/'+data.value.extra.next.type.slug+'/' + data.value.extra.next.slug))
 }
 
 
 const breadcrumbs = computed(() => {
-  const res = [
+  let res = [
     {
       title: data?.value?.title,
       path: null
     }
   ]
   if (data?.value?.collection?.data) {
-    res.unshift({
+    res = [
+      {
         title: data?.value.collection?.data?.attributes?.title,
-        path: `/collection/${data?.value.collection?.data?.attributes?.slug}`,
-      })
-  } else if (data?.value?.type?.data) {
-      res.unshift({
+        path: '/collection/' + data?.value.collection?.data?.attributes?.slug,
+      },
+        ...res
+    ]
+  } else {
+    if (data?.value?.type?.data) {
+      res = [
+        {
           title: data?.value.type?.data?.attributes?.title,
-          path: `/${data?.value.type?.data?.attributes?.slug}`,
-        })
+          path: '/' + data?.value.type?.data?.attributes?.slug,
+        },
+        ...res
+      ]
     }
-  
+  }
   return res;
 })
 
@@ -290,8 +306,8 @@ function getStars(level) {
     }
     return string
   }
-
 }
+
 onMounted(() => {
   getLikeList()
 
@@ -306,12 +322,14 @@ onMounted(() => {
         const viewedIds = $getViewedProduct()
         useViewedProductIds().value = viewedIds;
 
-        data.value.extra.also = data.value.extra.also.filter(item => !viewedIds.includes(item.attributes.id.toString()));
+        data.value.extra.also = data.value.extra.also.filter(item => {
+          return !viewedIds.includes(item.attributes.id.toString())
+        });
       }
+
     }
   }
   mount()
-
 })
 
 </script>

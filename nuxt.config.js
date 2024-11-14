@@ -153,10 +153,10 @@ export default defineNuxtConfig({
   },
 
   delayHydration: { 
-      mode: 'init',
-      // enables nuxt-delay-hydration in dev mode for testing  
-      debug: process.env.NODE_ENV === 'development'
-    },
+    mode: 'init',
+    // enables nuxt-delay-hydration in dev mode for testing  
+    debug: process.env.NODE_ENV === 'development'
+  },
 
   viewport: {
       breakpoints: {

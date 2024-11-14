@@ -3,8 +3,12 @@ import axios from "axios";
 export default defineEventHandler(async (event) => {
     const path = getRequestPath(event);
     const url = process.env.STRAPI_URL
+    const shouldBlockRobots = !!process.env.BLOCK_ROBOTS
 
     if (path === "/robots.txt") {
+        if (shouldBlockRobots) {
+            return '<pre>User-agent: * Disallow: /</pre>'
+        } else {
         try {
             const response = await axios.get( url + "/robot-txt/robots")
             if (response.status === 200) {
@@ -18,6 +22,7 @@ export default defineEventHandler(async (event) => {
             console.error(e);
             return ''
         }
+    }
     }
 
 
