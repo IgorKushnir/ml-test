@@ -3,7 +3,7 @@
     <div class="row gap-S justify-center">
       <div class="state-container col-6 col-12-md center">
         <div v-if="!hideIcon" class="icon">
-          <NuxtImg :src="imagePath" alt="Milla Nova" format="webp" />
+          <NuxtImg :src="imagePath" alt="Milla Nova" />
         </div>
         <h1 v-if="title" :class="white ? 'white' : ''">{{ title }}</h1>
         <p v-if="text" :class="white ? 'white' : ''">{{text}}</p>
