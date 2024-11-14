@@ -21,7 +21,7 @@
           <div class="swiper-wrapper">
             <NuxtLink v-for="dress in [...data.silhouettes?.data]" :to="(locale === 'en' ? '/dress?silhouettes=' : '/pl/suknie?silhouette=') + dress.attributes.slug" :key="dress.attributes.slug" class="swiper-slide">
               <div class="new-ratio-1x1">
-                <NuxtImg class="silhouette" :src="`/img/silhouette/${dress.attributes.slug}.png`" :alt="dress.attributes.title" loading="lazy" format="webp"/>
+                <NuxtImg class="silhouette" :src="`/img/silhouette/${dress.attributes.slug}.png`" :alt="dress.attributes.title" loading="lazy"/>
               </div>
               <div class="nav-link m-v-16">{{ dress.attributes.title }}</div>
             </NuxtLink>
@@ -105,7 +105,19 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-
+.button-arrow {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  right: 16px;
+  top: calc(50% - 20px);
+  opacity: 0;
+  transition: .5s ease-in-out opacity;
+  z-index: 6;
+}
 
 .silhouette-container {
   background-color: $gray;

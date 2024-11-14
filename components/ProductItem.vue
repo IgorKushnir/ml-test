@@ -128,6 +128,20 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+.button-arrow {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  right: 16px;
+  top: calc(50% - 20px);
+  opacity: 0;
+  transition: .5s ease-in-out opacity;
+  z-index: 6;
+}
+
 .relative {
   position: relative;
 }
