@@ -114,7 +114,7 @@
 
 
             <NuxtLink v-if="data.storeLink" :to="localePath(data.storeLink)" target="_blank" class="button m-t-16 m-t-0-md m-b-24-md m-r-16 target">{{$t('buy_online')}}</NuxtLink>
-            <NuxtLink v-if="!discontinued"  :to="locale === 'pl' ? localePath('/warsaw') : `${localePath('/request-an-appointment')}?source=${data?.collection?.data?.attributes?.slug ?? 'null'}`" target="_self" style="width: 100%;" class="button w-full m-t-16 m-t-0-md m-b-24-md">
+            <NuxtLink v-if="!discontinued"  :to="locale === 'pl' ? localePath('/warszawa') : `${localePath('/request-an-appointment')}?source=${data?.collection?.data?.attributes?.slug ?? 'null'}`" target="_self" style="width: 100%;" class="button w-full m-t-16 m-t-0-md m-b-24-md">
               {{ locale === 'pl' ? $t('book_an_appointment') : $t('request_an_appointment') }}</NuxtLink>
 
 
