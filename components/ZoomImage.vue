@@ -60,7 +60,7 @@ let imageH = 0
 let y = 0
 
 let touchScreen = false;
-if (import.meta.client) {
+if (process.client) {
   touchScreen = 'ontouchstart' in window
 }
 // let touchScreen = true;

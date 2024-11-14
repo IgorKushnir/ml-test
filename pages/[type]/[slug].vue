@@ -191,7 +191,7 @@ let {data, pending} = await getProduct(slug, JSON.stringify(extrudedIds), public
 const discontinued = computed(() => data.value.discontinued)
 
 // Redirect from not TYPE path
-if (import.meta.server) {
+if (process.server) {
   const types = useTypesData()
   const fullPath = route.fullPath;
 

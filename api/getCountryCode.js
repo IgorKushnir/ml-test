@@ -13,7 +13,7 @@ export default async function () {
     // return null
 
 
-    if (import.meta.client) {
+    if (process.client) {
         const country = document.cookie.replace(
             /(?:(?:^|.*;\s*)country\s*\=\s*([^;]*).*$)|^.*$/,
             "$1",

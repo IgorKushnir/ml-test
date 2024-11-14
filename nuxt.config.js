@@ -25,7 +25,6 @@ export default defineNuxtConfig({
       '@nuxtjs/i18n',
       '@nuxt/image',
       '@nuxtjs/critters',
-      'nuxt-delay-hydration',
       'nuxt-viewport',
   ],
 
@@ -151,12 +150,6 @@ export default defineNuxtConfig({
           vimeo: 'https://i.vimeocdn.com',
       }
   },
-
-  delayHydration: { 
-      mode: 'init',
-      // enables nuxt-delay-hydration in dev mode for testing  
-      debug: process.env.NODE_ENV === 'development'
-    },
 
   viewport: {
       breakpoints: {
