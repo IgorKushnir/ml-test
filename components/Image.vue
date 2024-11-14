@@ -10,15 +10,14 @@
         :src="$getImage(path, size)"
         :alt="path.data?.attributes?.alternativeText ?? alt"
         class="img-component base"
-        :loading="lazy ? 'lazy' : null"
-        format="webp"
+        :loading="lazyLoadImage ? 'lazy' : null"
     />
     
     <video ref="mainVideo" v-if="path.data?.attributes?.mime?.startsWith('video/')" muted autoplay playsinline :poster="poster" loop tabindex="-1">
       <source ref="videoSource" :type="path.data.attributes.mime" aria-hidden="true">
     </video>
     
-    <NuxtImg :src="placeholder" :alt="alt" class="img-component placeholder" format="webp" />
+    <NuxtImg :src="placeholder" :alt="alt" class="img-component placeholder" />
     
   </component>
 </template>
@@ -53,7 +52,7 @@ let props = defineProps({
     type: Object,
     required: false
   },
-  lazy: {
+  lazyLoadImage: {
     type: Boolean,
     required: false,
     default: false,
