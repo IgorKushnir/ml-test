@@ -35,12 +35,12 @@ export const generateBody = (userData: {[key: string]: {value: string | string[]
     'Nowe zgłoszenie', //status
     '', //postponed
     priority, //priority
-    `${new Date(Date.now()).toLocaleDateString('pl-PL', { timeZone: "Europe/Warsaw" })}, ${new Date(Date.now()).toLocaleTimeString('pl-PL'), { timeZone: "Europe/Warsaw" }}`, //creation date
+    `${new Date(Date.now()).toLocaleDateString('pl-PL', { timeZone: "Europe/Warsaw" })}, ${new Date(Date.now()).toLocaleTimeString('pl-PL', { timeZone: "Europe/Warsaw" })}`, //creation date
     userData.lastName.value, // last name
     userData.firstName.value, // first name
     userData.email.value, // email
     userData.phone.value, // Telefon
-    userData.weddingDate.value, // Data ślubu
+    new Date(userData.weddingDate.value as string).toLocaleDateString('pl-PL', { timeZone: "Europe/Warsaw" }), // Data ślubu
     userData.budget.value, // Budżet (PLN)
     userData.preferredContact.value, // Kontakt
     userData.fittingType.value, // Typ przymiarki
@@ -54,4 +54,5 @@ export const generateBody = (userData: {[key: string]: {value: string | string[]
     userData.instagram.value, // Instagram
     userData.findOut.value?.join(", "),  // Źródło MillaNova
      '',  // Menedżer
+     userData.consent.value // consent
 ]}
