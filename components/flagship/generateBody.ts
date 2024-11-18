@@ -26,7 +26,7 @@ export const generateBody = (userData: {[key: string]: {value: string | string[]
     }
 
     if (userData.fittingType.value === 'Powtórna') {
-        priorityCount = priorityCount + 3
+        priorityCount = priorityCount + 4
     }
 
     const priority = priorityCount > 4 ? 'Wysoki' : priorityCount > 2 ? 'Średni' : 'Niski'
