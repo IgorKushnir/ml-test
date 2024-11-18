@@ -89,15 +89,6 @@ const goToStep = (index) => {
   list-style: none;
 }
 
-.text-item {
-  flex-basis: 48%;
-  padding-top: 24px;
-  border-top: 1px solid $border-dark;
-  color: $gray;
-  font-weight: 400;
-font-size: 18px;
-}
-
 .additional-text-wrap {
   margin: 0 auto;
   padding: 0 32px;
@@ -128,10 +119,4 @@ font-size: 18px;
   }
 }
 
-@include lg {
-
-  .text-item {
-    flex-basis: 100%;
-  }
-}
 </style>
