@@ -21,7 +21,7 @@
         @goStep="(index) => goStep(index)"
       />
 
-      <Container size="0">
+      <Container size="0" marginVertical="40">
         <div class="col-12">
           <Fact :data="{background_color: 'light', logo: true, layout: 'wide'}" class="p-b-0">
             <div v-if="step===2" v-html="data.success" class="m-b-56"/>
