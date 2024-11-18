@@ -50,7 +50,6 @@
         </ul>
         </Container>
         <div class="additional-text-wrap">
-          <p class="additional-text">{{ $t("book_text_21") }}</p>
           <p class="additional-text">{{ $t("book_text_22") }}<b>{{ $t("book_text_23") }}</b></p>
         </div>
         <Container justify="justify-center">
