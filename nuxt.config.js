@@ -76,6 +76,13 @@ export default defineNuxtConfig({
               pl: '/pokazy/[slug]'
           },
 
+          'inspiration/index': {
+              pl: '/inspiracja'
+          },
+          'inspiration/[slug]': {
+              pl: '/inspiracja/[slug]'
+          },
+
       },
       detectBrowserLanguage: {
           useCookie: false,
