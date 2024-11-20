@@ -54,10 +54,6 @@ const isOpen = ref(false)
   font-size: 18px;
   transition: all 0.25s;
 
-  &:last-of-type {
-    border-bottom: 1px solid $border-dark;
-  }
-
   &__block {
     padding-left: 30px;
     margin-bottom: 0px;
@@ -69,6 +65,20 @@ const isOpen = ref(false)
         overflow: hidden;
   }
   }
+}
+
+@include lg {
+.text-item {
+  padding-top: 0;
+  flex-basis: 100%;
+
+  &__block {
+    grid-template-rows: 0fr;
+  }
+
+  &:last-of-type {
+    border-bottom: 1px solid $border-dark;
+  }
 
   &--active {
     border-top: 1px solid $blue;
@@ -77,8 +87,9 @@ const isOpen = ref(false)
 
     &:last-of-type {
     border-bottom: 1px solid $blue;
-  }
+    }
 
+    
     .text-item-header__title {
         font-weight: 600;
     }
@@ -95,19 +106,7 @@ const isOpen = ref(false)
     & + .text-item {
         border-top: 1px solid transparent;
     }
-  }
 }
-
-
-
-@include lg {
-.text-item {
-  padding-top: 0;
-  flex-basis: 100%;
-
-  &__block {
-    grid-template-rows: 0fr;
-  }
 }
 
 .text-item-header {
