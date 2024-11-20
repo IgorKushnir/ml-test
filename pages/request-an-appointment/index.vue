@@ -110,7 +110,7 @@
                       v-model="sendData['city'].value"
                       :disabled="sendData['country'].value === undefined"
                   >
-                    <option :value="undefined" :selected="sendData['city'] === undefined"><strong>- {{ $t('book_choose_city') }} -</strong></option>
+                    <option :value="undefined" :selected="sendData['city'] === undefined">- {{ $t('book_choose_city') }} -</option>
                     <option v-for="city in cities" :value="city.name.toLowerCase()">{{ city.name }}</option>
                   </select>
                   <label for="surname" class="error-message">{{ sendData['city'].error }}</label>
