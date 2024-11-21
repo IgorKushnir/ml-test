@@ -320,6 +320,7 @@ watch(() => input.value, () => {
 })
 
 function close() {
+  search.value = ''
   emits('close')
 }
 

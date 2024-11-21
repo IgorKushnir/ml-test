@@ -50,7 +50,6 @@
         </ul>
         </Container>
         <div class="additional-text-wrap">
-          <p class="additional-text">{{ $t("book_text_21") }}</p>
           <p class="additional-text">{{ $t("book_text_22") }}<b>{{ $t("book_text_23") }}</b></p>
         </div>
         <Container justify="justify-center">
@@ -90,15 +89,6 @@ const goToStep = (index) => {
   list-style: none;
 }
 
-.text-item {
-  flex-basis: 48%;
-  padding-top: 24px;
-  border-top: 1px solid $border-dark;
-  color: $gray;
-  font-weight: 400;
-font-size: 18px;
-}
-
 .additional-text-wrap {
   margin: 0 auto;
   padding: 0 32px;
@@ -129,10 +119,4 @@ font-size: 18px;
   }
 }
 
-@include lg {
-
-  .text-item {
-    flex-basis: 100%;
-  }
-}
 </style>

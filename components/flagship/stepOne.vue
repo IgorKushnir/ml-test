@@ -60,7 +60,7 @@ defineProps({
     type: Object
   },
   content: {
-    type: Object
+  type: Object
   },
 })
 
