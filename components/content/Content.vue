@@ -200,12 +200,12 @@ blockquote {
   margin-right: 0;
   padding: 40px 80px;
   position: relative;
+  background-color: $light-gray;
 
   * {
     color: $dark-blue;
   }
 
-  background-color: $light-gray;
 }
 
 blockquote *:before {
