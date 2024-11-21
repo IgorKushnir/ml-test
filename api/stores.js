@@ -159,22 +159,9 @@ async function getListOfCountries(lang) {
 }
     `);
     const {data, pending, refresh, error} = await useAsyncData('data_list_of_countries', () => response, {
-        transform: (d) => {
-            const countries = d.data['storeFinders'].data.map(e => {
+        transform: (d) => d.data['storeFinders'].data.map(e => {
                 return {value: e.attributes.country, flag: e.attributes.country_code, slug: e.attributes.slug}
             })
-            let priority = ['ukraine', 'australia', 'italy', 'united-states', 'united-kingdom', 'turkey']
-            function getCountryIndex(slug) {
-                return countries.findIndex(c => c.slug === slug)
-            }
-            let excluded = countries.filter(c => !priority.includes(c.slug))
-
-            priority = priority.map(e => getCountryIndex(e) !== -1 ? countries[getCountryIndex(e)] : null)
-            priority = priority.filter(c => c !== null)
-
-
-            return [...priority, ...excluded]
-        }
     })
 
 
