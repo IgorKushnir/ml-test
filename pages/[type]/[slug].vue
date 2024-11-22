@@ -2,7 +2,7 @@
   <div>
     <div v-if="data != null && !pending">
 
-      <StickyBarStickyHeaderMilla :title="data.title">
+      <StickyBarStickyHeaderMilla :title="collection ?  $t('back_to_collection') : data.title" @onBackClick="onBackClick">
         <template #end>
           <StickyBarBack v-if="data?.extra?.previous" reverse :text="$t('previous')" @clicks="prevHandler"/>
           <StickyBarBack v-if="data?.extra?.next" :text="$t('next')" @click="nextHandler"/>
@@ -173,11 +173,19 @@ const route = useRoute();
 const router = useRouter();
 let slug = route.params.slug;
 let draft = route.query?.draft;
+const collection = route.query?.collection;
 const likeList = ref([])
 
 const { locale } = useI18n()
 const localePath = useLocalePath()
 
+const onBackClick = () => {
+  if (collection) {
+    router.push(localePath(`/collection/${collection}`))
+  } else {
+    router.back()
+  }
+}
 
 let publicationState = "LIVE";
 if (draft === 'true') {
@@ -256,11 +264,11 @@ function handleLike(id) {
 
 
 function prevHandler() {
-  router.push(localePath('/'+data.value.extra.previous.type.slug+'/' + data.value.extra.previous.slug))
+  router.push(localePath(`/${data.value.extra.previous.type.slug}/${data.value.extra.previous.slug}${collection ? `?collection=${collection}` : ''}`))
 }
 
 function nextHandler() {
-  router.push(localePath('/'+data.value.extra.next.type.slug+'/' + data.value.extra.next.slug))
+  router.push(localePath(`/${data.value.extra.next.type.slug}/${data.value.extra.next.slug}${collection ? `?collection=${collection}` : ''}`))
 }
 
 
