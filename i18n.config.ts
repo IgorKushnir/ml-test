@@ -72,7 +72,7 @@ export default defineI18nConfig(() => ({
             shared_moodboard_title: 'Shared mood board',
             share_this_board: 'Share this board',
             moodboard_subtitle_desktop: 'See what your closest ones think of your picks — tap to share!',
-            moodboard_subtitle_mobile: 'Tap to share!',
+            moodboard_subtitle_mobile: 'Share your picks with the closest ones!',
             share: 'Share',
             copy_link: 'Copy link',
             copied: 'Copied!',
@@ -219,7 +219,7 @@ export default defineI18nConfig(() => ({
             press_about_us: 'Prasa',
             trunk_shows: 'Pokazy',
             moodboard_subtitle_desktop: 'Zobacz, co o Twoich wyborach myślą najbliżsi — dotknij, aby udostępnić!',
-            moodboard_subtitle_mobile: 'Dotknij, aby udostępnić!',
+            moodboard_subtitle_mobile: 'Podziel się swoimi wyborami z najbliższymi!',
 
             filters_filters: 'Filtr',
             filters_silhouette: 'Silhouette',
