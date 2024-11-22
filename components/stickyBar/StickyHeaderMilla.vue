@@ -6,7 +6,7 @@
 
           <transition name="fade">
             <div v-if="title && sticky" class="grid-column-start title-container">
-              <StickyBarBack v-if="back" reverse />
+              <StickyBarBack v-if="back" @click="clickHandler" reverse useCustomEmit/>
               <h3 class="sticky-title">{{ title }}</h3>
 
             </div>
@@ -38,11 +38,17 @@ const props = defineProps({
     default: true
   }
 })
+const emits = defineEmits('onBackClick')
+
 let wrapper = ref();
 let sticky = ref(false);
 let shift = ref(false);
 const inMobile = useIsMobile();
 let prevOffsetY = 0;
+
+const clickHandler = () => {
+  emits('onBackClick')
+}
 
 watch(() => sticky.value & shift.value, () => {
   const element = document.getElementsByClassName('navigation')

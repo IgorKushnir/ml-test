@@ -170,6 +170,7 @@ export default defineI18nConfig(() => ({
             book_text_24: "We're here to support you every step, ensuring a stress-free and joyful experience, so feel free to reach out to us at any time if you need help: ",
             book_text_25: " or email us at ",
             book_text_26: "Our showroom is open Monday through Saturday from 10:00 to 19:00.",
+            back_to_collection: "Back to collection",
             flagship_store_phone: "+48 882 153 873"
         },
         pl: {
@@ -363,6 +364,7 @@ export default defineI18nConfig(() => ({
             book_text_24: "Jesteśmy tu, aby wspierać Cię na każdym kroku i zapewnić spokojne i radosne doświadczenie, dlatego w razie potrzeby skontaktuj się z nami pod numerem: ",
             book_text_25: " lub napisz na ",
             book_text_26: "Nasz showroom jest otwarty od poniedziałku do soboty w godzinach od 10:00 do 19:00.",
+            back_to_collection: "Powrót do kolekcji",
             flagship_store_phone: "+48 882 153 873"
         }
     }
