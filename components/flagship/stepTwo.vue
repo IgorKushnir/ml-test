@@ -8,6 +8,8 @@
               {{ $t("book_text_3") }}
               <b>{{ $t("book_text_4") }}</b>
               {{ $t("book_text_5") }}
+              <a :href="`mailto:${$t('flagship_store_email')}`">{{ $t("book_text_5_link") }}</a>
+              {{ $t("book_text_5_2") }}
             </span>
           </FlagshipInfoItem>
           <FlagshipInfoItem :title="t('guest_policy')">
@@ -50,7 +52,6 @@
         </ul>
         </Container>
         <div class="additional-text-wrap">
-          <p class="additional-text">{{ $t("book_text_21") }}</p>
           <p class="additional-text">{{ $t("book_text_22") }}<b>{{ $t("book_text_23") }}</b></p>
         </div>
         <Container justify="justify-center">
@@ -58,9 +59,9 @@
       </Container>
       <div class="additional-text-wrap additional-text-wrap--small">
           <p class="additional-text">{{ $t("book_text_24") }}
-            <b>+48 882 153 873</b>
+            <a :href="`tel:${$t('flagship_store_phone')}`"><b>{{ $t('flagship_store_phone') }}</b></a>
             {{ $t("book_text_25") }}
-            <b>warsaw@millanova.com</b> <br>
+            <a :href="`mailto:${$t('flagship_store_email')}`"><b>{{ $t('flagship_store_email') }}</b></a> <br>
             {{ $t("book_text_26") }}</p>
         </div>
 </template>
@@ -88,15 +89,6 @@ const goToStep = (index) => {
   column-gap: 20px;
   row-gap: 40px;
   list-style: none;
-}
-
-.text-item {
-  flex-basis: 48%;
-  padding-top: 24px;
-  border-top: 1px solid $border-dark;
-  color: $gray;
-  font-weight: 400;
-font-size: 18px;
 }
 
 .additional-text-wrap {
@@ -129,10 +121,4 @@ font-size: 18px;
   }
 }
 
-@include lg {
-
-  .text-item {
-    flex-basis: 100%;
-  }
-}
 </style>

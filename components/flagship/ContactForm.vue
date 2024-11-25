@@ -173,7 +173,7 @@
           </div>
 
           <div class="c-4 m-v-24 center">
-            <div class="button primary" :class="sendingRequest ? 'loading' : ''" v-on:click="postRecord">
+            <div class="button primary submit-button" :class="sendingRequest ? 'loading' : ''" v-on:click="postRecord">
               <transition name="fade" mode="out-in">
                 <span v-if="!sendingRequest">{{ $t('book_send') }}</span>
                 <Spinner v-else white/>
@@ -236,7 +236,7 @@ const findOutItems = [
 {name: 'Tik Tok', value: 'Tik Tok', title: 'Tik Tok'},
 {name: 'Pinterest', value: 'Pinterest', title: 'Pinterest'},
 {name: 'Google', value: 'Google', title: 'Google'},
-{name: 'Reklama', value: 'Reklama', title: t("advertising")},
+{name: 'Reklamy', value: 'Reklamy', title: t("advertising")},
 {name: 'Poczta pantoflowa', value: 'Poczta pantoflowa', title: t("word_of_mouth")},
 ]
 
@@ -344,5 +344,10 @@ onMounted(async () => {
 .subtitle {
     font-style: italic;
     margin: 8px 0;
+}
+
+.submit-button {
+  width: 100%;
+  max-width: 350px;
 }
 </style>

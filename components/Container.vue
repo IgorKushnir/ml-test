@@ -1,5 +1,5 @@
 <template>
-  <div class="container  m-v-80 m-v-40-xl m-v-32-md">
+  <div :class="`container  m-v-${marginVertical} m-v-40-xl m-v-32-md`">
     <div :class="`row gap-${size} ${justify}`">
       <slot/>
     </div>
@@ -17,6 +17,11 @@ const props = defineProps({
     type: String,
     required: false,
     default: 'S'
+  },
+  marginVertical: {
+    type: String,
+    required: false,
+    default: '80'
   }
 })
 
