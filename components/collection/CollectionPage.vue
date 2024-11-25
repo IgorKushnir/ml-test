@@ -155,7 +155,7 @@ const {
     if (productPage.value === 1 || pages.value !== 1) {
       initialData.value = []
     }
-    initialData.value.push(...d.data[collection].data)
+    initialData.value.push(...d.data[collection].data.map(product => ({...product, attributes: {...product.attributes, slug: `${product.attributes.slug}?collection=${slug}`}})))
 
     d.data[collection].data = initialData.value;
 
