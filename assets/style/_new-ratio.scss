@@ -1,3 +1,5 @@
+@use '_breakpoints' as *;
+
 %ratio {
   position: relative;
   &.overflow-hidden {

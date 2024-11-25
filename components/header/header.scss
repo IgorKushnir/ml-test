@@ -1,4 +1,6 @@
 @use "sass:map";
+@use '../../assets/style/colors' as *;
+@use '../../assets/style/breakpoints' as *;
 
 .navigation {
   //height: 152px;

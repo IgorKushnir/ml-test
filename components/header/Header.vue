@@ -234,5 +234,5 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-@import "header"
+@use "header" as *;
 </style>
