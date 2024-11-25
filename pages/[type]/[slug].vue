@@ -103,7 +103,7 @@
                   <div class="trunk-show-preview"><Image :path="show.attributes.cover_4x3"/></div>
                   <div>
                     <NuxtLink  :to="localePath('/trunk-shows/'+show.attributes.slug)" class="p-small link dark-blue m-b-4">
-                      {{ `${show.attributes.title}, ${show.attributes.country}, ${show.attributes.city}, ${$getDatesInRange(show.attributes.from, show.attributes.to, $getMonths, true)}` }}
+                      {{ `${show.attributes.title}, ${show.attributes.country}, ${show.attributes.city}, ${$getDatesInRange(show.attributes.from, show.attributes.to, $getMonths, false)}` }}
                     </NuxtLink>
                   </div>
                 </div>
