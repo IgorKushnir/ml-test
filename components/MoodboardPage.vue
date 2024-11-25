@@ -182,6 +182,7 @@ function decodeFromBase64(string) {
 
   &--mobile {
     display: block;
+    margin: 0;
 
     @media (min-width: 768px) {
       display: none;
