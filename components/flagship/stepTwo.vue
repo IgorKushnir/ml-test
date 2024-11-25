@@ -8,7 +8,7 @@
               {{ $t("book_text_3") }}
               <b>{{ $t("book_text_4") }}</b>
               {{ $t("book_text_5") }}
-              <a :href="`mailto:${$t('flagship_store_email')}`">{{ $t("book_text_5_link") }}</a>
+              <a :href="`mailto:${flagship_store_email}`">{{ $t("book_text_5_link") }}</a>
               {{ $t("book_text_5_2") }}
             </span>
           </FlagshipInfoItem>
@@ -61,14 +61,14 @@
           <p class="additional-text">{{ $t("book_text_24") }}
             <a :href="`tel:${$t('flagship_store_phone')}`"><b>{{ $t('flagship_store_phone') }}</b></a>
             {{ $t("book_text_25") }}
-            <a :href="`mailto:${$t('flagship_store_email')}`"><b>{{ $t('flagship_store_email') }}</b></a> <br>
+            <a :href="`mailto:${flagship_store_email}`"><b>{{ flagship_store_email }}</b></a> <br>
             {{ $t("book_text_26") }}</p>
         </div>
 </template>
 
 <script setup>
 const { t } = useI18n()
-
+const flagship_store_email = "warsaw@millanova.com"
 const emits = defineEmits(['goStep'])
 
 const goToStep = (index) => {
