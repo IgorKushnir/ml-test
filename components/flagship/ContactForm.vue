@@ -236,7 +236,7 @@ const findOutItems = [
 {name: 'Tik Tok', value: 'Tik Tok', title: 'Tik Tok'},
 {name: 'Pinterest', value: 'Pinterest', title: 'Pinterest'},
 {name: 'Google', value: 'Google', title: 'Google'},
-{name: 'Reklama', value: 'Reklama', title: t("advertising")},
+{name: 'Reklamy', value: 'Reklamy', title: t("advertising")},
 {name: 'Poczta pantoflowa', value: 'Poczta pantoflowa', title: t("word_of_mouth")},
 ]
 
