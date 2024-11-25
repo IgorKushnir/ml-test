@@ -8,6 +8,8 @@
               {{ $t("book_text_3") }}
               <b>{{ $t("book_text_4") }}</b>
               {{ $t("book_text_5") }}
+              <a :href="`mailto:${$t('flagship_store_email')}`">{{ $t("book_text_5_link") }}</a>
+              {{ $t("book_text_5_2") }}
             </span>
           </FlagshipInfoItem>
           <FlagshipInfoItem :title="t('guest_policy')">
@@ -57,9 +59,9 @@
       </Container>
       <div class="additional-text-wrap additional-text-wrap--small">
           <p class="additional-text">{{ $t("book_text_24") }}
-            <b>+48 882 153 873</b>
+            <a :href="`tel:${$t('flagship_store_phone')}`"><b>{{ $t('flagship_store_phone') }}</b></a>
             {{ $t("book_text_25") }}
-            <b>warsaw@millanova.com</b> <br>
+            <a :href="`mailto:${$t('flagship_store_email')}`"><b>{{ $t('flagship_store_email') }}</b></a> <br>
             {{ $t("book_text_26") }}</p>
         </div>
 </template>
