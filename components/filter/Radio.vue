@@ -70,4 +70,10 @@ defineEmits(['update:modelValue'])
     font-style: italic;
     margin: 8px 0;
 }
+
+@include sm {
+    .list {
+        flex-direction: column;
+    }
+}
 </style>
