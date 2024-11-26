@@ -91,7 +91,7 @@ const countrySlug = ref(route.params.country);
 const countryCode = ref(null);
 const countryIndex = ref(-1);
 const stateIndex = ref(-1)
-const cityIndex = ref(-1)
+const cityIndex = ref(route.query.city || -1)
 const lineIndex = ref(-1)
 const showMap = ref(false)
 
