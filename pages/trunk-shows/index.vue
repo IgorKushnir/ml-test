@@ -10,7 +10,7 @@
 
     <transition name="fade">
       <div v-if="!pending && data != null">
-        <InnerHeader :title="$t('trunk_shows')"/>
+        <InnerHeader :title="$t('trunk_shows')" :sub_title="$t('trunk_shows_subtitle')"/>
 
         <Container justify="justify-center">
           <div class="row gap-S">
