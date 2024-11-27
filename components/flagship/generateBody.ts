@@ -1,5 +1,5 @@
-export const generateBody = (userData: {[key: string]: {value: string | string[]}}, language: string) => {
-    const parsedBudget = typeof userData.budget.value === 'string' ? parseInt(userData.budget.value) : 0
+export const generateBody = ({userData,  isFirstFitting, language}: {userData: {[key: string]: {value: string | string[]}}, isFirstFitting: boolean, language: string}) => {
+    const parsedBudget = !!userData.budget ? typeof userData.budget.value === 'string' ? parseInt(userData.budget.value) : 0 : 0
     const timeToWedding = typeof userData.weddingDate.value === 'string' ? new Date(userData.weddingDate.value).getTime() -  Date.now() : 0
     let priorityCount = 0
 
@@ -25,11 +25,12 @@ export const generateBody = (userData: {[key: string]: {value: string | string[]
         priorityCount = priorityCount + 1
     }
 
-    if (userData.fittingType.value === 'Powtórna') {
+    if (!isFirstFitting) {
         priorityCount = priorityCount + 4
     }
 
     const priority = priorityCount > 4 ? 'Wysoki' : priorityCount > 2 ? 'Średni' : 'Niski'
+    const selectedServiceTitle = isFirstFitting ? 'PIERWSZA PRZYMIARKA' : 'POWTÓRNA PRZYMIARKA'
 
     return [
     'Nowe zgłoszenie', //status
@@ -41,18 +42,18 @@ export const generateBody = (userData: {[key: string]: {value: string | string[]
     userData.email.value, // email
     userData.phone.value, // Telefon
     new Date(userData.weddingDate.value as string).toLocaleDateString('pl-PL', { timeZone: "Europe/Warsaw" }), // Data ślubu
-    userData.budget.value, // Budżet (PLN)
+    userData.budget?.value || "", // Budżet (PLN)
     userData.preferredContact.value, // Kontakt
-    userData.fittingType.value, // Typ przymiarki
+    selectedServiceTitle, // Typ przymiarki
     userData.models.value, // Modele sukni
-    userData.dressSize.value, // Rozmiar
+    userData.dressSize?.value || "", // Rozmiar
     userData.people.value, // Towarzyszące osoby
     language, // Język
     '', // Ostatni kontakt
     '', //urgent
     '', // Ponowny kontakt
-    userData.instagram.value, // Instagram
-    userData.findOut.value?.join(", "),  // Źródło MillaNova
+    userData.instagram?.value || "", // Instagram
+    userData.findOut?.value?.join(", ") || "",  // Źródło MillaNova
      '',  // Menedżer
      userData.consent.value // consent
 ]}

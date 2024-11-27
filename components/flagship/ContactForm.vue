@@ -52,7 +52,7 @@
             <label for="phone" class="error-message">{{ $t('book_error_phone') }}</label>
           </div>
 
-          <div class="input-block c-2" :class="userData.instagram.error ? 'error' : ''">
+          <div v-if="isFirstFitting" class="input-block c-2" :class="userData.instagram.error ? 'error' : ''">
             <label class="p-small" for="email">{{ $t('instagram') }}</label>
             <input
                 v-model="userData.instagram.value"
@@ -93,23 +93,8 @@
             <label for="people" class="error-message">{{ $t('book_error_empty_field') }}</label>
           </div>
 
-          <div class="input-block c-2" :class="userData.fittingType.error ? 'error' : ''">
-            <label class="p-small required" for="fittingType">{{ $t("fitting_type") }}</label>
-            <select
-                class="input m-t-16"
-                name="fittingType"
-                id="fittingType"
-                v-model="userData.fittingType.value"
-                required
-            >
-            <option :value="null" selected>- {{$t('choose_an_option')}} -</option>
-              <option value="Pierwsza" selected>{{ $t('first_fitting') }}</option>
-              <option value="Powtórna">{{ $t('retry_fitting') }}</option>
-            </select>
-            <label for="fittingType" class="error-message">{{ $t('book_error_empty_field') }}</label>
-          </div>
-
           <FilterRadio
+          v-if="isFirstFitting"
           v-model="userData.dressSize.value"
           name="dressSize"
           :title="$t('dress_size')"
@@ -121,6 +106,7 @@
           />
 
           <FilterRadio
+          v-if="isFirstFitting"
           v-model="userData.budget.value"
           name="budget"
           :title="$t('budget')"
@@ -141,7 +127,7 @@
           />
 
           <div class="input-block c-4" :class="userData.models.error ? 'error' : ''">
-            <label class="p-small" for="email">{{ $t('dress_list') }}</label>
+            <label class="p-small" for="models">{{ $t('dress_list') }}</label>
             <p class="p-small subtitle">{{ $t('dress_list_subtitle') }}</p>
             <textarea
                 v-model="userData.models.value"
@@ -154,6 +140,7 @@
           </div>
 
           <FilterCheckboxCards
+          v-if="isFirstFitting"
           :modelValue="userData.findOut.value"
           :title="$t('book_find_out')"
           :items="findOutItems"
@@ -189,11 +176,23 @@ import phoneCodes from '~/api/phoneCodes.json'
 import getCountryCode from "~/api/getCountryCode";
 import {generateBody} from './generateBody'
 import { onMounted } from 'vue';
+const props = defineProps({
+  isFirstFitting: {
+    type: Boolean,
+    required: false,
+    default: false
+  },
+  altegioRequestData: {
+    type: Object,
+    required: false,
+    default: () => ({})
+  }
+})
 
 const { $validateEmail } = useNuxtApp();
 const { locale, t } = useI18n()
 
-const emits = defineEmits(['goStep'])
+const emits = defineEmits(['goStep', 'addAltegError'])
 const sendingRequest = ref(false)
 
 const userData = ref({
@@ -202,15 +201,17 @@ const userData = ref({
   email: {value: "", error: false, required: true},
   phone: {value: "", error: false, required: true},
   weddingDate: {value: "", error: false, required: true},
-  fittingType: { value: '', error: false, required: true},
-  dressSize: { value: '', error: false, required: true },
-  budget: { value: '', error: false, required: true },
   models: { value: '', error: false },
-  instagram: { value: '', error: false },
   preferredContact: {value: "", error: false, required: true},
   people: {value: 0, error: false},
-  findOut: {value: [], error: false, required: true},
   consent: {value: false, error: false, required: true},
+  
+  ...(props.isFirstFitting && {
+    dressSize: { value: '', error: false, required: true },
+    budget: { value: '', error: false, required: true },
+    instagram: { value: '', error: false },
+    findOut: {value: [], error: false, required: true},
+  })
 })
 
 const sizeItems = [
@@ -326,17 +327,30 @@ onMounted(async () => {
     return
   }
 
-  const body = generateBody(userData.value, locale.value)
+  const body = generateBody({userData: userData.value, isFirstFitting: props.isFirstFitting, language: locale.value})
 
   sendingRequest.value = true
-  try {
-    await $fetch( '/api/googlesheets',  {method: "POST", body})
-    emits('goStep', 2)
-  } catch (e) {
-    console.error(e);
-  }
+  const googleSheetRequest = $fetch( '/api/googlesheets',  {method: "POST", body})
+  const altegioRequest = $fetch('/api/alteg', {
+    method: 'POST',
+    body: {
+      ...props.altegioRequestData,
+      phone: userData.value.phone.value,
+      email: userData.value.email.value,
+      fullName: `${userData.value.firstName.value} ${userData.value.lastName.value}`,
+      comment: `Number of people joining with ${userData.value.firstName.value}: ${userData.value.people.value}. Wedding Date: ${userData.value.weddingDate.value}. ${userData.value.findOut?.value?.length > 0 ? `Find out: ${userData.value.findOut.value.join(', ')}` : ""}`
+    }
+  })
+  Promise.all([googleSheetRequest, altegioRequest])
+  .then(([googleData, altegioData]) => {
+    if (altegioData.success) {
+      emits('goStep', 3)
+    }
 
-  sendingRequest.value = false
+    throw new Error(altegioData.meta.message)
+    })
+    .catch(e => emits('addAltegError', e.message))
+    .finally(() => sendingRequest.value = false)
 }
 </script>
 
