@@ -82,6 +82,7 @@ export default defineI18nConfig(() => ({
             moodboard_empty_description: 'Discover products and add it to your list.',
             press_about_us: 'Press about us',
             trunk_shows: 'Trunk shows',
+            trunk_shows_subtitle: "Trunk Show is an event where a specific designer's collection takes center stage in select retail stores. These special days offer a unique opportunity to explore our gowns up close, select your favorites, and try them on immediately. Often, Trunk Shows are the only place to discover our latest designs — unveiled exclusively at perticular retailer before they're available anywhere else.",
 
             collections: 'Collections',
             collection: 'Collection',
@@ -220,6 +221,7 @@ export default defineI18nConfig(() => ({
             news: "Aktualnosci",
             press_about_us: 'Prasa',
             trunk_shows: 'Pokazy',
+            trunk_shows_subtitle: '',
             moodboard_subtitle_desktop: 'Zobacz, co o Twoich wyborach myślą najbliżsi — dotknij, aby udostępnić!',
             moodboard_subtitle_mobile: 'Podziel się swoimi wyborami z najbliższymi!',
 
