@@ -6,7 +6,7 @@
             <NuxtLink
                 v-for="item in productsData"
                 class="img-hover col-3 col-4-lg col-6-md col-12-sm"
-                :to="localePath('/product/' + item?.attributes?.slug)"
+                :to="localePath(`/${item.attributes.type.data.attributes.slug}/${item?.attributes?.slug}`)"
                 target="_self"
             >
               <div class="ratio-3x4">
