@@ -172,7 +172,8 @@ export default defineI18nConfig(() => ({
             book_text_25: " or email us at ",
             book_text_26: "Our showroom is open Monday through Saturday from 10:00 to 19:00.",
             back_to_collection: "Back to collection",
-            flagship_store_phone: "+48 882 153 873"
+            flagship_store_phone: "+48 882 153 873",
+            product_trunk_show_tooltip: "Explore this design firsthand at the upcoming Trunk Show, showcasing this collection."
         },
         pl: {
             yes: 'Tak',
@@ -367,7 +368,8 @@ export default defineI18nConfig(() => ({
             book_text_25: " lub napisz na ",
             book_text_26: "Nasz showroom jest otwarty od poniedziałku do soboty w godzinach od 10:00 do 19:00.",
             back_to_collection: "Powrót do kolekcji",
-            flagship_store_phone: "+48 882 153 873"
+            flagship_store_phone: "+48 882 153 873",
+            product_trunk_show_tooltip: "Zapoznaj się z tym projektem na własne oczy podczas nadchodzącego Trunk Show, prezentując tę ​​kolekcję."
         }
     }
 }))
