@@ -114,7 +114,7 @@ useHead({
 })
 
 onMounted(async () => {
-  if(gtag) { gtag('config', process.env.GTAG_KEY); // Google Ads - Addon to Gtag
+  if(process.env.GTAG_KEY && gtag) { gtag('config', process.env.GTAG_KEY); // Google Ads - Addon to Gtag
   }
 
   reportWindowSize()
