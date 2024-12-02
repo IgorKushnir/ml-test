@@ -56,9 +56,6 @@
           </div>
         </div>
       </div>
-      <div class="m-t-16">
-        <div v-for="special in specials" class="legend p-small"><span class="ico"></span>{{ special.name }}</div>
-      </div>
     </div>
 
 
