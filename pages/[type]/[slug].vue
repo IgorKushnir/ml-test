@@ -98,7 +98,7 @@
 
             <div v-if="data?.trunk_shows?.data?.length > 0" class="info extra">
               <div class="m-b-32 m-b-16-md">
-                <div class="subheader small">{{$t('trunk_shows')}}</div>
+                <div class="subheader small subheader--flex">{{$t('trunk_shows')}} <Tooltip :text="$t('product_trunk_show_tooltip')" /></div>
                 <div v-for="show in data?.trunk_shows?.data" class="trunk-show-preview-container m-b-4">
                   <div class="trunk-show-preview"><Image :path="show.attributes.cover_4x3"/></div>
                   <div>
@@ -368,6 +368,12 @@ onMounted(() => {
 
 .info .subheader.small {
   margin-bottom: 8px;
+}
+
+.subheader--flex {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .sticky-content {
