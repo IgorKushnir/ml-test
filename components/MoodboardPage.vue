@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <InnerHeader :title="isSharedMoodBoardPage ? $t('shared_moodboard_title') : $t('moodboard_title')"/>
+    <InnerHeader :title="isSharedMoodBoardPage ? $t('shared_moodboard_title') : $t('moodboard_title')" :sub_title="isSharedMoodBoardPage ? $t('shared_moodboard_subtitle') : ''" />
     <StickyBarStickyHeaderMilla v-if="data?.liked?.length > 0 && !isSharedMoodBoardPage">
       <template #full>
         <div class="share-button-container">
