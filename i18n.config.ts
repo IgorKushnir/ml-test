@@ -69,7 +69,8 @@ export default defineI18nConfig(() => ({
             storefinder_show_on_map: 'Show on map',
 
             moodboard_title: 'Mood board',
-            shared_moodboard_title: 'Styles the bride has pinned on the mood board',
+            shared_moodboard_title: 'Shared mood board',
+            shared_moodboard_subtitle: 'Styles the bride has pinned on the mood board',
             share_this_board: 'Share this board',
             moodboard_subtitle_desktop: 'See what your closest ones think of your picks — tap to share!',
             moodboard_subtitle_mobile: 'Share your picks with the closest ones!',
@@ -249,7 +250,8 @@ export default defineI18nConfig(() => ({
             storefinder_show_on_map: 'Pokaż na mapie',
 
             moodboard_title: 'Tablica inspiracji',
-            shared_moodboard_title: 'Style, które panna młoda przypięła na tablicy nastroju',
+            shared_moodboard_title: 'Wspólna tablica inspiracji',
+            shared_moodboard_subtitle: 'Style, które panna młoda przypięła na tablicy nastroju',
             share_this_board: 'Udostępnij tę tablicę',
             share: 'Udział',
             copy_link: 'Kopiuj link',
