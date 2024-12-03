@@ -32,7 +32,7 @@
         v-if="step === 2"
         @goStep="(index) => goStep(index)"
         @addAltegError="addAltegError"
-        :isFirstFitting="selectedServiceId === services[1].service_id"
+        :isFirstFitting="selectedServiceId === services[0].service_id"
         :altegioRequestData="{
           type: 'appointment',
           date: selectedDate,
@@ -169,7 +169,7 @@ const addAltegError = (message) => altegError.value = message
 const services = computed(() => {
   if (!bookingServices.value) return
   const ids = bookingServices.value.map(bookingService => bookingService.id);
-  return data.value.servises.filter(service => ids.includes(service.service_id) && service.publish)
+  return data.value.servises.filter(service => ids.includes(service.service_id) && service.publish).reverse()
 })
 
 getServices()
@@ -177,7 +177,7 @@ getServices()
 const steps = computed(() => {
   return [
   {
-    name: selectedServiceId.value === services.value?.[1].service_id ? t('book_step_1_first') : t('book_step_1_retry'),
+    name: selectedServiceId.value === services.value?.[0].service_id ? t('book_step_1_first') : t('book_step_1_retry'),
     active: false
   },
   {
