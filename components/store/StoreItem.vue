@@ -29,7 +29,7 @@
               <a :href="'tel: '+store.phone" target="_blank" class="link normal">{{ parsePhoneNumber(store.phone)?.formatInternational() }}</a>
             </div>
             <div v-if="store?.website" class="m-b-8">
-              <a :href="store.website" target="_blank" rel="nofollow" class="link normal">{{ store.website }}</a>
+              <a :href="store.website" target="_blank" rel="nofollow" class="link normal brake-word">{{ store.website }}</a>
             </div>
             <div v-if="store?.instagram">
               <span class="icon-instagram-16"/>
