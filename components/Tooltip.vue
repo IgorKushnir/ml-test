@@ -28,6 +28,8 @@ defineProps({
 .tooltip-icon {
     background-image: none;
     cursor: pointer;
+    width: 12px;
+    height: 12px;
     
     &:hover {
         & + .tooltip-popup {
@@ -51,13 +53,15 @@ defineProps({
     border: 0.25px solid $dark-blue;
 
     &__icon {
+        width: 12px;
+        height: 12px;
         padding-top: 2px;
         background-image: none;
     }
 
     &__text {
         margin: 0;
-        font-size: 9px;
+        font-size: 11px;
         font-weight: 400;  
         text-transform: none;  
         color: $dark-blue;
