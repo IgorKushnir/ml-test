@@ -2,9 +2,7 @@ import {defineNuxtConfig} from 'nuxt/config'
 import graphql from '@rollup/plugin-graphql';
 
 export default defineNuxtConfig({
-    nitro: {
-        preset: "static", 
-      },
+  ssr: true,
   css: [
       '@/assets/style/main.scss',
   ],
