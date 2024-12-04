@@ -2,9 +2,6 @@ import {defineNuxtConfig} from 'nuxt/config'
 import graphql from '@rollup/plugin-graphql';
 
 export default defineNuxtConfig({
-    routeRules: {
-        '/': { prerender: true }
-    },
   css: [
       '@/assets/style/main.scss',
   ],
