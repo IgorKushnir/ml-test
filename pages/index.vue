@@ -5,7 +5,7 @@
         <ContentBanner v-if="data?.attributes?.banner" :data="data.attributes.banner" type="main"/>
         <template v-if="data.attributes.content">
           <template v-for="content in data.attributes.content">
-            <Content :data="content"/>
+            <LazyContent :data="content"/>
           </template>
         </template>
       </div>
