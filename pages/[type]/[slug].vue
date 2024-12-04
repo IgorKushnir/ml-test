@@ -55,7 +55,7 @@
                 <div class="subheader small">{{ $t('color') }}</div>
                 <div class="p-small">
                   <template v-for="(color, index) in data.colors.data">
-                    <NuxtLink :to="localePath(`/${(data?.type?.data?.attributes?.slug ?? 'product')}/${routeLocalization[locale].colors}/${color?.attributes?.slug}`)" class="p-small link">{{ color?.attributes?.title }}</NuxtLink><span v-if="index + 1 < data.colors.data?.length">, </span>
+                    <NuxtLink :to="data?.type?.data?.attributes?.slug === 'dress' ? localePath(`/${(data?.type?.data?.attributes?.slug)}/${routeLocalization[locale].colors}/${color?.attributes?.slug}`) : ''" class="p-small link">{{ color?.attributes?.title }}</NuxtLink><span v-if="index + 1 < data.colors.data?.length">, </span>
                   </template>
                 </div>
               </div>
@@ -65,7 +65,7 @@
               <div>
                 <div class="subheader small">{{ $t('silhouette') }}</div>
                 <div class="p-small">
-                  <NuxtLink :to="localePath(`/${(data?.type?.data?.attributes?.slug ?? 'product')}/${routeLocalization[locale].silhouettes}/${data.silhouettes.data.attributes.slug}`)" class="p-small link">{{ data.silhouettes.data?.attributes?.title }}</NuxtLink>
+                  <NuxtLink :to="data?.type?.data?.attributes?.slug === 'dress' ? localePath(`/${(data?.type?.data?.attributes?.slug)}/${routeLocalization[locale].silhouettes}/${data.silhouettes.data.attributes.slug}`) : ''" class="p-small link">{{ data.silhouettes.data?.attributes?.title }}</NuxtLink>
                 </div>
               </div>
             </div>
@@ -75,7 +75,7 @@
                 <div class="subheader small">{{ $t('fabric') }}</div>
                 <div class="p-small">
                   <template v-for="(fabric, index) in data.fabrics.data">
-                    <NuxtLink :to="localePath(`/${(data?.type?.data?.attributes?.slug ?? 'product')}/${routeLocalization[locale].fabrics}/${fabric.attributes.slug}`)" class="p-small link">{{ fabric.attributes.title }}</NuxtLink><span v-if="index+1 < data.fabrics.data?.length">, </span>
+                    <NuxtLink :to="data?.type?.data?.attributes?.slug === 'dress' ? localePath(`/${(data?.type?.data?.attributes?.slug)}/${routeLocalization[locale].fabrics}/${fabric.attributes.slug}`) : ''" class="p-small link">{{ fabric.attributes.title }}</NuxtLink><span v-if="index+1 < data.fabrics.data?.length">, </span>
                   </template>
                 </div>
               </div>
@@ -168,6 +168,7 @@ const { $setViewedProduct, $getViewedProduct, $getLikedProducts, $toggleLikeProd
 import {useTypesData} from "~/composables/states";
 import Image from "../../components/Image";
 const isMobile = useIsMobile();
+import {routeLocalization} from "~/composables/routeLocalization";
 
 const route = useRoute();
 const router = useRouter();
