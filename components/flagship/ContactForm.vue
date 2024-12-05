@@ -329,7 +329,12 @@ onMounted(async () => {
     return
   }
 
-  const body = generateBody({userData: userData.value, isFirstFitting: props.isFirstFitting, language: locale.value})
+  const body = generateBody({
+    userData: userData.value, 
+    isFirstFitting: props.isFirstFitting, 
+    language: locale.value, 
+    appointmentDate: props.altegioRequestData.date.slice(0, 10)
+  })
 
   sendingRequest.value = true
   const googleSheetRequest = $fetch( '/api/googlesheets',  {method: "POST", body})
