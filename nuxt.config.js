@@ -3,19 +3,6 @@ import graphql from '@rollup/plugin-graphql';
 
 export default defineNuxtConfig({
   ssr: true,
-//   nitro: {
-//     prerender: {
-//         crawlLinks: false,
-//         routes: ['/', 
-//             '/dress', '/pl/suknie',
-//             '/veils', '/pl/welony',
-//             '/accessories', '/pl/akcesoria',
-//             '/collections', '/pl/kolekcje',
-//             '/store-finder', '/pl/wyszukiwarka-sklepow',
-//             '/company', '/pl/firma',
-//             '/inspiration', 'pl/inspiracja' ],
-//       },
-//     },
   css: [
       '@/assets/style/main.scss',
   ],
@@ -28,6 +15,15 @@ export default defineNuxtConfig({
       'nuxt-delay-hydration',
       'nuxt-viewport',
   ],
+
+  router: {
+    scrollBehavior(to, from, savedPosition) {
+      if (savedPosition) {
+        return savedPosition;
+      }
+      return { x: 0, y: 0 };
+    },
+  },
 
   i18n: {
       locales: ['en', 'pl'],
@@ -106,7 +102,7 @@ export default defineNuxtConfig({
       css: {
           preprocessorOptions: {
               scss: {
-                additionalData: '@import "@/assets/style/global.scss";',
+                additionalData: '@use "@/assets/style/global" as *;',
                 quietDeps: true,
               },
           },

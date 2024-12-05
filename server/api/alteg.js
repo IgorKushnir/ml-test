@@ -6,7 +6,7 @@ export default  defineEventHandler(async (event) => {
 
     const url = "https://api.alteg.io/api/v1"
     const headers = {
-        "Authorization": "Bearer e6jygaxjnjtue285xsj8, User 294753996966c527f79d732ebe73c256",
+        "Authorization": "Bearer fmrkm4w8sktt9fsjzhaw, User 9bfbbdd6b8ca624ae4d2f9ef499bd7ff",
         "Accept": "application/vnd.api.v2+json",
         "Content-Type": "application/json"
     }

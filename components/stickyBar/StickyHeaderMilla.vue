@@ -199,6 +199,14 @@ addRouteMiddleware(async (to, from) => {
     overflow-x: scroll;
     overflow-y: hidden;
     scroll-behavior: smooth;
+
+    &::-webkit-scrollbar {
+        height: 2px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: $gray;
+      }
   }
 
 
@@ -214,6 +222,14 @@ addRouteMiddleware(async (to, from) => {
       overflow-x: scroll;
       overflow-y: hidden;
       scroll-behavior: smooth;
+
+      &::-webkit-scrollbar {
+        height: 2px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: $gray;
+      }
     }
 
     &.shift {
@@ -273,5 +289,8 @@ addRouteMiddleware(async (to, from) => {
     grid-column-start: 2;
   }
 
+  .sticky-header-wrapper .container {
+    padding: 0 12px !important;
+  }
 }
 </style>

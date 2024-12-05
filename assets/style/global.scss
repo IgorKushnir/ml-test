@@ -1,1 +1,11 @@
-@import "_variables", "_breakpoints", "_spacing", "_colors", "_fonts", "_grid", "_icons", "_navigation", "_new-ratio", "_form";
+@forward "_variables";
+@forward "_breakpoints";
+@forward "_spacing";
+@forward "_colors";
+@forward "_fonts";
+@forward "_grid";
+@forward "_icons";
+@forward "_navigation";
+@forward "_new-ratio";
+@forward "_form";
+

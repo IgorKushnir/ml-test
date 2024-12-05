@@ -99,7 +99,7 @@ function encodeToBase64(string) {
   if (process.client) {
     const encoder = new TextEncoder();
     const data = encoder.encode(string);
-    const base64 = btoa(String.fromCharCode.apply(null, data));
+    const base64 = btoa(String.fromCharCode(...data));
     return base64;
 
   } else {

@@ -55,7 +55,12 @@
           <p class="additional-text">{{ $t("book_text_22") }}<b>{{ $t("book_text_23") }}</b></p>
         </div>
         <Container justify="justify-center">
-        <FlagshipContactForm @goStep="(index) => goToStep(index)" />
+        <FlagshipContactForm 
+          @goStep="(index) => goToStep(index)" 
+          @addAltegError="addAltegError"
+          :isFirstFitting="isFirstFitting"
+          :altegioRequestData="altegioRequestData"
+        />
       </Container>
       <div class="additional-text-wrap additional-text-wrap--small">
           <p class="additional-text">{{ $t("book_text_24") }}
@@ -69,10 +74,26 @@
 <script setup>
 const { t } = useI18n()
 const flagship_store_email = "warsaw@millanova.com"
-const emits = defineEmits(['goStep'])
+const props = defineProps({
+  isFirstFitting: {
+    type: Boolean,
+    required: false,
+    default: false
+  },
+  altegioRequestData: {
+    type: Object,
+    required: false,
+    default: () => ({})
+  }
+})
+const emits = defineEmits(['goStep', 'addAltegError'])
 
 const goToStep = (index) => {
   emits('goStep', index)
+}
+
+const addAltegError = (message) => {
+  emits('addAltegError', message)
 }
 </script>
 
