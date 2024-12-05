@@ -350,11 +350,9 @@ onMounted(async () => {
   })
   Promise.all([googleSheetRequest])
   .then(([googleData, altegioData]) => {
-    if (altegioData.success) {
-      emits('goStep', 3)
-    }
+    emits('goStep', 3)
 
-    throw new Error(altegioData.meta.message)
+    // throw new Error(altegioData?.meta?.message)
     })
     .catch(e => emits('addAltegError', e.message))
     .finally(() => sendingRequest.value = false)
