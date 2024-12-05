@@ -124,23 +124,21 @@ export default  defineEventHandler(async (event) => {
             const services_id = body.services_id
 
 
-            const res =  await fetch(`${url}/book_record/${company_id}`, {
+            const res =  await fetch(`${url}/records/${company_id}`, {
                 method: "POST",
                 headers,
                 body: JSON.stringify({
-                    "phone": phone,
-                    "fullname": fullName,
-                    "email": email,
+                    "client": {
+                        "phone": phone,
+                        "name": fullName,
+                        "email": email,
+                    },
                     "comment": comment,
-                    "appointments": [
-                        {
-                            "id": 1,
-                            "staff_id": staff_id,
-                            "datetime": date,
-                            "services": [
-                                services_id
-                            ]
-                        }
+                    "seance_length": 3600,
+                    "staff_id": staff_id,
+                    "datetime": date,
+                    "services": [
+                        {"id": services_id}
                     ]
                 })
             })
