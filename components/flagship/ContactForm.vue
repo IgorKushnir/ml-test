@@ -348,7 +348,7 @@ onMounted(async () => {
       comment: `Number of people joining with ${userData.value.firstName.value}: ${userData.value.people.value}. Wedding Date: ${userData.value.weddingDate.value}. ${userData.value.findOut?.value?.length > 0 ? `Find out: ${userData.value.findOut.value.join(', ')}` : ""}`
     }
   })
-  Promise.all([googleSheetRequest, altegioRequest])
+  Promise.all([googleSheetRequest])
   .then(([googleData, altegioData]) => {
     if (altegioData.success) {
       emits('goStep', 3)
