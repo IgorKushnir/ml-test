@@ -49,7 +49,7 @@ export default  defineEventHandler(async (event) => {
                 return data
             })
             let resAll = await Promise.all(promises)
-            resAll = resAll.filter(r => r.success)
+            resAll = resAll.filter(r => r?.success)
             if (resAll?.length < 1) return {success: false}
 
             let allData = []
@@ -123,8 +123,7 @@ export default  defineEventHandler(async (event) => {
             const staff_id = body.staff_id
             const services_id = body.services_id
 
-
-            const res =  await fetch(`${url}/records/${company_id}`, {
+            const res = await fetch(`${url}/records/${company_id}`, {
                 method: "POST",
                 headers,
                 body: JSON.stringify({
@@ -142,6 +141,7 @@ export default  defineEventHandler(async (event) => {
                     ]
                 })
             })
+
             return await res.json()
         } catch (e) {
             throw e
