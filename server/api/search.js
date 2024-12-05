@@ -14,7 +14,7 @@ export default  defineEventHandler(async (event) => {
         return {
             products: await Search('product', query, locale, SEARCH_URL, MEILISEARCH_API_KEY),
             collections: await Search('collection', query, locale, SEARCH_URL, MEILISEARCH_API_KEY),
-
+            "store-finder": await Search('store-finder', query, locale, SEARCH_URL, MEILISEARCH_API_KEY),
             color: await Search('color', query, locale, SEARCH_URL, MEILISEARCH_API_KEY),
             fabric: await Search('fabric', query, locale, SEARCH_URL, MEILISEARCH_API_KEY),
             // line: await Search('line', query, locale, SEARCH_URL, MEILISEARCH_API_KEY),

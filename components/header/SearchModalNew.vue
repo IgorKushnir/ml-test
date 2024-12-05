@@ -159,6 +159,7 @@ const tagsNames = {
     other: {name: "other", slug: "/dress/others/"},
     backneckline: {name: "back necklines", slug: "/dress/backnecklines/"},
     fabric: {name: "fabric", slug: "/dress/fabrics/"},
+    "store-finder": {name: "store finder", slug: "/store-finder/"},
     // collection: {name: "collection", slug: "/collection/"}
   },
   pl: {
@@ -170,6 +171,7 @@ const tagsNames = {
     other: {name: "inni", slug: "/pl/suknie/inni/" },
     backneckline: {name: "dekolt z tylu", slug: "/pl/suknie/dekolt-z-tylu/" },
     fabric: {name: "tkanina", slug: "/pl/suknie/tkanina/" },
+    "store-finder": {name: "wyszukiwarka sklepow", slug: "/wyszukiwarka-sklepow/"},
     // collection: {name: "kolekcje", slug: "/pl/kolekcja/"} //todo: link to collection
   },
 }
@@ -275,26 +277,51 @@ async function getResult() {
     const res = await $fetch(`/api/search?q=${search.value}&locale=${locale.value}`, {
       method: 'GET'
     });
-    // console.log(res);
 
     const {color, fabric, line, decoration, backneckline, neckline, silhouette, style, other} = res;
 
     const _tags = [];
 
-    [color, fabric, line, decoration, backneckline, neckline, silhouette, style, other]?.forEach(e => {
-      if (e?.hits?.length) {
-        _tags.push(...e.hits.map(t => {
+    [color, fabric, line, decoration, backneckline, neckline, silhouette, style, other]?.forEach(resultItem => {
+      if (resultItem?.hits?.length) {
+        _tags.push(...resultItem.hits.map(hit => {
           return {
-            ...t,
-            index: e.index
+            ...hit,
+            index: resultItem.index
           }
         }))
       }
     })
+      if (res["store-finder"]?.hits?.length) {
+        _tags.push(...res["store-finder"].hits
+        .map(({country, id, slug, city}) => 
+          ([
+            { 
+              title: country,
+              id,
+              slug,
+              index: res["store-finder"].index
+            }, 
+            ...city.map((city, idx) => 
+              ({
+                ...city,
+                title: city.name,
+                slug: city?.storesExist ? `${slug}?city=${idx}` : slug,
+                index: res["store-finder"].index
+              })
+            )
+          ])
+        )
+        .flat()
+        .filter(({state, title}) => 
+          title.toLowerCase().includes(search.value.toLowerCase()) 
+          || state?.toLowerCase()?.includes(search.value)
+        )
+        )
+      }
+
     tags.value = _tags
     collections.value = res?.collections?.hits;
-
-
     result.value = res.products;
   }
   pending.value = false;
@@ -326,7 +353,7 @@ function close() {
 
 function highlight(text, search) {
   var innerHTML = text;
-  var index = innerHTML.toLowerCase().indexOf(search.toLowerCase());
+  var index = innerHTML?.toLowerCase().indexOf(search?.toLowerCase());
 
   if (index >= 0) {
     innerHTML = innerHTML.substring(0, index) + "<strong>" + innerHTML.substring(index, index + search?.length) + "</strong>" + innerHTML.substring(index + search?.length);

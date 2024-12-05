@@ -5,12 +5,14 @@ export const generateBody = (userData: {[key: string]: {value: string | string[]
 
     switch (parsedBudget) {
         case 6:
+        case 10:
             priorityCount = priorityCount + 1
             break;
-        case 12:
+        case 14:
             priorityCount = priorityCount + 2
             break;
-        case 28:
+        case 18:
+        case 22:
             priorityCount = priorityCount + 3
             break;
         default:

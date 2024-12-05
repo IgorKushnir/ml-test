@@ -70,6 +70,7 @@ export default defineI18nConfig(() => ({
 
             moodboard_title: 'Mood board',
             shared_moodboard_title: 'Shared mood board',
+            shared_moodboard_subtitle: 'Styles the bride has pinned on the mood board',
             share_this_board: 'Share this board',
             moodboard_subtitle_desktop: 'See what your closest ones think of your picks — tap to share!',
             moodboard_subtitle_mobile: 'Tap to share!',
@@ -82,6 +83,7 @@ export default defineI18nConfig(() => ({
             moodboard_empty_description: 'Discover products and add it to your list.',
             press_about_us: 'Press about us',
             trunk_shows: 'Trunk shows',
+            trunk_shows_subtitle: "Trunk Show is an event where a specific designer's collection takes center stage in select retail stores. These special days offer a unique opportunity to explore our gowns up close, select your favorites, and try them on immediately. Often, Trunk Shows are the only place to discover our latest designs — unveiled exclusively at perticular retailer before they're available anywhere else.",
 
             collections: 'Collections',
             collection: 'Collection',
@@ -170,7 +172,9 @@ export default defineI18nConfig(() => ({
             book_text_24: "We're here to support you every step, ensuring a stress-free and joyful experience, so feel free to reach out to us at any time if you need help: ",
             book_text_25: " or email us at ",
             book_text_26: "Our showroom is open Monday through Saturday from 10:00 to 19:00.",
-            flagship_store_phone: "+48 882 153 873"
+            back_to_collection: "Back to collection",
+            flagship_store_phone: "+48 882 153 873",
+            product_trunk_show_tooltip: "Explore this design firsthand at the upcoming Trunk Show, showcasing this collection."
         },
         pl: {
             yes: 'Tak',
@@ -219,6 +223,7 @@ export default defineI18nConfig(() => ({
             news: "Aktualnosci",
             press_about_us: 'Prasa',
             trunk_shows: 'Pokazy',
+            trunk_shows_subtitle: '',
             moodboard_subtitle_desktop: 'Zobacz, co o Twoich wyborach myślą najbliżsi — dotknij, aby udostępnić!',
             moodboard_subtitle_mobile: 'Dotknij, aby udostępnić!',
 
@@ -245,6 +250,7 @@ export default defineI18nConfig(() => ({
 
             moodboard_title: 'Tablica inspiracji',
             shared_moodboard_title: 'Wspólna tablica inspiracji',
+            shared_moodboard_subtitle: 'Style, które panna młoda przypięła na tablicy nastroju',
             share_this_board: 'Udostępnij tę tablicę',
             share: 'Udział',
             copy_link: 'Kopiuj link',
@@ -363,7 +369,9 @@ export default defineI18nConfig(() => ({
             book_text_24: "Jesteśmy tu, aby wspierać Cię na każdym kroku i zapewnić spokojne i radosne doświadczenie, dlatego w razie potrzeby skontaktuj się z nami pod numerem: ",
             book_text_25: " lub napisz na ",
             book_text_26: "Nasz showroom jest otwarty od poniedziałku do soboty w godzinach od 10:00 do 19:00.",
-            flagship_store_phone: "+48 882 153 873"
+            back_to_collection: "Powrót do kolekcji",
+            flagship_store_phone: "+48 882 153 873",
+            product_trunk_show_tooltip: "Zapoznaj się z tym projektem na własne oczy podczas nadchodzącego Trunk Show, prezentując tę ​​kolekcję."
         }
     }
 }))

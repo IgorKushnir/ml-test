@@ -91,7 +91,7 @@ const countrySlug = ref(route.params.country);
 const countryCode = ref(null);
 const countryIndex = ref(-1);
 const stateIndex = ref(-1)
-const cityIndex = ref(-1)
+const cityIndex = ref(route.query.city || -1)
 const lineIndex = ref(-1)
 const showMap = ref(false)
 
@@ -154,22 +154,14 @@ const stores = computed(() => {
 
 const states = computed(() => {
   if (countryIndex.value === -1) return [];
-  let _states = (data.value?.data?.attributes?.city ?? [])
-      .filter(city => {
-        return city.state !== null && city.state !== ''
-      })
-
-  // remove dublicates
-  if (_states?.length > 0) {
-    _states = _states
-    .map(({state}) => state)
-    .filter((item, pos) => _states.indexOf(item) == pos)
-    .sort((a, b) => a.localeCompare(b))
-    .map(value => ({value})
-    )
+  const citiesWithStates = (data.value?.data?.attributes?.city ?? []).filter(city => city.state !== null && city.state !== '')
+  
+  if (citiesWithStates?.length === 0) {
+    return []
   }
-
-  return _states
+    const statesMap = new Map()
+    citiesWithStates.forEach(({state}) => statesMap.set(state, state))
+    return Array.from(statesMap.values()).sort((a, b) => a.localeCompare(b)).map(value => ({value}))
 })
 const cities = computed(() => {
   if (countryIndex.value === -1) return [];

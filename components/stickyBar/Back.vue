@@ -27,11 +27,16 @@ const props = defineProps({
     required: false,
     default: false,
   },
+  useCustomEmit: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
 })
 const router = useRouter()
 
 function backHandler(e) {
-  if (props.text != null) {
+  if (props.text != null || props.useCustomEmit) {
     e('clicks')
   } else {
     router.back()

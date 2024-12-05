@@ -2,7 +2,7 @@
   <div>
     <div v-if="data != null && !pending">
 
-      <StickyBarStickyHeaderMilla :title="data.title">
+      <StickyBarStickyHeaderMilla :title="collection ?  $t('back_to_collection') : data.title" @onBackClick="onBackClick">
         <template #end>
           <StickyBarBack v-if="data?.extra?.previous" reverse :text="$t('previous')" @clicks="prevHandler"/>
           <StickyBarBack v-if="data?.extra?.next" :text="$t('next')" @click="nextHandler"/>
@@ -55,7 +55,7 @@
                 <div class="subheader small">{{ $t('color') }}</div>
                 <div class="p-small">
                   <template v-for="(color, index) in data.colors.data">
-                    <NuxtLink :to="localePath(`/${(data?.type?.data?.attributes?.slug ?? 'product')}/${routeLocalization[locale].colors}/${color?.attributes?.slug}`)" class="p-small link">{{ color?.attributes?.title }}</NuxtLink><span v-if="index + 1 < data.colors.data?.length">, </span>
+                    <NuxtLink :to="data?.type?.data?.attributes?.slug === 'dress' ? localePath(`/${(data?.type?.data?.attributes?.slug)}/${routeLocalization[locale].colors}/${color?.attributes?.slug}`) : ''" class="p-small link">{{ color?.attributes?.title }}</NuxtLink><span v-if="index + 1 < data.colors.data?.length">, </span>
                   </template>
                 </div>
               </div>
@@ -65,7 +65,7 @@
               <div>
                 <div class="subheader small">{{ $t('silhouette') }}</div>
                 <div class="p-small">
-                  <NuxtLink :to="localePath(`/${(data?.type?.data?.attributes?.slug ?? 'product')}/${routeLocalization[locale].silhouettes}/${data.silhouettes.data.attributes.slug}`)" class="p-small link">{{ data.silhouettes.data?.attributes?.title }}</NuxtLink>
+                  <NuxtLink :to="data?.type?.data?.attributes?.slug === 'dress' ? localePath(`/${(data?.type?.data?.attributes?.slug)}/${routeLocalization[locale].silhouettes}/${data.silhouettes.data.attributes.slug}`) : ''" class="p-small link">{{ data.silhouettes.data?.attributes?.title }}</NuxtLink>
                 </div>
               </div>
             </div>
@@ -75,7 +75,7 @@
                 <div class="subheader small">{{ $t('fabric') }}</div>
                 <div class="p-small">
                   <template v-for="(fabric, index) in data.fabrics.data">
-                    <NuxtLink :to="localePath(`/${(data?.type?.data?.attributes?.slug ?? 'product')}/${routeLocalization[locale].fabrics}/${fabric.attributes.slug}`)" class="p-small link">{{ fabric.attributes.title }}</NuxtLink><span v-if="index+1 < data.fabrics.data?.length">, </span>
+                    <NuxtLink :to="data?.type?.data?.attributes?.slug === 'dress' ? localePath(`/${(data?.type?.data?.attributes?.slug)}/${routeLocalization[locale].fabrics}/${fabric.attributes.slug}`) : ''" class="p-small link">{{ fabric.attributes.title }}</NuxtLink><span v-if="index+1 < data.fabrics.data?.length">, </span>
                   </template>
                 </div>
               </div>
@@ -98,7 +98,7 @@
 
             <div v-if="data?.trunk_shows?.data?.length > 0" class="info extra">
               <div class="m-b-32 m-b-16-md">
-                <div class="subheader small">{{$t('trunk_shows')}}</div>
+                <div class="subheader small subheader--flex">{{$t('trunk_shows')}} <Tooltip :text="$t('product_trunk_show_tooltip')" /></div>
                 <div v-for="show in data?.trunk_shows?.data" class="trunk-show-preview-container m-b-4">
                   <div class="trunk-show-preview"><Image :path="show.attributes.cover_4x3"/></div>
                   <div>
@@ -168,16 +168,25 @@ const { $setViewedProduct, $getViewedProduct, $getLikedProducts, $toggleLikeProd
 import {useTypesData} from "~/composables/states";
 import Image from "../../components/Image";
 const isMobile = useIsMobile();
+import {routeLocalization} from "~/composables/routeLocalization";
 
 const route = useRoute();
 const router = useRouter();
 let slug = route.params.slug;
 let draft = route.query?.draft;
+const collection = route.query?.collection;
 const likeList = ref([])
 
 const { locale } = useI18n()
 const localePath = useLocalePath()
 
+const onBackClick = () => {
+  if (collection) {
+    router.push(localePath(`/collection/${collection}`))
+  } else {
+    router.back()
+  }
+}
 
 let publicationState = "LIVE";
 if (draft === 'true') {
@@ -256,11 +265,11 @@ function handleLike(id) {
 
 
 function prevHandler() {
-  router.push(localePath('/'+data.value.extra.previous.type.slug+'/' + data.value.extra.previous.slug))
+  router.push(localePath(`/${data.value.extra.previous.type.slug}/${data.value.extra.previous.slug}${collection ? `?collection=${collection}` : ''}`))
 }
 
 function nextHandler() {
-  router.push(localePath('/'+data.value.extra.next.type.slug+'/' + data.value.extra.next.slug))
+  router.push(localePath(`/${data.value.extra.next.type.slug}/${data.value.extra.next.slug}${collection ? `?collection=${collection}` : ''}`))
 }
 
 
@@ -360,6 +369,12 @@ onMounted(() => {
 
 .info .subheader.small {
   margin-bottom: 8px;
+}
+
+.subheader--flex {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .sticky-content {
