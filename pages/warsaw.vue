@@ -32,7 +32,7 @@
         v-if="step === 2"
         @goStep="(index) => goStep(index)"
         @addAltegError="addAltegError"
-        :isFirstFitting="selectedServiceId === services[0].service_id"
+        :isFirstFitting="selectedServiceId === services[1].service_id"
         :altegioRequestData="{
           type: 'appointment',
           date: selectedDate,
