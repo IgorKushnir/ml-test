@@ -1,4 +1,11 @@
-export const generateBody = ({userData,  isFirstFitting, language}: {userData: {[key: string]: {value: string | string[]}}, isFirstFitting: boolean, language: string}) => {
+export const generateBody = ({
+    userData, isFirstFitting, language, appointmentDate
+}: {
+    userData: {[key: string]: {value: string | string[]}}, 
+    isFirstFitting: boolean, 
+    language: string,
+    appointmentDate: string
+}) => {
     const parsedBudget = !!userData.budget ? typeof userData.budget.value === 'string' ? parseInt(userData.budget.value) : 0 : 0
     const timeToWedding = typeof userData.weddingDate.value === 'string' ? new Date(userData.weddingDate.value).getTime() -  Date.now() : 0
     let priorityCount = 0
@@ -57,5 +64,6 @@ export const generateBody = ({userData,  isFirstFitting, language}: {userData: {
     userData.instagram?.value || "", // Instagram
     userData.findOut?.value?.join(", ") || "",  // Źródło MillaNova
      '',  // Menedżer
-     userData.consent.value // consent
+     userData.consent.value, // consent
+     appointmentDate //appointment date
 ]}
