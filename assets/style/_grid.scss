@@ -1,4 +1,6 @@
 @use 'sass:math';
+@use '_breakpoints' as *;
+
 $grid-columns: 12;
 $grid-max-width: 1600px;
 

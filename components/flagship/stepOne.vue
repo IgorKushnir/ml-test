@@ -16,10 +16,18 @@
           <transition name="fade" mode="out-in">
             <div v-if="services?.length > 0" class="navs m-v-8 m-v-0-lg">
               <div class="h4 m-b-24">{{ $t('choose_a_service') }}</div>
-              <div class="nav-button" v-for="service in services" v-on:click="() => select(service.service_id)">
-                <span class="nav-link">{{ service.title }}</span>
-                <span class="icon-arrow-16"/>
-              </div>
+              <template v-if="!isDressTypeSelected">
+                <div class="nav-button" @click="() => isDressTypeSelected = true">
+                  <span class="nav-link">{{ $t('wedding_dresses') }}</span>
+                  <span class="icon-arrow-16"/>
+                </div>
+              </template>
+              <template v-if="isDressTypeSelected">
+                <div class="nav-button" v-for="service in services" v-on:click="() => select(service.service_id)">
+                  <span class="nav-link">{{ service.title }}</span>
+                  <span class="icon-arrow-16"/>
+                </div>
+              </template>
             </div>
           </transition>
 
@@ -38,6 +46,9 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
+const { t } = useI18n()
+
 const emits = defineEmits(['serviceId'])
 defineProps({
   services: {
@@ -63,6 +74,8 @@ defineProps({
   type: Object
   },
 })
+
+const isDressTypeSelected = ref(false)
 
 function select(id) {
   emits('serviceId', id)

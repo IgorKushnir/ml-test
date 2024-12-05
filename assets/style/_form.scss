@@ -1,3 +1,5 @@
+@use '_colors' as *;
+@use '_breakpoints' as *;
 
 label.required:after {
   content: " *";

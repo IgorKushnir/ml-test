@@ -13,7 +13,7 @@
         :loading="lazyLoadImage ? 'lazy' : null"
     />
     
-    <video ref="mainVideo" v-if="path.data?.attributes?.mime?.startsWith('video/')" muted autoplay playsinline :poster="poster" loop tabindex="-1">
+    <video ref="mainVideo" v-if="path.data?.attributes?.mime?.startsWith('video/')" muted playsinline :poster="poster" loop tabindex="-1">
       <source ref="videoSource" :type="path.data.attributes.mime" aria-hidden="true">
     </video>
     
@@ -69,18 +69,21 @@ const poster = computed(() => props.poster?.data?.attributes?.url ?? bannerImage
 onMounted(async () => {
       await nextTick();
       if (document.readyState === 'complete') {
-        loadVideo();
+       await loadVideo();
       } else {
         window.addEventListener('load', loadVideo);
       }
     });
     
-    const loadVideo = () => {
+    const loadVideo = async () => {
       if (mainVideo.value && videoSource.value) {
         videoSource.value.src = $getAbsoluteUrl(props.path.data.attributes.url);
-        mainVideo.value.load(); 
+        await mainVideo.value.load(); 
+        await mainVideo.value.play();
       }
     };
+
+onBeforeUnmount(() => window.removeEventListener('load', loadVideo))
 
 const isNotSvg = computed(() => props.path.data?.attributes?.url.endsWith('.jpg') || props.path.data?.attributes?.url.endsWith('.jpeg') || props.path.data?.attributes?.url.endsWith('.png') || props.path.data?.attributes?.url.endsWith('.JPG') || props.path.data?.attributes?.url.endsWith('.JPEG') || props.path.data?.attributes?.url.endsWith('.PNG'))
 
