@@ -174,14 +174,18 @@ const route = useRoute();
 const router = useRouter();
 let slug = route.params.slug;
 let draft = route.query?.draft;
-const collection = route.query?.collection;
+const collection = typeof window !== 'undefined' ? localStorage.getItem('collection') : '';
 const likeList = ref([])
 
 const { locale } = useI18n()
 const localePath = useLocalePath()
 
 const onBackClick = () => {
-  if (collection) {
+  if (collection) { 
+    if (typeof window !== 'undefined') {
+    return
+  }
+    localStorage.removeItem('collection')
     router.push(localePath(`/collection/${collection}`))
   } else {
     router.back()
