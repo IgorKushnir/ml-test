@@ -18,6 +18,7 @@
                        :id="product.id"
                        :like-list="likeList"
                        @updateLikes="updateLikes"
+                       @onProductClick="onProductClick"
                        :hideLikedDefault="moodboard"
                        :product-type="product?.attributes?.type?.data?.attributes?.slug"
                        :showLike="showLike"
@@ -64,7 +65,7 @@ const localePath = useLocalePath()
 const snackBar = ref(null);
 const { locale } = useI18n()
 
-const emits = defineEmits(['load'])
+const emits = defineEmits(['load', 'click'])
 const props = defineProps({
   productsData: {
     type: Object,
@@ -105,6 +106,7 @@ const props = defineProps({
   }
 })
 const {$getLikedProducts, $toggleLikeProduct} = useNuxtApp()
+const onProductClick = () => emits('click')
 
 const loader = ref();
 let showLoader = ref(false)
