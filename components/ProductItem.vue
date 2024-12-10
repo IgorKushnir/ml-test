@@ -25,7 +25,7 @@
                  :class="'image ' + ratio"/>
           <template v-for="_image in gallery?.data ?? []">
             <Image
-                v-if="(image.data.attributes.url !== _image.attributes.url) && _image.attributes.mime.startsWith('image')"
+                v-if="(image?.data?.attributes?.url !== _image?.attributes?.url) && _image?.attributes?.mime?.startsWith('image')"
                 class="swiper-slide" :path="{data: _image}" :alt="productType ? title + ' ' + productType : title"
                 size="medium" :class="'image ' + ratio"/>
           </template>
