@@ -192,7 +192,7 @@ async function filterData(e, page) {
     if (page === 1) {
       window.scroll({top: 0})
     }
-  })
+  }).catch(e => console.error(e))
 
 }
 
