@@ -182,6 +182,12 @@ function content(extra) {
               }
             }
           }
+
+          ...on ComponentContentIframe {
+            __typename
+            link
+          }
+    
         }
     `
 }
