@@ -133,7 +133,7 @@ export default  defineEventHandler(async (event) => {
                         "email": email,
                     },
                     "comment": comment,
-                    "seance_length": 3600,
+                    "seance_length": 5400,
                     "staff_id": staff_id,
                     "datetime": date,
                     "services": [
