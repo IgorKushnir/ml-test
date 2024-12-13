@@ -56,9 +56,9 @@ watch(() => sticky.value & shift.value, () => {
     return
   }
   if (sticky.value & shift.value) {
-    element[0].classList.add('shift');
+    element[0]?.classList.add('shift');
   } else {
-    element[0].classList.remove('shift');
+    element[0]?.classList.remove('shift');
   }
 })
 
