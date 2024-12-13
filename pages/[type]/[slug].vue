@@ -269,11 +269,11 @@ function handleLike(id) {
 
 
 function prevHandler() {
-  router.push(localePath(`/${data.value.extra.previous.type.slug}/${data.value.extra.previous.slug}${collection ? `?collection=${collection}` : ''}`))
+  router.push(localePath(`/${data.value.extra.previous.type.slug}/${data.value.extra.previous.slug}`))
 }
 
 function nextHandler() {
-  router.push(localePath(`/${data.value.extra.next.type.slug}/${data.value.extra.next.slug}${collection ? `?collection=${collection}` : ''}`))
+  router.push(localePath(`/${data.value.extra.next.type.slug}/${data.value.extra.next.slug}`))
 }
 
 
