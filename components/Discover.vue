@@ -116,7 +116,7 @@ try {
 let {
   data: dataAvailableFilters,
   pending: pendingFilters,
-} = await useAsyncData('data_activeFilters', () => getActiveFilters({
+} = await useLazyAsyncData('data_activeFilters', () => getActiveFilters({
   filters: filters.value,
   lang: locale.value,
   type: slug,
@@ -297,9 +297,8 @@ function parseQuery() {
   // console.log(dataAvailableFilters.value.filters, '0');
 
   // Filter query by list of allows
-  let allowQuery = Object.keys(initialAvailableFilters?.filters ?? {});
-  queryKeys = queryKeys.filter((k) => allowQuery.includes(k))
-
+  //TEMP - remove filters double check
+  // let allowQuery = Object.keys(initialAvailableFilters?.filters ?? {});
 
   return queryKeys.map(key => {
     return {
