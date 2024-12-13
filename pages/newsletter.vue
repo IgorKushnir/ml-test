@@ -124,14 +124,14 @@ function subscribe() {
   if (email.value && email.value?.length > 0) {
     if(!$validateEmail(email.value)) {
       emailErrorMessage.value = 'Enter valid email address';
-      emailEl.value.classList.add('error')
+      emailEl.value?.classList.add('error')
       errors.push(true)
     } else {
-      emailEl.value.classList.remove('error')
+      emailEl.value?.classList.remove('error')
     }
   } else {
     emailErrorMessage.value = 'The field must not be empty';
-    emailEl.value.classList.add('error')
+    emailEl.value?.classList.add('error')
     errors.push(true)
   }
 
@@ -145,10 +145,10 @@ function subscribe() {
     })
 
     if (options?.length === 0) {
-      optionsEl.value.classList.add('error')
+      optionsEl.value?.classList.add('error')
       errors.push(true)
     } else {
-      optionsEl.value.classList.remove('error')
+      optionsEl.value?.classList.remove('error')
     }
   }
 
