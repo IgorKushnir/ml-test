@@ -182,11 +182,11 @@ const localePath = useLocalePath()
 
 const onBackClick = () => {
   if (collection) { 
-    if (typeof window !== 'undefined') {
+    if (typeof window === 'undefined') {
     return
   }
+  router.push(localePath(`/collection/${collection}`))
     localStorage.removeItem('collection')
-    router.push(localePath(`/collection/${collection}`))
   } else {
     router.back()
   }
