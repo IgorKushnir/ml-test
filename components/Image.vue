@@ -14,7 +14,7 @@
     />
     
     <video ref="mainVideo" v-if="path.data?.attributes?.mime?.startsWith('video/')" muted playsinline :poster="poster" loop tabindex="-1">
-      <!-- <source ref="videoSource" :type="path.data.attributes.mime" aria-hidden="true"> -->
+      <source ref="videoSource" :type="path.data.attributes.mime" aria-hidden="true">
     </video>
     
     <NuxtImg :src="placeholder" :alt="alt" class="img-component placeholder" />
@@ -63,7 +63,7 @@ const placeholder = computed(() => !props.path.data?.attributes?.placeholder ? "
 )
 
 const mainVideo = ref(null);
-// const videoSource = ref(null);
+const videoSource = ref(null);
 const poster = computed(() => props.poster?.data?.attributes?.url ?? bannerImage)
 
 onMounted(async () => {
@@ -76,11 +76,11 @@ onMounted(async () => {
     });
     
     const loadVideo = async () => {
-      // if (mainVideo.value && videoSource.value) {
-      //   videoSource.value.src = $getAbsoluteUrl(props.path.data.attributes.url);
-      //   await mainVideo.value.load(); 
-      //   await mainVideo.value.play();
-      // }
+      if (mainVideo.value && videoSource.value) {
+        videoSource.value.src = $getAbsoluteUrl(props.path.data.attributes.url);
+        await mainVideo.value.load(); 
+        await mainVideo.value.play();
+      }
     };
 
 onBeforeUnmount(() => window.removeEventListener('load', loadVideo))
