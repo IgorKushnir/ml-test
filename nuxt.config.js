@@ -14,6 +14,7 @@ export default defineNuxtConfig({
       '@nuxtjs/critters',
       'nuxt-delay-hydration',
       'nuxt-viewport',
+      'nuxt-purgecss'
   ],
 
   router: {
@@ -91,6 +92,14 @@ export default defineNuxtConfig({
 
   build: {
       analyze: true,
+      extractCSS: true,
+      terser: {
+        terserOptions: {
+          compress: {
+            drop_console: true
+          }
+        }
+      }
   },
 
   app: {
@@ -104,6 +113,7 @@ export default defineNuxtConfig({
               scss: {
                 additionalData: '@use "@/assets/style/global" as *;',
                 quietDeps: true,
+                api: 'modern-compiler'
               },
           },
       },
@@ -153,6 +163,11 @@ export default defineNuxtConfig({
       alias: {
           youtube: 'https://img.youtube.com',
           vimeo: 'https://i.vimeocdn.com',
+      },
+      formats: {
+        webp: {
+          quality: 80
+        }
       }
   },
 
