@@ -313,7 +313,7 @@ onMounted(async () => {
   width: 100%;
   height: calc(100vh - 152px);
 }
-.map:deep img {
+.map:deep(img) {
   background-image: unset;
 }
 .info {
