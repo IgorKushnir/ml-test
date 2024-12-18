@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink :to="localePath(to)" v-if="!shimmer" :class="gallery != null ? 'pointer-none' : ''">
+  <NuxtLink :to="localePath(to)" v-if="!shimmer" :class="gallery != null ? 'pointer-none' : ''" @click="handleClick">
 
 
     <div class="product-item" :class="gallery != null ? 'pointer-none' : ''">
@@ -92,7 +92,7 @@ const props = defineProps({
     default: true
   }
 })
-const emits = defineEmits(['updateLikes'])
+const emits = defineEmits(['updateLikes', 'onProductClick'])
 const {$toggleLikeProduct} = useNuxtApp()
 
 const liked = computed(() => props.likeList?.includes(props.id.toString()))
@@ -101,6 +101,10 @@ const liked = computed(() => props.likeList?.includes(props.id.toString()))
 function handleLike(id) {
   liked.value = $toggleLikeProduct(id)
   emits('updateLikes', id)
+}
+
+function handleClick () {
+  emits('onProductClick')
 }
 
 const swiperEl = ref()

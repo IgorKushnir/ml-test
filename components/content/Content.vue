@@ -62,6 +62,12 @@
         </div>
       </div>
 
+      <div v-if="data['__typename'] === 'ComponentContentIframe'"  class="col-12 p-v-0">
+        <div class="row gap-S justify-center">
+          <LazyContentIframe :data="data"/>
+        </div>
+      </div>
+
     </div>
   </div>
 </template>

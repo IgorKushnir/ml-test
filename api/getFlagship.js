@@ -7,6 +7,13 @@ export default async function (lang, publicationState = "LIVE") {
     const collection = 'flagship';
     // ${locals()}
 
+    const extra_blocks = `
+          ...on ComponentContentIframe {
+            __typename
+            link
+          }
+            `
+
     const response = graphql(`
     query Flagship{
   flagship(locale: "${lang}" publicationState: ${publicationState}) {
@@ -28,7 +35,7 @@ export default async function (lang, publicationState = "LIVE") {
             }
           }
         }
-                ${content()}
+                ${content(extra_blocks)}
 
         success
         contact_title

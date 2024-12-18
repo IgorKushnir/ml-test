@@ -91,7 +91,7 @@ const props = defineProps({
 
 function hover(hover, el) {
   const button = el.target.getElementsByClassName('button')[0]
-  if (hover) {
+  if (hover && button) {
     button.classList.add('button-hover')
   } else {
     button.classList.remove('button-hover')

@@ -163,7 +163,7 @@ const showSubMenu = (index) => {
   }
   activeIndex.value = index;
 
-  link.value[activeIndex.value].$el.parentElement.classList.add('active')
+  link.value[activeIndex.value].$el.parentElement?.classList.add('active')
 
 }
 // Hide submenu
@@ -172,7 +172,7 @@ const hideSubMenu = () => {
     data.value[0].primary[activeIndex.value].show = false;
   }
 
-  link.value[activeIndex.value].$el.parentElement.classList.remove('active')
+  link.value[activeIndex.value].$el.parentElement?.classList.remove('active')
 }
 
 
@@ -226,7 +226,7 @@ onMounted(() => {
   addRouteMiddleware(async (to) => {
     hideSubMenu();
     mobileMenuOpened.value = false;
-    menu_wrapper.value.classList.add('hide');
+    menu_wrapper.value?.classList.add('hide');
     document.body.classList.remove('no-mobile-scroll')
   });
 
