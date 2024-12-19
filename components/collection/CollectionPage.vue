@@ -51,6 +51,7 @@
             :pending-products="pendingProducts"
             :promo="dataCollection?.show_promo"
             @load="page => filterData(filters, page)"
+            @click="handleProductClick"
             infinite
             :shimmerItems="0"
         >
@@ -89,6 +90,13 @@ const productPage = ref(1)
 const pages = ref(1)
 
 const { locale } = useI18n()
+
+const handleProductClick = () => {
+  if (typeof window === 'undefined') {
+    return
+  }
+  localStorage.setItem('collection', slug)
+}
 
 const previousPages = router.options.history?.pages?.[slug]
 router.options.history.pages = {}

@@ -61,7 +61,8 @@ defineProps({
 
     &__text {
         margin: 0;
-        font-size: 11px;
+        font-size: 12px;
+        line-height: 16px;
         font-weight: 400;  
         text-transform: none;  
         color: $dark-blue;

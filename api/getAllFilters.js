@@ -175,7 +175,7 @@ query getAllFilters{
 }
 `);
 
-    const { data, pending, refresh, error } = await useAsyncData('data_'+collection, () => response, {
+    const { data, pending, refresh, error } = await useLazyAsyncData('data_'+collection, () => response, {
         transform: (d) => {
             const keys = Object.keys(d?.data);
             return keys.map(k => {

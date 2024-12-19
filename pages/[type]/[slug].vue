@@ -174,15 +174,19 @@ const route = useRoute();
 const router = useRouter();
 let slug = route.params.slug;
 let draft = route.query?.draft;
-const collection = route.query?.collection;
+const collection = typeof window !== 'undefined' ? localStorage.getItem('collection') : '';
 const likeList = ref([])
 
 const { locale } = useI18n()
 const localePath = useLocalePath()
 
 const onBackClick = () => {
-  if (collection) {
-    router.push(localePath(`/collection/${collection}`))
+  if (collection) { 
+    if (typeof window === 'undefined') {
+    return
+  }
+  router.push(localePath(`/collection/${collection}`))
+    localStorage.removeItem('collection')
   } else {
     router.back()
   }
@@ -265,11 +269,11 @@ function handleLike(id) {
 
 
 function prevHandler() {
-  router.push(localePath(`/${data.value.extra.previous.type.slug}/${data.value.extra.previous.slug}${collection ? `?collection=${collection}` : ''}`))
+  router.push(localePath(`/${data.value.extra.previous.type.slug}/${data.value.extra.previous.slug}`))
 }
 
 function nextHandler() {
-  router.push(localePath(`/${data.value.extra.next.type.slug}/${data.value.extra.next.slug}${collection ? `?collection=${collection}` : ''}`))
+  router.push(localePath(`/${data.value.extra.next.type.slug}/${data.value.extra.next.slug}`))
 }
 
 
