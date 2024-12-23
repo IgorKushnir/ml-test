@@ -92,7 +92,7 @@ query Main{
 `);
 
 
-    const { data, pending, refresh, error } = await useLazyAsyncData('data_'+collection, () => response, {
+    const { data, pending, refresh, error } = await useAsyncData('data_'+collection, () => response, {
         transform: (d) => d?.data[collection]?.data,
     })
     return { data, pending, refresh, error };
