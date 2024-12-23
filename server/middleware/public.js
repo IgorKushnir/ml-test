@@ -7,13 +7,14 @@ export default defineEventHandler(async (event) => {
 
     if (path === "/robots.txt") {
         if (shouldBlockRobots) {
-            return '<pre>User-agent: * Disallow: /</pre>'
+            const data = 'User-agent: * Disallow: /'
+            send(event, data, 'txt')
         } else {
         try {
             const response = await axios.get( url + "/robot-txt/robots")
             if (response.status === 200) {
                 const data = response?.data.body;
-                return '<pre>' + data + '</pre>'
+                send(event, data, 'txt')
             } else {
                 throw 'response.status: '+ response.status
             }
