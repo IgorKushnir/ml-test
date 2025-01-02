@@ -92,7 +92,7 @@ export default defineNuxtConfig({
 
   build: {
       analyze: true,
-      extractCSS: true,
+    //   extractCSS: true,
       terser: {
         terserOptions: {
           compress: {
@@ -112,7 +112,7 @@ export default defineNuxtConfig({
           preprocessorOptions: {
               scss: {
                 additionalData: '@use "@/assets/style/global" as *;',
-                // api: 'modern-compiler'
+                api: 'modern-compiler'
               },
           },
       },
