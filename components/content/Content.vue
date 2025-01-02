@@ -7,7 +7,7 @@
       </div>
 
       <template v-if="data['__typename'] === 'ComponentContentImageVideoGrig'">
-        <LazyContentMediaGrid :data="data.media.data" :classes="layout(data['grid_layout'])  + ' p-v-0'"
+        <ContentMediaGrid :data="data.media.data" :classes="layout(data['grid_layout'])  + ' p-v-0'"
                           :columns="data.columns"
         />
       </template>
