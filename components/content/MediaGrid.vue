@@ -103,20 +103,9 @@ if (props.zoom) {
   display: block;
   min-height: 100%;
 }
-.one {
-  grid-template-columns: repeat(1, 1fr);
-  .horizontal {
-    grid-column: auto/span 1;
-  }
-}
-.two, .product{
+
+.product{
   grid-template-columns: repeat(2, 1fr);
-}
-.three {
-  grid-template-columns: repeat(3, 1fr);
-}
-.four {
-  grid-template-columns: repeat(4, 1fr);
 }
 .horizontal {
   grid-column: auto/span 2;
@@ -126,16 +115,9 @@ if (props.zoom) {
 }
 
 
-
 @include xl {
   .gallery {
     grid-gap: 16px;
-  }
-  .three {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .four {
-    grid-template-columns: repeat(3, 1fr);
   }
 }
 @include lg {
@@ -159,12 +141,6 @@ if (props.zoom) {
   }
   .vertical {
     grid-column: auto/span 1;
-  }
-  .two, .three, .four {
-    grid-template-columns: repeat(2, 1fr);
-    .horizontal {
-      grid-column: auto/span 2;
-    }
   }
 }
 
