@@ -91,6 +91,14 @@ export default defineNuxtConfig({
 
   build: {
       analyze: true,
+      extractCSS: true,
+      terser: {
+        terserOptions: {
+          compress: {
+            drop_console: true
+          }
+        }
+      }
   },
 
   app: {
@@ -102,7 +110,8 @@ export default defineNuxtConfig({
       css: {
           preprocessorOptions: {
               scss: {
-                additionalData: '@use "@/assets/style/global" as *;'
+                additionalData: '@use "@/assets/style/global" as *;',
+                api: 'modern-compiler'
               },
           },
       },
