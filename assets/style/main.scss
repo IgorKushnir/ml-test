@@ -365,19 +365,19 @@ img {
   //--pswp-bg: #7079bf!important;
 }
 
-.one {
+.gallery.one {
   grid-template-columns: repeat(1, 1fr);
   .horizontal {
     grid-column: auto/span 1;
   }
 }
-.two, .product{
+.two, .product {
   grid-template-columns: repeat(2, 1fr);
 }
-.three {
+.gallery.three {
   grid-template-columns: repeat(3, 1fr);
 }
-.four {
+.gallery.four {
   grid-template-columns: repeat(4, 1fr);
 }
 
@@ -397,10 +397,10 @@ img {
   .display-block-lg {
     display: block!important;
   }
-  .three {
+  .gallery.three {
     grid-template-columns: repeat(2, 1fr);
   }
-  .four {
+  .gallery.four {
     grid-template-columns: repeat(3, 1fr);
   }
 }
