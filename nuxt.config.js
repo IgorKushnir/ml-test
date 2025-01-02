@@ -103,8 +103,7 @@ export default defineNuxtConfig({
       css: {
           preprocessorOptions: {
               scss: {
-                additionalData: '@use "@/assets/style/global" as *;',
-                api: 'modern-compiler'
+                additionalData: '@use "@/assets/style/global" as *;'
               },
           },
       },
