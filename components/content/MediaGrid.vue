@@ -105,19 +105,19 @@ if (props.zoom) {
   display: block;
   min-height: 100%;
 }
-.gallery.one {
+.one {
   grid-template-columns: repeat(1, 1fr);
   .horizontal {
     grid-column: auto/span 1;
   }
 }
-.gallery.two, .gallery.product{
+.two, .product{
   grid-template-columns: repeat(2, 1fr);
 }
-.gallery.three {
+.three {
   grid-template-columns: repeat(3, 1fr);
 }
-.gallery.four {
+.four {
   grid-template-columns: repeat(4, 1fr);
 }
 .horizontal {
@@ -133,15 +133,15 @@ if (props.zoom) {
   .gallery {
     grid-gap: 16px;
   }
-  .gallery.three {
+  .three {
     grid-template-columns: repeat(2, 1fr);
   }
-  .gallery.four {
+  .four {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 @include lg {
-  .gallery.product{
+  .product{
     grid-template-columns: repeat(1, 1fr);
     .horizontal {
       grid-column: auto/span 1;
@@ -162,7 +162,7 @@ if (props.zoom) {
   .vertical {
     grid-column: auto/span 1;
   }
-  .gallery.two, .gallery.three, .gallery.four {
+  .two, .three, .four {
     grid-template-columns: repeat(2, 1fr);
     .horizontal {
       grid-column: auto/span 2;
