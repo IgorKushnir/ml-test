@@ -112,8 +112,7 @@ export default defineNuxtConfig({
           preprocessorOptions: {
               scss: {
                 additionalData: '@use "@/assets/style/global" as *;',
-                quietDeps: true,
-                api: 'modern-compiler'
+                // api: 'modern-compiler'
               },
           },
       },
