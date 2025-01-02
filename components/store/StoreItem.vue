@@ -1,5 +1,5 @@
-<template>
-  <div>
+ <template>
+  <div v-if="store.publish">
     <div class="store-item p-v-40 p-h-40 p-b-0-md p-h-0-md" >
       <div class="store-item-wrapper" :class="store.cover_1x1?.data ? 'half' : ''">
         <div>
