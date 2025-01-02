@@ -92,14 +92,6 @@ export default defineNuxtConfig({
 
   build: {
       analyze: true,
-    //   extractCSS: true,
-      terser: {
-        terserOptions: {
-          compress: {
-            drop_console: true
-          }
-        }
-      }
   },
 
   app: {
