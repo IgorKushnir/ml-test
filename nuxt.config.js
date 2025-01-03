@@ -13,8 +13,7 @@ export default defineNuxtConfig({
       '@nuxt/image',
       '@nuxtjs/critters',
       'nuxt-delay-hydration',
-      'nuxt-viewport',
-      'nuxt-purgecss'
+      'nuxt-viewport'
   ],
 
   router: {
@@ -112,7 +111,6 @@ export default defineNuxtConfig({
           preprocessorOptions: {
               scss: {
                 additionalData: '@use "@/assets/style/global" as *;',
-                quietDeps: true,
                 api: 'modern-compiler'
               },
           },

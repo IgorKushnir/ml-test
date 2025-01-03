@@ -94,8 +94,6 @@ if (props.zoom) {
 /*}*/
 </style>
 <style scoped lang="scss">
-
-
 .gallery {
   display: grid;
   grid-gap: 40px;
@@ -105,19 +103,19 @@ if (props.zoom) {
   display: block;
   min-height: 100%;
 }
-.one {
+.gallery.one {
   grid-template-columns: repeat(1, 1fr);
   .horizontal {
     grid-column: auto/span 1;
   }
 }
-.two, .product{
+.gallery.two, .product{
   grid-template-columns: repeat(2, 1fr);
 }
-.three {
+.gallery.three {
   grid-template-columns: repeat(3, 1fr);
 }
-.four {
+.gallery.four {
   grid-template-columns: repeat(4, 1fr);
 }
 .horizontal {
@@ -128,15 +126,14 @@ if (props.zoom) {
 }
 
 
-
 @include xl {
   .gallery {
     grid-gap: 16px;
   }
-  .three {
+  .gallery.three {
     grid-template-columns: repeat(2, 1fr);
   }
-  .four {
+  .gallery.four {
     grid-template-columns: repeat(3, 1fr);
   }
 }
@@ -162,7 +159,7 @@ if (props.zoom) {
   .vertical {
     grid-column: auto/span 1;
   }
-  .two, .three, .four {
+  .gallery.two, .gallery.three, .gallery.four {
     grid-template-columns: repeat(2, 1fr);
     .horizontal {
       grid-column: auto/span 2;

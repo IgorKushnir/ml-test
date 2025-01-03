@@ -27,11 +27,6 @@ async function getCountry(slug, lang) {
                       pagination: {
                         limit: -1
                       }
-                      filters: {
-                          publish: {
-                            eq: true
-                          }
-                        }
                 ){
                     title
                     description
