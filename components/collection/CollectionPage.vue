@@ -146,7 +146,7 @@ const initialData = ref([])
 const {
   data: dataProducts,
   pending: pendingProducts,
-} = await useLazyAsyncData('data_products', () => getProducts({filters: filters.value, lang: locale.value, type: null, page: productPage.value, pages: pages.value }), {
+} = await useLazyAsyncData('data__collection_products', () => getProducts({filters: filters.value, lang: locale.value, type: null, page: productPage.value, pages: pages.value }), {
   transform: (d) => {
     const collection = 'products';
     let initialPageSize = 12;
@@ -196,7 +196,7 @@ async function filterData(e, page) {
 
   router.options.history.pages[slug] = page
 
-  refreshNuxtData('data_products').then(_ => {
+  refreshNuxtData('data_collection_products').then(_ => {
     if (page === 1) {
       window.scroll({top: 0})
     }
