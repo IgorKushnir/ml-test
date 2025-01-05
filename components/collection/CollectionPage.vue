@@ -146,7 +146,7 @@ const initialData = ref([])
 const {
   data: dataProducts,
   pending: pendingProducts,
-} = await useLazyAsyncData('data__collection_products', () => getProducts({filters: filters.value, lang: locale.value, type: null, page: productPage.value, pages: pages.value }), {
+} = await useLazyAsyncData('data_collection_products', () => getProducts({filters: filters.value, lang: locale.value, type: null, page: productPage.value, pages: pages.value }), {
   transform: (d) => {
     const collection = 'products';
     let initialPageSize = 12;
