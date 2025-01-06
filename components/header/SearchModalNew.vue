@@ -295,7 +295,7 @@ async function getResult() {
       if (res["store-finder"]?.hits?.length) {
         _tags.push(...res["store-finder"].hits
         .map(({country, id, slug, city}) => {
-          const cities = city.sort((cityA, cityB) => cityA.name.toLowerCase().localeCompare(cityB.name.toLowerCase()))
+          const cities = city.sort((cityA, cityB) => cityA.name.trim().toLowerCase().localeCompare(cityB.name.trim().toLowerCase()))
 
           return ([
             { 
