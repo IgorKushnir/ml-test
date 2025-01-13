@@ -150,7 +150,7 @@ function loadNextHook() {
   document.addEventListener('scroll', function (e) {
     currentPageHeight.value = document.body.scrollHeight;
     showScrollButton.value = window.scrollY > window.innerHeight;
-    const Y = window.scrollY - (document.body.scrollHeight - window.innerHeight);
+    const Y = window.scrollY - (document.body.scrollHeight - window.innerHeight) - 300;
     if (-Y < window.innerHeight) {
       if (allowLoadNext) {
         nuxtApp.callHook('page:loadNext')
