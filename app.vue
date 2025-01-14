@@ -4,7 +4,7 @@
     <div>
     <Header/>
       <NuxtPage />
-      <ScrollToTopButton v-show="showScrollButton" />
+      <!-- <ScrollToTopButton v-show="showScrollButton" /> -->
     </div>
     <LazyFooter/>
   </div>
