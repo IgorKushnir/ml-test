@@ -4,6 +4,7 @@
     <div>
     <Header/>
       <NuxtPage />
+      <ScrollToTopButton v-show="showScrollButton" />
     </div>
     <LazyFooter/>
   </div>
@@ -20,6 +21,7 @@ import {useIsMobile} from "~/composables/states";
 const nuxtApp = useNuxtApp()
 const likeCounter = useFavCount()
 const {$getLikedProducts} = nuxtApp
+const showScrollButton = ref(false)
 
 const { locale } = useI18n()
 watch(locale, () => {
@@ -147,7 +149,8 @@ function loadNextHook() {
 
   document.addEventListener('scroll', function (e) {
     currentPageHeight.value = document.body.scrollHeight;
-    const Y = window.scrollY - (document.body.scrollHeight - window.innerHeight);
+    showScrollButton.value = window.scrollY > window.innerHeight;
+    const Y = window.scrollY - (document.body.scrollHeight - window.innerHeight) - 300;
     if (-Y < window.innerHeight) {
       if (allowLoadNext) {
         nuxtApp.callHook('page:loadNext')
