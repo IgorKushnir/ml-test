@@ -1,7 +1,7 @@
 <template>
   <component :is="canZoom ? 'a' : 'div'" :href="canZoom ? $getImage(path, 'large') : null"
-             :data-pswp-width="path?.data?.attributes?.formats?.large?.width"
-             :data-pswp-height="path?.data?.attributes?.formats?.large?.height"
+             :data-pswp-width="path?.data?.attributes?.formats?.large?.width ?? path?.data?.attributes?.formats?.medium?.width"
+             :data-pswp-height="path?.data?.attributes?.formats?.large?.height ?? path?.data?.attributes?.formats?.medium?.height"
              data-cropped="true"
              class="img-component-container" :class="(zoom && !path.data?.attributes?.mime?.startsWith('video/')) ? 'zoom' : ''" v-on:click="() => showZoomImage(path)">
 
