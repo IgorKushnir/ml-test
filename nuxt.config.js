@@ -2,10 +2,20 @@ import {defineNuxtConfig} from 'nuxt/config'
 import graphql from '@rollup/plugin-graphql';
 
 export default defineNuxtConfig({
-  ssr: true,
+  isr: true,
   css: [
       '@/assets/style/main.scss',
   ],
+  nitro: {
+    prerender: {
+      crawlLinks: false, 
+      routes: [
+        '/',               
+        '/store-finder',    
+        '/dress'     
+      ]
+    }
+  },
 
   modules: [
       '@nuxtjs/strapi',
