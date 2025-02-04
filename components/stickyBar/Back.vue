@@ -47,7 +47,7 @@ const isBackAndNoHistory = computed(() => {
   if (props.text != null) {
     return true;
   } else {
-    return router.options?.history?.state?.back && !isMobile.value
+    return router.options?.history?.state?.back
   }
 })
 

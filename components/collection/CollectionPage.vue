@@ -29,19 +29,20 @@
             <Filter
                 v-if="dataAvailableFilters !== null"
                 :available-filters="dataAvailableFilters"
+                :all-filters="dataAllFilters"
                 @filters="e => handleFilter(e)"
                 @check-filters="e => checkFiltersHandler(e)"
                 :pending="pendingFilters"
-                :initialFilterSelected="initialFilters"
+                :initialFilterSelected="selectedFilters"
                 :pendingInitial="pendingFilters && dataAvailableFilters === null"
             />
           </template>
         </StickyBarStickyHeaderMilla>
         <TagContainer class="hide-md">
           <div
-              v-for="(item, index) in filterSelected"
+              v-for="(item) in displayFilters"
               class="selected-item"
-              v-on:click="cutOneFilter(index)"
+              v-on:click="cutOneFilter(item)"
           >
             {{item.value}} <span class="icon-close-16"/>
           </div>
@@ -50,7 +51,7 @@
             :products-data="dataProducts"
             :pending-products="pendingProducts"
             :promo="dataCollection?.show_promo"
-            @load="page => filterData(filters, page)"
+            @load="page => filterData(selectedFilters, page)"
             @click="handleProductClick"
             infinite
             :shimmerItems="0"
@@ -80,16 +81,30 @@
 import getCollection from '~/api/getCollection'
 import getProducts from '~/api/getProducts'
 import getActiveFilters from '~/api/getActiveFilters'
+import getAllFilters from "~/api/getAllFilters"
 
 const route = useRoute();
 const router = useRouter();
 let slug = route.params.slug;
 let filterSelected = ref([])
-const fetchFilters = ref(true)
+const filtersIsFetching = ref(true)
+const dataAllFilters = ref([])
+const selectedFilters = ref(parseQuery() ?? [])
+let initialData = ref([])
 const productPage = ref(1)
 const pages = ref(1)
 
 const { locale } = useI18n()
+
+const displayFilters = ref(parseQuery().map(filter => 
+filter.values.map(value => 
+({
+  key: filter.key,
+  value: value
+})
+)
+).flat() ?? []
+)
 
 const handleProductClick = () => {
   if (typeof window === 'undefined') {
@@ -108,6 +123,17 @@ const {
   pending: pendingCollection,
 } = await getCollection(slug, locale.value)
 
+const alignFiltersWithQueryParams = (filtersData, selectedFilters) => filtersData.map(filter => {
+  const currentRouteFilter = selectedFilters.find((routeFilter) =>  routeFilter.uid === filter.uid)
+  if (currentRouteFilter) {
+    return {...filter, data: filter.data.map(({attributes}) => ({attributes: {slug: attributes.slug, title: attrinbutes.title, value: currentRouteFilter.values.includes(attributes.slug)}}))}
+  }
+  return {...filter, data: filter.data.map(({attributes}) => ({attributes: {...attributes, value: false}}))}
+})
+
+const {data} = await getAllFilters(locale.value);
+dataAllFilters.value = alignFiltersWithQueryParams(data.value, selectedFilters.value)
+
 
 const filters = ref([{
   key: 'collection',
@@ -117,36 +143,23 @@ const filters = ref([{
 const {
   data: dataAvailableFilters,
   pending: pendingFilters,
-} = await useAsyncData('data_activeFilters', () => getActiveFilters({filters: filters.value, lang: locale.value, type: null, fetchFilters: fetchFilters.value}), {
+} = await useAsyncData('data_activeFilters', () => getActiveFilters({filters: [...[{
+  key: 'collection',
+  values: [slug]
+}], ...selectedFilters.value], lang: locale.value, type: null, fetchFilters: filtersIsFetching.value}), {
   transform: (d) => {
     return d.data['products']['meta']
   },
 })
 
-let initialAvailableFilters = {};
-const initialFilters = ref([]);
-// onMounted(() => {
-  initialAvailableFilters = dataAvailableFilters.value ?? {};
-
-  initialFilters.value = parseQuery();
-
-  initialFilters.value?.forEach(item => {
-    item.values?.forEach(it => {
-      filterSelected.value.push({
-        key: item.key,
-        value: it
-      })
-    })
-  })
-  filters.value = [...filters.value, ...initialFilters.value];
-// })
-
-const initialData = ref([])
 
 const {
   data: dataProducts,
   pending: pendingProducts,
-} = await useLazyAsyncData('data_collection_products', () => getProducts({filters: filters.value, lang: locale.value, type: null, page: productPage.value, pages: pages.value }), {
+} = await useLazyAsyncData('data_collection_products', () => getProducts({filters: [...[{
+  key: 'collection',
+  values: [slug]
+}], ...selectedFilters.value], lang: locale.value, type: null, page: productPage.value, pages: pages.value }), {
   transform: (d) => {
     const collection = 'products';
     let initialPageSize = 12;
@@ -163,7 +176,7 @@ const {
     if (productPage.value === 1 || pages.value !== 1) {
       initialData.value = []
     }
-    initialData.value.push(...d.data[collection].data)
+    initialData.value.push(...d.data[collection].data.map(product => ({...product, attributes: {...product.attributes, slug: `${product.attributes.slug}`}})))
 
     d.data[collection].data = initialData.value;
 
@@ -174,25 +187,10 @@ const {
 onMounted(() => {
   initialData.value = dataProducts.value?.data ?? []
 })
-const currentFilters =  ref([])
 
 async function filterData(e, page) {
   productPage.value = page;
-
-  // // Get selected filters in one array
-  let selected = []
-  filters.value?.forEach(f => f.values?.forEach(item => {
-    selected.push({
-      key: f.key,
-      value: item
-    })
-  }))
-
-  // Filter query by list of allows
-  const allowQuery = Object.keys(initialAvailableFilters.filters ?? {});
-  selected = selected.filter((k) => allowQuery.includes(k.key))
-
-  filterSelected.value = selected;
+  selectedFilters.value = e;
 
   router.options.history.pages[slug] = page
 
@@ -202,57 +200,62 @@ async function filterData(e, page) {
     }
   }).catch(e => console.error(e))
 
+  refreshNuxtData('data_activeFilters')
 }
 
 async function checkFiltersHandler(e) {
-  let f = [...filters.value];
-  if (e !== null) {
-    e?.forEach(eF => {
-      const index = f.findIndex(fF => eF.key === fF.key)
-      if (index !== -1) {
-        f[index] = eF
-      } else {
-        f.push(eF)
-      }
-    })
-    f = f.filter(d => d.values?.length > 0)
-  }
-  pendingFilters.value = true;
-  fetchFilters.value = false
-  filters.value = f
+  const processedSelectedFilters = selectedFilters.value
+  .map(filter => {
+    if (!e.some(eventFilter => eventFilter.key === filter.key)) {
+      return filter
+    }
+    
+    return {
+      key: filter.key,
+      values: e.find(eventFilter => eventFilter.key === filter.key).values
+    }
+  })
+  .filter(filter => filter.values.length > 0)
+
+  const processedEventFilters = e
+  .filter(eventFilter => !selectedFilters.value
+    .some((filter) => filter.key === eventFilter.key))
+  .filter(filter => filter.values.length > 0)
+
+  const processedFilters = [...processedSelectedFilters, ...processedEventFilters]
+
+  selectedFilters.value = processedFilters
+  displayFilters.value = processedFilters
+    .map(filter => 
+      filter.values.map(value => 
+       ({
+        key: filter.key,
+        value: value
+      })
+    )
+    )
+    .flat()
+  filtersIsFetching.value = true;
+
   refreshNuxtData('data_activeFilters')
 }
 
 function setQuery(filters) {
-  const query = {}
-  let allowQuery = Object.keys(initialAvailableFilters.filters ?? {});
-  filters?.forEach(q => {
-    if (allowQuery.includes(q.key)) { // Filter query by list of allows
-      query[q.key] = q.values.join(',');
-      if (query[q.key] === '') {
-        delete query[q.key];
-      }
-    }
-  })
-
   router.replace({
-    query: query,
+    query: filters.reduce((acc, item) => ({...acc, [item.key]: item.values.join(',')}), {}),
   })
 }
 
 function parseQuery() {
-  const query = route.query;
+  const query = route.meta.query ?? route.query; //
   let queryKeys = Object.keys(query);
 
-  // Filter query by list of allows
-  let allowQuery = Object.keys(initialAvailableFilters?.filters ?? {});
-  queryKeys = queryKeys.filter((k) => allowQuery.includes(k))
-
-  return queryKeys.map(key => ({
+  return queryKeys.map(key => {
+    return {
       key: key,
-      values: query[key] === '' ? [] :query[key]?.split(',') ?? []
-    })
-  )
+      values: query[key] === '' ? [] : query[key]?.split(',') ?? []
+    }
+  }) ?? []
 }
 
 function handleFilter(e) {
@@ -262,36 +265,30 @@ function handleFilter(e) {
   filterData(e, 1)
 }
 
-function cutOneFilter(index) {
-  const filterToRemove = filterSelected.value[index]
-  filterSelected.value.splice(index, 1)
-
-  const index1 = filters.value.findIndex((f) => f.key === filterToRemove.key );
-  if (index1 !== -1) {
-    const index2 = filters.value[index1].values.findIndex((f) => f === filterToRemove.value )
-    if (index2 !== -1) {
-      filters.value[index1].values.splice(index2, 1)
-      if (filters.value[index1].values?.length === 0) {
-        filters.value.splice(index1, 1)
-      }
-    }
+function cutOneFilter(item) {
+  const processedFilters = selectedFilters.value.map((filter) => {
+  if (filter.key !== item.key) {
+    return filter
   }
+  return ({...filter, values: filter.values.filter((value) => value !== item.value)})
+}).filter((filter) => filter.values.length > 0)
 
-  // selected filters
-  const _filters = [];
-  filterSelected.value?.forEach(filter => {
-    const index = _filters.findIndex(i => i.key === filter.key)
-    if (index === -1) {
-      _filters.push({key: filter.key, values: [filter.value]});
-    } else {
-      _filters[index].values.push(filter.value)
-    }
-  })
-  initialFilters.value = _filters;
+selectedFilters.value = processedFilters
 
-  setQuery(filters.value)
+displayFilters.value = processedFilters
+  .map(filter => 
+    filter.values.map(value => 
+       ({
+        key: filter.key,
+        value: value
+      })
+    )
+  )
+  .flat()
+
+  setQuery(selectedFilters.value)
   dataProducts.value.data = []
-  filterData(filters.value, 1)
+  filterData(selectedFilters.value, 1)
 }
 </script>
 <style scoped lang="scss">

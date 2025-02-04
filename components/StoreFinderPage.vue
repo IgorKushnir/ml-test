@@ -5,16 +5,30 @@
       <InnerHeader v-if="countries[countryIndex]?.value" :title="countries[countryIndex]?.value"
                    :sub_header="$t('storefinder_title')"/>
       <InnerHeader v-else :title="$t('storefinder_title')"/>
+      <StickyBarStickyHeaderMilla v-if="countryIndex === -1">
+        <template #center>
+          <div class="search-wrap">
+            <div class="icon-wrap">
+              <div class="icon-search-24"/>
+            </div>
+            <input type="text" :value="search" @input="handleInput" class="search" placeholder="Enter the the country"/>
+          </div>
+        </template>
+      </StickyBarStickyHeaderMilla>
       <StickyBarStickyHeaderMilla v-if="countryIndex !== -1">
 
         <template #center>
           <Select v-if="!(countryCode === 'UA')" :data="countries" name="Country" all="All countries"
                   :index="countryIndex" :flag="true"
-                  @index="(i) => changeCountry(i)"/>
+                  @index="(i) => changeCountry(i)"
+                  searchable
+                  />
           <Select v-if="states && states?.length > 0" :data="states" name="State" all="All states" :index="stateIndex"
                   @index="(i) => changeState(i)"/>
           <Select v-if="cities && cities?.length > 1" :data="cities" name="City" all="All cities" :index="cityIndex"
-                  @index="(i) => changeCity(i)"/>
+                  @index="(i) => changeCity(i)"
+                  searchable
+                  />
         </template>
         <template #end>
           <Select
@@ -46,8 +60,8 @@
             <StoreItem :store="store"
                        :class="store.cover_1x1?.data ? 'col-8 col-12-xl' : (stores?.length <= 2) ? 'col-6 col-8-lg col-12-md' : 'col-4 col-6-xl col-12-md'"/>
           </template>
-          <template v-if="countryIndex === -1" v-for="(country, index) in countries">
-            <a :href="localePath('/store-finder/'+country.slug)" v-on:click="(e) => changeCountry(index, e)"
+          <template v-if="countryIndex === -1" v-for="country in filteredCountries">
+            <a :href="localePath('/store-finder/'+country.slug)" v-on:click="(e) => changeCountry(country.index, e)"
                class="col-4 col-6-xl col-12-md">
               <StoreItem :store="{country_code: country.flag, city: country.value}" country/>
             </a>
@@ -76,6 +90,7 @@
 <script setup>
 import {getListOfCountries, getCountry, getBanner} from '~/api/stores'
 import getCountryCode from "../api/getCountryCode";
+import { debounce } from './header/debounce';
 
 const router = useRouter();
 const route = useRoute();
@@ -94,9 +109,32 @@ const stateIndex = ref(-1)
 const cityIndex = ref(route.query.city || -1)
 const lineIndex = ref(-1)
 const showMap = ref(false)
+const search = ref('')
 
-const countries = ref(await getListOfCountries(locale.value))
+const countries = ref(await getListOfCountries(locale.value).then(countries => countries.value.map((country, index) => ({...country, index})) ))
 const banner = ref(await getBanner(locale.value))
+const filteredCountries = ref(countries.value)
+
+function filterCountries()  {
+  filteredCountries.value = countries.value.filter(country => country.value.toLowerCase().includes(search.value.toLowerCase()))
+  if (typeof window !== 'undefined') {
+    nextTick(() => {
+    setTimeout(() => {
+      window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }, 200)
+    })
+  }
+}
+
+const debouncedFilterCountries = debounce(filterCountries)
+
+const handleInput = ({target: {value}}) => {
+search.value = value;
+debouncedFilterCountries()
+}
 
 countryCode.value = await getCountryCode()
 
@@ -114,10 +152,22 @@ const {data, pending, refresh, error} = await useLazyAsyncData('country', () => 
   }
 })
 
+const scrollToPrevCountry = () => {
+const prevRouteName = router.options.history.state.forward
+const isCountryRoute = prevRouteName.includes('store-finder')
+
+if (prevRouteName && isCountryRoute && countries.value) {
+  setTimeout(() => {
+    const currentCountryNode = document.querySelector(`a[href="${prevRouteName}"]`);
+    currentCountryNode && currentCountryNode.scrollIntoView()
+  }, 1000)
+}}
+
 onMounted(async () => {
   if (countryCode.value) {
     changeRoute()
   }
+  scrollToPrevCountry()
 })
 
 function getStores() {
@@ -273,9 +323,56 @@ function is_server() {
 }
 </script>
 
-<style scoped>
-.fd {
+<style scoped lang="scss">
+.search-wrap {
+  width: 95vw;
+  display: flex;
+  align-items: center;
+}
 
+.icon-wrap {
+  display: flex;
+  width: 63px;
+  min-width: 63px;
+  height: 63px;
+  justify-content: center;
+  align-items: center;
+  border-left: 1px solid $border-dark;
+  border-right: 1px solid $border-dark;
+}
+
+.search {
+  height: 63px;
+  padding-left: 12px;
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  font-weight: 400;
+  color: $dark-blue;
+
+  :focus {
+    border: none;
+    outline: none;
+  }
+
+  :placeholder {
+    color: #B4BABF;
+  }
+}
+
+@include md {
+  .icon-wrap {
+    width: 54px;
+    min-width: 54px;
+    height: 54px;
+    /* border-bottom: 1px solid $border-dark; */
+  }
+
+  .search {
+    height: 54px;
+    /* border-bottom: 1px solid $border-dark; */
+  }
 }
 
 </style>

@@ -1,36 +1,36 @@
 <template>
   <div>
     <div v-if="!pending">
-      <InnerHeader v-if="step !== 0"
+      <InnerHeader v-if="step === AppointmentSteps.dateSelect || step === AppointmentSteps.contactForm"
                    :sub_header="data.sub_header"
                    :title="data.title"
                    :sub_title="$t('warsaw_sub_title')"
                    :hideBorder="true"
-                   :steps="step !==3 ? steps : null"
-                   @step="(index) => goStep(index)"
+                   :steps="step !== AppointmentSteps.successScreen ? steps : null"
+                   @step="(index) => goStep(appointmentStepsArray[index])"
                    :currentStep="step"
       />
       <Error :text="altegError" />
       <FlagshipStepOne
-          v-if="step === 0"
-          @serviceId="(id) => goStep(1, id)"
+          v-if="step === AppointmentSteps.welcomeScreen"
+          @serviceId="(id) => goStep('dateSelect', id)"
           :sub_header="data.sub_header"
           :title="data.title"
           :cover="data.cover_4x3"
           :text="data.description"
           :services="services"
           :content="data?.content"/>
-      <FlagshipDayHour v-if="step === 1"
+      <FlagshipDayHour v-if="step === AppointmentSteps.dateSelect"
           :bookingDates="bookingDates"
           :bookingHours="bookingHours"
           :selectedDay="selectedDay" 
           :specials="data?.specials"
           @getHours="(day) => getHours(day)"
-          @goStep="(payload) => goStep(2, payload)"
+          @goStep="(payload) => goStep(AppointmentSteps.contactForm, payload)"
           />
       <FlagshipStepTwo 
-        v-if="step === 2"
-        @goStep="(index) => goStep(index)"
+        v-if="step === AppointmentSteps.contactForm"
+        @goStep="(index) => goStep(appointmentStepsArray[index])"
         @addAltegError="addAltegError"
         :isFirstFitting="selectedServiceId === services[0].service_id"
         :altegioRequestData="{
@@ -44,8 +44,8 @@
       <Container size="0" marginVertical="40">
         <div class="col-12">
           <Fact :data="{background_color: 'light', logo: true, layout: 'wide'}" class="p-b-0">
-            <div v-if="step===3" v-html="data.success" class="m-b-56"/>
-            <div class="button-wrap">
+            <div v-if="step===AppointmentSteps.successScreen" v-html="data.success" class="m-b-56"/>
+            <div class="button-wrap" v-if="step===AppointmentSteps.successScreen">
               <NuxtLink :to="localePath('/')" class="button primary">{{ $t('back_home') }}</NuxtLink>
             </div>
 
@@ -68,7 +68,7 @@
             </template>
           </Fact>
         </div>
-        <div v-if="step===2" class="image-wrap">
+        <div v-if="step===AppointmentSteps.successScreen" class="image-wrap">
         </div>
       </Container>
     </div>
@@ -87,9 +87,10 @@
 
 <script setup>
 import getFlagship from '~/api/getFlagship'
+import {AppointmentSteps, appointmentStepsArray} from '~/composables/utilTypes'
 
 const { t, locale } = useI18n()
-const step = ref(0)
+const step = ref(AppointmentSteps.welcomeScreen)
 const selectedServiceId = ref()
 const bookingServices = ref()
 const bookingStaff = ref()
@@ -105,19 +106,19 @@ let { data, pending } = await getFlagship(locale.value)
 
 function goStep(_step, payload) {
   step.value = _step
-  if (_step === 1) {
+  if (_step === AppointmentSteps.dateSelect) {
     if (payload) {
       selectedServiceId.value = payload
     }
     getDaysAndHours()
   }
-  if (_step === 2) {
+  if (_step === AppointmentSteps.contactForm) {
     if (payload) {
       selectedDate.value = payload.datetime
       selectedStaffId.value = payload.staff_id
     }
   }
-  if (_step === 3) {
+  if (_step === AppointmentSteps.successScreen) {
     fbq('track', 'Lead');  // Pixel??
     console.log('event-sent');
   }
@@ -178,14 +179,17 @@ const steps = computed(() => {
   return [
   {
     name: selectedServiceId.value === services.value?.[0].service_id ? t('book_step_1_first') : t('book_step_1_retry'),
+    value: AppointmentSteps.welcomeScreen,
     active: false
   },
   {
     name: t('book_step_2'),
+    value: AppointmentSteps.dateSelect,
     active: false
   },
   {
     name: t('book_step_3'),
+    value: AppointmentSteps.contactForm,
     active: false
   },
 ]})

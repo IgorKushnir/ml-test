@@ -4,9 +4,8 @@
         :class="_index !== -1 ? 'custom-select active desktop' : 'custom-select desktop'"
         @mouseenter="showDropdown = true"
         @mouseleave="showDropdown = false"
-        @click="showDropdown = false"
     >
-      <StoreFlag v-if="flag && _index!== -1" class="flag big" :code="data[_index].flag"/>
+      <StoreFlag v-if="flag && _index!== -1 && data[_index]?.flag" class="flag big" :code="data[_index].flag"/>
 
       <div class="label p-small">
         <strong>{{ _index === -1 ? name : data[_index].value }}</strong>
@@ -15,19 +14,21 @@
 
       <transition name="dropdown">
         <div v-show="showDropdown" ref="dropDown" :class="'drop-down ' + side">
-          <div :class="_index === -1 ? 'item active p-small' : 'item p-small'" v-on:click="emitIndex( -1)">{{all}}</div>
-          <div v-for="(item, i) in data" :class="_index === i ? 'item active p-small' : 'item p-small'" v-on:click="emitIndex( i)">
-            <StoreFlag v-if="flag" class="flag" :code="data[i].flag"/>
+          <div class="search-wrap" v-if="searchable">
+              <div class="icon-search-24 icon-search"/>
+            <input type="text" v-model="search" class="search" placeholder="Enter the city" @keyup.enter="onSearch"/>
+          </div>
+          <div :class="_index === -1 ? 'item active p-small' : 'item p-small'" v-on:click="onAllClick">{{all}}</div>
+          <div v-for="(item) in filteredData" :class="_index === item.index ? 'item active p-small' : 'item p-small'" v-on:click="emitIndex(item.index)">
+            <StoreFlag v-if="flag && data[item.index]?.flag" class="flag" :code="data[item.index].flag"/>
             <span>{{item.value}}</span>
           </div>
         </div>
       </transition>
-
-
     </div>
 
     <div  class="select-container mobile">
-      <StoreFlag v-if="flag && _index !== -1" class="flag-mobile" :code="data[_index].flag"/>
+      <StoreFlag v-if="flag && _index !== -1 && data[_index]?.flag" class="flag-mobile" :code="data[_index].flag"/>
 
       <select :class="'select custom-select p-small hidden' + (flag && _index !== -1 ? ' flag' : '')">
         <option value="1">{{_index === -1 ? all : data[_index].value}}</option>
@@ -36,8 +37,8 @@
       <div class="icon-drop-down-16"></div>
 
       <select :class="(_index === -1 ? 'select custom-select p-small absolute' : 'select custom-select p-small absolute active') + (flag && _index !== -1 ? ' flag' : '')" v-on:change="emitIndex( _index)" v-model="_index">
-        <option :value="-1">{{all}}</option>
-        <option  v-for="(item, i) in data" :value="i" :selected="index === i">{{item.value}}</option>
+        <option :value="-1" @click="search = ''">{{all}}</option>
+        <option  v-for="(item) in filteredData" :value="item.index" :selected="index === item.index">{{item.value}}</option>
 
       </select>
     </div>
@@ -75,10 +76,22 @@ const props = defineProps({
     type: String,
     required: false,
     default: 'left'
-  }
+  },
+  searchable: {
+    type: Boolean,
+    return: false,
+    default: false
+  },
 })
 let showDropdown = ref(false)
 const _index = ref(props.index);
+const dataWithIndex = computed(() => props.data.map((item, index) => ({...item, index})))
+const search = ref('')
+const filteredData = computed(() => dataWithIndex.value.filter(item => item.value.toLowerCase().includes(search.value.toLowerCase())))
+const onAllClick = () => {
+  emitIndex( -1)
+  search.value = ''
+}
 
 watch(() => props.index, (i) => {
   _index.value = i
@@ -311,5 +324,36 @@ select {
 }
 .dropdown-leave-to {
   opacity: 0;
+}
+
+.search-wrap {
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+  border: 1px solid $border-dark;
+}
+
+.search {
+  height: 63px;
+  padding-left: 16px;
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  font-weight: 400;
+  color: $dark-blue;
+
+  :focus {
+    border: none;
+    outline: none;
+  }
+
+  :placeholder {
+    color: #B4BABF;
+  }
+
+  .icon-search {
+    color: #B4BABF;
+  }
 }
 </style>

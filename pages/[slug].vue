@@ -1,6 +1,6 @@
 <template>
-  <Discover v-if="isType"/>
-  <Page v-else/>
+    <Discover v-if="isType"/>
+    <Page v-else/>
 </template>
 
 <script setup>

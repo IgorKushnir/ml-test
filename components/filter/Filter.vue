@@ -1,10 +1,10 @@
 <template>
   <FilterButton v-on:click="toggleFilters(true)" :count="count" />
   <FilterModal
-      v-if="availableFiltersFirstFetch.filters != null"
+      v-if="availableFilters.filters != null"
       :show-filters="showFilters"
       :all-filters="allFilters"
-      :available-filters="availableFiltersFirstFetch.filters"
+      :available-filters="availableFilters.filters"
       @close="toggleFilters(false)"
       @filters="e => emitFilters(e)"
       :products-count="availableFilters.pagination.total ?? 0"
@@ -36,24 +36,14 @@ const props = defineProps({
     type: Boolean,
     required: true
   },
+  allFilters: {
+    type: Array,
+    required: true
+  }
 })
 
 // Get Available Filters just Once
 const availableFiltersFirstFetch = ref(props.availableFilters)
-
-watch(() => props.availableFilters, (f)=> {
-  if (f.filters != null) {
-    availableFiltersFirstFetch.value = f
-  }
-})
-
-
-
-
-
-import {useFiltersData} from "~/composables/states";
-
-let allFilters = useFiltersData();
 
 let showFilters = ref(false)
 let count = ref(0)
@@ -77,7 +67,7 @@ function checkFiltersHandler(f) {
   emits('checkFilters', f)
 }
 function calculateFiltersAmount(filters) {
-  count.value = filters.map(d => d.values?.length).reduce((partialSum, a) => partialSum + a, 0)
+  count.value = filters?.map(d => d.values?.length).reduce((partialSum, a) => partialSum + a, 0)
 }
 </script>
 

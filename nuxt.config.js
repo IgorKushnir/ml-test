@@ -24,6 +24,14 @@ export default defineNuxtConfig({
       return { x: 0, y: 0 };
     },
   },
+  
+  serverMiddleware: [
+    { path: '/', handler: '~/middleware/dynamicRendering.js' }
+  ],
+
+  render: {
+    ssr: process.env.SSR === 'true', // Control SSR based on middleware logic
+  },
 
   i18n: {
       locales: ['en', 'pl'],

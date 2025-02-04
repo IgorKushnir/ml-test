@@ -17,7 +17,7 @@
 
         <div class="col-6 col-8-xl col-12-lg p-v-4 menu">
           <div v-for="item in menu" class="sub-menu navigation">
-            <div class="m-b-24">
+            <div class="m-b-24 link-wrap">
               <NuxtLink :to="localePath(item.url)" :target="item.target ? '_blank' : '_self'" class="nav-link hover white"
                         :class="item.target ? 'target' : ''">
                 {{ item.title }}
@@ -201,5 +201,8 @@ const { locale } = useI18n()
   .additional-items {
     flex-direction: column;
   }
+}
+.link-wrap {
+  min-height: 28px;
 }
 </style>

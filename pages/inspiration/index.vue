@@ -53,11 +53,6 @@ const { locale } = useI18n()
 
 const {data, pending, refresh, error} = await useLazyAsyncData('inspirations', () => getInspirations(locale.value, null, page.value), {
   transform: (d) => {
-    // if (page.value === 1) {
-    //   console.log('here');
-    //   data.value = d.data['inspirations']
-    // }
-
     return d?.data['inspirations']
   }
 })

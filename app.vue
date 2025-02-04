@@ -4,7 +4,6 @@
     <div>
     <Header/>
       <NuxtPage />
-      <!-- <ScrollToTopButton v-show="showScrollButton" /> -->
     </div>
     <LazyFooter/>
   </div>
@@ -21,7 +20,6 @@ import {useIsMobile} from "~/composables/states";
 const nuxtApp = useNuxtApp()
 const likeCounter = useFavCount()
 const {$getLikedProducts} = nuxtApp
-const showScrollButton = ref(false)
 
 const { locale } = useI18n()
 watch(locale, () => {
@@ -59,6 +57,7 @@ useHead({
     {name: 'author', content: 'Milla Nova'},
     {name: 'copyright', content: 'Milla Nova'},
     {name: 'revisit-after', content: '2 days'},
+    { name:"msvalidate.01", content:"3363C5CFAF950582BB763B7B4031DFF0"},
 
     // {name: 'facebook-domain-verification', content: 'wtdd4fzvg43jhi2tx4lpd4xumrtjln'}, // temporary to verify domain.
   ],
@@ -76,7 +75,7 @@ useHead({
                   n.callMethod.apply(n,arguments):n.queue.push(arguments)};
                   if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
                   n.queue=[];t=b.createElement(e);t.async=!0;
-                  t.src=v;s=b.getElementsByTagName(e)[0];
+                  t.src=v;s=b.getElementsByTagName(e)?.[0];
                   s.parentNode.insertBefore(t,s)}(window, document,'script',
                   'https://connect.facebook.net/en_US/fbevents.js');
                   fbq('init', ${process.env.FACEBOOK_INIT});
@@ -88,7 +87,7 @@ useHead({
                   window.pintrk.queue.push(Array.prototype.slice.call(arguments))};var
                     n=window.pintrk;n.queue=[],n.version="3.0";var
                     t=document.createElement("script");t.async=!0,t.src=e;var
-                    r=document.getElementsByTagName("script")[0];
+                    r=document.getElementsByTagName("script")?.[0];
                     r.parentNode.insertBefore(t,r)}}("https://s.pinimg.com/ct/core.js");
                   pintrk('load', ${process.env.PINTEREST_ID}, {em: '<user_email_address>'});
                   pintrk('page');
@@ -97,7 +96,7 @@ useHead({
     {innerHTML: process.env.HOTJAR_ID ? `(function(h,o,t,j,a,r){
                 h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
                 h._hjSettings={hjid:${process.env.HOTJAR_ID},hjsv:6};
-                a=o.getElementsByTagName('head')[0];
+                a=o.getElementsByTagName('head')?.[0];
                 r=o.createElement('script');r.async=1;
                 r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
                 a.appendChild(r);
@@ -149,7 +148,6 @@ function loadNextHook() {
 
   document.addEventListener('scroll', function (e) {
     currentPageHeight.value = document.body.scrollHeight;
-    showScrollButton.value = window.scrollY > window.innerHeight;
     const Y = window.scrollY - (document.body.scrollHeight - window.innerHeight) - 300;
     if (-Y < window.innerHeight) {
       if (allowLoadNext) {

@@ -26,18 +26,25 @@ const scrollToTop = () => {
 .wrap {
     position: fixed;
     bottom: 60px;
-    right: 220px;
+    right: 8vw;
     width: 57px;
     height: 57px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    border-right-width: 3px;
-    border-left-width: 3px;
+    background-color: #fff;
+    border: 1px solid #C1C4C7;
     border-radius: 50%;
     cursor: pointer;
-    z-index: 9999;
+    z-index: 98;
     animation: fadeIn 0.5s ease-in-out;
+
+    @media (min-width: 768px) {
+      right: 4vw;
+    }
+}
+
+.icon {
+  background-image: unset;
 }
 </style>

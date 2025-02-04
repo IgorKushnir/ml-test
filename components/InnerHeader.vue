@@ -19,8 +19,8 @@
       <div class="col-4 col-8-xl col-10-lg col-12-md steps-container">
         <template v-for="(step, index) in steps">
           <div
-              v-on:click="() => goStep(index)"
-              class="step-item" :class="(currentStep === index ? 'active' : '') + (currentStep < index ? ' disable' : '')"><div class="step-point m-b-8">{{index + 1}}</div><div class="p-small center">
+              v-on:click="() => goStep(step.value)"
+              class="step-item" :class="(currentStep === step.value ? 'active' : '')"><div class="step-point m-b-8">{{index + 1}}</div><div class="p-small center">
             {{ step.name }}</div></div>
           <div v-if="index < steps?.length-1" class="icon-drop-down-16 divider"/>
         </template>
@@ -34,6 +34,7 @@
 </template>
 
 <script setup lang="js">
+import {AppointmentSteps} from '~/composables/utilTypes'
 const emits = defineEmits(['step'])
 const props = defineProps({
   title: {
@@ -53,8 +54,8 @@ const props = defineProps({
     required: false
   },
   currentStep: {
-      type: Number,
-      default: 0
+      type: String,
+      default: AppointmentSteps.welcomeScreen
     },
     hideBorder: {
       type: Boolean,

@@ -32,17 +32,13 @@
             </transition>
 
             <transition name="shift">
-              <div v-if="!showFilterButton && !pendingInitial" class="button-container p-v-16 p-h-56  p-h-32-md">
+              <div v-if="!pendingInitial" class="button-container p-v-16 p-h-56  p-h-32-md">
                 <div class="button primary" v-on:click="handleFilterButton">
                   <span v-if="!pending">{{ $t('filters_show') }} {{ productsCount }}</span>
                   <span v-else>...</span>
                 </div>
               </div>
-              <div v-else class="button-container p-v-16 p-h-56  p-h-32-md">
-                <div class="button primary close" v-on:click="closeFilter">
-                  <span>{{ $t('filters_dismiss') }}</span>
-                </div>
-              </div>
+              
             </transition>
 
 
@@ -123,12 +119,11 @@ watch(() => props.showFilters, (e) => {
   e ? document.body.classList.add('no-scroll') : document.body.classList.remove('no-scroll')
 })
 
-const allFiltersFiltered = computed(()=> {
-  return props.allFilters.filter((d, index) => {
+const allFiltersFiltered = computed(()=> props.productsCount === 0 ? props.allFilters : props.allFilters?.filter((d, index) => {
     const availableItem = props.availableFilters[d.uid]?.length > 0
     return d.data?.length > 0 && availableItem
   })
-})
+)
 
 const filters = ref([])
 
@@ -141,7 +136,6 @@ function checkIsFilterButtonShow() {
   showFilterButton.value = JSON.stringify(selectedItems.value) === JSON.stringify(filteredItems.value);
 }
 checkIsFilterButtonShow()
-
 
 
 function handleValue(e) {
@@ -203,7 +197,6 @@ const isSelectedFilters = computed(()=> {
   })
   return selected?.length > 0
 })
-
 
 
 function resetHandler() {

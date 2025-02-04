@@ -25,7 +25,7 @@ defineProps({
   justify-content: center;
   height: 64px;
   //margin: -1px;
-  border: 1px solid $border-dark;
+  border-left: 1px solid $border-dark;
   padding: 0 25px;
   cursor: pointer;
 

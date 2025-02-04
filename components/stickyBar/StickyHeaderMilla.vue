@@ -165,7 +165,7 @@ addRouteMiddleware(async (to, from) => {
   //border-width: 1px 0px;
   //border-style: solid;
   //border-color: $border-dark;
-  border-bottom: 1px solid $border-dark;
+  /* border-bottom: 1px solid $border-dark; */
   background-color: $white;
   z-index: 8;
 
@@ -181,6 +181,7 @@ addRouteMiddleware(async (to, from) => {
   grid-template-columns: 1fr auto 1fr;
   justify-items: center;
   white-space: nowrap;
+  border-bottom: 1px solid $border-dark;
 }
 
 
@@ -192,8 +193,8 @@ addRouteMiddleware(async (to, from) => {
     height: 55px;
   }
   .sticky-header-wrapper, .sticky-header {
-    height: 56px;
-    max-height: 56px;
+    height: 59px;
+    max-height: 59px;
   }
   .sticky-header-wrapper {
     overflow-x: scroll;
@@ -290,7 +291,7 @@ addRouteMiddleware(async (to, from) => {
   }
 
   .sticky-header-wrapper .container {
-    padding: 0 12px !important;
+    padding: 0 !important;
   }
 }
 </style>

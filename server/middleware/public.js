@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export default defineEventHandler(async (event) => {
-    console.log(event);
     const path = getRequestPath(event);
     const url = process.env.STRAPI_URL
     const shouldBlockRobots = !!process.env.BLOCK_ROBOTS

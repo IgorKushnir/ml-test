@@ -15,10 +15,10 @@
                 :label="filter.title"
                 :value="filter.value"
                 @value="e => setItemValue(i, e)"
-                :available="isFilterItemsAvailable(filter)"
+                :available="true"
             />
             <FilterCheckBoxDress
-                v-if="data.uid === 'silhouettes' && isFilterItemsAvailable(filter)"
+                v-if="data.uid === 'silhouettes'"
                 :filter="filter"
                 @value="e => setItemValue(i, e)"
             />

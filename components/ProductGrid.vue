@@ -26,7 +26,7 @@
         </div>
       </template>
 
-      <template v-if="shimmerItems" v-for="index in Array.from(Array(shimmerItems ?? 0).keys())">
+      <template v-if="shimmerItems && pendingProducts" v-for="index in Array.from(Array(shimmerItems ?? 0).keys())">
         <div class="shimmer" :class="grid === 3 ? 'col-4 col-6-lg col-12-sm' : 'col-3 col-4-lg col-6-md col-12-sm'">
           <ProductItem shimmer/>
         </div>
@@ -35,7 +35,6 @@
   </transition>
 
 
-  <Loading :pending="pendingProducts" extended-class="half"/>
   <transition name="fade">
     <div v-if="productsData && !pendingProducts && productsData?.data?.length === 0">
       <State v-if="!moodboard" title="No products" class="half"></State>
